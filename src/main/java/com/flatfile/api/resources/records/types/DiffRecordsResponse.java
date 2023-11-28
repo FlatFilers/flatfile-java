@@ -9,29 +9,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DiffRecordsResponse.Builder.class)
 public final class DiffRecordsResponse {
-    private final List<DiffRecord> data;
+    private final DiffRecords data;
 
     private final Map<String, Object> additionalProperties;
 
-    private DiffRecordsResponse(List<DiffRecord> data, Map<String, Object> additionalProperties) {
+    private DiffRecordsResponse(DiffRecords data, Map<String, Object> additionalProperties) {
         this.data = data;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data")
-    public List<DiffRecord> getData() {
+    public DiffRecords getData() {
         return data;
     }
 
@@ -60,41 +57,43 @@ public final class DiffRecordsResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static DataStage builder() {
         return new Builder();
     }
 
+    public interface DataStage {
+        _FinalStage data(DiffRecords data);
+
+        Builder from(DiffRecordsResponse other);
+    }
+
+    public interface _FinalStage {
+        DiffRecordsResponse build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private List<DiffRecord> data = new ArrayList<>();
+    public static final class Builder implements DataStage, _FinalStage {
+        private DiffRecords data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @Override
         public Builder from(DiffRecordsResponse other) {
             data(other.getData());
             return this;
         }
 
-        @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public Builder data(List<DiffRecord> data) {
-            this.data.clear();
-            this.data.addAll(data);
+        @Override
+        @JsonSetter("data")
+        public _FinalStage data(DiffRecords data) {
+            this.data = data;
             return this;
         }
 
-        public Builder addData(DiffRecord data) {
-            this.data.add(data);
-            return this;
-        }
-
-        public Builder addAllData(List<DiffRecord> data) {
-            this.data.addAll(data);
-            return this;
-        }
-
+        @Override
         public DiffRecordsResponse build() {
             return new DiffRecordsResponse(data, additionalProperties);
         }

@@ -21,6 +21,8 @@ import com.flatfile.api.resources.agents.types.GetDetailedAgentLogResponse;
 import com.flatfile.api.resources.agents.types.GetDetailedAgentLogsResponse;
 import com.flatfile.api.resources.agents.types.GetExecutionsResponse;
 import com.flatfile.api.resources.agents.types.ListAgentsResponse;
+import com.flatfile.api.resources.commons.types.AgentId;
+import com.flatfile.api.resources.commons.types.EventId;
 import com.flatfile.api.resources.commons.types.Success;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -41,7 +43,7 @@ public class AgentsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("agents");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -70,7 +72,7 @@ public class AgentsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("agents");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         RequestBody body;
         try {
             body = RequestBody.create(
@@ -103,12 +105,12 @@ public class AgentsClient {
         return create(request, null);
     }
 
-    public AgentResponse get(String agentId, GetAgentRequest request, RequestOptions requestOptions) {
+    public AgentResponse get(AgentId agentId, GetAgentRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("agents")
-                .addPathSegment(agentId);
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+                .addPathSegment(agentId.toString());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -129,18 +131,18 @@ public class AgentsClient {
         }
     }
 
-    public AgentResponse get(String agentId, GetAgentRequest request) {
+    public AgentResponse get(AgentId agentId, GetAgentRequest request) {
         return get(agentId, request, null);
     }
 
     public GetAgentLogsResponse getAgentLogs(
-            String agentId, GetAgentLogsRequest request, RequestOptions requestOptions) {
+            AgentId agentId, GetAgentLogsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("agents")
-                .addPathSegment(agentId)
+                .addPathSegment(agentId.toString())
                 .addPathSegments("logs");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -161,18 +163,18 @@ public class AgentsClient {
         }
     }
 
-    public GetAgentLogsResponse getAgentLogs(String agentId, GetAgentLogsRequest request) {
+    public GetAgentLogsResponse getAgentLogs(AgentId agentId, GetAgentLogsRequest request) {
         return getAgentLogs(agentId, request, null);
     }
 
     public GetDetailedAgentLogResponse getAgentLog(
-            String eventId, GetAgentLogRequest request, RequestOptions requestOptions) {
+            EventId eventId, GetAgentLogRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("agents")
                 .addPathSegments("log")
-                .addPathSegment(eventId);
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+                .addPathSegment(eventId.toString());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -193,7 +195,7 @@ public class AgentsClient {
         }
     }
 
-    public GetDetailedAgentLogResponse getAgentLog(String eventId, GetAgentLogRequest request) {
+    public GetDetailedAgentLogResponse getAgentLog(EventId eventId, GetAgentLogRequest request) {
         return getAgentLog(eventId, request, null);
     }
 
@@ -203,9 +205,9 @@ public class AgentsClient {
                 .newBuilder()
                 .addPathSegments("agents")
                 .addPathSegments("logs");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         if (request.getSuccess().isPresent()) {
             httpUrl.addQueryParameter("success", request.getSuccess().get().toString());
@@ -248,9 +250,9 @@ public class AgentsClient {
                 .newBuilder()
                 .addPathSegments("agents")
                 .addPathSegments("executions");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         if (request.getSuccess().isPresent()) {
             httpUrl.addQueryParameter("success", request.getSuccess().get().toString());
@@ -289,12 +291,12 @@ public class AgentsClient {
     /**
      * Deletes a single agent
      */
-    public Success delete(String agentId, DeleteAgentRequest request, RequestOptions requestOptions) {
+    public Success delete(AgentId agentId, DeleteAgentRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("agents")
-                .addPathSegment(agentId);
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+                .addPathSegment(agentId.toString());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("DELETE", null)
@@ -318,7 +320,7 @@ public class AgentsClient {
     /**
      * Deletes a single agent
      */
-    public Success delete(String agentId, DeleteAgentRequest request) {
+    public Success delete(AgentId agentId, DeleteAgentRequest request) {
         return delete(agentId, request, null);
     }
 }

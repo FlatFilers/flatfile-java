@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,17 +19,17 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GuestWorkbook.Builder.class)
 public final class GuestWorkbook {
-    private final String id;
+    private final WorkbookId id;
 
     private final Map<String, Object> additionalProperties;
 
-    private GuestWorkbook(String id, Map<String, Object> additionalProperties) {
+    private GuestWorkbook(WorkbookId id, Map<String, Object> additionalProperties) {
         this.id = id;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public WorkbookId getId() {
         return id;
     }
 
@@ -62,7 +63,7 @@ public final class GuestWorkbook {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(WorkbookId id);
 
         Builder from(GuestWorkbook other);
     }
@@ -73,7 +74,7 @@ public final class GuestWorkbook {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
-        private String id;
+        private WorkbookId id;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -88,7 +89,7 @@ public final class GuestWorkbook {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public _FinalStage id(WorkbookId id) {
             this.id = id;
             return this;
         }

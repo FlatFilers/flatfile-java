@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.FileId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.files.requests.CreateFileRequest;
 import com.flatfile.api.resources.files.requests.ListFilesRequest;
@@ -232,11 +233,11 @@ public class FilesClient {
         return update(fileId, request, null);
     }
 
-    public InputStream download(String fileId, RequestOptions requestOptions) {
+    public InputStream download(FileId fileId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("files")
-                .addPathSegment(fileId)
+                .addPathSegment(fileId.toString())
                 .addPathSegments("download")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -259,7 +260,7 @@ public class FilesClient {
         }
     }
 
-    public InputStream download(String fileId) {
+    public InputStream download(FileId fileId) {
         return download(fileId, null);
     }
 }

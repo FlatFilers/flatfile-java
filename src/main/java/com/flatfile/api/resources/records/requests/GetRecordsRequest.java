@@ -12,8 +12,15 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EventId;
 import com.flatfile.api.resources.commons.types.Filter;
+import com.flatfile.api.resources.commons.types.FilterField;
+import com.flatfile.api.resources.commons.types.RecordId;
+import com.flatfile.api.resources.commons.types.SearchField;
+import com.flatfile.api.resources.commons.types.SearchValue;
 import com.flatfile.api.resources.commons.types.SortDirection;
+import com.flatfile.api.resources.commons.types.SortField;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -24,21 +31,21 @@ import java.util.Optional;
 public final class GetRecordsRequest {
     private final Optional<String> versionId;
 
-    private final Optional<String> sinceVersionId;
+    private final Optional<VersionId> sinceVersionId;
 
-    private final Optional<String> sortField;
+    private final Optional<SortField> sortField;
 
     private final Optional<SortDirection> sortDirection;
 
     private final Optional<Filter> filter;
 
-    private final Optional<String> filterField;
+    private final Optional<FilterField> filterField;
 
-    private final Optional<String> searchValue;
+    private final Optional<SearchValue> searchValue;
 
-    private final Optional<String> searchField;
+    private final Optional<SearchField> searchField;
 
-    private final Optional<String> ids;
+    private final Optional<RecordId> ids;
 
     private final Optional<Integer> pageSize;
 
@@ -52,7 +59,7 @@ public final class GetRecordsRequest {
 
     private final Optional<Boolean> includeMessages;
 
-    private final Optional<String> for_;
+    private final Optional<EventId> for_;
 
     private final Optional<String> q;
 
@@ -60,21 +67,21 @@ public final class GetRecordsRequest {
 
     private GetRecordsRequest(
             Optional<String> versionId,
-            Optional<String> sinceVersionId,
-            Optional<String> sortField,
+            Optional<VersionId> sinceVersionId,
+            Optional<SortField> sortField,
             Optional<SortDirection> sortDirection,
             Optional<Filter> filter,
-            Optional<String> filterField,
-            Optional<String> searchValue,
-            Optional<String> searchField,
-            Optional<String> ids,
+            Optional<FilterField> filterField,
+            Optional<SearchValue> searchValue,
+            Optional<SearchField> searchField,
+            Optional<RecordId> ids,
             Optional<Integer> pageSize,
             Optional<Integer> pageNumber,
             Optional<Boolean> includeCounts,
             Optional<Boolean> includeLength,
             Optional<Boolean> includeLinks,
             Optional<Boolean> includeMessages,
-            Optional<String> for_,
+            Optional<EventId> for_,
             Optional<String> q,
             Map<String, Object> additionalProperties) {
         this.versionId = versionId;
@@ -103,12 +110,12 @@ public final class GetRecordsRequest {
     }
 
     @JsonProperty("sinceVersionId")
-    public Optional<String> getSinceVersionId() {
+    public Optional<VersionId> getSinceVersionId() {
         return sinceVersionId;
     }
 
     @JsonProperty("sortField")
-    public Optional<String> getSortField() {
+    public Optional<SortField> getSortField() {
         return sortField;
     }
 
@@ -126,17 +133,17 @@ public final class GetRecordsRequest {
      * @return Name of field by which to filter records
      */
     @JsonProperty("filterField")
-    public Optional<String> getFilterField() {
+    public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
     @JsonProperty("searchValue")
-    public Optional<String> getSearchValue() {
+    public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
     @JsonProperty("searchField")
-    public Optional<String> getSearchField() {
+    public Optional<SearchField> getSearchField() {
         return searchField;
     }
 
@@ -144,7 +151,7 @@ public final class GetRecordsRequest {
      * @return The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records. Maximum of 100 allowed.
      */
     @JsonProperty("ids")
-    public Optional<String> getIds() {
+    public Optional<RecordId> getIds() {
         return ids;
     }
 
@@ -200,7 +207,7 @@ public final class GetRecordsRequest {
      * @return if &quot;for&quot; is provided, the query parameters will be pulled from the event payload
      */
     @JsonProperty("for")
-    public Optional<String> getFor() {
+    public Optional<EventId> getFor() {
         return for_;
     }
 
@@ -278,21 +285,21 @@ public final class GetRecordsRequest {
     public static final class Builder {
         private Optional<String> versionId = Optional.empty();
 
-        private Optional<String> sinceVersionId = Optional.empty();
+        private Optional<VersionId> sinceVersionId = Optional.empty();
 
-        private Optional<String> sortField = Optional.empty();
+        private Optional<SortField> sortField = Optional.empty();
 
         private Optional<SortDirection> sortDirection = Optional.empty();
 
         private Optional<Filter> filter = Optional.empty();
 
-        private Optional<String> filterField = Optional.empty();
+        private Optional<FilterField> filterField = Optional.empty();
 
-        private Optional<String> searchValue = Optional.empty();
+        private Optional<SearchValue> searchValue = Optional.empty();
 
-        private Optional<String> searchField = Optional.empty();
+        private Optional<SearchField> searchField = Optional.empty();
 
-        private Optional<String> ids = Optional.empty();
+        private Optional<RecordId> ids = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
 
@@ -306,7 +313,7 @@ public final class GetRecordsRequest {
 
         private Optional<Boolean> includeMessages = Optional.empty();
 
-        private Optional<String> for_ = Optional.empty();
+        private Optional<EventId> for_ = Optional.empty();
 
         private Optional<String> q = Optional.empty();
 
@@ -348,23 +355,23 @@ public final class GetRecordsRequest {
         }
 
         @JsonSetter(value = "sinceVersionId", nulls = Nulls.SKIP)
-        public Builder sinceVersionId(Optional<String> sinceVersionId) {
+        public Builder sinceVersionId(Optional<VersionId> sinceVersionId) {
             this.sinceVersionId = sinceVersionId;
             return this;
         }
 
-        public Builder sinceVersionId(String sinceVersionId) {
+        public Builder sinceVersionId(VersionId sinceVersionId) {
             this.sinceVersionId = Optional.of(sinceVersionId);
             return this;
         }
 
         @JsonSetter(value = "sortField", nulls = Nulls.SKIP)
-        public Builder sortField(Optional<String> sortField) {
+        public Builder sortField(Optional<SortField> sortField) {
             this.sortField = sortField;
             return this;
         }
 
-        public Builder sortField(String sortField) {
+        public Builder sortField(SortField sortField) {
             this.sortField = Optional.of(sortField);
             return this;
         }
@@ -392,45 +399,45 @@ public final class GetRecordsRequest {
         }
 
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
-        public Builder filterField(Optional<String> filterField) {
+        public Builder filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }
 
-        public Builder filterField(String filterField) {
+        public Builder filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
-        public Builder searchValue(Optional<String> searchValue) {
+        public Builder searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
-        public Builder searchValue(String searchValue) {
+        public Builder searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
         @JsonSetter(value = "searchField", nulls = Nulls.SKIP)
-        public Builder searchField(Optional<String> searchField) {
+        public Builder searchField(Optional<SearchField> searchField) {
             this.searchField = searchField;
             return this;
         }
 
-        public Builder searchField(String searchField) {
+        public Builder searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
             return this;
         }
 
         @JsonSetter(value = "ids", nulls = Nulls.SKIP)
-        public Builder ids(Optional<String> ids) {
+        public Builder ids(Optional<RecordId> ids) {
             this.ids = ids;
             return this;
         }
 
-        public Builder ids(String ids) {
+        public Builder ids(RecordId ids) {
             this.ids = Optional.of(ids);
             return this;
         }
@@ -502,12 +509,12 @@ public final class GetRecordsRequest {
         }
 
         @JsonSetter(value = "for", nulls = Nulls.SKIP)
-        public Builder for_(Optional<String> for_) {
+        public Builder for_(Optional<EventId> for_) {
             this.for_ = for_;
             return this;
         }
 
-        public Builder for_(String for_) {
+        public Builder for_(EventId for_) {
             this.for_ = Optional.of(for_);
             return this;
         }

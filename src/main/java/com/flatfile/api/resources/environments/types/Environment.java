@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -23,9 +25,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Environment.Builder.class)
 public final class Environment {
-    private final String id;
+    private final EnvironmentId id;
 
-    private final String accountId;
+    private final AccountId accountId;
 
     private final String name;
 
@@ -43,13 +45,11 @@ public final class Environment {
 
     private final Optional<String> languageOverride;
 
-    private final Optional<DataRetentionPolicyEnum> dataRetentionPolicy;
-
     private final Map<String, Object> additionalProperties;
 
     private Environment(
-            String id,
-            String accountId,
+            EnvironmentId id,
+            AccountId accountId,
             String name,
             boolean isProd,
             List<GuestAuthenticationEnum> guestAuthentication,
@@ -58,7 +58,6 @@ public final class Environment {
             Optional<String> translationsPath,
             Optional<List<String>> namespaces,
             Optional<String> languageOverride,
-            Optional<DataRetentionPolicyEnum> dataRetentionPolicy,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.accountId = accountId;
@@ -70,17 +69,16 @@ public final class Environment {
         this.translationsPath = translationsPath;
         this.namespaces = namespaces;
         this.languageOverride = languageOverride;
-        this.dataRetentionPolicy = dataRetentionPolicy;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public EnvironmentId getId() {
         return id;
     }
 
     @JsonProperty("accountId")
-    public String getAccountId() {
+    public AccountId getAccountId() {
         return accountId;
     }
 
@@ -130,11 +128,6 @@ public final class Environment {
         return languageOverride;
     }
 
-    @JsonProperty("dataRetentionPolicy")
-    public Optional<DataRetentionPolicyEnum> getDataRetentionPolicy() {
-        return dataRetentionPolicy;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -156,8 +149,7 @@ public final class Environment {
                 && metadata.equals(other.metadata)
                 && translationsPath.equals(other.translationsPath)
                 && namespaces.equals(other.namespaces)
-                && languageOverride.equals(other.languageOverride)
-                && dataRetentionPolicy.equals(other.dataRetentionPolicy);
+                && languageOverride.equals(other.languageOverride);
     }
 
     @Override
@@ -172,8 +164,7 @@ public final class Environment {
                 this.metadata,
                 this.translationsPath,
                 this.namespaces,
-                this.languageOverride,
-                this.dataRetentionPolicy);
+                this.languageOverride);
     }
 
     @Override
@@ -186,13 +177,13 @@ public final class Environment {
     }
 
     public interface IdStage {
-        AccountIdStage id(String id);
+        AccountIdStage id(EnvironmentId id);
 
         Builder from(Environment other);
     }
 
     public interface AccountIdStage {
-        NameStage accountId(String accountId);
+        NameStage accountId(AccountId accountId);
     }
 
     public interface NameStage {
@@ -235,23 +226,17 @@ public final class Environment {
         _FinalStage languageOverride(Optional<String> languageOverride);
 
         _FinalStage languageOverride(String languageOverride);
-
-        _FinalStage dataRetentionPolicy(Optional<DataRetentionPolicyEnum> dataRetentionPolicy);
-
-        _FinalStage dataRetentionPolicy(DataRetentionPolicyEnum dataRetentionPolicy);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, AccountIdStage, NameStage, IsProdStage, _FinalStage {
-        private String id;
+        private EnvironmentId id;
 
-        private String accountId;
+        private AccountId accountId;
 
         private String name;
 
         private boolean isProd;
-
-        private Optional<DataRetentionPolicyEnum> dataRetentionPolicy = Optional.empty();
 
         private Optional<String> languageOverride = Optional.empty();
 
@@ -282,20 +267,19 @@ public final class Environment {
             translationsPath(other.getTranslationsPath());
             namespaces(other.getNamespaces());
             languageOverride(other.getLanguageOverride());
-            dataRetentionPolicy(other.getDataRetentionPolicy());
             return this;
         }
 
         @Override
         @JsonSetter("id")
-        public AccountIdStage id(String id) {
+        public AccountIdStage id(EnvironmentId id) {
             this.id = id;
             return this;
         }
 
         @Override
         @JsonSetter("accountId")
-        public NameStage accountId(String accountId) {
+        public NameStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
@@ -319,19 +303,6 @@ public final class Environment {
         @JsonSetter("isProd")
         public _FinalStage isProd(boolean isProd) {
             this.isProd = isProd;
-            return this;
-        }
-
-        @Override
-        public _FinalStage dataRetentionPolicy(DataRetentionPolicyEnum dataRetentionPolicy) {
-            this.dataRetentionPolicy = Optional.of(dataRetentionPolicy);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "dataRetentionPolicy", nulls = Nulls.SKIP)
-        public _FinalStage dataRetentionPolicy(Optional<DataRetentionPolicyEnum> dataRetentionPolicy) {
-            this.dataRetentionPolicy = dataRetentionPolicy;
             return this;
         }
 
@@ -447,7 +418,6 @@ public final class Environment {
                     translationsPath,
                     namespaces,
                     languageOverride,
-                    dataRetentionPolicy,
                     additionalProperties);
         }
     }

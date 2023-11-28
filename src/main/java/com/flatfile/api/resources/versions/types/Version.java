@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,17 +19,17 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Version.Builder.class)
 public final class Version {
-    private final String versionId;
+    private final VersionId versionId;
 
     private final Map<String, Object> additionalProperties;
 
-    private Version(String versionId, Map<String, Object> additionalProperties) {
+    private Version(VersionId versionId, Map<String, Object> additionalProperties) {
         this.versionId = versionId;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("versionId")
-    public String getVersionId() {
+    public VersionId getVersionId() {
         return versionId;
     }
 
@@ -62,7 +63,7 @@ public final class Version {
     }
 
     public interface VersionIdStage {
-        _FinalStage versionId(String versionId);
+        _FinalStage versionId(VersionId versionId);
 
         Builder from(Version other);
     }
@@ -73,7 +74,7 @@ public final class Version {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements VersionIdStage, _FinalStage {
-        private String versionId;
+        private VersionId versionId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -88,7 +89,7 @@ public final class Version {
 
         @Override
         @JsonSetter("versionId")
-        public _FinalStage versionId(String versionId) {
+        public _FinalStage versionId(VersionId versionId) {
             this.versionId = versionId;
             return this;
         }

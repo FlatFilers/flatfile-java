@@ -13,6 +13,10 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.FileId;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +27,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = File.Builder.class)
 public final class File {
-    private final String id;
+    private final FileId id;
 
     private final String name;
 
@@ -45,18 +49,18 @@ public final class File {
 
     private final OffsetDateTime updatedAt;
 
-    private final String spaceId;
+    private final SpaceId spaceId;
 
-    private final Optional<String> workbookId;
+    private final Optional<WorkbookId> workbookId;
 
-    private final Optional<String> sheetId;
+    private final Optional<SheetId> sheetId;
 
     private final Optional<List<Action>> actions;
 
     private final Map<String, Object> additionalProperties;
 
     private File(
-            String id,
+            FileId id,
             String name,
             String ext,
             String mimetype,
@@ -67,9 +71,9 @@ public final class File {
             int bytesReceived,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            String spaceId,
-            Optional<String> workbookId,
-            Optional<String> sheetId,
+            SpaceId spaceId,
+            Optional<WorkbookId> workbookId,
+            Optional<SheetId> sheetId,
             Optional<List<Action>> actions,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -91,7 +95,7 @@ public final class File {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public FileId getId() {
         return id;
     }
 
@@ -176,17 +180,17 @@ public final class File {
     }
 
     @JsonProperty("spaceId")
-    public String getSpaceId() {
+    public SpaceId getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("workbookId")
-    public Optional<String> getWorkbookId() {
+    public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
     @JsonProperty("sheetId")
-    public Optional<String> getSheetId() {
+    public Optional<SheetId> getSheetId() {
         return sheetId;
     }
 
@@ -254,7 +258,7 @@ public final class File {
     }
 
     public interface IdStage {
-        NameStage id(String id);
+        NameStage id(FileId id);
 
         Builder from(File other);
     }
@@ -296,7 +300,7 @@ public final class File {
     }
 
     public interface SpaceIdStage {
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
     }
 
     public interface _FinalStage {
@@ -306,13 +310,13 @@ public final class File {
 
         _FinalStage mode(Mode mode);
 
-        _FinalStage workbookId(Optional<String> workbookId);
+        _FinalStage workbookId(Optional<WorkbookId> workbookId);
 
-        _FinalStage workbookId(String workbookId);
+        _FinalStage workbookId(WorkbookId workbookId);
 
-        _FinalStage sheetId(Optional<String> sheetId);
+        _FinalStage sheetId(Optional<SheetId> sheetId);
 
-        _FinalStage sheetId(String sheetId);
+        _FinalStage sheetId(SheetId sheetId);
 
         _FinalStage actions(Optional<List<Action>> actions);
 
@@ -333,7 +337,7 @@ public final class File {
                     UpdatedAtStage,
                     SpaceIdStage,
                     _FinalStage {
-        private String id;
+        private FileId id;
 
         private String name;
 
@@ -353,13 +357,13 @@ public final class File {
 
         private OffsetDateTime updatedAt;
 
-        private String spaceId;
+        private SpaceId spaceId;
 
         private Optional<List<Action>> actions = Optional.empty();
 
-        private Optional<String> sheetId = Optional.empty();
+        private Optional<SheetId> sheetId = Optional.empty();
 
-        private Optional<String> workbookId = Optional.empty();
+        private Optional<WorkbookId> workbookId = Optional.empty();
 
         private Optional<Mode> mode = Optional.empty();
 
@@ -390,7 +394,7 @@ public final class File {
 
         @Override
         @JsonSetter("id")
-        public NameStage id(String id) {
+        public NameStage id(FileId id) {
             this.id = id;
             return this;
         }
@@ -496,7 +500,7 @@ public final class File {
 
         @Override
         @JsonSetter("spaceId")
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }
@@ -515,27 +519,27 @@ public final class File {
         }
 
         @Override
-        public _FinalStage sheetId(String sheetId) {
+        public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = Optional.of(sheetId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "sheetId", nulls = Nulls.SKIP)
-        public _FinalStage sheetId(Optional<String> sheetId) {
+        public _FinalStage sheetId(Optional<SheetId> sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
         @Override
-        public _FinalStage workbookId(String workbookId) {
+        public _FinalStage workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
-        public _FinalStage workbookId(Optional<String> workbookId) {
+        public _FinalStage workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
             return this;
         }

@@ -12,8 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.RecordId;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,9 +23,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Record.Builder.class)
 public final class Record implements IRecordBase {
-    private final String id;
+    private final RecordId id;
 
-    private final Optional<String> versionId;
+    private final Optional<VersionId> versionId;
 
     private final Optional<Boolean> valid;
 
@@ -32,17 +33,17 @@ public final class Record implements IRecordBase {
 
     private final Optional<Map<String, Object>> metadata;
 
-    private final Map<String, CellValue> values;
+    private final RecordData values;
 
     private final Map<String, Object> additionalProperties;
 
     private Record(
-            String id,
-            Optional<String> versionId,
+            RecordId id,
+            Optional<VersionId> versionId,
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
-            Map<String, CellValue> values,
+            RecordData values,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.versionId = versionId;
@@ -55,13 +56,13 @@ public final class Record implements IRecordBase {
 
     @JsonProperty("id")
     @Override
-    public String getId() {
+    public RecordId getId() {
         return id;
     }
 
     @JsonProperty("versionId")
     @Override
-    public Optional<String> getVersionId() {
+    public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
@@ -84,7 +85,7 @@ public final class Record implements IRecordBase {
     }
 
     @JsonProperty("values")
-    public Map<String, CellValue> getValues() {
+    public RecordData getValues() {
         return values;
     }
 
@@ -123,17 +124,21 @@ public final class Record implements IRecordBase {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        ValuesStage id(RecordId id);
 
         Builder from(Record other);
+    }
+
+    public interface ValuesStage {
+        _FinalStage values(RecordData values);
     }
 
     public interface _FinalStage {
         Record build();
 
-        _FinalStage versionId(Optional<String> versionId);
+        _FinalStage versionId(Optional<VersionId> versionId);
 
-        _FinalStage versionId(String versionId);
+        _FinalStage versionId(VersionId versionId);
 
         _FinalStage valid(Optional<Boolean> valid);
 
@@ -146,19 +151,13 @@ public final class Record implements IRecordBase {
         _FinalStage metadata(Optional<Map<String, Object>> metadata);
 
         _FinalStage metadata(Map<String, Object> metadata);
-
-        _FinalStage values(Map<String, CellValue> values);
-
-        _FinalStage putAllValues(Map<String, CellValue> values);
-
-        _FinalStage values(String key, CellValue value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, _FinalStage {
-        private String id;
+    public static final class Builder implements IdStage, ValuesStage, _FinalStage {
+        private RecordId id;
 
-        private Map<String, CellValue> values = new LinkedHashMap<>();
+        private RecordData values;
 
         private Optional<Map<String, Object>> metadata = Optional.empty();
 
@@ -166,7 +165,7 @@ public final class Record implements IRecordBase {
 
         private Optional<Boolean> valid = Optional.empty();
 
-        private Optional<String> versionId = Optional.empty();
+        private Optional<VersionId> versionId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -186,28 +185,15 @@ public final class Record implements IRecordBase {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public ValuesStage id(RecordId id) {
             this.id = id;
             return this;
         }
 
         @Override
-        public _FinalStage values(String key, CellValue value) {
-            this.values.put(key, value);
-            return this;
-        }
-
-        @Override
-        public _FinalStage putAllValues(Map<String, CellValue> values) {
-            this.values.putAll(values);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public _FinalStage values(Map<String, CellValue> values) {
-            this.values.clear();
-            this.values.putAll(values);
+        @JsonSetter("values")
+        public _FinalStage values(RecordData values) {
+            this.values = values;
             return this;
         }
 
@@ -251,14 +237,14 @@ public final class Record implements IRecordBase {
         }
 
         @Override
-        public _FinalStage versionId(String versionId) {
+        public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
-        public _FinalStage versionId(Optional<String> versionId) {
+        public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }

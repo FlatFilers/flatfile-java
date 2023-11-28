@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,26 +22,26 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = VersionsPostRequestBody.Builder.class)
 public final class VersionsPostRequestBody {
-    private final Optional<String> sheetId;
+    private final Optional<SheetId> sheetId;
 
-    private final Optional<String> parentVersionId;
+    private final Optional<VersionId> parentVersionId;
 
     private final Map<String, Object> additionalProperties;
 
     private VersionsPostRequestBody(
-            Optional<String> sheetId, Optional<String> parentVersionId, Map<String, Object> additionalProperties) {
+            Optional<SheetId> sheetId, Optional<VersionId> parentVersionId, Map<String, Object> additionalProperties) {
         this.sheetId = sheetId;
         this.parentVersionId = parentVersionId;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("sheetId")
-    public Optional<String> getSheetId() {
+    public Optional<SheetId> getSheetId() {
         return sheetId;
     }
 
     @JsonProperty("parentVersionId")
-    public Optional<String> getParentVersionId() {
+    public Optional<VersionId> getParentVersionId() {
         return parentVersionId;
     }
 
@@ -74,9 +76,9 @@ public final class VersionsPostRequestBody {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> sheetId = Optional.empty();
+        private Optional<SheetId> sheetId = Optional.empty();
 
-        private Optional<String> parentVersionId = Optional.empty();
+        private Optional<VersionId> parentVersionId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -90,23 +92,23 @@ public final class VersionsPostRequestBody {
         }
 
         @JsonSetter(value = "sheetId", nulls = Nulls.SKIP)
-        public Builder sheetId(Optional<String> sheetId) {
+        public Builder sheetId(Optional<SheetId> sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
-        public Builder sheetId(String sheetId) {
+        public Builder sheetId(SheetId sheetId) {
             this.sheetId = Optional.of(sheetId);
             return this;
         }
 
         @JsonSetter(value = "parentVersionId", nulls = Nulls.SKIP)
-        public Builder parentVersionId(Optional<String> parentVersionId) {
+        public Builder parentVersionId(Optional<VersionId> parentVersionId) {
             this.parentVersionId = parentVersionId;
             return this;
         }
 
-        public Builder parentVersionId(String parentVersionId) {
+        public Builder parentVersionId(VersionId parentVersionId) {
             this.parentVersionId = Optional.of(parentVersionId);
             return this;
         }

@@ -13,6 +13,11 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Filter;
+import com.flatfile.api.resources.commons.types.FilterField;
+import com.flatfile.api.resources.commons.types.RecordId;
+import com.flatfile.api.resources.commons.types.SearchField;
+import com.flatfile.api.resources.commons.types.SearchValue;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,28 +29,28 @@ import java.util.Optional;
 public final class DeleteRecordsJobConfig {
     private final Optional<Filter> filter;
 
-    private final Optional<String> filterField;
+    private final Optional<FilterField> filterField;
 
-    private final Optional<String> searchValue;
+    private final Optional<SearchValue> searchValue;
 
-    private final Optional<String> searchField;
+    private final Optional<SearchField> searchField;
 
     private final Optional<String> q;
 
-    private final String sheet;
+    private final SheetId sheet;
 
-    private final Optional<List<String>> exceptions;
+    private final Optional<List<RecordId>> exceptions;
 
     private final Map<String, Object> additionalProperties;
 
     private DeleteRecordsJobConfig(
             Optional<Filter> filter,
-            Optional<String> filterField,
-            Optional<String> searchValue,
-            Optional<String> searchField,
+            Optional<FilterField> filterField,
+            Optional<SearchValue> searchValue,
+            Optional<SearchField> searchField,
             Optional<String> q,
-            String sheet,
-            Optional<List<String>> exceptions,
+            SheetId sheet,
+            Optional<List<RecordId>> exceptions,
             Map<String, Object> additionalProperties) {
         this.filter = filter;
         this.filterField = filterField;
@@ -63,17 +68,17 @@ public final class DeleteRecordsJobConfig {
     }
 
     @JsonProperty("filterField")
-    public Optional<String> getFilterField() {
+    public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
     @JsonProperty("searchValue")
-    public Optional<String> getSearchValue() {
+    public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
     @JsonProperty("searchField")
-    public Optional<String> getSearchField() {
+    public Optional<SearchField> getSearchField() {
         return searchField;
     }
 
@@ -86,7 +91,7 @@ public final class DeleteRecordsJobConfig {
     }
 
     @JsonProperty("sheet")
-    public String getSheet() {
+    public SheetId getSheet() {
         return sheet;
     }
 
@@ -94,7 +99,7 @@ public final class DeleteRecordsJobConfig {
      * @return List of record ids to exclude from deletion
      */
     @JsonProperty("exceptions")
-    public Optional<List<String>> getExceptions() {
+    public Optional<List<RecordId>> getExceptions() {
         return exceptions;
     }
 
@@ -135,7 +140,7 @@ public final class DeleteRecordsJobConfig {
     }
 
     public interface SheetStage {
-        _FinalStage sheet(String sheet);
+        _FinalStage sheet(SheetId sheet);
 
         Builder from(DeleteRecordsJobConfig other);
     }
@@ -147,40 +152,40 @@ public final class DeleteRecordsJobConfig {
 
         _FinalStage filter(Filter filter);
 
-        _FinalStage filterField(Optional<String> filterField);
+        _FinalStage filterField(Optional<FilterField> filterField);
 
-        _FinalStage filterField(String filterField);
+        _FinalStage filterField(FilterField filterField);
 
-        _FinalStage searchValue(Optional<String> searchValue);
+        _FinalStage searchValue(Optional<SearchValue> searchValue);
 
-        _FinalStage searchValue(String searchValue);
+        _FinalStage searchValue(SearchValue searchValue);
 
-        _FinalStage searchField(Optional<String> searchField);
+        _FinalStage searchField(Optional<SearchField> searchField);
 
-        _FinalStage searchField(String searchField);
+        _FinalStage searchField(SearchField searchField);
 
         _FinalStage q(Optional<String> q);
 
         _FinalStage q(String q);
 
-        _FinalStage exceptions(Optional<List<String>> exceptions);
+        _FinalStage exceptions(Optional<List<RecordId>> exceptions);
 
-        _FinalStage exceptions(List<String> exceptions);
+        _FinalStage exceptions(List<RecordId> exceptions);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SheetStage, _FinalStage {
-        private String sheet;
+        private SheetId sheet;
 
-        private Optional<List<String>> exceptions = Optional.empty();
+        private Optional<List<RecordId>> exceptions = Optional.empty();
 
         private Optional<String> q = Optional.empty();
 
-        private Optional<String> searchField = Optional.empty();
+        private Optional<SearchField> searchField = Optional.empty();
 
-        private Optional<String> searchValue = Optional.empty();
+        private Optional<SearchValue> searchValue = Optional.empty();
 
-        private Optional<String> filterField = Optional.empty();
+        private Optional<FilterField> filterField = Optional.empty();
 
         private Optional<Filter> filter = Optional.empty();
 
@@ -203,7 +208,7 @@ public final class DeleteRecordsJobConfig {
 
         @Override
         @JsonSetter("sheet")
-        public _FinalStage sheet(String sheet) {
+        public _FinalStage sheet(SheetId sheet) {
             this.sheet = sheet;
             return this;
         }
@@ -213,14 +218,14 @@ public final class DeleteRecordsJobConfig {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage exceptions(List<String> exceptions) {
+        public _FinalStage exceptions(List<RecordId> exceptions) {
             this.exceptions = Optional.of(exceptions);
             return this;
         }
 
         @Override
         @JsonSetter(value = "exceptions", nulls = Nulls.SKIP)
-        public _FinalStage exceptions(Optional<List<String>> exceptions) {
+        public _FinalStage exceptions(Optional<List<RecordId>> exceptions) {
             this.exceptions = exceptions;
             return this;
         }
@@ -243,40 +248,40 @@ public final class DeleteRecordsJobConfig {
         }
 
         @Override
-        public _FinalStage searchField(String searchField) {
+        public _FinalStage searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
             return this;
         }
 
         @Override
         @JsonSetter(value = "searchField", nulls = Nulls.SKIP)
-        public _FinalStage searchField(Optional<String> searchField) {
+        public _FinalStage searchField(Optional<SearchField> searchField) {
             this.searchField = searchField;
             return this;
         }
 
         @Override
-        public _FinalStage searchValue(String searchValue) {
+        public _FinalStage searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
         @Override
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
-        public _FinalStage searchValue(Optional<String> searchValue) {
+        public _FinalStage searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
         @Override
-        public _FinalStage filterField(String filterField) {
+        public _FinalStage filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
         @Override
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
-        public _FinalStage filterField(Optional<String> filterField) {
+        public _FinalStage filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }

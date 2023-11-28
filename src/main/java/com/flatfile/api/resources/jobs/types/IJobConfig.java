@@ -3,6 +3,9 @@
  */
 package com.flatfile.api.resources.jobs.types;
 
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.FileId;
+import com.flatfile.api.resources.commons.types.JobId;
 import java.util.Map;
 import java.util.Optional;
 
@@ -11,9 +14,9 @@ public interface IJobConfig {
 
     String getOperation();
 
-    String getSource();
+    JobSource getSource();
 
-    Optional<String> getDestination();
+    Optional<JobDestination> getDestination();
 
     Optional<JobUpdateConfig> getConfig();
 
@@ -23,7 +26,7 @@ public interface IJobConfig {
 
     Optional<Double> getProgress();
 
-    Optional<String> getFileId();
+    Optional<FileId> getFileId();
 
     Optional<JobMode> getMode();
 
@@ -37,11 +40,13 @@ public interface IJobConfig {
 
     Optional<Boolean> getManaged();
 
+    Optional<EnvironmentId> getEnvironmentId();
+
     Optional<Integer> getPart();
 
     Optional<Map<String, Object>> getPartData();
 
     Optional<JobPartExecution> getPartExecution();
 
-    Optional<String> getParentId();
+    Optional<JobId> getParentId();
 }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,25 +21,17 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetEventTokenRequest.Builder.class)
 public final class GetEventTokenRequest {
-    private final Optional<String> spaceId;
-
     private final Optional<String> scope;
+
+    private final Optional<SpaceId> spaceId;
 
     private final Map<String, Object> additionalProperties;
 
     private GetEventTokenRequest(
-            Optional<String> spaceId, Optional<String> scope, Map<String, Object> additionalProperties) {
-        this.spaceId = spaceId;
+            Optional<String> scope, Optional<SpaceId> spaceId, Map<String, Object> additionalProperties) {
         this.scope = scope;
+        this.spaceId = spaceId;
         this.additionalProperties = additionalProperties;
-    }
-
-    /**
-     * @return The space id
-     */
-    @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
-        return spaceId;
     }
 
     /**
@@ -47,6 +40,14 @@ public final class GetEventTokenRequest {
     @JsonProperty("scope")
     public Optional<String> getScope() {
         return scope;
+    }
+
+    /**
+     * @return The space ID of the event stream
+     */
+    @JsonProperty("spaceId")
+    public Optional<SpaceId> getSpaceId() {
+        return spaceId;
     }
 
     @Override
@@ -61,12 +62,12 @@ public final class GetEventTokenRequest {
     }
 
     private boolean equalTo(GetEventTokenRequest other) {
-        return spaceId.equals(other.spaceId) && scope.equals(other.scope);
+        return scope.equals(other.scope) && spaceId.equals(other.spaceId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.spaceId, this.scope);
+        return Objects.hash(this.scope, this.spaceId);
     }
 
     @Override
@@ -80,9 +81,9 @@ public final class GetEventTokenRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> spaceId = Optional.empty();
-
         private Optional<String> scope = Optional.empty();
+
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -90,19 +91,8 @@ public final class GetEventTokenRequest {
         private Builder() {}
 
         public Builder from(GetEventTokenRequest other) {
-            spaceId(other.getSpaceId());
             scope(other.getScope());
-            return this;
-        }
-
-        @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public Builder spaceId(Optional<String> spaceId) {
-            this.spaceId = spaceId;
-            return this;
-        }
-
-        public Builder spaceId(String spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            spaceId(other.getSpaceId());
             return this;
         }
 
@@ -117,8 +107,19 @@ public final class GetEventTokenRequest {
             return this;
         }
 
+        @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
+        public Builder spaceId(Optional<SpaceId> spaceId) {
+            this.spaceId = spaceId;
+            return this;
+        }
+
+        public Builder spaceId(SpaceId spaceId) {
+            this.spaceId = Optional.of(spaceId);
+            return this;
+        }
+
         public GetEventTokenRequest build() {
-            return new GetEventTokenRequest(spaceId, scope, additionalProperties);
+            return new GetEventTokenRequest(scope, spaceId, additionalProperties);
         }
     }
 }

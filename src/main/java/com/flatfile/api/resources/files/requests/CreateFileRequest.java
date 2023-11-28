@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import com.flatfile.api.resources.files.types.Mode;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +25,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateFileRequest.Builder.class)
 public final class CreateFileRequest {
-    private final String spaceId;
+    private final SpaceId spaceId;
 
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final Optional<Mode> mode;
 
@@ -34,8 +36,8 @@ public final class CreateFileRequest {
     private final Map<String, Object> additionalProperties;
 
     private CreateFileRequest(
-            String spaceId,
-            String environmentId,
+            SpaceId spaceId,
+            EnvironmentId environmentId,
             Optional<Mode> mode,
             Optional<List<Action>> actions,
             Map<String, Object> additionalProperties) {
@@ -47,12 +49,12 @@ public final class CreateFileRequest {
     }
 
     @JsonProperty("spaceId")
-    public String getSpaceId() {
+    public SpaceId getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -105,13 +107,13 @@ public final class CreateFileRequest {
     }
 
     public interface SpaceIdStage {
-        EnvironmentIdStage spaceId(String spaceId);
+        EnvironmentIdStage spaceId(SpaceId spaceId);
 
         Builder from(CreateFileRequest other);
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -128,9 +130,9 @@ public final class CreateFileRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SpaceIdStage, EnvironmentIdStage, _FinalStage {
-        private String spaceId;
+        private SpaceId spaceId;
 
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private Optional<List<Action>> actions = Optional.empty();
 
@@ -152,14 +154,14 @@ public final class CreateFileRequest {
 
         @Override
         @JsonSetter("spaceId")
-        public EnvironmentIdStage spaceId(String spaceId) {
+        public EnvironmentIdStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
         @Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }

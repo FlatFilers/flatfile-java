@@ -12,6 +12,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.PageNumber;
+import com.flatfile.api.resources.commons.types.PageSize;
+import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.commons.types.SuccessQueryParameter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,24 +25,24 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetEnvironmentAgentExecutionsRequest.Builder.class)
 public final class GetEnvironmentAgentExecutionsRequest {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
-    private final Optional<Boolean> success;
+    private final Optional<SuccessQueryParameter> success;
 
-    private final Optional<Integer> pageSize;
+    private final Optional<PageSize> pageSize;
 
-    private final Optional<Integer> pageNumber;
+    private final Optional<PageNumber> pageNumber;
 
     private final Map<String, Object> additionalProperties;
 
     private GetEnvironmentAgentExecutionsRequest(
-            String environmentId,
-            Optional<String> spaceId,
-            Optional<Boolean> success,
-            Optional<Integer> pageSize,
-            Optional<Integer> pageNumber,
+            EnvironmentId environmentId,
+            Optional<SpaceId> spaceId,
+            Optional<SuccessQueryParameter> success,
+            Optional<PageSize> pageSize,
+            Optional<PageNumber> pageNumber,
             Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.spaceId = spaceId;
@@ -48,27 +53,27 @@ public final class GetEnvironmentAgentExecutionsRequest {
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("success")
-    public Optional<Boolean> getSuccess() {
+    public Optional<SuccessQueryParameter> getSuccess() {
         return success;
     }
 
     @JsonProperty("pageSize")
-    public Optional<Integer> getPageSize() {
+    public Optional<PageSize> getPageSize() {
         return pageSize;
     }
 
     @JsonProperty("pageNumber")
-    public Optional<Integer> getPageNumber() {
+    public Optional<PageNumber> getPageNumber() {
         return pageNumber;
     }
 
@@ -107,7 +112,7 @@ public final class GetEnvironmentAgentExecutionsRequest {
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
 
         Builder from(GetEnvironmentAgentExecutionsRequest other);
     }
@@ -115,34 +120,34 @@ public final class GetEnvironmentAgentExecutionsRequest {
     public interface _FinalStage {
         GetEnvironmentAgentExecutionsRequest build();
 
-        _FinalStage spaceId(Optional<String> spaceId);
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
 
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
 
-        _FinalStage success(Optional<Boolean> success);
+        _FinalStage success(Optional<SuccessQueryParameter> success);
 
-        _FinalStage success(Boolean success);
+        _FinalStage success(SuccessQueryParameter success);
 
-        _FinalStage pageSize(Optional<Integer> pageSize);
+        _FinalStage pageSize(Optional<PageSize> pageSize);
 
-        _FinalStage pageSize(Integer pageSize);
+        _FinalStage pageSize(PageSize pageSize);
 
-        _FinalStage pageNumber(Optional<Integer> pageNumber);
+        _FinalStage pageNumber(Optional<PageNumber> pageNumber);
 
-        _FinalStage pageNumber(Integer pageNumber);
+        _FinalStage pageNumber(PageNumber pageNumber);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
-        private Optional<Integer> pageNumber = Optional.empty();
+        private Optional<PageNumber> pageNumber = Optional.empty();
 
-        private Optional<Integer> pageSize = Optional.empty();
+        private Optional<PageSize> pageSize = Optional.empty();
 
-        private Optional<Boolean> success = Optional.empty();
+        private Optional<SuccessQueryParameter> success = Optional.empty();
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -161,59 +166,59 @@ public final class GetEnvironmentAgentExecutionsRequest {
 
         @Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
-        public _FinalStage pageNumber(Integer pageNumber) {
+        public _FinalStage pageNumber(PageNumber pageNumber) {
             this.pageNumber = Optional.of(pageNumber);
             return this;
         }
 
         @Override
         @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
-        public _FinalStage pageNumber(Optional<Integer> pageNumber) {
+        public _FinalStage pageNumber(Optional<PageNumber> pageNumber) {
             this.pageNumber = pageNumber;
             return this;
         }
 
         @Override
-        public _FinalStage pageSize(Integer pageSize) {
+        public _FinalStage pageSize(PageSize pageSize) {
             this.pageSize = Optional.of(pageSize);
             return this;
         }
 
         @Override
         @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
-        public _FinalStage pageSize(Optional<Integer> pageSize) {
+        public _FinalStage pageSize(Optional<PageSize> pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
         @Override
-        public _FinalStage success(Boolean success) {
+        public _FinalStage success(SuccessQueryParameter success) {
             this.success = Optional.of(success);
             return this;
         }
 
         @Override
         @JsonSetter(value = "success", nulls = Nulls.SKIP)
-        public _FinalStage success(Optional<Boolean> success) {
+        public _FinalStage success(Optional<SuccessQueryParameter> success) {
             this.success = success;
             return this;
         }
 
         @Override
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<String> spaceId) {
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }

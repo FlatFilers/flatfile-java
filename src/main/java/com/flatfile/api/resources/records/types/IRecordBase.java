@@ -3,14 +3,16 @@
  */
 package com.flatfile.api.resources.records.types;
 
+import com.flatfile.api.resources.commons.types.RecordId;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public interface IRecordBase {
-    String getId();
+    RecordId getId();
 
-    Optional<String> getVersionId();
+    Optional<VersionId> getVersionId();
 
     Optional<Boolean> getValid();
 

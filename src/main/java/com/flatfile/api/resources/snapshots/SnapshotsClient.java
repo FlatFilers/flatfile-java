@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.SnapshotId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.records.types.DiffRecordsResponse;
 import com.flatfile.api.resources.snapshots.requests.CreateSnapshotRequest;
@@ -81,7 +82,7 @@ public class SnapshotsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("snapshots");
-        httpUrl.addQueryParameter("sheetId", request.getSheetId());
+        httpUrl.addQueryParameter("sheetId", request.getSheetId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -112,11 +113,12 @@ public class SnapshotsClient {
     /**
      * Gets a snapshot of a sheet
      */
-    public SnapshotResponse getSnapshot(String snapshotId, GetSnapshotRequest request, RequestOptions requestOptions) {
+    public SnapshotResponse getSnapshot(
+            SnapshotId snapshotId, GetSnapshotRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("snapshots")
-                .addPathSegment(snapshotId);
+                .addPathSegment(snapshotId.toString());
         httpUrl.addQueryParameter("includeSummary", request.getIncludeSummary().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -141,18 +143,18 @@ public class SnapshotsClient {
     /**
      * Gets a snapshot of a sheet
      */
-    public SnapshotResponse getSnapshot(String snapshotId, GetSnapshotRequest request) {
+    public SnapshotResponse getSnapshot(SnapshotId snapshotId, GetSnapshotRequest request) {
         return getSnapshot(snapshotId, request, null);
     }
 
     /**
      * Deletes a snapshot of a sheet
      */
-    public Success deleteSnapshot(String snapshotId, RequestOptions requestOptions) {
+    public Success deleteSnapshot(SnapshotId snapshotId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("snapshots")
-                .addPathSegment(snapshotId)
+                .addPathSegment(snapshotId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -177,14 +179,14 @@ public class SnapshotsClient {
     /**
      * Deletes a snapshot of a sheet
      */
-    public Success deleteSnapshot(String snapshotId) {
+    public Success deleteSnapshot(SnapshotId snapshotId) {
         return deleteSnapshot(snapshotId, null);
     }
 
     /**
      * Restores a snapshot of a sheet
      */
-    public SnapshotResponse restoreSnapshot(String snapshotId) {
+    public SnapshotResponse restoreSnapshot(SnapshotId snapshotId) {
         return restoreSnapshot(snapshotId, Optional.empty());
     }
 
@@ -192,11 +194,11 @@ public class SnapshotsClient {
      * Restores a snapshot of a sheet
      */
     public SnapshotResponse restoreSnapshot(
-            String snapshotId, Optional<RestoreOptions> request, RequestOptions requestOptions) {
+            SnapshotId snapshotId, Optional<RestoreOptions> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("snapshots")
-                .addPathSegment(snapshotId)
+                .addPathSegment(snapshotId.toString())
                 .addPathSegments("restore")
                 .build();
         RequestBody body;
@@ -229,14 +231,14 @@ public class SnapshotsClient {
     /**
      * Restores a snapshot of a sheet
      */
-    public SnapshotResponse restoreSnapshot(String snapshotId, Optional<RestoreOptions> request) {
+    public SnapshotResponse restoreSnapshot(SnapshotId snapshotId, Optional<RestoreOptions> request) {
         return restoreSnapshot(snapshotId, request, null);
     }
 
     /**
      * Gets records from a snapshot of a sheet
      */
-    public DiffRecordsResponse getSnapshotRecords(String snapshotId) {
+    public DiffRecordsResponse getSnapshotRecords(SnapshotId snapshotId) {
         return getSnapshotRecords(
                 snapshotId, GetSnapshotRecordsRequest.builder().build());
     }
@@ -245,11 +247,11 @@ public class SnapshotsClient {
      * Gets records from a snapshot of a sheet
      */
     public DiffRecordsResponse getSnapshotRecords(
-            String snapshotId, GetSnapshotRecordsRequest request, RequestOptions requestOptions) {
+            SnapshotId snapshotId, GetSnapshotRecordsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("snapshots")
-                .addPathSegment(snapshotId)
+                .addPathSegment(snapshotId.toString())
                 .addPathSegments("records");
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
@@ -285,7 +287,7 @@ public class SnapshotsClient {
     /**
      * Gets records from a snapshot of a sheet
      */
-    public DiffRecordsResponse getSnapshotRecords(String snapshotId, GetSnapshotRecordsRequest request) {
+    public DiffRecordsResponse getSnapshotRecords(SnapshotId snapshotId, GetSnapshotRecordsRequest request) {
         return getSnapshotRecords(snapshotId, request, null);
     }
 }

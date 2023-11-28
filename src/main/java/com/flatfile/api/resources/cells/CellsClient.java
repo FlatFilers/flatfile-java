@@ -9,6 +9,7 @@ import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.cells.requests.GetFieldValuesRequest;
 import com.flatfile.api.resources.cells.types.CellsResponse;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -25,24 +26,24 @@ public class CellsClient {
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getValues(String sheetId) {
+    public CellsResponse getValues(SheetId sheetId) {
         return getValues(sheetId, GetFieldValuesRequest.builder().build());
     }
 
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getValues(String sheetId, GetFieldValuesRequest request, RequestOptions requestOptions) {
+    public CellsResponse getValues(SheetId sheetId, GetFieldValuesRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("cells");
         if (request.getFieldKey().isPresent()) {
-            httpUrl.addQueryParameter("fieldKey", request.getFieldKey().get());
+            httpUrl.addQueryParameter("fieldKey", request.getFieldKey().get().toString());
         }
         if (request.getSortField().isPresent()) {
-            httpUrl.addQueryParameter("sortField", request.getSortField().get());
+            httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
         }
         if (request.getSortDirection().isPresent()) {
             httpUrl.addQueryParameter(
@@ -52,7 +53,8 @@ public class CellsClient {
             httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
         }
         if (request.getFilterField().isPresent()) {
-            httpUrl.addQueryParameter("filterField", request.getFilterField().get());
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
         }
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
@@ -69,7 +71,8 @@ public class CellsClient {
                     "includeCounts", request.getIncludeCounts().get().toString());
         }
         if (request.getSearchValue().isPresent()) {
-            httpUrl.addQueryParameter("searchValue", request.getSearchValue().get());
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -94,7 +97,7 @@ public class CellsClient {
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getValues(String sheetId, GetFieldValuesRequest request) {
+    public CellsResponse getValues(SheetId sheetId, GetFieldValuesRequest request) {
         return getValues(sheetId, request, null);
     }
 }

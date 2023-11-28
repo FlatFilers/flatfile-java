@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AgentId;
+import com.flatfile.api.resources.commons.types.GuestId;
+import com.flatfile.api.resources.commons.types.UserId;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -31,11 +34,11 @@ public final class ActorIdUnion {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((UserId) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((AgentId) this.value);
         } else if (this.type == 2) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((GuestId) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -60,24 +63,24 @@ public final class ActorIdUnion {
         return this.value.toString();
     }
 
-    public static ActorIdUnion of(String value) {
+    public static ActorIdUnion of(UserId value) {
         return new ActorIdUnion(value, 0);
     }
 
-    public static ActorIdUnion of(String value) {
+    public static ActorIdUnion of(AgentId value) {
         return new ActorIdUnion(value, 1);
     }
 
-    public static ActorIdUnion of(String value) {
+    public static ActorIdUnion of(GuestId value) {
         return new ActorIdUnion(value, 2);
     }
 
     public interface Visitor<T> {
-        T visit(String value);
+        T visit(UserId value);
 
-        T visit(String value);
+        T visit(AgentId value);
 
-        T visit(String value);
+        T visit(GuestId value);
     }
 
     static final class Deserializer extends StdDeserializer<ActorIdUnion> {
@@ -89,15 +92,15 @@ public final class ActorIdUnion {
         public ActorIdUnion deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UserId.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AgentId.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, GuestId.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

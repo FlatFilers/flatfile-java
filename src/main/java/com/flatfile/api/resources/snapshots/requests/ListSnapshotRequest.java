@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,11 +19,11 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListSnapshotRequest.Builder.class)
 public final class ListSnapshotRequest {
-    private final String sheetId;
+    private final SheetId sheetId;
 
     private final Map<String, Object> additionalProperties;
 
-    private ListSnapshotRequest(String sheetId, Map<String, Object> additionalProperties) {
+    private ListSnapshotRequest(SheetId sheetId, Map<String, Object> additionalProperties) {
         this.sheetId = sheetId;
         this.additionalProperties = additionalProperties;
     }
@@ -31,7 +32,7 @@ public final class ListSnapshotRequest {
      * @return ID of sheet
      */
     @JsonProperty("sheetId")
-    public String getSheetId() {
+    public SheetId getSheetId() {
         return sheetId;
     }
 
@@ -65,7 +66,7 @@ public final class ListSnapshotRequest {
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(String sheetId);
+        _FinalStage sheetId(SheetId sheetId);
 
         Builder from(ListSnapshotRequest other);
     }
@@ -76,7 +77,7 @@ public final class ListSnapshotRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SheetIdStage, _FinalStage {
-        private String sheetId;
+        private SheetId sheetId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -95,7 +96,7 @@ public final class ListSnapshotRequest {
          */
         @Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(String sheetId) {
+        public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
             return this;
         }

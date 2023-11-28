@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,15 +25,15 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ApiKey.Builder.class)
 public final class ApiKey {
-    private final String id;
+    private final ApiKeyId id;
 
-    private final Optional<String> rawKey;
+    private final Optional<RawKey> rawKey;
 
     private final ApiKeyType type;
 
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
-    private final Optional<String> accountId;
+    private final Optional<AccountId> accountId;
 
     private final List<ApiKeyOperation> operations;
 
@@ -46,11 +48,11 @@ public final class ApiKey {
     private final Map<String, Object> additionalProperties;
 
     private ApiKey(
-            String id,
-            Optional<String> rawKey,
+            ApiKeyId id,
+            Optional<RawKey> rawKey,
             ApiKeyType type,
-            Optional<String> environmentId,
-            Optional<String> accountId,
+            Optional<EnvironmentId> environmentId,
+            Optional<AccountId> accountId,
             List<ApiKeyOperation> operations,
             OffsetDateTime createdAt,
             Optional<OffsetDateTime> updatedAt,
@@ -71,12 +73,12 @@ public final class ApiKey {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public ApiKeyId getId() {
         return id;
     }
 
     @JsonProperty("rawKey")
-    public Optional<String> getRawKey() {
+    public Optional<RawKey> getRawKey() {
         return rawKey;
     }
 
@@ -86,12 +88,12 @@ public final class ApiKey {
     }
 
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("accountId")
-    public Optional<String> getAccountId() {
+    public Optional<AccountId> getAccountId() {
         return accountId;
     }
 
@@ -169,7 +171,7 @@ public final class ApiKey {
     }
 
     public interface IdStage {
-        TypeStage id(String id);
+        TypeStage id(ApiKeyId id);
 
         Builder from(ApiKey other);
     }
@@ -185,17 +187,17 @@ public final class ApiKey {
     public interface _FinalStage {
         ApiKey build();
 
-        _FinalStage rawKey(Optional<String> rawKey);
+        _FinalStage rawKey(Optional<RawKey> rawKey);
 
-        _FinalStage rawKey(String rawKey);
+        _FinalStage rawKey(RawKey rawKey);
 
-        _FinalStage environmentId(Optional<String> environmentId);
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
 
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
 
-        _FinalStage accountId(Optional<String> accountId);
+        _FinalStage accountId(Optional<AccountId> accountId);
 
-        _FinalStage accountId(String accountId);
+        _FinalStage accountId(AccountId accountId);
 
         _FinalStage operations(List<ApiKeyOperation> operations);
 
@@ -218,7 +220,7 @@ public final class ApiKey {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, TypeStage, CreatedAtStage, _FinalStage {
-        private String id;
+        private ApiKeyId id;
 
         private ApiKeyType type;
 
@@ -232,11 +234,11 @@ public final class ApiKey {
 
         private List<ApiKeyOperation> operations = new ArrayList<>();
 
-        private Optional<String> accountId = Optional.empty();
+        private Optional<AccountId> accountId = Optional.empty();
 
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> rawKey = Optional.empty();
+        private Optional<RawKey> rawKey = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -260,7 +262,7 @@ public final class ApiKey {
 
         @Override
         @JsonSetter("id")
-        public TypeStage id(String id) {
+        public TypeStage id(ApiKeyId id) {
             this.id = id;
             return this;
         }
@@ -339,40 +341,40 @@ public final class ApiKey {
         }
 
         @Override
-        public _FinalStage accountId(String accountId) {
+        public _FinalStage accountId(AccountId accountId) {
             this.accountId = Optional.of(accountId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "accountId", nulls = Nulls.SKIP)
-        public _FinalStage accountId(Optional<String> accountId) {
+        public _FinalStage accountId(Optional<AccountId> accountId) {
             this.accountId = accountId;
             return this;
         }
 
         @Override
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public _FinalStage environmentId(Optional<String> environmentId) {
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
-        public _FinalStage rawKey(String rawKey) {
+        public _FinalStage rawKey(RawKey rawKey) {
             this.rawKey = Optional.of(rawKey);
             return this;
         }
 
         @Override
         @JsonSetter(value = "rawKey", nulls = Nulls.SKIP)
-        public _FinalStage rawKey(Optional<String> rawKey) {
+        public _FinalStage rawKey(Optional<RawKey> rawKey) {
             this.rawKey = rawKey;
             return this;
         }

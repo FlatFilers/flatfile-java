@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.RecordId;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +23,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RecordBase.Builder.class)
 public final class RecordBase implements IRecordBase {
-    private final String id;
+    private final RecordId id;
 
-    private final Optional<String> versionId;
+    private final Optional<VersionId> versionId;
 
     private final Optional<Boolean> valid;
 
@@ -34,8 +36,8 @@ public final class RecordBase implements IRecordBase {
     private final Map<String, Object> additionalProperties;
 
     private RecordBase(
-            String id,
-            Optional<String> versionId,
+            RecordId id,
+            Optional<VersionId> versionId,
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
@@ -50,13 +52,13 @@ public final class RecordBase implements IRecordBase {
 
     @JsonProperty("id")
     @Override
-    public String getId() {
+    public RecordId getId() {
         return id;
     }
 
     @JsonProperty("versionId")
     @Override
-    public Optional<String> getVersionId() {
+    public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
@@ -112,7 +114,7 @@ public final class RecordBase implements IRecordBase {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(RecordId id);
 
         Builder from(RecordBase other);
     }
@@ -120,9 +122,9 @@ public final class RecordBase implements IRecordBase {
     public interface _FinalStage {
         RecordBase build();
 
-        _FinalStage versionId(Optional<String> versionId);
+        _FinalStage versionId(Optional<VersionId> versionId);
 
-        _FinalStage versionId(String versionId);
+        _FinalStage versionId(VersionId versionId);
 
         _FinalStage valid(Optional<Boolean> valid);
 
@@ -139,7 +141,7 @@ public final class RecordBase implements IRecordBase {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
-        private String id;
+        private RecordId id;
 
         private Optional<Map<String, Object>> metadata = Optional.empty();
 
@@ -147,7 +149,7 @@ public final class RecordBase implements IRecordBase {
 
         private Optional<Boolean> valid = Optional.empty();
 
-        private Optional<String> versionId = Optional.empty();
+        private Optional<VersionId> versionId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -166,7 +168,7 @@ public final class RecordBase implements IRecordBase {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public _FinalStage id(RecordId id) {
             this.id = id;
             return this;
         }
@@ -211,14 +213,14 @@ public final class RecordBase implements IRecordBase {
         }
 
         @Override
-        public _FinalStage versionId(String versionId) {
+        public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
-        public _FinalStage versionId(Optional<String> versionId) {
+        public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }

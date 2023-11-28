@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.auth.types.ApiKeyType;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -19,20 +20,21 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateNewApiKeyRequest.Builder.class)
 public final class CreateNewApiKeyRequest {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final ApiKeyType type;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateNewApiKeyRequest(String environmentId, ApiKeyType type, Map<String, Object> additionalProperties) {
+    private CreateNewApiKeyRequest(
+            EnvironmentId environmentId, ApiKeyType type, Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.type = type;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -74,7 +76,7 @@ public final class CreateNewApiKeyRequest {
     }
 
     public interface EnvironmentIdStage {
-        TypeStage environmentId(String environmentId);
+        TypeStage environmentId(EnvironmentId environmentId);
 
         Builder from(CreateNewApiKeyRequest other);
     }
@@ -89,7 +91,7 @@ public final class CreateNewApiKeyRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, TypeStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private ApiKeyType type;
 
@@ -107,7 +109,7 @@ public final class CreateNewApiKeyRequest {
 
         @Override
         @JsonSetter("environmentId")
-        public TypeStage environmentId(String environmentId) {
+        public TypeStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }

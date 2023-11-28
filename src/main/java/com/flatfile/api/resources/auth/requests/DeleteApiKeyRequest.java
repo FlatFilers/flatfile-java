@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.auth.types.ApiKeyId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,25 +20,25 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DeleteApiKeyRequest.Builder.class)
 public final class DeleteApiKeyRequest {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
-    private final String key;
+    private final ApiKeyId key;
 
     private final Map<String, Object> additionalProperties;
 
-    private DeleteApiKeyRequest(String environmentId, String key, Map<String, Object> additionalProperties) {
+    private DeleteApiKeyRequest(EnvironmentId environmentId, ApiKeyId key, Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.key = key;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("key")
-    public String getKey() {
+    public ApiKeyId getKey() {
         return key;
     }
 
@@ -70,13 +72,13 @@ public final class DeleteApiKeyRequest {
     }
 
     public interface EnvironmentIdStage {
-        KeyStage environmentId(String environmentId);
+        KeyStage environmentId(EnvironmentId environmentId);
 
         Builder from(DeleteApiKeyRequest other);
     }
 
     public interface KeyStage {
-        _FinalStage key(String key);
+        _FinalStage key(ApiKeyId key);
     }
 
     public interface _FinalStage {
@@ -85,9 +87,9 @@ public final class DeleteApiKeyRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, KeyStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
-        private String key;
+        private ApiKeyId key;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,14 +105,14 @@ public final class DeleteApiKeyRequest {
 
         @Override
         @JsonSetter("environmentId")
-        public KeyStage environmentId(String environmentId) {
+        public KeyStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
         @JsonSetter("key")
-        public _FinalStage key(String key) {
+        public _FinalStage key(ApiKeyId key) {
             this.key = key;
             return this;
         }

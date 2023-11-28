@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.FileId;
+import com.flatfile.api.resources.commons.types.JobId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +29,9 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
     private final Optional<List<DestinationField>> unmappedDestinationFields;
 
-    private final String fileId;
+    private final FileId fileId;
 
-    private final String jobId;
+    private final JobId jobId;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,8 +39,8 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
             Optional<List<Edge>> fieldMapping,
             Optional<List<SourceField>> unmappedSourceFields,
             Optional<List<DestinationField>> unmappedDestinationFields,
-            String fileId,
-            String jobId,
+            FileId fileId,
+            JobId jobId,
             Map<String, Object> additionalProperties) {
         this.fieldMapping = fieldMapping;
         this.unmappedSourceFields = unmappedSourceFields;
@@ -67,12 +69,12 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
     }
 
     @JsonProperty("fileId")
-    public String getFileId() {
+    public FileId getFileId() {
         return fileId;
     }
 
     @JsonProperty("jobId")
-    public String getJobId() {
+    public JobId getJobId() {
         return jobId;
     }
 
@@ -111,13 +113,13 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
     }
 
     public interface FileIdStage {
-        JobIdStage fileId(String fileId);
+        JobIdStage fileId(FileId fileId);
 
         Builder from(JobExecutionPlanConfigRequest other);
     }
 
     public interface JobIdStage {
-        _FinalStage jobId(String jobId);
+        _FinalStage jobId(JobId jobId);
     }
 
     public interface _FinalStage {
@@ -138,9 +140,9 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements FileIdStage, JobIdStage, _FinalStage {
-        private String fileId;
+        private FileId fileId;
 
-        private String jobId;
+        private JobId jobId;
 
         private Optional<List<DestinationField>> unmappedDestinationFields = Optional.empty();
 
@@ -165,14 +167,14 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
         @Override
         @JsonSetter("fileId")
-        public JobIdStage fileId(String fileId) {
+        public JobIdStage fileId(FileId fileId) {
             this.fileId = fileId;
             return this;
         }
 
         @Override
         @JsonSetter("jobId")
-        public _FinalStage jobId(String jobId) {
+        public _FinalStage jobId(JobId jobId) {
             this.jobId = jobId;
             return this;
         }

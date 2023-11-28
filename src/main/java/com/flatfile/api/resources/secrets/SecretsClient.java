@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.SecretId;
 import com.flatfile.api.resources.secrets.requests.ListSecrets;
 import com.flatfile.api.resources.secrets.types.SecretsResponse;
 import com.flatfile.api.resources.secrets.types.WriteSecret;
@@ -32,9 +33,9 @@ public class SecretsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("secrets");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -108,11 +109,11 @@ public class SecretsClient {
     /**
      * Deletes a specific Secret from the Environment or Space as is the case
      */
-    public SecretsResponse delete(String secretId, RequestOptions requestOptions) {
+    public SecretsResponse delete(SecretId secretId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("secrets")
-                .addPathSegment(secretId)
+                .addPathSegment(secretId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -137,7 +138,7 @@ public class SecretsClient {
     /**
      * Deletes a specific Secret from the Environment or Space as is the case
      */
-    public SecretsResponse delete(String secretId) {
+    public SecretsResponse delete(SecretId secretId) {
         return delete(secretId, null);
     }
 }

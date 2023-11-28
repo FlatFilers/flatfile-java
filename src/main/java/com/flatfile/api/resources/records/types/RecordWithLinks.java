@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.RecordId;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -22,9 +22,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RecordWithLinks.Builder.class)
 public final class RecordWithLinks {
-    private final String id;
+    private final RecordId id;
 
-    private final Map<String, CellValueWithLinks> values;
+    private final RecordDataWithLinks values;
 
     private final Optional<Boolean> valid;
 
@@ -35,8 +35,8 @@ public final class RecordWithLinks {
     private final Map<String, Object> additionalProperties;
 
     private RecordWithLinks(
-            String id,
-            Map<String, CellValueWithLinks> values,
+            RecordId id,
+            RecordDataWithLinks values,
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
@@ -50,12 +50,12 @@ public final class RecordWithLinks {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public RecordId getId() {
         return id;
     }
 
     @JsonProperty("values")
-    public Map<String, CellValueWithLinks> getValues() {
+    public RecordDataWithLinks getValues() {
         return values;
     }
 
@@ -108,19 +108,17 @@ public final class RecordWithLinks {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        ValuesStage id(RecordId id);
 
         Builder from(RecordWithLinks other);
     }
 
+    public interface ValuesStage {
+        _FinalStage values(RecordDataWithLinks values);
+    }
+
     public interface _FinalStage {
         RecordWithLinks build();
-
-        _FinalStage values(Map<String, CellValueWithLinks> values);
-
-        _FinalStage putAllValues(Map<String, CellValueWithLinks> values);
-
-        _FinalStage values(String key, CellValueWithLinks value);
 
         _FinalStage valid(Optional<Boolean> valid);
 
@@ -136,16 +134,16 @@ public final class RecordWithLinks {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, _FinalStage {
-        private String id;
+    public static final class Builder implements IdStage, ValuesStage, _FinalStage {
+        private RecordId id;
+
+        private RecordDataWithLinks values;
 
         private Optional<Map<String, Object>> metadata = Optional.empty();
 
         private Optional<List<ValidationMessage>> messages = Optional.empty();
 
         private Optional<Boolean> valid = Optional.empty();
-
-        private Map<String, CellValueWithLinks> values = new LinkedHashMap<>();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -164,8 +162,15 @@ public final class RecordWithLinks {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public ValuesStage id(RecordId id) {
             this.id = id;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("values")
+        public _FinalStage values(RecordDataWithLinks values) {
+            this.values = values;
             return this;
         }
 
@@ -205,26 +210,6 @@ public final class RecordWithLinks {
         @JsonSetter(value = "valid", nulls = Nulls.SKIP)
         public _FinalStage valid(Optional<Boolean> valid) {
             this.valid = valid;
-            return this;
-        }
-
-        @Override
-        public _FinalStage values(String key, CellValueWithLinks value) {
-            this.values.put(key, value);
-            return this;
-        }
-
-        @Override
-        public _FinalStage putAllValues(Map<String, CellValueWithLinks> values) {
-            this.values.putAll(values);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "values", nulls = Nulls.SKIP)
-        public _FinalStage values(Map<String, CellValueWithLinks> values) {
-            this.values.clear();
-            this.values.putAll(values);
             return this;
         }
 

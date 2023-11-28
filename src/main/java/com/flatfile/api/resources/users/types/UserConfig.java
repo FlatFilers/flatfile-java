@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,11 +23,11 @@ public final class UserConfig implements IUserConfig {
 
     private final String name;
 
-    private final String accountId;
+    private final AccountId accountId;
 
     private final Map<String, Object> additionalProperties;
 
-    private UserConfig(String email, String name, String accountId, Map<String, Object> additionalProperties) {
+    private UserConfig(String email, String name, AccountId accountId, Map<String, Object> additionalProperties) {
         this.email = email;
         this.name = name;
         this.accountId = accountId;
@@ -47,7 +48,7 @@ public final class UserConfig implements IUserConfig {
 
     @JsonProperty("accountId")
     @Override
-    public String getAccountId() {
+    public AccountId getAccountId() {
         return accountId;
     }
 
@@ -91,7 +92,7 @@ public final class UserConfig implements IUserConfig {
     }
 
     public interface AccountIdStage {
-        _FinalStage accountId(String accountId);
+        _FinalStage accountId(AccountId accountId);
     }
 
     public interface _FinalStage {
@@ -104,7 +105,7 @@ public final class UserConfig implements IUserConfig {
 
         private String name;
 
-        private String accountId;
+        private AccountId accountId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -135,7 +136,7 @@ public final class UserConfig implements IUserConfig {
 
         @Override
         @JsonSetter("accountId")
-        public _FinalStage accountId(String accountId) {
+        public _FinalStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }

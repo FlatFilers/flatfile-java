@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.GuestId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,9 +22,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Invite.Builder.class)
 public final class Invite {
-    private final String guestId;
+    private final GuestId guestId;
 
-    private final String spaceId;
+    private final SpaceId spaceId;
 
     private final Optional<String> fromName;
 
@@ -31,8 +33,8 @@ public final class Invite {
     private final Map<String, Object> additionalProperties;
 
     private Invite(
-            String guestId,
-            String spaceId,
+            GuestId guestId,
+            SpaceId spaceId,
             Optional<String> fromName,
             Optional<String> message,
             Map<String, Object> additionalProperties) {
@@ -44,12 +46,12 @@ public final class Invite {
     }
 
     @JsonProperty("guestId")
-    public String getGuestId() {
+    public GuestId getGuestId() {
         return guestId;
     }
 
     @JsonProperty("spaceId")
-    public String getSpaceId() {
+    public SpaceId getSpaceId() {
         return spaceId;
     }
 
@@ -102,13 +104,13 @@ public final class Invite {
     }
 
     public interface GuestIdStage {
-        SpaceIdStage guestId(String guestId);
+        SpaceIdStage guestId(GuestId guestId);
 
         Builder from(Invite other);
     }
 
     public interface SpaceIdStage {
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
     }
 
     public interface _FinalStage {
@@ -125,9 +127,9 @@ public final class Invite {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements GuestIdStage, SpaceIdStage, _FinalStage {
-        private String guestId;
+        private GuestId guestId;
 
-        private String spaceId;
+        private SpaceId spaceId;
 
         private Optional<String> message = Optional.empty();
 
@@ -149,14 +151,14 @@ public final class Invite {
 
         @Override
         @JsonSetter("guestId")
-        public SpaceIdStage guestId(String guestId) {
+        public SpaceIdStage guestId(GuestId guestId) {
             this.guestId = guestId;
             return this;
         }
 
         @Override
         @JsonSetter("spaceId")
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }

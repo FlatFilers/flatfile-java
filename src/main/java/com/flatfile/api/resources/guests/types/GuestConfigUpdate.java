@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GuestConfigUpdate.Builder.class)
 public final class GuestConfigUpdate {
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final Optional<String> email;
 
@@ -32,7 +33,7 @@ public final class GuestConfigUpdate {
     private final Map<String, Object> additionalProperties;
 
     private GuestConfigUpdate(
-            Optional<String> environmentId,
+            Optional<EnvironmentId> environmentId,
             Optional<String> email,
             Optional<String> name,
             Optional<List<GuestSpace>> spaces,
@@ -45,7 +46,7 @@ public final class GuestConfigUpdate {
     }
 
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -98,7 +99,7 @@ public final class GuestConfigUpdate {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
         private Optional<String> email = Optional.empty();
 
@@ -120,12 +121,12 @@ public final class GuestConfigUpdate {
         }
 
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public Builder environmentId(Optional<String> environmentId) {
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        public Builder environmentId(String environmentId) {
+        public Builder environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }

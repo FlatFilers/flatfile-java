@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,17 +22,17 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = MappingProgramJobConfig.Builder.class)
 public final class MappingProgramJobConfig {
-    private final String sourceSheetId;
+    private final SheetId sourceSheetId;
 
-    private final String destinationSheetId;
+    private final SheetId destinationSheetId;
 
     private final List<Map<String, Object>> mappingRules;
 
     private final Map<String, Object> additionalProperties;
 
     private MappingProgramJobConfig(
-            String sourceSheetId,
-            String destinationSheetId,
+            SheetId sourceSheetId,
+            SheetId destinationSheetId,
             List<Map<String, Object>> mappingRules,
             Map<String, Object> additionalProperties) {
         this.sourceSheetId = sourceSheetId;
@@ -41,12 +42,12 @@ public final class MappingProgramJobConfig {
     }
 
     @JsonProperty("sourceSheetId")
-    public String getSourceSheetId() {
+    public SheetId getSourceSheetId() {
         return sourceSheetId;
     }
 
     @JsonProperty("destinationSheetId")
-    public String getDestinationSheetId() {
+    public SheetId getDestinationSheetId() {
         return destinationSheetId;
     }
 
@@ -87,13 +88,13 @@ public final class MappingProgramJobConfig {
     }
 
     public interface SourceSheetIdStage {
-        DestinationSheetIdStage sourceSheetId(String sourceSheetId);
+        DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId);
 
         Builder from(MappingProgramJobConfig other);
     }
 
     public interface DestinationSheetIdStage {
-        _FinalStage destinationSheetId(String destinationSheetId);
+        _FinalStage destinationSheetId(SheetId destinationSheetId);
     }
 
     public interface _FinalStage {
@@ -108,9 +109,9 @@ public final class MappingProgramJobConfig {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SourceSheetIdStage, DestinationSheetIdStage, _FinalStage {
-        private String sourceSheetId;
+        private SheetId sourceSheetId;
 
-        private String destinationSheetId;
+        private SheetId destinationSheetId;
 
         private List<Map<String, Object>> mappingRules = new ArrayList<>();
 
@@ -129,14 +130,14 @@ public final class MappingProgramJobConfig {
 
         @Override
         @JsonSetter("sourceSheetId")
-        public DestinationSheetIdStage sourceSheetId(String sourceSheetId) {
+        public DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId) {
             this.sourceSheetId = sourceSheetId;
             return this;
         }
 
         @Override
         @JsonSetter("destinationSheetId")
-        public _FinalStage destinationSheetId(String destinationSheetId) {
+        public _FinalStage destinationSheetId(SheetId destinationSheetId) {
             this.destinationSheetId = destinationSheetId;
             return this;
         }

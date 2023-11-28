@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,25 +22,26 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListSecrets.Builder.class)
 public final class ListSecrets {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
     private final Map<String, Object> additionalProperties;
 
-    private ListSecrets(String environmentId, Optional<String> spaceId, Map<String, Object> additionalProperties) {
+    private ListSecrets(
+            EnvironmentId environmentId, Optional<SpaceId> spaceId, Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.spaceId = spaceId;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
@@ -72,7 +75,7 @@ public final class ListSecrets {
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
 
         Builder from(ListSecrets other);
     }
@@ -80,16 +83,16 @@ public final class ListSecrets {
     public interface _FinalStage {
         ListSecrets build();
 
-        _FinalStage spaceId(Optional<String> spaceId);
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
 
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -105,20 +108,20 @@ public final class ListSecrets {
 
         @Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<String> spaceId) {
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }

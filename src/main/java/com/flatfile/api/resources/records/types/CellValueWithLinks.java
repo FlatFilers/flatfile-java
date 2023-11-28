@@ -32,7 +32,7 @@ public final class CellValueWithLinks implements ICellValue {
 
     private final Optional<OffsetDateTime> updatedAt;
 
-    private final Optional<List<Record>> links;
+    private final Optional<Records> links;
 
     private final Map<String, Object> additionalProperties;
 
@@ -42,7 +42,7 @@ public final class CellValueWithLinks implements ICellValue {
             Optional<CellValueUnion> value,
             Optional<String> layer,
             Optional<OffsetDateTime> updatedAt,
-            Optional<List<Record>> links,
+            Optional<Records> links,
             Map<String, Object> additionalProperties) {
         this.valid = valid;
         this.messages = messages;
@@ -84,7 +84,7 @@ public final class CellValueWithLinks implements ICellValue {
     }
 
     @JsonProperty("links")
-    public Optional<List<Record>> getLinks() {
+    public Optional<Records> getLinks() {
         return links;
     }
 
@@ -134,7 +134,7 @@ public final class CellValueWithLinks implements ICellValue {
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
 
-        private Optional<List<Record>> links = Optional.empty();
+        private Optional<Records> links = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -207,12 +207,12 @@ public final class CellValueWithLinks implements ICellValue {
         }
 
         @JsonSetter(value = "links", nulls = Nulls.SKIP)
-        public Builder links(Optional<List<Record>> links) {
+        public Builder links(Optional<Records> links) {
             this.links = links;
             return this;
         }
 
-        public Builder links(List<Record> links) {
+        public Builder links(Records links) {
             this.links = Optional.of(links);
             return this;
         }

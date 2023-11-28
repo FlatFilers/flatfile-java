@@ -3,14 +3,16 @@
  */
 package com.flatfile.api.resources.sheets.types;
 
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.records.types.RecordCounts;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
 public interface ISheetUpdate {
-    Optional<String> getId();
+    Optional<SheetId> getId();
 
-    Optional<String> getWorkbookId();
+    Optional<WorkbookId> getWorkbookId();
 
     Optional<SheetConfig> getConfig();
 

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EventId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DetailedAgentLog.Builder.class)
 public final class DetailedAgentLog {
-    private final String eventId;
+    private final EventId eventId;
 
     private final boolean success;
 
@@ -41,7 +42,7 @@ public final class DetailedAgentLog {
     private final Map<String, Object> additionalProperties;
 
     private DetailedAgentLog(
-            String eventId,
+            EventId eventId,
             boolean success,
             OffsetDateTime createdAt,
             OffsetDateTime completedAt,
@@ -62,7 +63,7 @@ public final class DetailedAgentLog {
     }
 
     @JsonProperty("eventId")
-    public String getEventId() {
+    public EventId getEventId() {
         return eventId;
     }
 
@@ -161,7 +162,7 @@ public final class DetailedAgentLog {
     }
 
     public interface EventIdStage {
-        SuccessStage eventId(String eventId);
+        SuccessStage eventId(EventId eventId);
 
         Builder from(DetailedAgentLog other);
     }
@@ -209,7 +210,7 @@ public final class DetailedAgentLog {
                     DurationStage,
                     TopicStage,
                     _FinalStage {
-        private String eventId;
+        private EventId eventId;
 
         private boolean success;
 
@@ -245,7 +246,7 @@ public final class DetailedAgentLog {
 
         @Override
         @JsonSetter("eventId")
-        public SuccessStage eventId(String eventId) {
+        public SuccessStage eventId(EventId eventId) {
             this.eventId = eventId;
             return this;
         }

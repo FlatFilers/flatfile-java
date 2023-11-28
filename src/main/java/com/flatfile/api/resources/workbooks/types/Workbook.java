@@ -13,6 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.sheets.types.Sheet;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -24,13 +27,13 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Workbook.Builder.class)
 public final class Workbook {
-    private final String id;
+    private final WorkbookId id;
 
     private final Optional<String> name;
 
-    private final String spaceId;
+    private final SpaceId spaceId;
 
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final Optional<List<Sheet>> sheets;
 
@@ -51,10 +54,10 @@ public final class Workbook {
     private final Map<String, Object> additionalProperties;
 
     private Workbook(
-            String id,
+            WorkbookId id,
             Optional<String> name,
-            String spaceId,
-            String environmentId,
+            SpaceId spaceId,
+            EnvironmentId environmentId,
             Optional<List<Sheet>> sheets,
             Optional<List<String>> labels,
             Optional<List<Action>> actions,
@@ -80,7 +83,7 @@ public final class Workbook {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public WorkbookId getId() {
         return id;
     }
 
@@ -90,12 +93,12 @@ public final class Workbook {
     }
 
     @JsonProperty("spaceId")
-    public String getSpaceId() {
+    public SpaceId getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -201,17 +204,17 @@ public final class Workbook {
     }
 
     public interface IdStage {
-        SpaceIdStage id(String id);
+        SpaceIdStage id(WorkbookId id);
 
         Builder from(Workbook other);
     }
 
     public interface SpaceIdStage {
-        EnvironmentIdStage spaceId(String spaceId);
+        EnvironmentIdStage spaceId(SpaceId spaceId);
     }
 
     public interface EnvironmentIdStage {
-        UpdatedAtStage environmentId(String environmentId);
+        UpdatedAtStage environmentId(EnvironmentId environmentId);
     }
 
     public interface UpdatedAtStage {
@@ -257,11 +260,11 @@ public final class Workbook {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements IdStage, SpaceIdStage, EnvironmentIdStage, UpdatedAtStage, CreatedAtStage, _FinalStage {
-        private String id;
+        private WorkbookId id;
 
-        private String spaceId;
+        private SpaceId spaceId;
 
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private OffsetDateTime updatedAt;
 
@@ -305,21 +308,21 @@ public final class Workbook {
 
         @Override
         @JsonSetter("id")
-        public SpaceIdStage id(String id) {
+        public SpaceIdStage id(WorkbookId id) {
             this.id = id;
             return this;
         }
 
         @Override
         @JsonSetter("spaceId")
-        public EnvironmentIdStage spaceId(String spaceId) {
+        public EnvironmentIdStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
         @Override
         @JsonSetter("environmentId")
-        public UpdatedAtStage environmentId(String environmentId) {
+        public UpdatedAtStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }

@@ -35,8 +35,6 @@ public final class EnvironmentConfigUpdate {
 
     private final Optional<String> languageOverride;
 
-    private final Optional<DataRetentionPolicyEnum> dataRetentionPolicy;
-
     private final Map<String, Object> additionalProperties;
 
     private EnvironmentConfigUpdate(
@@ -47,7 +45,6 @@ public final class EnvironmentConfigUpdate {
             Optional<String> translationsPath,
             Optional<List<String>> namespaces,
             Optional<String> languageOverride,
-            Optional<DataRetentionPolicyEnum> dataRetentionPolicy,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.isProd = isProd;
@@ -56,7 +53,6 @@ public final class EnvironmentConfigUpdate {
         this.translationsPath = translationsPath;
         this.namespaces = namespaces;
         this.languageOverride = languageOverride;
-        this.dataRetentionPolicy = dataRetentionPolicy;
         this.additionalProperties = additionalProperties;
     }
 
@@ -101,11 +97,6 @@ public final class EnvironmentConfigUpdate {
         return languageOverride;
     }
 
-    @JsonProperty("dataRetentionPolicy")
-    public Optional<DataRetentionPolicyEnum> getDataRetentionPolicy() {
-        return dataRetentionPolicy;
-    }
-
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -124,8 +115,7 @@ public final class EnvironmentConfigUpdate {
                 && metadata.equals(other.metadata)
                 && translationsPath.equals(other.translationsPath)
                 && namespaces.equals(other.namespaces)
-                && languageOverride.equals(other.languageOverride)
-                && dataRetentionPolicy.equals(other.dataRetentionPolicy);
+                && languageOverride.equals(other.languageOverride);
     }
 
     @Override
@@ -137,8 +127,7 @@ public final class EnvironmentConfigUpdate {
                 this.metadata,
                 this.translationsPath,
                 this.namespaces,
-                this.languageOverride,
-                this.dataRetentionPolicy);
+                this.languageOverride);
     }
 
     @Override
@@ -166,8 +155,6 @@ public final class EnvironmentConfigUpdate {
 
         private Optional<String> languageOverride = Optional.empty();
 
-        private Optional<DataRetentionPolicyEnum> dataRetentionPolicy = Optional.empty();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -181,7 +168,6 @@ public final class EnvironmentConfigUpdate {
             translationsPath(other.getTranslationsPath());
             namespaces(other.getNamespaces());
             languageOverride(other.getLanguageOverride());
-            dataRetentionPolicy(other.getDataRetentionPolicy());
             return this;
         }
 
@@ -262,17 +248,6 @@ public final class EnvironmentConfigUpdate {
             return this;
         }
 
-        @JsonSetter(value = "dataRetentionPolicy", nulls = Nulls.SKIP)
-        public Builder dataRetentionPolicy(Optional<DataRetentionPolicyEnum> dataRetentionPolicy) {
-            this.dataRetentionPolicy = dataRetentionPolicy;
-            return this;
-        }
-
-        public Builder dataRetentionPolicy(DataRetentionPolicyEnum dataRetentionPolicy) {
-            this.dataRetentionPolicy = Optional.of(dataRetentionPolicy);
-            return this;
-        }
-
         public EnvironmentConfigUpdate build() {
             return new EnvironmentConfigUpdate(
                     name,
@@ -282,7 +257,6 @@ public final class EnvironmentConfigUpdate {
                     translationsPath,
                     namespaces,
                     languageOverride,
-                    dataRetentionPolicy,
                     additionalProperties);
         }
     }

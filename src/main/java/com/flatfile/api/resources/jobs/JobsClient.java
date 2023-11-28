@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.JobId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.jobs.requests.ListJobsRequest;
 import com.flatfile.api.resources.jobs.types.JobAckDetails;
@@ -46,19 +47,20 @@ public class JobsClient {
                 .addPathSegments("jobs");
         if (request.getEnvironmentId().isPresent()) {
             httpUrl.addQueryParameter(
-                    "environmentId", request.getEnvironmentId().get());
+                    "environmentId", request.getEnvironmentId().get().toString());
         }
         if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         if (request.getWorkbookId().isPresent()) {
-            httpUrl.addQueryParameter("workbookId", request.getWorkbookId().get());
+            httpUrl.addQueryParameter(
+                    "workbookId", request.getWorkbookId().get().toString());
         }
         if (request.getFileId().isPresent()) {
-            httpUrl.addQueryParameter("fileId", request.getFileId().get());
+            httpUrl.addQueryParameter("fileId", request.getFileId().get().toString());
         }
         if (request.getParentId().isPresent()) {
-            httpUrl.addQueryParameter("parentId", request.getParentId().get());
+            httpUrl.addQueryParameter("parentId", request.getParentId().get().toString());
         }
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
@@ -131,11 +133,11 @@ public class JobsClient {
         return create(request, null);
     }
 
-    public JobResponse get(String jobId, RequestOptions requestOptions) {
+    public JobResponse get(JobId jobId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -157,19 +159,19 @@ public class JobsClient {
         }
     }
 
-    public JobResponse get(String jobId) {
+    public JobResponse get(JobId jobId) {
         return get(jobId, null);
     }
 
-    public JobResponse update(String jobId) {
+    public JobResponse update(JobId jobId) {
         return update(jobId, JobUpdate.builder().build());
     }
 
-    public JobResponse update(String jobId, JobUpdate request, RequestOptions requestOptions) {
+    public JobResponse update(JobId jobId, JobUpdate request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .build();
         RequestBody body;
         try {
@@ -198,15 +200,15 @@ public class JobsClient {
         }
     }
 
-    public JobResponse update(String jobId, JobUpdate request) {
+    public JobResponse update(JobId jobId, JobUpdate request) {
         return update(jobId, request, null);
     }
 
-    public Success delete(String jobId, RequestOptions requestOptions) {
+    public Success delete(JobId jobId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -228,7 +230,7 @@ public class JobsClient {
         }
     }
 
-    public Success delete(String jobId) {
+    public Success delete(JobId jobId) {
         return delete(jobId, null);
     }
 
@@ -272,11 +274,11 @@ public class JobsClient {
     /**
      * Returns a single job's execution plan
      */
-    public JobPlanResponse getExecutionPlan(String jobId, RequestOptions requestOptions) {
+    public JobPlanResponse getExecutionPlan(JobId jobId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("plan")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -302,7 +304,7 @@ public class JobsClient {
     /**
      * Returns a single job's execution plan
      */
-    public JobPlanResponse getExecutionPlan(String jobId) {
+    public JobPlanResponse getExecutionPlan(JobId jobId) {
         return getExecutionPlan(jobId, null);
     }
 
@@ -310,11 +312,11 @@ public class JobsClient {
      * Update a job's entire execution plan
      */
     public JobPlanResponse updateExecutionPlan(
-            String jobId, JobExecutionPlanRequest request, RequestOptions requestOptions) {
+            JobId jobId, JobExecutionPlanRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("plan")
                 .build();
         RequestBody body;
@@ -347,7 +349,7 @@ public class JobsClient {
     /**
      * Update a job's entire execution plan
      */
-    public JobPlanResponse updateExecutionPlan(String jobId, JobExecutionPlanRequest request) {
+    public JobPlanResponse updateExecutionPlan(JobId jobId, JobExecutionPlanRequest request) {
         return updateExecutionPlan(jobId, request, null);
     }
 
@@ -399,18 +401,18 @@ public class JobsClient {
     /**
      * Acknowledge a job and return the job
      */
-    public JobResponse ack(String jobId) {
+    public JobResponse ack(JobId jobId) {
         return ack(jobId, Optional.empty());
     }
 
     /**
      * Acknowledge a job and return the job
      */
-    public JobResponse ack(String jobId, Optional<JobAckDetails> request, RequestOptions requestOptions) {
+    public JobResponse ack(JobId jobId, Optional<JobAckDetails> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("ack")
                 .build();
         RequestBody body;
@@ -443,18 +445,18 @@ public class JobsClient {
     /**
      * Acknowledge a job and return the job
      */
-    public JobResponse ack(String jobId, Optional<JobAckDetails> request) {
+    public JobResponse ack(JobId jobId, Optional<JobAckDetails> request) {
         return ack(jobId, request, null);
     }
 
     /**
      * Acknowledge a job outcome and return the job
      */
-    public JobResponse ackOutcome(String jobId, RequestOptions requestOptions) {
+    public JobResponse ackOutcome(JobId jobId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("outcome/ack")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -480,25 +482,25 @@ public class JobsClient {
     /**
      * Acknowledge a job outcome and return the job
      */
-    public JobResponse ackOutcome(String jobId) {
+    public JobResponse ackOutcome(JobId jobId) {
         return ackOutcome(jobId, null);
     }
 
     /**
      * Complete a job and return the job
      */
-    public JobResponse complete(String jobId) {
+    public JobResponse complete(JobId jobId) {
         return complete(jobId, Optional.empty());
     }
 
     /**
      * Complete a job and return the job
      */
-    public JobResponse complete(String jobId, Optional<JobCompleteDetails> request, RequestOptions requestOptions) {
+    public JobResponse complete(JobId jobId, Optional<JobCompleteDetails> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("complete")
                 .build();
         RequestBody body;
@@ -531,25 +533,25 @@ public class JobsClient {
     /**
      * Complete a job and return the job
      */
-    public JobResponse complete(String jobId, Optional<JobCompleteDetails> request) {
+    public JobResponse complete(JobId jobId, Optional<JobCompleteDetails> request) {
         return complete(jobId, request, null);
     }
 
     /**
      * Fail a job and return the job
      */
-    public JobResponse fail(String jobId) {
+    public JobResponse fail(JobId jobId) {
         return fail(jobId, Optional.empty());
     }
 
     /**
      * Fail a job and return the job
      */
-    public JobResponse fail(String jobId, Optional<JobCompleteDetails> request, RequestOptions requestOptions) {
+    public JobResponse fail(JobId jobId, Optional<JobCompleteDetails> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("fail")
                 .build();
         RequestBody body;
@@ -582,25 +584,25 @@ public class JobsClient {
     /**
      * Fail a job and return the job
      */
-    public JobResponse fail(String jobId, Optional<JobCompleteDetails> request) {
+    public JobResponse fail(JobId jobId, Optional<JobCompleteDetails> request) {
         return fail(jobId, request, null);
     }
 
     /**
      * Cancel a job and return the job
      */
-    public JobResponse cancel(String jobId) {
+    public JobResponse cancel(JobId jobId) {
         return cancel(jobId, Optional.empty());
     }
 
     /**
      * Cancel a job and return the job
      */
-    public JobResponse cancel(String jobId, Optional<JobCancelDetails> request, RequestOptions requestOptions) {
+    public JobResponse cancel(JobId jobId, Optional<JobCancelDetails> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("cancel")
                 .build();
         RequestBody body;
@@ -633,18 +635,18 @@ public class JobsClient {
     /**
      * Cancel a job and return the job
      */
-    public JobResponse cancel(String jobId, Optional<JobCancelDetails> request) {
+    public JobResponse cancel(JobId jobId, Optional<JobCancelDetails> request) {
         return cancel(jobId, request, null);
     }
 
     /**
      * Split a job and return the job
      */
-    public JobResponse split(String jobId, JobSplitDetails request, RequestOptions requestOptions) {
+    public JobResponse split(JobId jobId, JobSplitDetails request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("jobs")
-                .addPathSegment(jobId)
+                .addPathSegment(jobId.toString())
                 .addPathSegments("split")
                 .build();
         RequestBody body;
@@ -677,7 +679,7 @@ public class JobsClient {
     /**
      * Split a job and return the job
      */
-    public JobResponse split(String jobId, JobSplitDetails request) {
+    public JobResponse split(JobId jobId, JobSplitDetails request) {
         return split(jobId, request, null);
     }
 }

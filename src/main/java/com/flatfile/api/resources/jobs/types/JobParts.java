@@ -6,14 +6,11 @@ package com.flatfile.api.resources.jobs.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.flatfile.api.core.ObjectMappers;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 @JsonDeserialize(using = JobParts.Deserializer.class)
@@ -36,7 +33,7 @@ public final class JobParts {
         if (this.type == 0) {
             return visitor.visit((int) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((List<Map<String, Object>>) this.value);
+            return visitor.visit((JobPartsArray) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -65,14 +62,14 @@ public final class JobParts {
         return new JobParts(value, 0);
     }
 
-    public static JobParts of(List<Map<String, Object>> value) {
+    public static JobParts of(JobPartsArray value) {
         return new JobParts(value, 1);
     }
 
     public interface Visitor<T> {
         T visit(int value);
 
-        T visit(List<Map<String, Object>> value);
+        T visit(JobPartsArray value);
     }
 
     static final class Deserializer extends StdDeserializer<JobParts> {
@@ -87,8 +84,7 @@ public final class JobParts {
                 return of((Integer) value);
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(
-                        value, new TypeReference<List<Map<String, Object>>>() {}));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, JobPartsArray.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

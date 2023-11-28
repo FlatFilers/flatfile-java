@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,7 +21,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EventToken.Builder.class)
 public final class EventToken {
-    private final Optional<String> accountId;
+    private final Optional<AccountId> accountId;
 
     private final Optional<String> subscribeKey;
 
@@ -31,7 +32,7 @@ public final class EventToken {
     private final Map<String, Object> additionalProperties;
 
     private EventToken(
-            Optional<String> accountId,
+            Optional<AccountId> accountId,
             Optional<String> subscribeKey,
             Optional<Integer> ttl,
             Optional<String> token,
@@ -44,7 +45,7 @@ public final class EventToken {
     }
 
     @JsonProperty("accountId")
-    public Optional<String> getAccountId() {
+    public Optional<AccountId> getAccountId() {
         return accountId;
     }
 
@@ -103,7 +104,7 @@ public final class EventToken {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> accountId = Optional.empty();
+        private Optional<AccountId> accountId = Optional.empty();
 
         private Optional<String> subscribeKey = Optional.empty();
 
@@ -125,12 +126,12 @@ public final class EventToken {
         }
 
         @JsonSetter(value = "accountId", nulls = Nulls.SKIP)
-        public Builder accountId(Optional<String> accountId) {
+        public Builder accountId(Optional<AccountId> accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        public Builder accountId(String accountId) {
+        public Builder accountId(AccountId accountId) {
             this.accountId = Optional.of(accountId);
             return this;
         }

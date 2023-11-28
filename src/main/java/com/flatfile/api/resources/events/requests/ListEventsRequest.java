@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +23,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListEventsRequest.Builder.class)
 public final class ListEventsRequest {
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
     private final Optional<String> domain;
 
@@ -40,8 +42,8 @@ public final class ListEventsRequest {
     private final Map<String, Object> additionalProperties;
 
     private ListEventsRequest(
-            Optional<String> environmentId,
-            Optional<String> spaceId,
+            Optional<EnvironmentId> environmentId,
+            Optional<SpaceId> spaceId,
             Optional<String> domain,
             Optional<String> topic,
             Optional<OffsetDateTime> since,
@@ -64,7 +66,7 @@ public final class ListEventsRequest {
      * @return Filter by environment
      */
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -72,7 +74,7 @@ public final class ListEventsRequest {
      * @return Filter by space
      */
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
@@ -170,9 +172,9 @@ public final class ListEventsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         private Optional<String> domain = Optional.empty();
 
@@ -204,23 +206,23 @@ public final class ListEventsRequest {
         }
 
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public Builder environmentId(Optional<String> environmentId) {
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        public Builder environmentId(String environmentId) {
+        public Builder environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public Builder spaceId(Optional<String> spaceId) {
+        public Builder spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        public Builder spaceId(String spaceId) {
+        public Builder spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }

@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.UserId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,13 +24,13 @@ public final class User implements IUserConfig {
 
     private final String name;
 
-    private final String accountId;
+    private final AccountId accountId;
 
-    private final String id;
+    private final UserId id;
 
     private final Map<String, Object> additionalProperties;
 
-    private User(String email, String name, String accountId, String id, Map<String, Object> additionalProperties) {
+    private User(String email, String name, AccountId accountId, UserId id, Map<String, Object> additionalProperties) {
         this.email = email;
         this.name = name;
         this.accountId = accountId;
@@ -50,12 +52,12 @@ public final class User implements IUserConfig {
 
     @JsonProperty("accountId")
     @Override
-    public String getAccountId() {
+    public AccountId getAccountId() {
         return accountId;
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public UserId getId() {
         return id;
     }
 
@@ -102,11 +104,11 @@ public final class User implements IUserConfig {
     }
 
     public interface AccountIdStage {
-        IdStage accountId(String accountId);
+        IdStage accountId(AccountId accountId);
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(UserId id);
     }
 
     public interface _FinalStage {
@@ -119,9 +121,9 @@ public final class User implements IUserConfig {
 
         private String name;
 
-        private String accountId;
+        private AccountId accountId;
 
-        private String id;
+        private UserId id;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -153,14 +155,14 @@ public final class User implements IUserConfig {
 
         @Override
         @JsonSetter("accountId")
-        public IdStage accountId(String accountId) {
+        public IdStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public _FinalStage id(UserId id) {
             this.id = id;
             return this;
         }

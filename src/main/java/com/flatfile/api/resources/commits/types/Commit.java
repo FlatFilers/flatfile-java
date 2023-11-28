@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +23,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Commit.Builder.class)
 public final class Commit {
-    private final String id;
+    private final VersionId id;
 
-    private final String sheetId;
+    private final SheetId sheetId;
 
     private final String createdBy;
 
@@ -36,8 +38,8 @@ public final class Commit {
     private final Map<String, Object> additionalProperties;
 
     private Commit(
-            String id,
-            String sheetId,
+            VersionId id,
+            SheetId sheetId,
             String createdBy,
             Optional<String> completedBy,
             OffsetDateTime createdAt,
@@ -53,12 +55,12 @@ public final class Commit {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public VersionId getId() {
         return id;
     }
 
     @JsonProperty("sheetId")
-    public String getSheetId() {
+    public SheetId getSheetId() {
         return sheetId;
     }
 
@@ -129,13 +131,13 @@ public final class Commit {
     }
 
     public interface IdStage {
-        SheetIdStage id(String id);
+        SheetIdStage id(VersionId id);
 
         Builder from(Commit other);
     }
 
     public interface SheetIdStage {
-        CreatedByStage sheetId(String sheetId);
+        CreatedByStage sheetId(SheetId sheetId);
     }
 
     public interface CreatedByStage {
@@ -160,9 +162,9 @@ public final class Commit {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, SheetIdStage, CreatedByStage, CreatedAtStage, _FinalStage {
-        private String id;
+        private VersionId id;
 
-        private String sheetId;
+        private SheetId sheetId;
 
         private String createdBy;
 
@@ -190,14 +192,14 @@ public final class Commit {
 
         @Override
         @JsonSetter("id")
-        public SheetIdStage id(String id) {
+        public SheetIdStage id(VersionId id) {
             this.id = id;
             return this;
         }
 
         @Override
         @JsonSetter("sheetId")
-        public CreatedByStage sheetId(String sheetId) {
+        public CreatedByStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
             return this;
         }

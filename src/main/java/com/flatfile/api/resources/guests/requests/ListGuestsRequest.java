@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,13 +21,13 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListGuestsRequest.Builder.class)
 public final class ListGuestsRequest {
-    private final String spaceId;
+    private final SpaceId spaceId;
 
     private final Optional<String> email;
 
     private final Map<String, Object> additionalProperties;
 
-    private ListGuestsRequest(String spaceId, Optional<String> email, Map<String, Object> additionalProperties) {
+    private ListGuestsRequest(SpaceId spaceId, Optional<String> email, Map<String, Object> additionalProperties) {
         this.spaceId = spaceId;
         this.email = email;
         this.additionalProperties = additionalProperties;
@@ -36,7 +37,7 @@ public final class ListGuestsRequest {
      * @return ID of space to return
      */
     @JsonProperty("spaceId")
-    public String getSpaceId() {
+    public SpaceId getSpaceId() {
         return spaceId;
     }
 
@@ -78,7 +79,7 @@ public final class ListGuestsRequest {
     }
 
     public interface SpaceIdStage {
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
 
         Builder from(ListGuestsRequest other);
     }
@@ -93,7 +94,7 @@ public final class ListGuestsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SpaceIdStage, _FinalStage {
-        private String spaceId;
+        private SpaceId spaceId;
 
         private Optional<String> email = Optional.empty();
 
@@ -115,7 +116,7 @@ public final class ListGuestsRequest {
          */
         @Override
         @JsonSetter("spaceId")
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }

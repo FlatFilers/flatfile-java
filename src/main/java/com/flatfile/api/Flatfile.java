@@ -9,6 +9,7 @@ import com.flatfile.api.resources.agents.AgentsClient;
 import com.flatfile.api.resources.auth.AuthClient;
 import com.flatfile.api.resources.cells.CellsClient;
 import com.flatfile.api.resources.commits.CommitsClient;
+import com.flatfile.api.resources.dataretentionpolicies.DataRetentionPoliciesClient;
 import com.flatfile.api.resources.documents.DocumentsClient;
 import com.flatfile.api.resources.environments.EnvironmentsClient;
 import com.flatfile.api.resources.events.EventsClient;
@@ -37,6 +38,8 @@ public class Flatfile {
     protected final Supplier<CellsClient> cellsClient;
 
     protected final Supplier<CommitsClient> commitsClient;
+
+    protected final Supplier<DataRetentionPoliciesClient> dataRetentionPoliciesClient;
 
     protected final Supplier<DocumentsClient> documentsClient;
 
@@ -76,6 +79,7 @@ public class Flatfile {
         this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
         this.cellsClient = Suppliers.memoize(() -> new CellsClient(clientOptions));
         this.commitsClient = Suppliers.memoize(() -> new CommitsClient(clientOptions));
+        this.dataRetentionPoliciesClient = Suppliers.memoize(() -> new DataRetentionPoliciesClient(clientOptions));
         this.documentsClient = Suppliers.memoize(() -> new DocumentsClient(clientOptions));
         this.environmentsClient = Suppliers.memoize(() -> new EnvironmentsClient(clientOptions));
         this.eventsClient = Suppliers.memoize(() -> new EventsClient(clientOptions));
@@ -108,6 +112,10 @@ public class Flatfile {
 
     public CommitsClient commits() {
         return this.commitsClient.get();
+    }
+
+    public DataRetentionPoliciesClient dataRetentionPolicies() {
+        return this.dataRetentionPoliciesClient.get();
     }
 
     public DocumentsClient documents() {

@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.MappingId;
 import com.flatfile.api.resources.mapping.types.MappingRuleConfig;
 import com.flatfile.api.resources.mapping.types.MappingRuleResponse;
 import com.flatfile.api.resources.mapping.types.MappingRulesResponse;
@@ -107,12 +108,12 @@ public class MappingClient {
     /**
      * Deletes a mapping rule
      */
-    public MappingRuleResponse deleteMapping(String mappingId, RequestOptions requestOptions) {
+    public MappingRuleResponse deleteMapping(MappingId mappingId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("mapping")
                 .addPathSegments("rules")
-                .addPathSegment(mappingId)
+                .addPathSegment(mappingId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -137,7 +138,7 @@ public class MappingClient {
     /**
      * Deletes a mapping rule
      */
-    public MappingRuleResponse deleteMapping(String mappingId) {
+    public MappingRuleResponse deleteMapping(MappingId mappingId) {
         return deleteMapping(mappingId, null);
     }
 }

@@ -3,15 +3,17 @@
  */
 package com.flatfile.api.resources.mapping.types;
 
+import com.flatfile.api.resources.commons.types.MappingId;
+import com.flatfile.api.resources.commons.types.UserId;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
 public interface IMappingRuleBase extends IMappingRuleConfig {
-    String getId();
+    MappingId getId();
 
     Optional<Double> getConfidence();
 
-    Optional<String> getCreatedBy();
+    Optional<UserId> getCreatedBy();
 
     OffsetDateTime getCreatedAt();
 

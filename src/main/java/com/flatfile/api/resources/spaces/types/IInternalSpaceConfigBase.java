@@ -4,16 +4,19 @@
 package com.flatfile.api.resources.spaces.types;
 
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceConfigId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface IInternalSpaceConfigBase {
-    Optional<String> getSpaceConfigId();
+    Optional<SpaceConfigId> getSpaceConfigId();
 
-    Optional<String> getEnvironmentId();
+    Optional<EnvironmentId> getEnvironmentId();
 
-    Optional<String> getPrimaryWorkbookId();
+    Optional<WorkbookId> getPrimaryWorkbookId();
 
     Optional<Object> getMetadata();
 

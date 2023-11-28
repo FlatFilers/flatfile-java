@@ -13,6 +13,11 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceConfigId;
+import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.commons.types.UserId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.environments.types.GuestAuthenticationEnum;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -25,11 +30,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Space.Builder.class)
 public final class Space implements IInternalSpaceConfigBase {
-    private final Optional<String> spaceConfigId;
+    private final Optional<SpaceConfigId> spaceConfigId;
 
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
-    private final Optional<String> primaryWorkbookId;
+    private final Optional<WorkbookId> primaryWorkbookId;
 
     private final Optional<Object> metadata;
 
@@ -49,13 +54,13 @@ public final class Space implements IInternalSpaceConfigBase {
 
     private final Optional<OffsetDateTime> archivedAt;
 
-    private final String id;
+    private final SpaceId id;
 
     private final Optional<Integer> workbooksCount;
 
     private final Optional<Integer> filesCount;
 
-    private final Optional<String> createdByUserId;
+    private final Optional<UserId> createdByUserId;
 
     private final Optional<String> createdByUserName;
 
@@ -82,9 +87,9 @@ public final class Space implements IInternalSpaceConfigBase {
     private final Map<String, Object> additionalProperties;
 
     private Space(
-            Optional<String> spaceConfigId,
-            Optional<String> environmentId,
-            Optional<String> primaryWorkbookId,
+            Optional<SpaceConfigId> spaceConfigId,
+            Optional<EnvironmentId> environmentId,
+            Optional<WorkbookId> primaryWorkbookId,
             Optional<Object> metadata,
             Optional<List<Action>> actions,
             Optional<List<SpaceAccess>> access,
@@ -94,10 +99,10 @@ public final class Space implements IInternalSpaceConfigBase {
             Optional<String> translationsPath,
             Optional<String> languageOverride,
             Optional<OffsetDateTime> archivedAt,
-            String id,
+            SpaceId id,
             Optional<Integer> workbooksCount,
             Optional<Integer> filesCount,
-            Optional<String> createdByUserId,
+            Optional<UserId> createdByUserId,
             Optional<String> createdByUserName,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -142,19 +147,19 @@ public final class Space implements IInternalSpaceConfigBase {
 
     @JsonProperty("spaceConfigId")
     @Override
-    public Optional<String> getSpaceConfigId() {
+    public Optional<SpaceConfigId> getSpaceConfigId() {
         return spaceConfigId;
     }
 
     @JsonProperty("environmentId")
     @Override
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("primaryWorkbookId")
     @Override
-    public Optional<String> getPrimaryWorkbookId() {
+    public Optional<WorkbookId> getPrimaryWorkbookId() {
         return primaryWorkbookId;
     }
 
@@ -219,7 +224,7 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public SpaceId getId() {
         return id;
     }
 
@@ -240,7 +245,7 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     @JsonProperty("createdByUserId")
-    public Optional<String> getCreatedByUserId() {
+    public Optional<UserId> getCreatedByUserId() {
         return createdByUserId;
     }
 
@@ -400,7 +405,7 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(SpaceId id);
 
         Builder from(Space other);
     }
@@ -420,17 +425,17 @@ public final class Space implements IInternalSpaceConfigBase {
     public interface _FinalStage {
         Space build();
 
-        _FinalStage spaceConfigId(Optional<String> spaceConfigId);
+        _FinalStage spaceConfigId(Optional<SpaceConfigId> spaceConfigId);
 
-        _FinalStage spaceConfigId(String spaceConfigId);
+        _FinalStage spaceConfigId(SpaceConfigId spaceConfigId);
 
-        _FinalStage environmentId(Optional<String> environmentId);
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
 
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
 
-        _FinalStage primaryWorkbookId(Optional<String> primaryWorkbookId);
+        _FinalStage primaryWorkbookId(Optional<WorkbookId> primaryWorkbookId);
 
-        _FinalStage primaryWorkbookId(String primaryWorkbookId);
+        _FinalStage primaryWorkbookId(WorkbookId primaryWorkbookId);
 
         _FinalStage metadata(Optional<Object> metadata);
 
@@ -476,9 +481,9 @@ public final class Space implements IInternalSpaceConfigBase {
 
         _FinalStage filesCount(Integer filesCount);
 
-        _FinalStage createdByUserId(Optional<String> createdByUserId);
+        _FinalStage createdByUserId(Optional<UserId> createdByUserId);
 
-        _FinalStage createdByUserId(String createdByUserId);
+        _FinalStage createdByUserId(UserId createdByUserId);
 
         _FinalStage createdByUserName(Optional<String> createdByUserName);
 
@@ -517,7 +522,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, CreatedAtStage, UpdatedAtStage, NameStage, _FinalStage {
-        private String id;
+        private SpaceId id;
 
         private OffsetDateTime createdAt;
 
@@ -541,7 +546,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         private Optional<String> createdByUserName = Optional.empty();
 
-        private Optional<String> createdByUserId = Optional.empty();
+        private Optional<UserId> createdByUserId = Optional.empty();
 
         private Optional<Integer> filesCount = Optional.empty();
 
@@ -565,11 +570,11 @@ public final class Space implements IInternalSpaceConfigBase {
 
         private Optional<Object> metadata = Optional.empty();
 
-        private Optional<String> primaryWorkbookId = Optional.empty();
+        private Optional<WorkbookId> primaryWorkbookId = Optional.empty();
 
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> spaceConfigId = Optional.empty();
+        private Optional<SpaceConfigId> spaceConfigId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -610,7 +615,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
+        public CreatedAtStage id(SpaceId id) {
             this.id = id;
             return this;
         }
@@ -772,14 +777,14 @@ public final class Space implements IInternalSpaceConfigBase {
         }
 
         @Override
-        public _FinalStage createdByUserId(String createdByUserId) {
+        public _FinalStage createdByUserId(UserId createdByUserId) {
             this.createdByUserId = Optional.of(createdByUserId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "createdByUserId", nulls = Nulls.SKIP)
-        public _FinalStage createdByUserId(Optional<String> createdByUserId) {
+        public _FinalStage createdByUserId(Optional<UserId> createdByUserId) {
             this.createdByUserId = createdByUserId;
             return this;
         }
@@ -944,40 +949,40 @@ public final class Space implements IInternalSpaceConfigBase {
         }
 
         @Override
-        public _FinalStage primaryWorkbookId(String primaryWorkbookId) {
+        public _FinalStage primaryWorkbookId(WorkbookId primaryWorkbookId) {
             this.primaryWorkbookId = Optional.of(primaryWorkbookId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "primaryWorkbookId", nulls = Nulls.SKIP)
-        public _FinalStage primaryWorkbookId(Optional<String> primaryWorkbookId) {
+        public _FinalStage primaryWorkbookId(Optional<WorkbookId> primaryWorkbookId) {
             this.primaryWorkbookId = primaryWorkbookId;
             return this;
         }
 
         @Override
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public _FinalStage environmentId(Optional<String> environmentId) {
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
-        public _FinalStage spaceConfigId(String spaceConfigId) {
+        public _FinalStage spaceConfigId(SpaceConfigId spaceConfigId) {
             this.spaceConfigId = Optional.of(spaceConfigId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceConfigId", nulls = Nulls.SKIP)
-        public _FinalStage spaceConfigId(Optional<String> spaceConfigId) {
+        public _FinalStage spaceConfigId(Optional<SpaceConfigId> spaceConfigId) {
             this.spaceConfigId = spaceConfigId;
             return this;
         }

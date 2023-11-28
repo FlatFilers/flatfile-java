@@ -13,6 +13,11 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Filter;
+import com.flatfile.api.resources.commons.types.FilterField;
+import com.flatfile.api.resources.commons.types.RecordId;
+import com.flatfile.api.resources.commons.types.SearchField;
+import com.flatfile.api.resources.commons.types.SearchValue;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +27,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = MutateJobConfig.Builder.class)
 public final class MutateJobConfig {
-    private final String sheetId;
+    private final SheetId sheetId;
 
     private final String mutateRecord;
 
@@ -30,28 +35,28 @@ public final class MutateJobConfig {
 
     private final Optional<Filter> filter;
 
-    private final Optional<String> filterField;
+    private final Optional<FilterField> filterField;
 
-    private final Optional<String> searchValue;
+    private final Optional<SearchValue> searchValue;
 
-    private final Optional<String> searchField;
+    private final Optional<SearchField> searchField;
 
     private final Optional<String> q;
 
-    private final Optional<List<String>> ids;
+    private final Optional<List<RecordId>> ids;
 
     private final Map<String, Object> additionalProperties;
 
     private MutateJobConfig(
-            String sheetId,
+            SheetId sheetId,
             String mutateRecord,
             Optional<String> mutationId,
             Optional<Filter> filter,
-            Optional<String> filterField,
-            Optional<String> searchValue,
-            Optional<String> searchField,
+            Optional<FilterField> filterField,
+            Optional<SearchValue> searchValue,
+            Optional<SearchField> searchField,
             Optional<String> q,
-            Optional<List<String>> ids,
+            Optional<List<RecordId>> ids,
             Map<String, Object> additionalProperties) {
         this.sheetId = sheetId;
         this.mutateRecord = mutateRecord;
@@ -66,7 +71,7 @@ public final class MutateJobConfig {
     }
 
     @JsonProperty("sheetId")
-    public String getSheetId() {
+    public SheetId getSheetId() {
         return sheetId;
     }
 
@@ -92,17 +97,17 @@ public final class MutateJobConfig {
     }
 
     @JsonProperty("filterField")
-    public Optional<String> getFilterField() {
+    public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
     @JsonProperty("searchValue")
-    public Optional<String> getSearchValue() {
+    public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
     @JsonProperty("searchField")
-    public Optional<String> getSearchField() {
+    public Optional<SearchField> getSearchField() {
         return searchField;
     }
 
@@ -115,7 +120,7 @@ public final class MutateJobConfig {
      * @return The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
      */
     @JsonProperty("ids")
-    public Optional<List<String>> getIds() {
+    public Optional<List<RecordId>> getIds() {
         return ids;
     }
 
@@ -166,7 +171,7 @@ public final class MutateJobConfig {
     }
 
     public interface SheetIdStage {
-        MutateRecordStage sheetId(String sheetId);
+        MutateRecordStage sheetId(SheetId sheetId);
 
         Builder from(MutateJobConfig other);
     }
@@ -186,42 +191,42 @@ public final class MutateJobConfig {
 
         _FinalStage filter(Filter filter);
 
-        _FinalStage filterField(Optional<String> filterField);
+        _FinalStage filterField(Optional<FilterField> filterField);
 
-        _FinalStage filterField(String filterField);
+        _FinalStage filterField(FilterField filterField);
 
-        _FinalStage searchValue(Optional<String> searchValue);
+        _FinalStage searchValue(Optional<SearchValue> searchValue);
 
-        _FinalStage searchValue(String searchValue);
+        _FinalStage searchValue(SearchValue searchValue);
 
-        _FinalStage searchField(Optional<String> searchField);
+        _FinalStage searchField(Optional<SearchField> searchField);
 
-        _FinalStage searchField(String searchField);
+        _FinalStage searchField(SearchField searchField);
 
         _FinalStage q(Optional<String> q);
 
         _FinalStage q(String q);
 
-        _FinalStage ids(Optional<List<String>> ids);
+        _FinalStage ids(Optional<List<RecordId>> ids);
 
-        _FinalStage ids(List<String> ids);
+        _FinalStage ids(List<RecordId> ids);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SheetIdStage, MutateRecordStage, _FinalStage {
-        private String sheetId;
+        private SheetId sheetId;
 
         private String mutateRecord;
 
-        private Optional<List<String>> ids = Optional.empty();
+        private Optional<List<RecordId>> ids = Optional.empty();
 
         private Optional<String> q = Optional.empty();
 
-        private Optional<String> searchField = Optional.empty();
+        private Optional<SearchField> searchField = Optional.empty();
 
-        private Optional<String> searchValue = Optional.empty();
+        private Optional<SearchValue> searchValue = Optional.empty();
 
-        private Optional<String> filterField = Optional.empty();
+        private Optional<FilterField> filterField = Optional.empty();
 
         private Optional<Filter> filter = Optional.empty();
 
@@ -248,7 +253,7 @@ public final class MutateJobConfig {
 
         @Override
         @JsonSetter("sheetId")
-        public MutateRecordStage sheetId(String sheetId) {
+        public MutateRecordStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
             return this;
         }
@@ -269,14 +274,14 @@ public final class MutateJobConfig {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage ids(List<String> ids) {
+        public _FinalStage ids(List<RecordId> ids) {
             this.ids = Optional.of(ids);
             return this;
         }
 
         @Override
         @JsonSetter(value = "ids", nulls = Nulls.SKIP)
-        public _FinalStage ids(Optional<List<String>> ids) {
+        public _FinalStage ids(Optional<List<RecordId>> ids) {
             this.ids = ids;
             return this;
         }
@@ -295,40 +300,40 @@ public final class MutateJobConfig {
         }
 
         @Override
-        public _FinalStage searchField(String searchField) {
+        public _FinalStage searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
             return this;
         }
 
         @Override
         @JsonSetter(value = "searchField", nulls = Nulls.SKIP)
-        public _FinalStage searchField(Optional<String> searchField) {
+        public _FinalStage searchField(Optional<SearchField> searchField) {
             this.searchField = searchField;
             return this;
         }
 
         @Override
-        public _FinalStage searchValue(String searchValue) {
+        public _FinalStage searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
         @Override
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
-        public _FinalStage searchValue(Optional<String> searchValue) {
+        public _FinalStage searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
         @Override
-        public _FinalStage filterField(String filterField) {
+        public _FinalStage filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
         @Override
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
-        public _FinalStage filterField(Optional<String> filterField) {
+        public _FinalStage filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }

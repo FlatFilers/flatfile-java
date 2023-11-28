@@ -12,6 +12,17 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.DocumentId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.EventId;
+import com.flatfile.api.resources.commons.types.FileId;
+import com.flatfile.api.resources.commons.types.JobId;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.SnapshotId;
+import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.commons.types.VersionId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,33 +36,33 @@ public final class Context {
 
     private final Optional<EventContextSlugs> slugs;
 
-    private final Optional<String> actionName;
+    private final Optional<ActionName> actionName;
 
-    private final String accountId;
+    private final AccountId accountId;
 
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
-    private final Optional<String> workbookId;
+    private final Optional<WorkbookId> workbookId;
 
-    private final Optional<String> sheetId;
+    private final Optional<SheetId> sheetId;
 
-    private final Optional<String> sheetSlug;
+    private final Optional<SheetSlug> sheetSlug;
 
-    private final Optional<String> snapshotId;
+    private final Optional<SnapshotId> snapshotId;
 
-    private final Optional<String> versionId;
+    private final Optional<VersionId> versionId;
 
-    private final Optional<String> commitId;
+    private final Optional<VersionId> commitId;
 
-    private final Optional<String> jobId;
+    private final Optional<JobId> jobId;
 
-    private final Optional<String> fileId;
+    private final Optional<FileId> fileId;
 
-    private final Optional<String> documentId;
+    private final Optional<DocumentId> documentId;
 
-    private final Optional<String> precedingEventId;
+    private final Optional<EventId> precedingEventId;
 
     private final Optional<String> actorId;
 
@@ -60,20 +71,20 @@ public final class Context {
     private Context(
             Optional<List<String>> namespaces,
             Optional<EventContextSlugs> slugs,
-            Optional<String> actionName,
-            String accountId,
-            String environmentId,
-            Optional<String> spaceId,
-            Optional<String> workbookId,
-            Optional<String> sheetId,
-            Optional<String> sheetSlug,
-            Optional<String> snapshotId,
-            Optional<String> versionId,
-            Optional<String> commitId,
-            Optional<String> jobId,
-            Optional<String> fileId,
-            Optional<String> documentId,
-            Optional<String> precedingEventId,
+            Optional<ActionName> actionName,
+            AccountId accountId,
+            EnvironmentId environmentId,
+            Optional<SpaceId> spaceId,
+            Optional<WorkbookId> workbookId,
+            Optional<SheetId> sheetId,
+            Optional<SheetSlug> sheetSlug,
+            Optional<SnapshotId> snapshotId,
+            Optional<VersionId> versionId,
+            Optional<VersionId> commitId,
+            Optional<JobId> jobId,
+            Optional<FileId> fileId,
+            Optional<DocumentId> documentId,
+            Optional<EventId> precedingEventId,
             Optional<String> actorId,
             Map<String, Object> additionalProperties) {
         this.namespaces = namespaces;
@@ -113,72 +124,72 @@ public final class Context {
     }
 
     @JsonProperty("actionName")
-    public Optional<String> getActionName() {
+    public Optional<ActionName> getActionName() {
         return actionName;
     }
 
     @JsonProperty("accountId")
-    public String getAccountId() {
+    public AccountId getAccountId() {
         return accountId;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("workbookId")
-    public Optional<String> getWorkbookId() {
+    public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
     @JsonProperty("sheetId")
-    public Optional<String> getSheetId() {
+    public Optional<SheetId> getSheetId() {
         return sheetId;
     }
 
     @JsonProperty("sheetSlug")
-    public Optional<String> getSheetSlug() {
+    public Optional<SheetSlug> getSheetSlug() {
         return sheetSlug;
     }
 
     @JsonProperty("snapshotId")
-    public Optional<String> getSnapshotId() {
+    public Optional<SnapshotId> getSnapshotId() {
         return snapshotId;
     }
 
     @JsonProperty("versionId")
-    public Optional<String> getVersionId() {
+    public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
     @JsonProperty("commitId")
-    public Optional<String> getCommitId() {
+    public Optional<VersionId> getCommitId() {
         return commitId;
     }
 
     @JsonProperty("jobId")
-    public Optional<String> getJobId() {
+    public Optional<JobId> getJobId() {
         return jobId;
     }
 
     @JsonProperty("fileId")
-    public Optional<String> getFileId() {
+    public Optional<FileId> getFileId() {
         return fileId;
     }
 
     @JsonProperty("documentId")
-    public Optional<String> getDocumentId() {
+    public Optional<DocumentId> getDocumentId() {
         return documentId;
     }
 
     @JsonProperty("precedingEventId")
-    public Optional<String> getPrecedingEventId() {
+    public Optional<EventId> getPrecedingEventId() {
         return precedingEventId;
     }
 
@@ -253,13 +264,13 @@ public final class Context {
     }
 
     public interface AccountIdStage {
-        EnvironmentIdStage accountId(String accountId);
+        EnvironmentIdStage accountId(AccountId accountId);
 
         Builder from(Context other);
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -273,53 +284,53 @@ public final class Context {
 
         _FinalStage slugs(EventContextSlugs slugs);
 
-        _FinalStage actionName(Optional<String> actionName);
+        _FinalStage actionName(Optional<ActionName> actionName);
 
-        _FinalStage actionName(String actionName);
+        _FinalStage actionName(ActionName actionName);
 
-        _FinalStage spaceId(Optional<String> spaceId);
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
 
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
 
-        _FinalStage workbookId(Optional<String> workbookId);
+        _FinalStage workbookId(Optional<WorkbookId> workbookId);
 
-        _FinalStage workbookId(String workbookId);
+        _FinalStage workbookId(WorkbookId workbookId);
 
-        _FinalStage sheetId(Optional<String> sheetId);
+        _FinalStage sheetId(Optional<SheetId> sheetId);
 
-        _FinalStage sheetId(String sheetId);
+        _FinalStage sheetId(SheetId sheetId);
 
-        _FinalStage sheetSlug(Optional<String> sheetSlug);
+        _FinalStage sheetSlug(Optional<SheetSlug> sheetSlug);
 
-        _FinalStage sheetSlug(String sheetSlug);
+        _FinalStage sheetSlug(SheetSlug sheetSlug);
 
-        _FinalStage snapshotId(Optional<String> snapshotId);
+        _FinalStage snapshotId(Optional<SnapshotId> snapshotId);
 
-        _FinalStage snapshotId(String snapshotId);
+        _FinalStage snapshotId(SnapshotId snapshotId);
 
-        _FinalStage versionId(Optional<String> versionId);
+        _FinalStage versionId(Optional<VersionId> versionId);
 
-        _FinalStage versionId(String versionId);
+        _FinalStage versionId(VersionId versionId);
 
-        _FinalStage commitId(Optional<String> commitId);
+        _FinalStage commitId(Optional<VersionId> commitId);
 
-        _FinalStage commitId(String commitId);
+        _FinalStage commitId(VersionId commitId);
 
-        _FinalStage jobId(Optional<String> jobId);
+        _FinalStage jobId(Optional<JobId> jobId);
 
-        _FinalStage jobId(String jobId);
+        _FinalStage jobId(JobId jobId);
 
-        _FinalStage fileId(Optional<String> fileId);
+        _FinalStage fileId(Optional<FileId> fileId);
 
-        _FinalStage fileId(String fileId);
+        _FinalStage fileId(FileId fileId);
 
-        _FinalStage documentId(Optional<String> documentId);
+        _FinalStage documentId(Optional<DocumentId> documentId);
 
-        _FinalStage documentId(String documentId);
+        _FinalStage documentId(DocumentId documentId);
 
-        _FinalStage precedingEventId(Optional<String> precedingEventId);
+        _FinalStage precedingEventId(Optional<EventId> precedingEventId);
 
-        _FinalStage precedingEventId(String precedingEventId);
+        _FinalStage precedingEventId(EventId precedingEventId);
 
         _FinalStage actorId(Optional<String> actorId);
 
@@ -328,35 +339,35 @@ public final class Context {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements AccountIdStage, EnvironmentIdStage, _FinalStage {
-        private String accountId;
+        private AccountId accountId;
 
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private Optional<String> actorId = Optional.empty();
 
-        private Optional<String> precedingEventId = Optional.empty();
+        private Optional<EventId> precedingEventId = Optional.empty();
 
-        private Optional<String> documentId = Optional.empty();
+        private Optional<DocumentId> documentId = Optional.empty();
 
-        private Optional<String> fileId = Optional.empty();
+        private Optional<FileId> fileId = Optional.empty();
 
-        private Optional<String> jobId = Optional.empty();
+        private Optional<JobId> jobId = Optional.empty();
 
-        private Optional<String> commitId = Optional.empty();
+        private Optional<VersionId> commitId = Optional.empty();
 
-        private Optional<String> versionId = Optional.empty();
+        private Optional<VersionId> versionId = Optional.empty();
 
-        private Optional<String> snapshotId = Optional.empty();
+        private Optional<SnapshotId> snapshotId = Optional.empty();
 
-        private Optional<String> sheetSlug = Optional.empty();
+        private Optional<SheetSlug> sheetSlug = Optional.empty();
 
-        private Optional<String> sheetId = Optional.empty();
+        private Optional<SheetId> sheetId = Optional.empty();
 
-        private Optional<String> workbookId = Optional.empty();
+        private Optional<WorkbookId> workbookId = Optional.empty();
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
-        private Optional<String> actionName = Optional.empty();
+        private Optional<ActionName> actionName = Optional.empty();
 
         private Optional<EventContextSlugs> slugs = Optional.empty();
 
@@ -391,14 +402,14 @@ public final class Context {
 
         @Override
         @JsonSetter("accountId")
-        public EnvironmentIdStage accountId(String accountId) {
+        public EnvironmentIdStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
 
         @Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
@@ -421,157 +432,157 @@ public final class Context {
         }
 
         @Override
-        public _FinalStage precedingEventId(String precedingEventId) {
+        public _FinalStage precedingEventId(EventId precedingEventId) {
             this.precedingEventId = Optional.of(precedingEventId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "precedingEventId", nulls = Nulls.SKIP)
-        public _FinalStage precedingEventId(Optional<String> precedingEventId) {
+        public _FinalStage precedingEventId(Optional<EventId> precedingEventId) {
             this.precedingEventId = precedingEventId;
             return this;
         }
 
         @Override
-        public _FinalStage documentId(String documentId) {
+        public _FinalStage documentId(DocumentId documentId) {
             this.documentId = Optional.of(documentId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "documentId", nulls = Nulls.SKIP)
-        public _FinalStage documentId(Optional<String> documentId) {
+        public _FinalStage documentId(Optional<DocumentId> documentId) {
             this.documentId = documentId;
             return this;
         }
 
         @Override
-        public _FinalStage fileId(String fileId) {
+        public _FinalStage fileId(FileId fileId) {
             this.fileId = Optional.of(fileId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "fileId", nulls = Nulls.SKIP)
-        public _FinalStage fileId(Optional<String> fileId) {
+        public _FinalStage fileId(Optional<FileId> fileId) {
             this.fileId = fileId;
             return this;
         }
 
         @Override
-        public _FinalStage jobId(String jobId) {
+        public _FinalStage jobId(JobId jobId) {
             this.jobId = Optional.of(jobId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "jobId", nulls = Nulls.SKIP)
-        public _FinalStage jobId(Optional<String> jobId) {
+        public _FinalStage jobId(Optional<JobId> jobId) {
             this.jobId = jobId;
             return this;
         }
 
         @Override
-        public _FinalStage commitId(String commitId) {
+        public _FinalStage commitId(VersionId commitId) {
             this.commitId = Optional.of(commitId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
-        public _FinalStage commitId(Optional<String> commitId) {
+        public _FinalStage commitId(Optional<VersionId> commitId) {
             this.commitId = commitId;
             return this;
         }
 
         @Override
-        public _FinalStage versionId(String versionId) {
+        public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
-        public _FinalStage versionId(Optional<String> versionId) {
+        public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }
 
         @Override
-        public _FinalStage snapshotId(String snapshotId) {
+        public _FinalStage snapshotId(SnapshotId snapshotId) {
             this.snapshotId = Optional.of(snapshotId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "snapshotId", nulls = Nulls.SKIP)
-        public _FinalStage snapshotId(Optional<String> snapshotId) {
+        public _FinalStage snapshotId(Optional<SnapshotId> snapshotId) {
             this.snapshotId = snapshotId;
             return this;
         }
 
         @Override
-        public _FinalStage sheetSlug(String sheetSlug) {
+        public _FinalStage sheetSlug(SheetSlug sheetSlug) {
             this.sheetSlug = Optional.of(sheetSlug);
             return this;
         }
 
         @Override
         @JsonSetter(value = "sheetSlug", nulls = Nulls.SKIP)
-        public _FinalStage sheetSlug(Optional<String> sheetSlug) {
+        public _FinalStage sheetSlug(Optional<SheetSlug> sheetSlug) {
             this.sheetSlug = sheetSlug;
             return this;
         }
 
         @Override
-        public _FinalStage sheetId(String sheetId) {
+        public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = Optional.of(sheetId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "sheetId", nulls = Nulls.SKIP)
-        public _FinalStage sheetId(Optional<String> sheetId) {
+        public _FinalStage sheetId(Optional<SheetId> sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
         @Override
-        public _FinalStage workbookId(String workbookId) {
+        public _FinalStage workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
-        public _FinalStage workbookId(Optional<String> workbookId) {
+        public _FinalStage workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
             return this;
         }
 
         @Override
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<String> spaceId) {
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
         @Override
-        public _FinalStage actionName(String actionName) {
+        public _FinalStage actionName(ActionName actionName) {
             this.actionName = Optional.of(actionName);
             return this;
         }
 
         @Override
         @JsonSetter(value = "actionName", nulls = Nulls.SKIP)
-        public _FinalStage actionName(Optional<String> actionName) {
+        public _FinalStage actionName(Optional<ActionName> actionName) {
             this.actionName = actionName;
             return this;
         }

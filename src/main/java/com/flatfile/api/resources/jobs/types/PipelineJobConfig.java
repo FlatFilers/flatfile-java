@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,26 +19,26 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PipelineJobConfig.Builder.class)
 public final class PipelineJobConfig {
-    private final String sourceSheetId;
+    private final SheetId sourceSheetId;
 
-    private final String destinationSheetId;
+    private final SheetId destinationSheetId;
 
     private final Map<String, Object> additionalProperties;
 
     private PipelineJobConfig(
-            String sourceSheetId, String destinationSheetId, Map<String, Object> additionalProperties) {
+            SheetId sourceSheetId, SheetId destinationSheetId, Map<String, Object> additionalProperties) {
         this.sourceSheetId = sourceSheetId;
         this.destinationSheetId = destinationSheetId;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("sourceSheetId")
-    public String getSourceSheetId() {
+    public SheetId getSourceSheetId() {
         return sourceSheetId;
     }
 
     @JsonProperty("destinationSheetId")
-    public String getDestinationSheetId() {
+    public SheetId getDestinationSheetId() {
         return destinationSheetId;
     }
 
@@ -71,13 +72,13 @@ public final class PipelineJobConfig {
     }
 
     public interface SourceSheetIdStage {
-        DestinationSheetIdStage sourceSheetId(String sourceSheetId);
+        DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId);
 
         Builder from(PipelineJobConfig other);
     }
 
     public interface DestinationSheetIdStage {
-        _FinalStage destinationSheetId(String destinationSheetId);
+        _FinalStage destinationSheetId(SheetId destinationSheetId);
     }
 
     public interface _FinalStage {
@@ -86,9 +87,9 @@ public final class PipelineJobConfig {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SourceSheetIdStage, DestinationSheetIdStage, _FinalStage {
-        private String sourceSheetId;
+        private SheetId sourceSheetId;
 
-        private String destinationSheetId;
+        private SheetId destinationSheetId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -104,14 +105,14 @@ public final class PipelineJobConfig {
 
         @Override
         @JsonSetter("sourceSheetId")
-        public DestinationSheetIdStage sourceSheetId(String sourceSheetId) {
+        public DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId) {
             this.sourceSheetId = sourceSheetId;
             return this;
         }
 
         @Override
         @JsonSetter("destinationSheetId")
-        public _FinalStage destinationSheetId(String destinationSheetId) {
+        public _FinalStage destinationSheetId(SheetId destinationSheetId) {
             this.destinationSheetId = destinationSheetId;
             return this;
         }

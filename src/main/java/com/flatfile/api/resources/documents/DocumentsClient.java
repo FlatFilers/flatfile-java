@@ -7,6 +7,8 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.DocumentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.documents.types.DocumentConfig;
 import com.flatfile.api.resources.documents.types.DocumentResponse;
@@ -29,11 +31,11 @@ public class DocumentsClient {
     /**
      * Returns all documents for a space
      */
-    public ListDocumentsResponse list(String spaceId, RequestOptions requestOptions) {
+    public ListDocumentsResponse list(SpaceId spaceId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .addPathSegments("documents")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -59,18 +61,18 @@ public class DocumentsClient {
     /**
      * Returns all documents for a space
      */
-    public ListDocumentsResponse list(String spaceId) {
+    public ListDocumentsResponse list(SpaceId spaceId) {
         return list(spaceId, null);
     }
 
     /**
      * Add a new document to the space
      */
-    public DocumentResponse create(String spaceId, DocumentConfig request, RequestOptions requestOptions) {
+    public DocumentResponse create(SpaceId spaceId, DocumentConfig request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .addPathSegments("documents")
                 .build();
         RequestBody body;
@@ -103,20 +105,20 @@ public class DocumentsClient {
     /**
      * Add a new document to the space
      */
-    public DocumentResponse create(String spaceId, DocumentConfig request) {
+    public DocumentResponse create(SpaceId spaceId, DocumentConfig request) {
         return create(spaceId, request, null);
     }
 
     /**
      * Returns a single document
      */
-    public DocumentResponse get(String spaceId, String documentId, RequestOptions requestOptions) {
+    public DocumentResponse get(SpaceId spaceId, DocumentId documentId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .addPathSegments("documents")
-                .addPathSegment(documentId)
+                .addPathSegment(documentId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -141,7 +143,7 @@ public class DocumentsClient {
     /**
      * Returns a single document
      */
-    public DocumentResponse get(String spaceId, String documentId) {
+    public DocumentResponse get(SpaceId spaceId, DocumentId documentId) {
         return get(spaceId, documentId, null);
     }
 
@@ -149,13 +151,13 @@ public class DocumentsClient {
      * updates a single document, for only the body and title
      */
     public DocumentResponse update(
-            String spaceId, String documentId, DocumentConfig request, RequestOptions requestOptions) {
+            SpaceId spaceId, DocumentId documentId, DocumentConfig request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .addPathSegments("documents")
-                .addPathSegment(documentId)
+                .addPathSegment(documentId.toString())
                 .build();
         RequestBody body;
         try {
@@ -187,20 +189,20 @@ public class DocumentsClient {
     /**
      * updates a single document, for only the body and title
      */
-    public DocumentResponse update(String spaceId, String documentId, DocumentConfig request) {
+    public DocumentResponse update(SpaceId spaceId, DocumentId documentId, DocumentConfig request) {
         return update(spaceId, documentId, request, null);
     }
 
     /**
      * Deletes a single document
      */
-    public Success delete(String spaceId, String documentId, RequestOptions requestOptions) {
+    public Success delete(SpaceId spaceId, DocumentId documentId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .addPathSegments("documents")
-                .addPathSegment(documentId)
+                .addPathSegment(documentId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -225,7 +227,7 @@ public class DocumentsClient {
     /**
      * Deletes a single document
      */
-    public Success delete(String spaceId, String documentId) {
+    public Success delete(SpaceId spaceId, DocumentId documentId) {
         return delete(spaceId, documentId, null);
     }
 }

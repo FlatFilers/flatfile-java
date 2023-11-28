@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.MappingId;
+import com.flatfile.api.resources.commons.types.UserId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,11 +23,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = MappingRuleOneToOne.Builder.class)
 public final class MappingRuleOneToOne implements IMappingRuleBase {
-    private final String id;
+    private final MappingId id;
 
     private final Optional<Double> confidence;
 
-    private final Optional<String> createdBy;
+    private final Optional<UserId> createdBy;
 
     private final OffsetDateTime createdAt;
 
@@ -44,9 +46,9 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
     private final Map<String, Object> additionalProperties;
 
     private MappingRuleOneToOne(
-            String id,
+            MappingId id,
             Optional<Double> confidence,
-            Optional<String> createdBy,
+            Optional<UserId> createdBy,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             String name,
@@ -73,7 +75,7 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
      */
     @JsonProperty("id")
     @Override
-    public String getId() {
+    public MappingId getId() {
         return id;
     }
 
@@ -91,7 +93,7 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
      */
     @JsonProperty("createdBy")
     @Override
-    public Optional<String> getCreatedBy() {
+    public Optional<UserId> getCreatedBy() {
         return createdBy;
     }
 
@@ -199,7 +201,7 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(MappingId id);
 
         Builder from(MappingRuleOneToOne other);
     }
@@ -235,9 +237,9 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
 
         _FinalStage confidence(Double confidence);
 
-        _FinalStage createdBy(Optional<String> createdBy);
+        _FinalStage createdBy(Optional<UserId> createdBy);
 
-        _FinalStage createdBy(String createdBy);
+        _FinalStage createdBy(UserId createdBy);
 
         _FinalStage config(Optional<Object> config);
 
@@ -254,7 +256,7 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
                     SourceFieldStage,
                     DestinationFieldStage,
                     _FinalStage {
-        private String id;
+        private MappingId id;
 
         private OffsetDateTime createdAt;
 
@@ -270,7 +272,7 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
 
         private Optional<Object> config = Optional.empty();
 
-        private Optional<String> createdBy = Optional.empty();
+        private Optional<UserId> createdBy = Optional.empty();
 
         private Optional<Double> confidence = Optional.empty();
 
@@ -300,7 +302,7 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
          */
         @Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
+        public CreatedAtStage id(MappingId id) {
             this.id = id;
             return this;
         }
@@ -385,14 +387,14 @@ public final class MappingRuleOneToOne implements IMappingRuleBase {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage createdBy(String createdBy) {
+        public _FinalStage createdBy(UserId createdBy) {
             this.createdBy = Optional.of(createdBy);
             return this;
         }
 
         @Override
         @JsonSetter(value = "createdBy", nulls = Nulls.SKIP)
-        public _FinalStage createdBy(Optional<String> createdBy) {
+        public _FinalStage createdBy(Optional<UserId> createdBy) {
             this.createdBy = createdBy;
             return this;
         }

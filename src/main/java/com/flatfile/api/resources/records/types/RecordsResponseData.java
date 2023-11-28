@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.ISuccessData;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -24,19 +24,19 @@ import java.util.Optional;
 public final class RecordsResponseData implements ISuccessData {
     private final boolean success;
 
-    private final Optional<List<RecordWithLinks>> records;
+    private final Optional<RecordsWithLinks> records;
 
     private final Optional<RecordCounts> counts;
 
-    private final Optional<String> versionId;
+    private final Optional<VersionId> versionId;
 
     private final Map<String, Object> additionalProperties;
 
     private RecordsResponseData(
             boolean success,
-            Optional<List<RecordWithLinks>> records,
+            Optional<RecordsWithLinks> records,
             Optional<RecordCounts> counts,
-            Optional<String> versionId,
+            Optional<VersionId> versionId,
             Map<String, Object> additionalProperties) {
         this.success = success;
         this.records = records;
@@ -52,7 +52,7 @@ public final class RecordsResponseData implements ISuccessData {
     }
 
     @JsonProperty("records")
-    public Optional<List<RecordWithLinks>> getRecords() {
+    public Optional<RecordsWithLinks> getRecords() {
         return records;
     }
 
@@ -62,7 +62,7 @@ public final class RecordsResponseData implements ISuccessData {
     }
 
     @JsonProperty("versionId")
-    public Optional<String> getVersionId() {
+    public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
@@ -107,28 +107,28 @@ public final class RecordsResponseData implements ISuccessData {
     public interface _FinalStage {
         RecordsResponseData build();
 
-        _FinalStage records(Optional<List<RecordWithLinks>> records);
+        _FinalStage records(Optional<RecordsWithLinks> records);
 
-        _FinalStage records(List<RecordWithLinks> records);
+        _FinalStage records(RecordsWithLinks records);
 
         _FinalStage counts(Optional<RecordCounts> counts);
 
         _FinalStage counts(RecordCounts counts);
 
-        _FinalStage versionId(Optional<String> versionId);
+        _FinalStage versionId(Optional<VersionId> versionId);
 
-        _FinalStage versionId(String versionId);
+        _FinalStage versionId(VersionId versionId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SuccessStage, _FinalStage {
         private boolean success;
 
-        private Optional<String> versionId = Optional.empty();
+        private Optional<VersionId> versionId = Optional.empty();
 
         private Optional<RecordCounts> counts = Optional.empty();
 
-        private Optional<List<RecordWithLinks>> records = Optional.empty();
+        private Optional<RecordsWithLinks> records = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -152,14 +152,14 @@ public final class RecordsResponseData implements ISuccessData {
         }
 
         @Override
-        public _FinalStage versionId(String versionId) {
+        public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
-        public _FinalStage versionId(Optional<String> versionId) {
+        public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }
@@ -178,14 +178,14 @@ public final class RecordsResponseData implements ISuccessData {
         }
 
         @Override
-        public _FinalStage records(List<RecordWithLinks> records) {
+        public _FinalStage records(RecordsWithLinks records) {
             this.records = Optional.of(records);
             return this;
         }
 
         @Override
         @JsonSetter(value = "records", nulls = Nulls.SKIP)
-        public _FinalStage records(Optional<List<RecordWithLinks>> records) {
+        public _FinalStage records(Optional<RecordsWithLinks> records) {
             this.records = records;
             return this;
         }

@@ -13,6 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.DocumentId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -31,11 +34,11 @@ public final class Document implements IDocumentConfig {
 
     private final Optional<List<Action>> actions;
 
-    private final String id;
+    private final DocumentId id;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final OffsetDateTime createdAt;
 
@@ -48,9 +51,9 @@ public final class Document implements IDocumentConfig {
             String body,
             Optional<List<String>> treatments,
             Optional<List<Action>> actions,
-            String id,
-            Optional<String> spaceId,
-            Optional<String> environmentId,
+            DocumentId id,
+            Optional<SpaceId> spaceId,
+            Optional<EnvironmentId> environmentId,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Map<String, Object> additionalProperties) {
@@ -91,17 +94,17 @@ public final class Document implements IDocumentConfig {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public DocumentId getId() {
         return id;
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -178,7 +181,7 @@ public final class Document implements IDocumentConfig {
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(DocumentId id);
     }
 
     public interface CreatedAtStage {
@@ -200,13 +203,13 @@ public final class Document implements IDocumentConfig {
 
         _FinalStage actions(List<Action> actions);
 
-        _FinalStage spaceId(Optional<String> spaceId);
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
 
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
 
-        _FinalStage environmentId(Optional<String> environmentId);
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
 
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -216,15 +219,15 @@ public final class Document implements IDocumentConfig {
 
         private String body;
 
-        private String id;
+        private DocumentId id;
 
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
 
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         private Optional<List<Action>> actions = Optional.empty();
 
@@ -265,7 +268,7 @@ public final class Document implements IDocumentConfig {
 
         @Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
+        public CreatedAtStage id(DocumentId id) {
             this.id = id;
             return this;
         }
@@ -293,27 +296,27 @@ public final class Document implements IDocumentConfig {
         }
 
         @Override
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public _FinalStage environmentId(Optional<String> environmentId) {
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<String> spaceId) {
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }

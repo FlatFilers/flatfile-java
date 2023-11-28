@@ -7,14 +7,15 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.records.requests.DeleteRecordsRequest;
 import com.flatfile.api.resources.records.requests.FindAndReplaceRecordRequest;
 import com.flatfile.api.resources.records.requests.FindAndReplaceRecordRequestDeprecated;
 import com.flatfile.api.resources.records.requests.GetRecordsRequest;
-import com.flatfile.api.resources.records.types.CellValue;
 import com.flatfile.api.resources.records.types.GetRecordsResponse;
-import com.flatfile.api.resources.records.types.Record;
+import com.flatfile.api.resources.records.types.RecordData;
+import com.flatfile.api.resources.records.types.Records;
 import com.flatfile.api.resources.records.types.RecordsResponse;
 import com.flatfile.api.resources.versions.types.VersionResponse;
 import java.io.IOException;
@@ -38,28 +39,28 @@ public class RecordsClient {
     /**
      * Returns records from a sheet in a workbook
      */
-    public GetRecordsResponse get(String sheetId) {
+    public GetRecordsResponse get(SheetId sheetId) {
         return get(sheetId, GetRecordsRequest.builder().build());
     }
 
     /**
      * Returns records from a sheet in a workbook
      */
-    public GetRecordsResponse get(String sheetId, GetRecordsRequest request, RequestOptions requestOptions) {
+    public GetRecordsResponse get(SheetId sheetId, GetRecordsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("records");
         if (request.getVersionId().isPresent()) {
             httpUrl.addQueryParameter("versionId", request.getVersionId().get());
         }
         if (request.getSinceVersionId().isPresent()) {
             httpUrl.addQueryParameter(
-                    "sinceVersionId", request.getSinceVersionId().get());
+                    "sinceVersionId", request.getSinceVersionId().get().toString());
         }
         if (request.getSortField().isPresent()) {
-            httpUrl.addQueryParameter("sortField", request.getSortField().get());
+            httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
         }
         if (request.getSortDirection().isPresent()) {
             httpUrl.addQueryParameter(
@@ -69,16 +70,19 @@ public class RecordsClient {
             httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
         }
         if (request.getFilterField().isPresent()) {
-            httpUrl.addQueryParameter("filterField", request.getFilterField().get());
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
         }
         if (request.getSearchValue().isPresent()) {
-            httpUrl.addQueryParameter("searchValue", request.getSearchValue().get());
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
         }
         if (request.getSearchField().isPresent()) {
-            httpUrl.addQueryParameter("searchField", request.getSearchField().get());
+            httpUrl.addQueryParameter(
+                    "searchField", request.getSearchField().get().toString());
         }
         if (request.getIds().isPresent()) {
-            httpUrl.addQueryParameter("ids", request.getIds().get());
+            httpUrl.addQueryParameter("ids", request.getIds().get().toString());
         }
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
@@ -104,7 +108,7 @@ public class RecordsClient {
                     "includeMessages", request.getIncludeMessages().get().toString());
         }
         if (request.getFor().isPresent()) {
-            httpUrl.addQueryParameter("for", request.getFor().get());
+            httpUrl.addQueryParameter("for", request.getFor().get().toString());
         }
         if (request.getQ().isPresent()) {
             httpUrl.addQueryParameter("q", request.getQ().get());
@@ -132,18 +136,18 @@ public class RecordsClient {
     /**
      * Returns records from a sheet in a workbook
      */
-    public GetRecordsResponse get(String sheetId, GetRecordsRequest request) {
+    public GetRecordsResponse get(SheetId sheetId, GetRecordsRequest request) {
         return get(sheetId, request, null);
     }
 
     /**
      * Updates existing records in a workbook sheet
      */
-    public VersionResponse update(String sheetId, List<Record> request, RequestOptions requestOptions) {
+    public VersionResponse update(SheetId sheetId, Records request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("records")
                 .build();
         RequestBody body;
@@ -176,18 +180,18 @@ public class RecordsClient {
     /**
      * Updates existing records in a workbook sheet
      */
-    public VersionResponse update(String sheetId, List<Record> request) {
+    public VersionResponse update(SheetId sheetId, Records request) {
         return update(sheetId, request, null);
     }
 
     /**
      * Adds records to a workbook sheet
      */
-    public RecordsResponse insert(String sheetId, List<Map<String, CellValue>> request, RequestOptions requestOptions) {
+    public RecordsResponse insert(SheetId sheetId, List<RecordData> request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("records")
                 .build();
         RequestBody body;
@@ -220,28 +224,28 @@ public class RecordsClient {
     /**
      * Adds records to a workbook sheet
      */
-    public RecordsResponse insert(String sheetId, List<Map<String, CellValue>> request) {
+    public RecordsResponse insert(SheetId sheetId, List<RecordData> request) {
         return insert(sheetId, request, null);
     }
 
     /**
      * Deletes records from a workbook sheet
      */
-    public Success delete(String sheetId) {
+    public Success delete(SheetId sheetId) {
         return delete(sheetId, DeleteRecordsRequest.builder().build());
     }
 
     /**
      * Deletes records from a workbook sheet
      */
-    public Success delete(String sheetId, DeleteRecordsRequest request, RequestOptions requestOptions) {
+    public Success delete(SheetId sheetId, DeleteRecordsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("records");
         if (request.getIds().isPresent()) {
-            httpUrl.addQueryParameter("ids", request.getIds().get());
+            httpUrl.addQueryParameter("ids", request.getIds().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -266,7 +270,7 @@ public class RecordsClient {
     /**
      * Deletes records from a workbook sheet
      */
-    public Success delete(String sheetId, DeleteRecordsRequest request) {
+    public Success delete(SheetId sheetId, DeleteRecordsRequest request) {
         return delete(sheetId, request, null);
     }
 
@@ -274,11 +278,11 @@ public class RecordsClient {
      * Searches for the given searchValue in a field and replaces all instances of that value with replaceValue
      */
     public RecordsResponse findAndReplaceDeprecated(
-            String sheetId, FindAndReplaceRecordRequestDeprecated request, RequestOptions requestOptions) {
+            SheetId sheetId, FindAndReplaceRecordRequestDeprecated request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("replace");
         httpUrl.addQueryParameter("fieldKey", request.getFieldKey());
         httpUrl.addQueryParameter("searchValue", request.getSearchValue());
@@ -324,7 +328,7 @@ public class RecordsClient {
     /**
      * Searches for the given searchValue in a field and replaces all instances of that value with replaceValue
      */
-    public RecordsResponse findAndReplaceDeprecated(String sheetId, FindAndReplaceRecordRequestDeprecated request) {
+    public RecordsResponse findAndReplaceDeprecated(SheetId sheetId, FindAndReplaceRecordRequestDeprecated request) {
         return findAndReplaceDeprecated(sheetId, request, null);
     }
 
@@ -332,26 +336,29 @@ public class RecordsClient {
      * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a versionId for the updated records
      */
     public VersionResponse findAndReplace(
-            String sheetId, FindAndReplaceRecordRequest request, RequestOptions requestOptions) {
+            SheetId sheetId, FindAndReplaceRecordRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("find-replace");
         if (request.getFilter().isPresent()) {
             httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
         }
         if (request.getFilterField().isPresent()) {
-            httpUrl.addQueryParameter("filterField", request.getFilterField().get());
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
         }
         if (request.getSearchValue().isPresent()) {
-            httpUrl.addQueryParameter("searchValue", request.getSearchValue().get());
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
         }
         if (request.getSearchField().isPresent()) {
-            httpUrl.addQueryParameter("searchField", request.getSearchField().get());
+            httpUrl.addQueryParameter(
+                    "searchField", request.getSearchField().get().toString());
         }
         if (request.getIds().isPresent()) {
-            httpUrl.addQueryParameter("ids", request.getIds().get());
+            httpUrl.addQueryParameter("ids", request.getIds().get().toString());
         }
         Map<String, Object> properties = new HashMap<>();
         if (request.getFind().isPresent()) {
@@ -391,7 +398,7 @@ public class RecordsClient {
     /**
      * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a versionId for the updated records
      */
-    public VersionResponse findAndReplace(String sheetId, FindAndReplaceRecordRequest request) {
+    public VersionResponse findAndReplace(SheetId sheetId, FindAndReplaceRecordRequest request) {
         return findAndReplace(sheetId, request, null);
     }
 }

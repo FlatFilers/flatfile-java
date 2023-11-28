@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,21 +21,21 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListWorkbooksRequest.Builder.class)
 public final class ListWorkbooksRequest {
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
     private final Optional<Boolean> includeCounts;
 
     private final Map<String, Object> additionalProperties;
 
     private ListWorkbooksRequest(
-            Optional<String> spaceId, Optional<Boolean> includeCounts, Map<String, Object> additionalProperties) {
+            Optional<SpaceId> spaceId, Optional<Boolean> includeCounts, Map<String, Object> additionalProperties) {
         this.spaceId = spaceId;
         this.includeCounts = includeCounts;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
@@ -77,7 +78,7 @@ public final class ListWorkbooksRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         private Optional<Boolean> includeCounts = Optional.empty();
 
@@ -93,12 +94,12 @@ public final class ListWorkbooksRequest {
         }
 
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public Builder spaceId(Optional<String> spaceId) {
+        public Builder spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        public Builder spaceId(String spaceId) {
+        public Builder spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }

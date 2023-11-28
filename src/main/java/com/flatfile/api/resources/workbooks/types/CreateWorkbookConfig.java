@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import com.flatfile.api.resources.sheets.types.SheetConfig;
 import java.util.HashMap;
 import java.util.List;
@@ -27,9 +29,9 @@ public final class CreateWorkbookConfig {
 
     private final Optional<List<String>> labels;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final Optional<String> namespace;
 
@@ -46,8 +48,8 @@ public final class CreateWorkbookConfig {
     private CreateWorkbookConfig(
             String name,
             Optional<List<String>> labels,
-            Optional<String> spaceId,
-            Optional<String> environmentId,
+            Optional<SpaceId> spaceId,
+            Optional<EnvironmentId> environmentId,
             Optional<String> namespace,
             Optional<List<SheetConfig>> sheets,
             Optional<List<Action>> actions,
@@ -77,12 +79,12 @@ public final class CreateWorkbookConfig {
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -173,13 +175,13 @@ public final class CreateWorkbookConfig {
 
         _FinalStage labels(List<String> labels);
 
-        _FinalStage spaceId(Optional<String> spaceId);
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
 
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
 
-        _FinalStage environmentId(Optional<String> environmentId);
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
 
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
 
         _FinalStage namespace(Optional<String> namespace);
 
@@ -216,9 +218,9 @@ public final class CreateWorkbookConfig {
 
         private Optional<String> namespace = Optional.empty();
 
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         private Optional<List<String>> labels = Optional.empty();
 
@@ -318,27 +320,27 @@ public final class CreateWorkbookConfig {
         }
 
         @Override
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public _FinalStage environmentId(Optional<String> environmentId) {
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<String> spaceId) {
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,13 +21,13 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateSnapshotRequest.Builder.class)
 public final class CreateSnapshotRequest {
-    private final String sheetId;
+    private final SheetId sheetId;
 
     private final Optional<String> label;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateSnapshotRequest(String sheetId, Optional<String> label, Map<String, Object> additionalProperties) {
+    private CreateSnapshotRequest(SheetId sheetId, Optional<String> label, Map<String, Object> additionalProperties) {
         this.sheetId = sheetId;
         this.label = label;
         this.additionalProperties = additionalProperties;
@@ -36,7 +37,7 @@ public final class CreateSnapshotRequest {
      * @return ID of sheet
      */
     @JsonProperty("sheetId")
-    public String getSheetId() {
+    public SheetId getSheetId() {
         return sheetId;
     }
 
@@ -78,7 +79,7 @@ public final class CreateSnapshotRequest {
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(String sheetId);
+        _FinalStage sheetId(SheetId sheetId);
 
         Builder from(CreateSnapshotRequest other);
     }
@@ -93,7 +94,7 @@ public final class CreateSnapshotRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SheetIdStage, _FinalStage {
-        private String sheetId;
+        private SheetId sheetId;
 
         private Optional<String> label = Optional.empty();
 
@@ -115,7 +116,7 @@ public final class CreateSnapshotRequest {
          */
         @Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(String sheetId) {
+        public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
             return this;
         }

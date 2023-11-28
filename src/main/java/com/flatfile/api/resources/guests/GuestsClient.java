@@ -7,12 +7,15 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.GuestId;
 import com.flatfile.api.resources.commons.types.Success;
+import com.flatfile.api.resources.guests.requests.GetGuestTokenRequest;
 import com.flatfile.api.resources.guests.requests.ListGuestsRequest;
 import com.flatfile.api.resources.guests.types.CreateGuestResponse;
 import com.flatfile.api.resources.guests.types.GuestConfig;
 import com.flatfile.api.resources.guests.types.GuestConfigUpdate;
 import com.flatfile.api.resources.guests.types.GuestResponse;
+import com.flatfile.api.resources.guests.types.GuestTokenResponse;
 import com.flatfile.api.resources.guests.types.Invite;
 import com.flatfile.api.resources.guests.types.ListGuestsResponse;
 import java.io.IOException;
@@ -38,7 +41,7 @@ public class GuestsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("guests");
-        httpUrl.addQueryParameter("spaceId", request.getSpaceId());
+        httpUrl.addQueryParameter("spaceId", request.getSpaceId().toString());
         if (request.getEmail().isPresent()) {
             httpUrl.addQueryParameter("email", request.getEmail().get());
         }
@@ -114,11 +117,11 @@ public class GuestsClient {
     /**
      * Returns a single guest
      */
-    public GuestResponse get(String guestId, RequestOptions requestOptions) {
+    public GuestResponse get(GuestId guestId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("guests")
-                .addPathSegment(guestId)
+                .addPathSegment(guestId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -143,18 +146,18 @@ public class GuestsClient {
     /**
      * Returns a single guest
      */
-    public GuestResponse get(String guestId) {
+    public GuestResponse get(GuestId guestId) {
         return get(guestId, null);
     }
 
     /**
      * Deletes a single guest
      */
-    public Success delete(String guestId, RequestOptions requestOptions) {
+    public Success delete(GuestId guestId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("guests")
-                .addPathSegment(guestId)
+                .addPathSegment(guestId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -179,25 +182,25 @@ public class GuestsClient {
     /**
      * Deletes a single guest
      */
-    public Success delete(String guestId) {
+    public Success delete(GuestId guestId) {
         return delete(guestId, null);
     }
 
     /**
      * Updates a single guest, for example to change name or email
      */
-    public GuestResponse update(String guestId) {
+    public GuestResponse update(GuestId guestId) {
         return update(guestId, GuestConfigUpdate.builder().build());
     }
 
     /**
      * Updates a single guest, for example to change name or email
      */
-    public GuestResponse update(String guestId, GuestConfigUpdate request, RequestOptions requestOptions) {
+    public GuestResponse update(GuestId guestId, GuestConfigUpdate request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("guests")
-                .addPathSegment(guestId)
+                .addPathSegment(guestId.toString())
                 .build();
         RequestBody body;
         try {
@@ -229,8 +232,55 @@ public class GuestsClient {
     /**
      * Updates a single guest, for example to change name or email
      */
-    public GuestResponse update(String guestId, GuestConfigUpdate request) {
+    public GuestResponse update(GuestId guestId, GuestConfigUpdate request) {
         return update(guestId, request, null);
+    }
+
+    /**
+     * Returns a single guest token
+     */
+    public GuestTokenResponse getGuestToken(GuestId guestId) {
+        return getGuestToken(guestId, GetGuestTokenRequest.builder().build());
+    }
+
+    /**
+     * Returns a single guest token
+     */
+    public GuestTokenResponse getGuestToken(
+            GuestId guestId, GetGuestTokenRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("guests")
+                .addPathSegment(guestId.toString())
+                .addPathSegments("token");
+        if (request.getSpaceId().isPresent()) {
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), GuestTokenResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Returns a single guest token
+     */
+    public GuestTokenResponse getGuestToken(GuestId guestId, GetGuestTokenRequest request) {
+        return getGuestToken(guestId, request, null);
     }
 
     /**

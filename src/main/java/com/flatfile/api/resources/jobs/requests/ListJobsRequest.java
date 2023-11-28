@@ -12,7 +12,12 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.FileId;
+import com.flatfile.api.resources.commons.types.JobId;
 import com.flatfile.api.resources.commons.types.SortDirection;
+import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,15 +26,15 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListJobsRequest.Builder.class)
 public final class ListJobsRequest {
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
-    private final Optional<String> workbookId;
+    private final Optional<WorkbookId> workbookId;
 
-    private final Optional<String> fileId;
+    private final Optional<FileId> fileId;
 
-    private final Optional<String> parentId;
+    private final Optional<JobId> parentId;
 
     private final Optional<Integer> pageSize;
 
@@ -40,11 +45,11 @@ public final class ListJobsRequest {
     private final Map<String, Object> additionalProperties;
 
     private ListJobsRequest(
-            Optional<String> environmentId,
-            Optional<String> spaceId,
-            Optional<String> workbookId,
-            Optional<String> fileId,
-            Optional<String> parentId,
+            Optional<EnvironmentId> environmentId,
+            Optional<SpaceId> spaceId,
+            Optional<WorkbookId> workbookId,
+            Optional<FileId> fileId,
+            Optional<JobId> parentId,
             Optional<Integer> pageSize,
             Optional<Integer> pageNumber,
             Optional<SortDirection> sortDirection,
@@ -61,27 +66,27 @@ public final class ListJobsRequest {
     }
 
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("spaceId")
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("workbookId")
-    public Optional<String> getWorkbookId() {
+    public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
     @JsonProperty("fileId")
-    public Optional<String> getFileId() {
+    public Optional<FileId> getFileId() {
         return fileId;
     }
 
     @JsonProperty("parentId")
-    public Optional<String> getParentId() {
+    public Optional<JobId> getParentId() {
         return parentId;
     }
 
@@ -152,15 +157,15 @@ public final class ListJobsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
-        private Optional<String> workbookId = Optional.empty();
+        private Optional<WorkbookId> workbookId = Optional.empty();
 
-        private Optional<String> fileId = Optional.empty();
+        private Optional<FileId> fileId = Optional.empty();
 
-        private Optional<String> parentId = Optional.empty();
+        private Optional<JobId> parentId = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
 
@@ -186,56 +191,56 @@ public final class ListJobsRequest {
         }
 
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public Builder environmentId(Optional<String> environmentId) {
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        public Builder environmentId(String environmentId) {
+        public Builder environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public Builder spaceId(Optional<String> spaceId) {
+        public Builder spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        public Builder spaceId(String spaceId) {
+        public Builder spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
-        public Builder workbookId(Optional<String> workbookId) {
+        public Builder workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
             return this;
         }
 
-        public Builder workbookId(String workbookId) {
+        public Builder workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }
 
         @JsonSetter(value = "fileId", nulls = Nulls.SKIP)
-        public Builder fileId(Optional<String> fileId) {
+        public Builder fileId(Optional<FileId> fileId) {
             this.fileId = fileId;
             return this;
         }
 
-        public Builder fileId(String fileId) {
+        public Builder fileId(FileId fileId) {
             this.fileId = Optional.of(fileId);
             return this;
         }
 
         @JsonSetter(value = "parentId", nulls = Nulls.SKIP)
-        public Builder parentId(Optional<String> parentId) {
+        public Builder parentId(Optional<JobId> parentId) {
             this.parentId = parentId;
             return this;
         }
 
-        public Builder parentId(String parentId) {
+        public Builder parentId(JobId parentId) {
             this.parentId = Optional.of(parentId);
             return this;
         }

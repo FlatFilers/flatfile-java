@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.records.types.RecordCounts;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
@@ -22,9 +24,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Sheet.Builder.class)
 public final class Sheet {
-    private final String id;
+    private final SheetId id;
 
-    private final String workbookId;
+    private final WorkbookId workbookId;
 
     private final String name;
 
@@ -45,8 +47,8 @@ public final class Sheet {
     private final Map<String, Object> additionalProperties;
 
     private Sheet(
-            String id,
-            String workbookId,
+            SheetId id,
+            WorkbookId workbookId,
             String name,
             SheetConfig config,
             Optional<RecordCounts> countRecords,
@@ -70,12 +72,12 @@ public final class Sheet {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public SheetId getId() {
         return id;
     }
 
     @JsonProperty("workbookId")
-    public String getWorkbookId() {
+    public WorkbookId getWorkbookId() {
         return workbookId;
     }
 
@@ -174,13 +176,13 @@ public final class Sheet {
     }
 
     public interface IdStage {
-        WorkbookIdStage id(String id);
+        WorkbookIdStage id(SheetId id);
 
         Builder from(Sheet other);
     }
 
     public interface WorkbookIdStage {
-        NameStage workbookId(String workbookId);
+        NameStage workbookId(WorkbookId workbookId);
     }
 
     public interface NameStage {
@@ -222,9 +224,9 @@ public final class Sheet {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements IdStage, WorkbookIdStage, NameStage, ConfigStage, UpdatedAtStage, CreatedAtStage, _FinalStage {
-        private String id;
+        private SheetId id;
 
-        private String workbookId;
+        private WorkbookId workbookId;
 
         private String name;
 
@@ -264,14 +266,14 @@ public final class Sheet {
 
         @Override
         @JsonSetter("id")
-        public WorkbookIdStage id(String id) {
+        public WorkbookIdStage id(SheetId id) {
             this.id = id;
             return this;
         }
 
         @Override
         @JsonSetter("workbookId")
-        public NameStage workbookId(String workbookId) {
+        public NameStage workbookId(WorkbookId workbookId) {
             this.workbookId = workbookId;
             return this;
         }

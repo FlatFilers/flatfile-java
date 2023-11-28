@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SortDirection;
 import com.flatfile.api.resources.spaces.types.GetSpacesSortField;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListSpacesRequest.Builder.class)
 public final class ListSpacesRequest {
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final Optional<Integer> pageSize;
 
@@ -41,7 +42,7 @@ public final class ListSpacesRequest {
     private final Map<String, Object> additionalProperties;
 
     private ListSpacesRequest(
-            Optional<String> environmentId,
+            Optional<EnvironmentId> environmentId,
             Optional<Integer> pageSize,
             Optional<Integer> pageNumber,
             Optional<String> search,
@@ -62,7 +63,7 @@ public final class ListSpacesRequest {
     }
 
     @JsonProperty("environmentId")
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -153,7 +154,7 @@ public final class ListSpacesRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
         private Optional<Integer> pageSize = Optional.empty();
 
@@ -187,12 +188,12 @@ public final class ListSpacesRequest {
         }
 
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public Builder environmentId(Optional<String> environmentId) {
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        public Builder environmentId(String environmentId) {
+        public Builder environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }

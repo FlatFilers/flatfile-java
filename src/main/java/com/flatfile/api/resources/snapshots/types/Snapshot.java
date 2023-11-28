@@ -12,6 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.SnapshotId;
+import com.flatfile.api.resources.commons.types.UserId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +24,9 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Snapshot.Builder.class)
 public final class Snapshot {
-    private final String id;
+    private final SnapshotId id;
 
-    private final String sheetId;
+    private final SheetId sheetId;
 
     private final Optional<String> label;
 
@@ -31,17 +34,17 @@ public final class Snapshot {
 
     private final OffsetDateTime createdAt;
 
-    private final String createdBy;
+    private final UserId createdBy;
 
     private final Map<String, Object> additionalProperties;
 
     private Snapshot(
-            String id,
-            String sheetId,
+            SnapshotId id,
+            SheetId sheetId,
             Optional<String> label,
             Optional<SnapshotSummary> summary,
             OffsetDateTime createdAt,
-            String createdBy,
+            UserId createdBy,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.sheetId = sheetId;
@@ -53,12 +56,12 @@ public final class Snapshot {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public SnapshotId getId() {
         return id;
     }
 
     @JsonProperty("sheetId")
-    public String getSheetId() {
+    public SheetId getSheetId() {
         return sheetId;
     }
 
@@ -78,7 +81,7 @@ public final class Snapshot {
     }
 
     @JsonProperty("createdBy")
-    public String getCreatedBy() {
+    public UserId getCreatedBy() {
         return createdBy;
     }
 
@@ -117,13 +120,13 @@ public final class Snapshot {
     }
 
     public interface IdStage {
-        SheetIdStage id(String id);
+        SheetIdStage id(SnapshotId id);
 
         Builder from(Snapshot other);
     }
 
     public interface SheetIdStage {
-        CreatedAtStage sheetId(String sheetId);
+        CreatedAtStage sheetId(SheetId sheetId);
     }
 
     public interface CreatedAtStage {
@@ -131,7 +134,7 @@ public final class Snapshot {
     }
 
     public interface CreatedByStage {
-        _FinalStage createdBy(String createdBy);
+        _FinalStage createdBy(UserId createdBy);
     }
 
     public interface _FinalStage {
@@ -148,13 +151,13 @@ public final class Snapshot {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, SheetIdStage, CreatedAtStage, CreatedByStage, _FinalStage {
-        private String id;
+        private SnapshotId id;
 
-        private String sheetId;
+        private SheetId sheetId;
 
         private OffsetDateTime createdAt;
 
-        private String createdBy;
+        private UserId createdBy;
 
         private Optional<SnapshotSummary> summary = Optional.empty();
 
@@ -178,14 +181,14 @@ public final class Snapshot {
 
         @Override
         @JsonSetter("id")
-        public SheetIdStage id(String id) {
+        public SheetIdStage id(SnapshotId id) {
             this.id = id;
             return this;
         }
 
         @Override
         @JsonSetter("sheetId")
-        public CreatedAtStage sheetId(String sheetId) {
+        public CreatedAtStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
             return this;
         }
@@ -199,7 +202,7 @@ public final class Snapshot {
 
         @Override
         @JsonSetter("createdBy")
-        public _FinalStage createdBy(String createdBy) {
+        public _FinalStage createdBy(UserId createdBy) {
             this.createdBy = createdBy;
             return this;
         }

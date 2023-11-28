@@ -76,7 +76,7 @@ public class AuthClient {
                 .newBuilder()
                 .addPathSegments("auth")
                 .addPathSegments("api-keys");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -106,7 +106,7 @@ public class AuthClient {
                 .newBuilder()
                 .addPathSegments("auth")
                 .addPathSegments("api-key");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         httpUrl.addQueryParameter("type", request.getType().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -137,8 +137,8 @@ public class AuthClient {
                 .newBuilder()
                 .addPathSegments("auth")
                 .addPathSegments("api-key");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
-        httpUrl.addQueryParameter("key", request.getKey());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
+        httpUrl.addQueryParameter("key", request.getKey().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("DELETE", null)

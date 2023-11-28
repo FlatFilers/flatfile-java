@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,11 +19,11 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetEnvironmentEventTokenRequest.Builder.class)
 public final class GetEnvironmentEventTokenRequest {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetEnvironmentEventTokenRequest(String environmentId, Map<String, Object> additionalProperties) {
+    private GetEnvironmentEventTokenRequest(EnvironmentId environmentId, Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.additionalProperties = additionalProperties;
     }
@@ -31,7 +32,7 @@ public final class GetEnvironmentEventTokenRequest {
      * @return ID of environment to return
      */
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -65,7 +66,7 @@ public final class GetEnvironmentEventTokenRequest {
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(String environmentId);
+        _FinalStage environmentId(EnvironmentId environmentId);
 
         Builder from(GetEnvironmentEventTokenRequest other);
     }
@@ -76,7 +77,7 @@ public final class GetEnvironmentEventTokenRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -95,7 +96,7 @@ public final class GetEnvironmentEventTokenRequest {
          */
         @Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(String environmentId) {
+        public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }

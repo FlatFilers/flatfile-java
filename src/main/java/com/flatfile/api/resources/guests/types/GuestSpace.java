@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GuestSpace.Builder.class)
 public final class GuestSpace {
-    private final String id;
+    private final SpaceId id;
 
     private final Optional<List<GuestWorkbook>> workbooks;
 
@@ -31,7 +32,7 @@ public final class GuestSpace {
     private final Map<String, Object> additionalProperties;
 
     private GuestSpace(
-            String id,
+            SpaceId id,
             Optional<List<GuestWorkbook>> workbooks,
             Optional<OffsetDateTime> lastAccessed,
             Map<String, Object> additionalProperties) {
@@ -42,7 +43,7 @@ public final class GuestSpace {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public SpaceId getId() {
         return id;
     }
 
@@ -86,7 +87,7 @@ public final class GuestSpace {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(SpaceId id);
 
         Builder from(GuestSpace other);
     }
@@ -105,7 +106,7 @@ public final class GuestSpace {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
-        private String id;
+        private SpaceId id;
 
         private Optional<OffsetDateTime> lastAccessed = Optional.empty();
 
@@ -126,7 +127,7 @@ public final class GuestSpace {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public _FinalStage id(SpaceId id) {
             this.id = id;
             return this;
         }

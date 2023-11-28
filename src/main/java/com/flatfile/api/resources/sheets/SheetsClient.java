@@ -8,13 +8,12 @@ import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commits.types.ListCommitsResponse;
+import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.Success;
-import com.flatfile.api.resources.property.types.Property;
 import com.flatfile.api.resources.sheets.requests.GetRecordCountsRequest;
 import com.flatfile.api.resources.sheets.requests.GetRecordsCsvRequest;
 import com.flatfile.api.resources.sheets.requests.ListSheetCommitsRequest;
 import com.flatfile.api.resources.sheets.requests.ListSheetsRequest;
-import com.flatfile.api.resources.sheets.types.FieldConfigResponse;
 import com.flatfile.api.resources.sheets.types.ListSheetsResponse;
 import com.flatfile.api.resources.sheets.types.RecordCountsResponse;
 import com.flatfile.api.resources.sheets.types.SheetResponse;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -41,7 +39,7 @@ public class SheetsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets");
-        httpUrl.addQueryParameter("workbookId", request.getWorkbookId());
+        httpUrl.addQueryParameter("workbookId", request.getWorkbookId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -72,11 +70,11 @@ public class SheetsClient {
     /**
      * Returns a sheet in a workbook
      */
-    public SheetResponse get(String sheetId, RequestOptions requestOptions) {
+    public SheetResponse get(SheetId sheetId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -101,18 +99,18 @@ public class SheetsClient {
     /**
      * Returns a sheet in a workbook
      */
-    public SheetResponse get(String sheetId) {
+    public SheetResponse get(SheetId sheetId) {
         return get(sheetId, null);
     }
 
     /**
      * Deletes a specific sheet from a workbook
      */
-    public Success delete(String sheetId, RequestOptions requestOptions) {
+    public Success delete(SheetId sheetId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -137,18 +135,18 @@ public class SheetsClient {
     /**
      * Deletes a specific sheet from a workbook
      */
-    public Success delete(String sheetId) {
+    public Success delete(SheetId sheetId) {
         return delete(sheetId, null);
     }
 
     /**
      * Trigger data hooks and validation to run on a sheet
      */
-    public Success validate(String sheetId, RequestOptions requestOptions) {
+    public Success validate(SheetId sheetId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("validate")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -174,35 +172,35 @@ public class SheetsClient {
     /**
      * Trigger data hooks and validation to run on a sheet
      */
-    public Success validate(String sheetId) {
+    public Success validate(SheetId sheetId) {
         return validate(sheetId, null);
     }
 
     /**
      * Returns records from a sheet in a workbook as a csv file
      */
-    public InputStream getRecordsAsCsv(String sheetId) {
+    public InputStream getRecordsAsCsv(SheetId sheetId) {
         return getRecordsAsCsv(sheetId, GetRecordsCsvRequest.builder().build());
     }
 
     /**
      * Returns records from a sheet in a workbook as a csv file
      */
-    public InputStream getRecordsAsCsv(String sheetId, GetRecordsCsvRequest request, RequestOptions requestOptions) {
+    public InputStream getRecordsAsCsv(SheetId sheetId, GetRecordsCsvRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("download");
         if (request.getVersionId().isPresent()) {
             httpUrl.addQueryParameter("versionId", request.getVersionId().get());
         }
         if (request.getSinceVersionId().isPresent()) {
             httpUrl.addQueryParameter(
-                    "sinceVersionId", request.getSinceVersionId().get());
+                    "sinceVersionId", request.getSinceVersionId().get().toString());
         }
         if (request.getSortField().isPresent()) {
-            httpUrl.addQueryParameter("sortField", request.getSortField().get());
+            httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
         }
         if (request.getSortDirection().isPresent()) {
             httpUrl.addQueryParameter(
@@ -212,16 +210,19 @@ public class SheetsClient {
             httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
         }
         if (request.getFilterField().isPresent()) {
-            httpUrl.addQueryParameter("filterField", request.getFilterField().get());
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
         }
         if (request.getSearchValue().isPresent()) {
-            httpUrl.addQueryParameter("searchValue", request.getSearchValue().get());
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
         }
         if (request.getSearchField().isPresent()) {
-            httpUrl.addQueryParameter("searchField", request.getSearchField().get());
+            httpUrl.addQueryParameter(
+                    "searchField", request.getSearchField().get().toString());
         }
         if (request.getIds().isPresent()) {
-            httpUrl.addQueryParameter("ids", request.getIds().get());
+            httpUrl.addQueryParameter("ids", request.getIds().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -246,14 +247,14 @@ public class SheetsClient {
     /**
      * Returns records from a sheet in a workbook as a csv file
      */
-    public InputStream getRecordsAsCsv(String sheetId, GetRecordsCsvRequest request) {
+    public InputStream getRecordsAsCsv(SheetId sheetId, GetRecordsCsvRequest request) {
         return getRecordsAsCsv(sheetId, request, null);
     }
 
     /**
      * Returns counts of records from a sheet
      */
-    public RecordCountsResponse getRecordCounts(String sheetId) {
+    public RecordCountsResponse getRecordCounts(SheetId sheetId) {
         return getRecordCounts(sheetId, GetRecordCountsRequest.builder().build());
     }
 
@@ -261,30 +262,33 @@ public class SheetsClient {
      * Returns counts of records from a sheet
      */
     public RecordCountsResponse getRecordCounts(
-            String sheetId, GetRecordCountsRequest request, RequestOptions requestOptions) {
+            SheetId sheetId, GetRecordCountsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("counts");
         if (request.getVersionId().isPresent()) {
             httpUrl.addQueryParameter("versionId", request.getVersionId().get());
         }
         if (request.getSinceVersionId().isPresent()) {
             httpUrl.addQueryParameter(
-                    "sinceVersionId", request.getSinceVersionId().get());
+                    "sinceVersionId", request.getSinceVersionId().get().toString());
         }
         if (request.getFilter().isPresent()) {
             httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
         }
         if (request.getFilterField().isPresent()) {
-            httpUrl.addQueryParameter("filterField", request.getFilterField().get());
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
         }
         if (request.getSearchValue().isPresent()) {
-            httpUrl.addQueryParameter("searchValue", request.getSearchValue().get());
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
         }
         if (request.getSearchField().isPresent()) {
-            httpUrl.addQueryParameter("searchField", request.getSearchField().get());
+            httpUrl.addQueryParameter(
+                    "searchField", request.getSearchField().get().toString());
         }
         if (request.getByField().isPresent()) {
             httpUrl.addQueryParameter("byField", request.getByField().get().toString());
@@ -315,58 +319,14 @@ public class SheetsClient {
     /**
      * Returns counts of records from a sheet
      */
-    public RecordCountsResponse getRecordCounts(String sheetId, GetRecordCountsRequest request) {
+    public RecordCountsResponse getRecordCounts(SheetId sheetId, GetRecordCountsRequest request) {
         return getRecordCounts(sheetId, request, null);
-    }
-
-    /**
-     * Adds a new field to a sheet
-     */
-    public FieldConfigResponse addField(String sheetId, Property request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("fields")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), FieldConfigResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Adds a new field to a sheet
-     */
-    public FieldConfigResponse addField(String sheetId, Property request) {
-        return addField(sheetId, request, null);
     }
 
     /**
      * Returns the commit versions for a sheet
      */
-    public ListCommitsResponse getSheetCommits(String sheetId) {
+    public ListCommitsResponse getSheetCommits(SheetId sheetId) {
         return getSheetCommits(sheetId, ListSheetCommitsRequest.builder().build());
     }
 
@@ -374,11 +334,11 @@ public class SheetsClient {
      * Returns the commit versions for a sheet
      */
     public ListCommitsResponse getSheetCommits(
-            String sheetId, ListSheetCommitsRequest request, RequestOptions requestOptions) {
+            SheetId sheetId, ListSheetCommitsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
-                .addPathSegment(sheetId)
+                .addPathSegment(sheetId.toString())
                 .addPathSegments("commits");
         if (request.getCompleted().isPresent()) {
             httpUrl.addQueryParameter("completed", request.getCompleted().get().toString());
@@ -406,7 +366,7 @@ public class SheetsClient {
     /**
      * Returns the commit versions for a sheet
      */
-    public ListCommitsResponse getSheetCommits(String sheetId, ListSheetCommitsRequest request) {
+    public ListCommitsResponse getSheetCommits(SheetId sheetId, ListSheetCommitsRequest request) {
         return getSheetCommits(sheetId, request, null);
     }
 }

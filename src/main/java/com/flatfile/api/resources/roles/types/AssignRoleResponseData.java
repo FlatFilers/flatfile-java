@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.ISuccessData;
+import com.flatfile.api.resources.commons.types.RoleId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,7 +22,7 @@ import java.util.Objects;
 public final class AssignRoleResponseData implements ISuccessData {
     private final boolean success;
 
-    private final String roleId;
+    private final RoleId roleId;
 
     private final ActorIdUnion actorId;
 
@@ -31,7 +32,7 @@ public final class AssignRoleResponseData implements ISuccessData {
 
     private AssignRoleResponseData(
             boolean success,
-            String roleId,
+            RoleId roleId,
             ActorIdUnion actorId,
             ResourceIdUnion resourceId,
             Map<String, Object> additionalProperties) {
@@ -49,7 +50,7 @@ public final class AssignRoleResponseData implements ISuccessData {
     }
 
     @JsonProperty("roleId")
-    public String getRoleId() {
+    public RoleId getRoleId() {
         return roleId;
     }
 
@@ -102,7 +103,7 @@ public final class AssignRoleResponseData implements ISuccessData {
     }
 
     public interface RoleIdStage {
-        ActorIdStage roleId(String roleId);
+        ActorIdStage roleId(RoleId roleId);
     }
 
     public interface ActorIdStage {
@@ -121,7 +122,7 @@ public final class AssignRoleResponseData implements ISuccessData {
     public static final class Builder implements SuccessStage, RoleIdStage, ActorIdStage, ResourceIdStage, _FinalStage {
         private boolean success;
 
-        private String roleId;
+        private RoleId roleId;
 
         private ActorIdUnion actorId;
 
@@ -150,7 +151,7 @@ public final class AssignRoleResponseData implements ISuccessData {
 
         @Override
         @JsonSetter("roleId")
-        public ActorIdStage roleId(String roleId) {
+        public ActorIdStage roleId(RoleId roleId) {
             this.roleId = roleId;
             return this;
         }

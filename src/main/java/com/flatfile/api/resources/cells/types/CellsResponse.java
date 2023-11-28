@@ -9,29 +9,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CellsResponse.Builder.class)
 public final class CellsResponse {
-    private final Map<String, List<CellValueWithCounts>> data;
+    private final CellsResponseData data;
 
     private final Map<String, Object> additionalProperties;
 
-    private CellsResponse(Map<String, List<CellValueWithCounts>> data, Map<String, Object> additionalProperties) {
+    private CellsResponse(CellsResponseData data, Map<String, Object> additionalProperties) {
         this.data = data;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data")
-    public Map<String, List<CellValueWithCounts>> getData() {
+    public CellsResponseData getData() {
         return data;
     }
 
@@ -60,41 +57,43 @@ public final class CellsResponse {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static DataStage builder() {
         return new Builder();
     }
 
+    public interface DataStage {
+        _FinalStage data(CellsResponseData data);
+
+        Builder from(CellsResponse other);
+    }
+
+    public interface _FinalStage {
+        CellsResponse build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Map<String, List<CellValueWithCounts>> data = new LinkedHashMap<>();
+    public static final class Builder implements DataStage, _FinalStage {
+        private CellsResponseData data;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @Override
         public Builder from(CellsResponse other) {
             data(other.getData());
             return this;
         }
 
-        @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public Builder data(Map<String, List<CellValueWithCounts>> data) {
-            this.data.clear();
-            this.data.putAll(data);
+        @Override
+        @JsonSetter("data")
+        public _FinalStage data(CellsResponseData data) {
+            this.data = data;
             return this;
         }
 
-        public Builder putAllData(Map<String, List<CellValueWithCounts>> data) {
-            this.data.putAll(data);
-            return this;
-        }
-
-        public Builder data(String key, List<CellValueWithCounts> value) {
-            this.data.put(key, value);
-            return this;
-        }
-
+        @Override
         public CellsResponse build() {
             return new CellsResponse(data, additionalProperties);
         }

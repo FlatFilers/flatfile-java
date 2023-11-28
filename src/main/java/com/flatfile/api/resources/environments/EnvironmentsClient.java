@@ -130,7 +130,7 @@ public class EnvironmentsClient {
                 .newBuilder()
                 .addPathSegments("environments")
                 .addPathSegments("subscription-token");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId());
+        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.SheetId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.property.types.Property;
 import com.flatfile.api.resources.records.types.RecordCounts;
 import java.time.OffsetDateTime;
@@ -43,9 +45,9 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
 
     private final Optional<List<Action>> actions;
 
-    private final Optional<String> id;
+    private final Optional<SheetId> id;
 
-    private final Optional<String> workbookId;
+    private final Optional<WorkbookId> workbookId;
 
     private final Optional<SheetConfig> config;
 
@@ -69,8 +71,8 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
             Optional<List<SheetAccess>> access,
             Optional<List<Property>> fields,
             Optional<List<Action>> actions,
-            Optional<String> id,
-            Optional<String> workbookId,
+            Optional<SheetId> id,
+            Optional<WorkbookId> workbookId,
             Optional<SheetConfig> config,
             Optional<RecordCounts> countRecords,
             Optional<String> namespace,
@@ -152,13 +154,13 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
 
     @JsonProperty("id")
     @Override
-    public Optional<String> getId() {
+    public Optional<SheetId> getId() {
         return id;
     }
 
     @JsonProperty("workbookId")
     @Override
-    public Optional<String> getWorkbookId() {
+    public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
@@ -278,9 +280,9 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
 
         private Optional<List<Action>> actions = Optional.empty();
 
-        private Optional<String> id = Optional.empty();
+        private Optional<SheetId> id = Optional.empty();
 
-        private Optional<String> workbookId = Optional.empty();
+        private Optional<WorkbookId> workbookId = Optional.empty();
 
         private Optional<SheetConfig> config = Optional.empty();
 
@@ -417,23 +419,23 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         @JsonSetter(value = "id", nulls = Nulls.SKIP)
-        public Builder id(Optional<String> id) {
+        public Builder id(Optional<SheetId> id) {
             this.id = id;
             return this;
         }
 
-        public Builder id(String id) {
+        public Builder id(SheetId id) {
             this.id = Optional.of(id);
             return this;
         }
 
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
-        public Builder workbookId(Optional<String> workbookId) {
+        public Builder workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
             return this;
         }
 
-        public Builder workbookId(String workbookId) {
+        public Builder workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }

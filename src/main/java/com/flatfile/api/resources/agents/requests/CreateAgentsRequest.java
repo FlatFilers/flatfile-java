@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.agents.types.AgentConfig;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -19,20 +20,21 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateAgentsRequest.Builder.class)
 public final class CreateAgentsRequest {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final AgentConfig body;
 
     private final Map<String, Object> additionalProperties;
 
-    private CreateAgentsRequest(String environmentId, AgentConfig body, Map<String, Object> additionalProperties) {
+    private CreateAgentsRequest(
+            EnvironmentId environmentId, AgentConfig body, Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.body = body;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("environmentId")
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -71,7 +73,7 @@ public final class CreateAgentsRequest {
     }
 
     public interface EnvironmentIdStage {
-        BodyStage environmentId(String environmentId);
+        BodyStage environmentId(EnvironmentId environmentId);
 
         Builder from(CreateAgentsRequest other);
     }
@@ -86,7 +88,7 @@ public final class CreateAgentsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, BodyStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private AgentConfig body;
 
@@ -104,7 +106,7 @@ public final class CreateAgentsRequest {
 
         @Override
         @JsonSetter("environmentId")
-        public BodyStage environmentId(String environmentId) {
+        public BodyStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }

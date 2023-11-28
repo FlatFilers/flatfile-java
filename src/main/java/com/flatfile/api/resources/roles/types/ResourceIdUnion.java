@@ -10,6 +10,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -31,11 +34,11 @@ public final class ResourceIdUnion {
 
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((AccountId) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((EnvironmentId) this.value);
         } else if (this.type == 2) {
-            return visitor.visit((String) this.value);
+            return visitor.visit((SpaceId) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -60,24 +63,24 @@ public final class ResourceIdUnion {
         return this.value.toString();
     }
 
-    public static ResourceIdUnion of(String value) {
+    public static ResourceIdUnion of(AccountId value) {
         return new ResourceIdUnion(value, 0);
     }
 
-    public static ResourceIdUnion of(String value) {
+    public static ResourceIdUnion of(EnvironmentId value) {
         return new ResourceIdUnion(value, 1);
     }
 
-    public static ResourceIdUnion of(String value) {
+    public static ResourceIdUnion of(SpaceId value) {
         return new ResourceIdUnion(value, 2);
     }
 
     public interface Visitor<T> {
-        T visit(String value);
+        T visit(AccountId value);
 
-        T visit(String value);
+        T visit(EnvironmentId value);
 
-        T visit(String value);
+        T visit(SpaceId value);
     }
 
     static final class Deserializer extends StdDeserializer<ResourceIdUnion> {
@@ -89,15 +92,15 @@ public final class ResourceIdUnion {
         public ResourceIdUnion deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AccountId.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, EnvironmentId.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, SpaceId.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

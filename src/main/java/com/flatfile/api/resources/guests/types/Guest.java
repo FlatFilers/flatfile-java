@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.GuestId;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Guest.Builder.class)
 public final class Guest implements IGuestConfig {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final String email;
 
@@ -30,7 +32,7 @@ public final class Guest implements IGuestConfig {
 
     private final List<GuestSpace> spaces;
 
-    private final String id;
+    private final GuestId id;
 
     private final OffsetDateTime createdAt;
 
@@ -39,11 +41,11 @@ public final class Guest implements IGuestConfig {
     private final Map<String, Object> additionalProperties;
 
     private Guest(
-            String environmentId,
+            EnvironmentId environmentId,
             String email,
             String name,
             List<GuestSpace> spaces,
-            String id,
+            GuestId id,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Map<String, Object> additionalProperties) {
@@ -59,7 +61,7 @@ public final class Guest implements IGuestConfig {
 
     @JsonProperty("environmentId")
     @Override
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -82,7 +84,7 @@ public final class Guest implements IGuestConfig {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public GuestId getId() {
         return id;
     }
 
@@ -139,7 +141,7 @@ public final class Guest implements IGuestConfig {
     }
 
     public interface EnvironmentIdStage {
-        EmailStage environmentId(String environmentId);
+        EmailStage environmentId(EnvironmentId environmentId);
 
         Builder from(Guest other);
     }
@@ -153,7 +155,7 @@ public final class Guest implements IGuestConfig {
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(GuestId id);
     }
 
     public interface CreatedAtStage {
@@ -177,13 +179,13 @@ public final class Guest implements IGuestConfig {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
             implements EnvironmentIdStage, EmailStage, NameStage, IdStage, CreatedAtStage, UpdatedAtStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private String email;
 
         private String name;
 
-        private String id;
+        private GuestId id;
 
         private OffsetDateTime createdAt;
 
@@ -210,7 +212,7 @@ public final class Guest implements IGuestConfig {
 
         @Override
         @JsonSetter("environmentId")
-        public EmailStage environmentId(String environmentId) {
+        public EmailStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
@@ -231,7 +233,7 @@ public final class Guest implements IGuestConfig {
 
         @Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
+        public CreatedAtStage id(GuestId id) {
             this.id = id;
             return this;
         }

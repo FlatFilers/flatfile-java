@@ -12,6 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.FileId;
+import com.flatfile.api.resources.commons.types.JobId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +28,9 @@ public final class Job implements IJobConfig {
 
     private final String operation;
 
-    private final String source;
+    private final JobSource source;
 
-    private final Optional<String> destination;
+    private final Optional<JobDestination> destination;
 
     private final Optional<JobUpdateConfig> config;
 
@@ -37,7 +40,7 @@ public final class Job implements IJobConfig {
 
     private final Optional<Double> progress;
 
-    private final Optional<String> fileId;
+    private final Optional<FileId> fileId;
 
     private final Optional<JobMode> mode;
 
@@ -51,15 +54,17 @@ public final class Job implements IJobConfig {
 
     private final Optional<Boolean> managed;
 
+    private final Optional<EnvironmentId> environmentId;
+
     private final Optional<Integer> part;
 
     private final Optional<Map<String, Object>> partData;
 
     private final Optional<JobPartExecution> partExecution;
 
-    private final Optional<String> parentId;
+    private final Optional<JobId> parentId;
 
-    private final String id;
+    private final JobId id;
 
     private final OffsetDateTime createdAt;
 
@@ -76,24 +81,25 @@ public final class Job implements IJobConfig {
     private Job(
             JobType type,
             String operation,
-            String source,
-            Optional<String> destination,
+            JobSource source,
+            Optional<JobDestination> destination,
             Optional<JobUpdateConfig> config,
             Optional<Trigger> trigger,
             Optional<JobStatus> status,
             Optional<Double> progress,
-            Optional<String> fileId,
+            Optional<FileId> fileId,
             Optional<JobMode> mode,
             Optional<Map<String, Object>> input,
             Optional<JobSubject> subject,
             Optional<Map<String, Object>> outcome,
             Optional<String> info,
             Optional<Boolean> managed,
+            Optional<EnvironmentId> environmentId,
             Optional<Integer> part,
             Optional<Map<String, Object>> partData,
             Optional<JobPartExecution> partExecution,
-            Optional<String> parentId,
-            String id,
+            Optional<JobId> parentId,
+            JobId id,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<OffsetDateTime> startedAt,
@@ -115,6 +121,7 @@ public final class Job implements IJobConfig {
         this.outcome = outcome;
         this.info = info;
         this.managed = managed;
+        this.environmentId = environmentId;
         this.part = part;
         this.partData = partData;
         this.partExecution = partExecution;
@@ -148,13 +155,13 @@ public final class Job implements IJobConfig {
 
     @JsonProperty("source")
     @Override
-    public String getSource() {
+    public JobSource getSource() {
         return source;
     }
 
     @JsonProperty("destination")
     @Override
-    public Optional<String> getDestination() {
+    public Optional<JobDestination> getDestination() {
         return destination;
     }
 
@@ -193,7 +200,7 @@ public final class Job implements IJobConfig {
 
     @JsonProperty("fileId")
     @Override
-    public Optional<String> getFileId() {
+    public Optional<FileId> getFileId() {
         return fileId;
     }
 
@@ -252,6 +259,15 @@ public final class Job implements IJobConfig {
     }
 
     /**
+     * @return The id of the environment this job belongs to
+     */
+    @JsonProperty("environmentId")
+    @Override
+    public Optional<EnvironmentId> getEnvironmentId() {
+        return environmentId;
+    }
+
+    /**
      * @return The part number of this job
      */
     @JsonProperty("part")
@@ -283,12 +299,12 @@ public final class Job implements IJobConfig {
      */
     @JsonProperty("parentId")
     @Override
-    public Optional<String> getParentId() {
+    public Optional<JobId> getParentId() {
         return parentId;
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public JobId getId() {
         return id;
     }
 
@@ -359,6 +375,7 @@ public final class Job implements IJobConfig {
                 && outcome.equals(other.outcome)
                 && info.equals(other.info)
                 && managed.equals(other.managed)
+                && environmentId.equals(other.environmentId)
                 && part.equals(other.part)
                 && partData.equals(other.partData)
                 && partExecution.equals(other.partExecution)
@@ -389,6 +406,7 @@ public final class Job implements IJobConfig {
                 this.outcome,
                 this.info,
                 this.managed,
+                this.environmentId,
                 this.part,
                 this.partData,
                 this.partExecution,
@@ -421,11 +439,11 @@ public final class Job implements IJobConfig {
     }
 
     public interface SourceStage {
-        IdStage source(String source);
+        IdStage source(JobSource source);
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(JobId id);
     }
 
     public interface CreatedAtStage {
@@ -439,9 +457,9 @@ public final class Job implements IJobConfig {
     public interface _FinalStage {
         Job build();
 
-        _FinalStage destination(Optional<String> destination);
+        _FinalStage destination(Optional<JobDestination> destination);
 
-        _FinalStage destination(String destination);
+        _FinalStage destination(JobDestination destination);
 
         _FinalStage config(Optional<JobUpdateConfig> config);
 
@@ -459,9 +477,9 @@ public final class Job implements IJobConfig {
 
         _FinalStage progress(Double progress);
 
-        _FinalStage fileId(Optional<String> fileId);
+        _FinalStage fileId(Optional<FileId> fileId);
 
-        _FinalStage fileId(String fileId);
+        _FinalStage fileId(FileId fileId);
 
         _FinalStage mode(Optional<JobMode> mode);
 
@@ -487,6 +505,10 @@ public final class Job implements IJobConfig {
 
         _FinalStage managed(Boolean managed);
 
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
+
+        _FinalStage environmentId(EnvironmentId environmentId);
+
         _FinalStage part(Optional<Integer> part);
 
         _FinalStage part(Integer part);
@@ -499,9 +521,9 @@ public final class Job implements IJobConfig {
 
         _FinalStage partExecution(JobPartExecution partExecution);
 
-        _FinalStage parentId(Optional<String> parentId);
+        _FinalStage parentId(Optional<JobId> parentId);
 
-        _FinalStage parentId(String parentId);
+        _FinalStage parentId(JobId parentId);
 
         _FinalStage startedAt(Optional<OffsetDateTime> startedAt);
 
@@ -523,9 +545,9 @@ public final class Job implements IJobConfig {
 
         private String operation;
 
-        private String source;
+        private JobSource source;
 
-        private String id;
+        private JobId id;
 
         private OffsetDateTime createdAt;
 
@@ -537,13 +559,15 @@ public final class Job implements IJobConfig {
 
         private Optional<OffsetDateTime> startedAt = Optional.empty();
 
-        private Optional<String> parentId = Optional.empty();
+        private Optional<JobId> parentId = Optional.empty();
 
         private Optional<JobPartExecution> partExecution = Optional.empty();
 
         private Optional<Map<String, Object>> partData = Optional.empty();
 
         private Optional<Integer> part = Optional.empty();
+
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
         private Optional<Boolean> managed = Optional.empty();
 
@@ -557,7 +581,7 @@ public final class Job implements IJobConfig {
 
         private Optional<JobMode> mode = Optional.empty();
 
-        private Optional<String> fileId = Optional.empty();
+        private Optional<FileId> fileId = Optional.empty();
 
         private Optional<Double> progress = Optional.empty();
 
@@ -567,7 +591,7 @@ public final class Job implements IJobConfig {
 
         private Optional<JobUpdateConfig> config = Optional.empty();
 
-        private Optional<String> destination = Optional.empty();
+        private Optional<JobDestination> destination = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -591,6 +615,7 @@ public final class Job implements IJobConfig {
             outcome(other.getOutcome());
             info(other.getInfo());
             managed(other.getManaged());
+            environmentId(other.getEnvironmentId());
             part(other.getPart());
             partData(other.getPartData());
             partExecution(other.getPartExecution());
@@ -628,14 +653,14 @@ public final class Job implements IJobConfig {
 
         @Override
         @JsonSetter("source")
-        public IdStage source(String source) {
+        public IdStage source(JobSource source) {
             this.source = source;
             return this;
         }
 
         @Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
+        public CreatedAtStage id(JobId id) {
             this.id = id;
             return this;
         }
@@ -718,14 +743,14 @@ public final class Job implements IJobConfig {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage parentId(String parentId) {
+        public _FinalStage parentId(JobId parentId) {
             this.parentId = Optional.of(parentId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "parentId", nulls = Nulls.SKIP)
-        public _FinalStage parentId(Optional<String> parentId) {
+        public _FinalStage parentId(Optional<JobId> parentId) {
             this.parentId = parentId;
             return this;
         }
@@ -778,6 +803,23 @@ public final class Job implements IJobConfig {
         @JsonSetter(value = "part", nulls = Nulls.SKIP)
         public _FinalStage part(Optional<Integer> part) {
             this.part = part;
+            return this;
+        }
+
+        /**
+         * <p>The id of the environment this job belongs to</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage environmentId(EnvironmentId environmentId) {
+            this.environmentId = Optional.of(environmentId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
+            this.environmentId = environmentId;
             return this;
         }
 
@@ -884,14 +926,14 @@ public final class Job implements IJobConfig {
         }
 
         @Override
-        public _FinalStage fileId(String fileId) {
+        public _FinalStage fileId(FileId fileId) {
             this.fileId = Optional.of(fileId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "fileId", nulls = Nulls.SKIP)
-        public _FinalStage fileId(Optional<String> fileId) {
+        public _FinalStage fileId(Optional<FileId> fileId) {
             this.fileId = fileId;
             return this;
         }
@@ -961,14 +1003,14 @@ public final class Job implements IJobConfig {
         }
 
         @Override
-        public _FinalStage destination(String destination) {
+        public _FinalStage destination(JobDestination destination) {
             this.destination = Optional.of(destination);
             return this;
         }
 
         @Override
         @JsonSetter(value = "destination", nulls = Nulls.SKIP)
-        public _FinalStage destination(Optional<String> destination) {
+        public _FinalStage destination(Optional<JobDestination> destination) {
             this.destination = destination;
             return this;
         }
@@ -991,6 +1033,7 @@ public final class Job implements IJobConfig {
                     outcome,
                     info,
                     managed,
+                    environmentId,
                     part,
                     partData,
                     partExecution,

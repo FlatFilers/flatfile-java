@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.files.types.Mode;
 import com.flatfile.api.resources.files.types.ModelFileStatusEnum;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = UpdateFileRequest.Builder.class)
 public final class UpdateFileRequest {
-    private final Optional<String> workbookId;
+    private final Optional<WorkbookId> workbookId;
 
     private final Optional<String> name;
 
@@ -37,7 +38,7 @@ public final class UpdateFileRequest {
     private final Map<String, Object> additionalProperties;
 
     private UpdateFileRequest(
-            Optional<String> workbookId,
+            Optional<WorkbookId> workbookId,
             Optional<String> name,
             Optional<Mode> mode,
             Optional<ModelFileStatusEnum> status,
@@ -52,7 +53,7 @@ public final class UpdateFileRequest {
     }
 
     @JsonProperty("workbookId")
-    public Optional<String> getWorkbookId() {
+    public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
@@ -123,7 +124,7 @@ public final class UpdateFileRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> workbookId = Optional.empty();
+        private Optional<WorkbookId> workbookId = Optional.empty();
 
         private Optional<String> name = Optional.empty();
 
@@ -148,12 +149,12 @@ public final class UpdateFileRequest {
         }
 
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
-        public Builder workbookId(Optional<String> workbookId) {
+        public Builder workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
             return this;
         }
 
-        public Builder workbookId(String workbookId) {
+        public Builder workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }

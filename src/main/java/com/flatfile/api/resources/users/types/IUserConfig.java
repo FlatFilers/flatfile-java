@@ -3,10 +3,12 @@
  */
 package com.flatfile.api.resources.users.types;
 
+import com.flatfile.api.resources.commons.types.AccountId;
+
 public interface IUserConfig {
     String getEmail();
 
     String getName();
 
-    String getAccountId();
+    AccountId getAccountId();
 }

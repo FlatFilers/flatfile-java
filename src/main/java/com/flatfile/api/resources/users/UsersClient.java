@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.UserId;
 import com.flatfile.api.resources.users.requests.CreateApiTokenRequest;
 import com.flatfile.api.resources.users.requests.ExchangeTokenRequest;
 import com.flatfile.api.resources.users.requests.ListApiTokensRequest;
@@ -15,7 +16,6 @@ import com.flatfile.api.resources.users.types.ApiTokenResponse;
 import com.flatfile.api.resources.users.types.ExchangeTokenResponse;
 import com.flatfile.api.resources.users.types.ListApiTokensResponse;
 import com.flatfile.api.resources.users.types.ListUsersResponse;
-import com.flatfile.api.resources.users.types.UserConfig;
 import com.flatfile.api.resources.users.types.UserResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -77,55 +77,13 @@ public class UsersClient {
     }
 
     /**
-     * A user is a privileged user that logs in with a username and password.
-     */
-    public UserResponse create(UserConfig request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("users")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * A user is a privileged user that logs in with a username and password.
-     */
-    public UserResponse create(UserConfig request) {
-        return create(request, null);
-    }
-
-    /**
      * Gets a user
      */
-    public UserResponse get(String userId, RequestOptions requestOptions) {
+    public UserResponse get(UserId userId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(userId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -150,7 +108,7 @@ public class UsersClient {
     /**
      * Gets a user
      */
-    public UserResponse get(String userId) {
+    public UserResponse get(UserId userId) {
         return get(userId, null);
     }
 
@@ -158,11 +116,11 @@ public class UsersClient {
      * Gets all the api tokens for a user.
      */
     public ListApiTokensResponse listApiTokens(
-            String userId, ListApiTokensRequest request, RequestOptions requestOptions) {
+            UserId userId, ListApiTokensRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(userId.toString())
                 .addPathSegments("api-token");
         httpUrl.addQueryParameter("tenantId", request.getTenantId());
         if (request.getPageSize().isPresent()) {
@@ -195,7 +153,7 @@ public class UsersClient {
     /**
      * Gets all the api tokens for a user.
      */
-    public ListApiTokensResponse listApiTokens(String userId, ListApiTokensRequest request) {
+    public ListApiTokensResponse listApiTokens(UserId userId, ListApiTokensRequest request) {
         return listApiTokens(userId, request, null);
     }
 
@@ -203,11 +161,11 @@ public class UsersClient {
      * Creates an api token for authenticating against Flatfile APIs.
      */
     public ApiTokenResponse createApiToken(
-            String userId, CreateApiTokenRequest request, RequestOptions requestOptions) {
+            UserId userId, CreateApiTokenRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(userId.toString())
                 .addPathSegments("api-token");
         httpUrl.addQueryParameter("tenantId", request.getTenantId());
         Request.Builder _requestBuilder = new Request.Builder()
@@ -233,7 +191,7 @@ public class UsersClient {
     /**
      * Creates an api token for authenticating against Flatfile APIs.
      */
-    public ApiTokenResponse createApiToken(String userId, CreateApiTokenRequest request) {
+    public ApiTokenResponse createApiToken(UserId userId, CreateApiTokenRequest request) {
         return createApiToken(userId, request, null);
     }
 

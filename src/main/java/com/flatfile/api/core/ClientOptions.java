@@ -29,7 +29,7 @@ public final class ClientOptions {
                 "X-Fern-SDK-Name",
                 "com.flatfile.fern:api-sdk",
                 "X-Fern-SDK-Version",
-                "0.0.1",
+                "0.0.2",
                 "X-Fern-Language",
                 "JAVA"));
         this.headerSuppliers = headerSuppliers;

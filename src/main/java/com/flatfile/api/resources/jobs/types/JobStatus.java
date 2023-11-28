@@ -6,7 +6,11 @@ package com.flatfile.api.resources.jobs.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum JobStatus {
+    CREATED("created"),
+
     PLANNING("planning"),
+
+    SCHEDULED("scheduled"),
 
     READY("ready"),
 
@@ -14,7 +18,9 @@ public enum JobStatus {
 
     COMPLETE("complete"),
 
-    FAILED("failed");
+    FAILED("failed"),
+
+    CANCELED("canceled");
 
     private final String value;
 

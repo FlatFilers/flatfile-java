@@ -3,14 +3,16 @@
  */
 package com.flatfile.api.resources.secrets.types;
 
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.Optional;
 
 public interface IWriteSecret {
-    String getName();
+    SecretName getName();
 
-    String getValue();
+    SecretValue getValue();
 
-    String getEnvironmentId();
+    EnvironmentId getEnvironmentId();
 
-    Optional<String> getSpaceId();
+    Optional<SpaceId> getSpaceId();
 }

@@ -13,6 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceConfigId;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +26,11 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = InternalSpaceConfigBase.Builder.class)
 public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
-    private final Optional<String> spaceConfigId;
+    private final Optional<SpaceConfigId> spaceConfigId;
 
-    private final Optional<String> environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
-    private final Optional<String> primaryWorkbookId;
+    private final Optional<WorkbookId> primaryWorkbookId;
 
     private final Optional<Object> metadata;
 
@@ -50,9 +53,9 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
     private final Map<String, Object> additionalProperties;
 
     private InternalSpaceConfigBase(
-            Optional<String> spaceConfigId,
-            Optional<String> environmentId,
-            Optional<String> primaryWorkbookId,
+            Optional<SpaceConfigId> spaceConfigId,
+            Optional<EnvironmentId> environmentId,
+            Optional<WorkbookId> primaryWorkbookId,
             Optional<Object> metadata,
             Optional<List<Action>> actions,
             Optional<List<SpaceAccess>> access,
@@ -80,19 +83,19 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
 
     @JsonProperty("spaceConfigId")
     @Override
-    public Optional<String> getSpaceConfigId() {
+    public Optional<SpaceConfigId> getSpaceConfigId() {
         return spaceConfigId;
     }
 
     @JsonProperty("environmentId")
     @Override
-    public Optional<String> getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("primaryWorkbookId")
     @Override
-    public Optional<String> getPrimaryWorkbookId() {
+    public Optional<WorkbookId> getPrimaryWorkbookId() {
         return primaryWorkbookId;
     }
 
@@ -210,11 +213,11 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> spaceConfigId = Optional.empty();
+        private Optional<SpaceConfigId> spaceConfigId = Optional.empty();
 
-        private Optional<String> environmentId = Optional.empty();
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
-        private Optional<String> primaryWorkbookId = Optional.empty();
+        private Optional<WorkbookId> primaryWorkbookId = Optional.empty();
 
         private Optional<Object> metadata = Optional.empty();
 
@@ -256,34 +259,34 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         @JsonSetter(value = "spaceConfigId", nulls = Nulls.SKIP)
-        public Builder spaceConfigId(Optional<String> spaceConfigId) {
+        public Builder spaceConfigId(Optional<SpaceConfigId> spaceConfigId) {
             this.spaceConfigId = spaceConfigId;
             return this;
         }
 
-        public Builder spaceConfigId(String spaceConfigId) {
+        public Builder spaceConfigId(SpaceConfigId spaceConfigId) {
             this.spaceConfigId = Optional.of(spaceConfigId);
             return this;
         }
 
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
-        public Builder environmentId(Optional<String> environmentId) {
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        public Builder environmentId(String environmentId) {
+        public Builder environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
         @JsonSetter(value = "primaryWorkbookId", nulls = Nulls.SKIP)
-        public Builder primaryWorkbookId(Optional<String> primaryWorkbookId) {
+        public Builder primaryWorkbookId(Optional<WorkbookId> primaryWorkbookId) {
             this.primaryWorkbookId = primaryWorkbookId;
             return this;
         }
 
-        public Builder primaryWorkbookId(String primaryWorkbookId) {
+        public Builder primaryWorkbookId(WorkbookId primaryWorkbookId) {
             this.primaryWorkbookId = Optional.of(primaryWorkbookId);
             return this;
         }

@@ -12,8 +12,16 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.cells.types.Distinct;
+import com.flatfile.api.resources.cells.types.FieldKey;
+import com.flatfile.api.resources.cells.types.IncludeCounts;
 import com.flatfile.api.resources.commons.types.Filter;
+import com.flatfile.api.resources.commons.types.FilterField;
+import com.flatfile.api.resources.commons.types.PageNumber;
+import com.flatfile.api.resources.commons.types.PageSize;
+import com.flatfile.api.resources.commons.types.SearchValue;
 import com.flatfile.api.resources.commons.types.SortDirection;
+import com.flatfile.api.resources.commons.types.SortField;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,39 +30,39 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetFieldValuesRequest.Builder.class)
 public final class GetFieldValuesRequest {
-    private final Optional<String> fieldKey;
+    private final Optional<FieldKey> fieldKey;
 
-    private final Optional<String> sortField;
+    private final Optional<SortField> sortField;
 
     private final Optional<SortDirection> sortDirection;
 
     private final Optional<Filter> filter;
 
-    private final Optional<String> filterField;
+    private final Optional<FilterField> filterField;
 
-    private final Optional<Integer> pageSize;
+    private final Optional<PageSize> pageSize;
 
-    private final Optional<Integer> pageNumber;
+    private final Optional<PageNumber> pageNumber;
 
-    private final Optional<Boolean> distinct;
+    private final Optional<Distinct> distinct;
 
-    private final Optional<Boolean> includeCounts;
+    private final Optional<IncludeCounts> includeCounts;
 
-    private final Optional<String> searchValue;
+    private final Optional<SearchValue> searchValue;
 
     private final Map<String, Object> additionalProperties;
 
     private GetFieldValuesRequest(
-            Optional<String> fieldKey,
-            Optional<String> sortField,
+            Optional<FieldKey> fieldKey,
+            Optional<SortField> sortField,
             Optional<SortDirection> sortDirection,
             Optional<Filter> filter,
-            Optional<String> filterField,
-            Optional<Integer> pageSize,
-            Optional<Integer> pageNumber,
-            Optional<Boolean> distinct,
-            Optional<Boolean> includeCounts,
-            Optional<String> searchValue,
+            Optional<FilterField> filterField,
+            Optional<PageSize> pageSize,
+            Optional<PageNumber> pageNumber,
+            Optional<Distinct> distinct,
+            Optional<IncludeCounts> includeCounts,
+            Optional<SearchValue> searchValue,
             Map<String, Object> additionalProperties) {
         this.fieldKey = fieldKey;
         this.sortField = sortField;
@@ -70,12 +78,12 @@ public final class GetFieldValuesRequest {
     }
 
     @JsonProperty("fieldKey")
-    public Optional<String> getFieldKey() {
+    public Optional<FieldKey> getFieldKey() {
         return fieldKey;
     }
 
     @JsonProperty("sortField")
-    public Optional<String> getSortField() {
+    public Optional<SortField> getSortField() {
         return sortField;
     }
 
@@ -93,7 +101,7 @@ public final class GetFieldValuesRequest {
      * @return Name of field by which to filter records
      */
     @JsonProperty("filterField")
-    public Optional<String> getFilterField() {
+    public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
@@ -101,7 +109,7 @@ public final class GetFieldValuesRequest {
      * @return Number of records to return in a page (default 1000 if pageNumber included)
      */
     @JsonProperty("pageSize")
-    public Optional<Integer> getPageSize() {
+    public Optional<PageSize> getPageSize() {
         return pageSize;
     }
 
@@ -109,17 +117,17 @@ public final class GetFieldValuesRequest {
      * @return Based on pageSize, which page of records to return
      */
     @JsonProperty("pageNumber")
-    public Optional<Integer> getPageNumber() {
+    public Optional<PageNumber> getPageNumber() {
         return pageNumber;
     }
 
     @JsonProperty("distinct")
-    public Optional<Boolean> getDistinct() {
+    public Optional<Distinct> getDistinct() {
         return distinct;
     }
 
     @JsonProperty("includeCounts")
-    public Optional<Boolean> getIncludeCounts() {
+    public Optional<IncludeCounts> getIncludeCounts() {
         return includeCounts;
     }
 
@@ -127,7 +135,7 @@ public final class GetFieldValuesRequest {
      * @return A value to find for a given field in a sheet. Wrap the value in &quot;&quot; for exact match
      */
     @JsonProperty("searchValue")
-    public Optional<String> getSearchValue() {
+    public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
@@ -181,25 +189,25 @@ public final class GetFieldValuesRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> fieldKey = Optional.empty();
+        private Optional<FieldKey> fieldKey = Optional.empty();
 
-        private Optional<String> sortField = Optional.empty();
+        private Optional<SortField> sortField = Optional.empty();
 
         private Optional<SortDirection> sortDirection = Optional.empty();
 
         private Optional<Filter> filter = Optional.empty();
 
-        private Optional<String> filterField = Optional.empty();
+        private Optional<FilterField> filterField = Optional.empty();
 
-        private Optional<Integer> pageSize = Optional.empty();
+        private Optional<PageSize> pageSize = Optional.empty();
 
-        private Optional<Integer> pageNumber = Optional.empty();
+        private Optional<PageNumber> pageNumber = Optional.empty();
 
-        private Optional<Boolean> distinct = Optional.empty();
+        private Optional<Distinct> distinct = Optional.empty();
 
-        private Optional<Boolean> includeCounts = Optional.empty();
+        private Optional<IncludeCounts> includeCounts = Optional.empty();
 
-        private Optional<String> searchValue = Optional.empty();
+        private Optional<SearchValue> searchValue = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -221,23 +229,23 @@ public final class GetFieldValuesRequest {
         }
 
         @JsonSetter(value = "fieldKey", nulls = Nulls.SKIP)
-        public Builder fieldKey(Optional<String> fieldKey) {
+        public Builder fieldKey(Optional<FieldKey> fieldKey) {
             this.fieldKey = fieldKey;
             return this;
         }
 
-        public Builder fieldKey(String fieldKey) {
+        public Builder fieldKey(FieldKey fieldKey) {
             this.fieldKey = Optional.of(fieldKey);
             return this;
         }
 
         @JsonSetter(value = "sortField", nulls = Nulls.SKIP)
-        public Builder sortField(Optional<String> sortField) {
+        public Builder sortField(Optional<SortField> sortField) {
             this.sortField = sortField;
             return this;
         }
 
-        public Builder sortField(String sortField) {
+        public Builder sortField(SortField sortField) {
             this.sortField = Optional.of(sortField);
             return this;
         }
@@ -265,67 +273,67 @@ public final class GetFieldValuesRequest {
         }
 
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
-        public Builder filterField(Optional<String> filterField) {
+        public Builder filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }
 
-        public Builder filterField(String filterField) {
+        public Builder filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
         @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
-        public Builder pageSize(Optional<Integer> pageSize) {
+        public Builder pageSize(Optional<PageSize> pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
-        public Builder pageSize(Integer pageSize) {
+        public Builder pageSize(PageSize pageSize) {
             this.pageSize = Optional.of(pageSize);
             return this;
         }
 
         @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
-        public Builder pageNumber(Optional<Integer> pageNumber) {
+        public Builder pageNumber(Optional<PageNumber> pageNumber) {
             this.pageNumber = pageNumber;
             return this;
         }
 
-        public Builder pageNumber(Integer pageNumber) {
+        public Builder pageNumber(PageNumber pageNumber) {
             this.pageNumber = Optional.of(pageNumber);
             return this;
         }
 
         @JsonSetter(value = "distinct", nulls = Nulls.SKIP)
-        public Builder distinct(Optional<Boolean> distinct) {
+        public Builder distinct(Optional<Distinct> distinct) {
             this.distinct = distinct;
             return this;
         }
 
-        public Builder distinct(Boolean distinct) {
+        public Builder distinct(Distinct distinct) {
             this.distinct = Optional.of(distinct);
             return this;
         }
 
         @JsonSetter(value = "includeCounts", nulls = Nulls.SKIP)
-        public Builder includeCounts(Optional<Boolean> includeCounts) {
+        public Builder includeCounts(Optional<IncludeCounts> includeCounts) {
             this.includeCounts = includeCounts;
             return this;
         }
 
-        public Builder includeCounts(Boolean includeCounts) {
+        public Builder includeCounts(IncludeCounts includeCounts) {
             this.includeCounts = Optional.of(includeCounts);
             return this;
         }
 
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
-        public Builder searchValue(Optional<String> searchValue) {
+        public Builder searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
-        public Builder searchValue(String searchValue) {
+        public Builder searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,11 +19,11 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DeleteSpacesRequest.Builder.class)
 public final class DeleteSpacesRequest {
-    private final String ids;
+    private final SpaceId ids;
 
     private final Map<String, Object> additionalProperties;
 
-    private DeleteSpacesRequest(String ids, Map<String, Object> additionalProperties) {
+    private DeleteSpacesRequest(SpaceId ids, Map<String, Object> additionalProperties) {
         this.ids = ids;
         this.additionalProperties = additionalProperties;
     }
@@ -31,7 +32,7 @@ public final class DeleteSpacesRequest {
      * @return List of ids for the spaces to be deleted
      */
     @JsonProperty("ids")
-    public String getIds() {
+    public SpaceId getIds() {
         return ids;
     }
 
@@ -65,7 +66,7 @@ public final class DeleteSpacesRequest {
     }
 
     public interface IdsStage {
-        _FinalStage ids(String ids);
+        _FinalStage ids(SpaceId ids);
 
         Builder from(DeleteSpacesRequest other);
     }
@@ -76,7 +77,7 @@ public final class DeleteSpacesRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdsStage, _FinalStage {
-        private String ids;
+        private SpaceId ids;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -95,7 +96,7 @@ public final class DeleteSpacesRequest {
          */
         @Override
         @JsonSetter("ids")
-        public _FinalStage ids(String ids) {
+        public _FinalStage ids(SpaceId ids) {
             this.ids = ids;
             return this;
         }

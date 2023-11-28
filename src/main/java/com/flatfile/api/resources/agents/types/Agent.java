@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AgentId;
 import com.flatfile.api.resources.events.types.EventTopic;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public final class Agent implements IAgentConfig {
 
     private final Optional<String> source;
 
-    private final String id;
+    private final AgentId id;
 
     private final Map<String, Object> additionalProperties;
 
@@ -36,7 +37,7 @@ public final class Agent implements IAgentConfig {
             Optional<List<EventTopic>> topics,
             Optional<Compiler> compiler,
             Optional<String> source,
-            String id,
+            AgentId id,
             Map<String, Object> additionalProperties) {
         this.topics = topics;
         this.compiler = compiler;
@@ -73,7 +74,7 @@ public final class Agent implements IAgentConfig {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public AgentId getId() {
         return id;
     }
 
@@ -110,7 +111,7 @@ public final class Agent implements IAgentConfig {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(AgentId id);
 
         Builder from(Agent other);
     }
@@ -133,7 +134,7 @@ public final class Agent implements IAgentConfig {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
-        private String id;
+        private AgentId id;
 
         private Optional<String> source = Optional.empty();
 
@@ -157,7 +158,7 @@ public final class Agent implements IAgentConfig {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public _FinalStage id(AgentId id) {
             this.id = id;
             return this;
         }

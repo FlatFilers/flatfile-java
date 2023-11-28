@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EventId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -39,7 +40,7 @@ public final class GenericEvent implements IBaseEvent {
 
     private final Optional<List<String>> namespaces;
 
-    private final String id;
+    private final EventId id;
 
     private final OffsetDateTime createdAt;
 
@@ -62,7 +63,7 @@ public final class GenericEvent implements IBaseEvent {
             Optional<String> target,
             Optional<Origin> origin,
             Optional<List<String>> namespaces,
-            String id,
+            EventId id,
             OffsetDateTime createdAt,
             Optional<OffsetDateTime> deletedAt,
             Optional<OffsetDateTime> acknowledgedAt,
@@ -150,7 +151,7 @@ public final class GenericEvent implements IBaseEvent {
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public EventId getId() {
         return id;
     }
 
@@ -258,7 +259,7 @@ public final class GenericEvent implements IBaseEvent {
     }
 
     public interface IdStage {
-        CreatedAtStage id(String id);
+        CreatedAtStage id(EventId id);
     }
 
     public interface CreatedAtStage {
@@ -317,7 +318,7 @@ public final class GenericEvent implements IBaseEvent {
 
         private Context context;
 
-        private String id;
+        private EventId id;
 
         private OffsetDateTime createdAt;
 
@@ -389,7 +390,7 @@ public final class GenericEvent implements IBaseEvent {
 
         @Override
         @JsonSetter("id")
-        public CreatedAtStage id(String id) {
+        public CreatedAtStage id(EventId id) {
             this.id = id;
             return this;
         }

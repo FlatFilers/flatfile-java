@@ -3,10 +3,11 @@
  */
 package com.flatfile.api.resources.guests.types;
 
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.List;
 
 public interface IGuestConfig {
-    String getEnvironmentId();
+    EnvironmentId getEnvironmentId();
 
     String getEmail();
 

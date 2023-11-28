@@ -7,22 +7,16 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commits.types.ListCommitsResponse;
 import com.flatfile.api.resources.commons.types.Success;
-import com.flatfile.api.resources.records.types.CellValue;
-import com.flatfile.api.resources.records.types.Record;
-import com.flatfile.api.resources.records.types.RecordsResponse;
-import com.flatfile.api.resources.sheets.types.ListSheetsResponse;
-import com.flatfile.api.resources.versions.types.VersionResponse;
-import com.flatfile.api.resources.workbooks.requests.DeleteRecordsRequestDeprecated;
-import com.flatfile.api.resources.workbooks.requests.ListRecordsRequest;
+import com.flatfile.api.resources.commons.types.WorkbookId;
+import com.flatfile.api.resources.workbooks.requests.ListWorkbookCommitsRequest;
 import com.flatfile.api.resources.workbooks.requests.ListWorkbooksRequest;
 import com.flatfile.api.resources.workbooks.types.CreateWorkbookConfig;
 import com.flatfile.api.resources.workbooks.types.ListWorkbooksResponse;
 import com.flatfile.api.resources.workbooks.types.WorkbookResponse;
 import com.flatfile.api.resources.workbooks.types.WorkbookUpdate;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -52,7 +46,7 @@ public class WorkbooksClient {
                 .newBuilder()
                 .addPathSegments("workbooks");
         if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         if (request.getIncludeCounts().isPresent()) {
             httpUrl.addQueryParameter(
@@ -130,11 +124,11 @@ public class WorkbooksClient {
     /**
      * Returns a single workbook
      */
-    public WorkbookResponse get(String workbookId, RequestOptions requestOptions) {
+    public WorkbookResponse get(WorkbookId workbookId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
+                .addPathSegment(workbookId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -159,18 +153,18 @@ public class WorkbooksClient {
     /**
      * Returns a single workbook
      */
-    public WorkbookResponse get(String workbookId) {
+    public WorkbookResponse get(WorkbookId workbookId) {
         return get(workbookId, null);
     }
 
     /**
      * Deletes a workbook and all of its record data permanently
      */
-    public Success delete(String workbookId, RequestOptions requestOptions) {
+    public Success delete(WorkbookId workbookId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
+                .addPathSegment(workbookId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -195,25 +189,25 @@ public class WorkbooksClient {
     /**
      * Deletes a workbook and all of its record data permanently
      */
-    public Success delete(String workbookId) {
+    public Success delete(WorkbookId workbookId) {
         return delete(workbookId, null);
     }
 
     /**
      * Updates a workbook
      */
-    public WorkbookResponse update(String workbookId) {
+    public WorkbookResponse update(WorkbookId workbookId) {
         return update(workbookId, WorkbookUpdate.builder().build());
     }
 
     /**
      * Updates a workbook
      */
-    public WorkbookResponse update(String workbookId, WorkbookUpdate request, RequestOptions requestOptions) {
+    public WorkbookResponse update(WorkbookId workbookId, WorkbookUpdate request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
+                .addPathSegment(workbookId.toString())
                 .build();
         RequestBody body;
         try {
@@ -245,189 +239,30 @@ public class WorkbooksClient {
     /**
      * Updates a workbook
      */
-    public WorkbookResponse update(String workbookId, WorkbookUpdate request) {
+    public WorkbookResponse update(WorkbookId workbookId, WorkbookUpdate request) {
         return update(workbookId, request, null);
     }
 
     /**
-     * Clones a workbook
+     * Returns the commits for a workbook
      */
-    public WorkbookResponse clone(String workbookId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("clone")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), WorkbookResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public ListCommitsResponse getWorkbookCommits(WorkbookId workbookId) {
+        return getWorkbookCommits(
+                workbookId, ListWorkbookCommitsRequest.builder().build());
     }
 
     /**
-     * Clones a workbook
+     * Returns the commits for a workbook
      */
-    public WorkbookResponse clone(String workbookId) {
-        return clone(workbookId, null);
-    }
-
-    /**
-     * Returns sheets from a workbook
-     */
-    public ListSheetsResponse getSheetsDeprecated(String workbookId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListSheetsResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Returns sheets from a workbook
-     */
-    public ListSheetsResponse getSheetsDeprecated(String workbookId) {
-        return getSheetsDeprecated(workbookId, null);
-    }
-
-    /**
-     * Rebuild a workbook
-     */
-    public Success rebuildWorkbook(String workbookId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("rebuild")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Rebuild a workbook
-     */
-    public Success rebuildWorkbook(String workbookId) {
-        return rebuildWorkbook(workbookId, null);
-    }
-
-    /**
-     * Returns records from a sheet in a workbook
-     */
-    public RecordsResponse getRecordsDeprecated(String workbookId, String sheetId) {
-        return getRecordsDeprecated(
-                workbookId, sheetId, ListRecordsRequest.builder().build());
-    }
-
-    /**
-     * Returns records from a sheet in a workbook
-     */
-    public RecordsResponse getRecordsDeprecated(
-            String workbookId, String sheetId, ListRecordsRequest request, RequestOptions requestOptions) {
+    public ListCommitsResponse getWorkbookCommits(
+            WorkbookId workbookId, ListWorkbookCommitsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("records");
-        if (request.getVersionId().isPresent()) {
-            httpUrl.addQueryParameter("versionId", request.getVersionId().get());
-        }
-        if (request.getUntilVersionId().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "untilVersionId", request.getUntilVersionId().get());
-        }
-        if (request.getSinceVersionId().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "sinceVersionId", request.getSinceVersionId().get());
-        }
-        if (request.getSortField().isPresent()) {
-            httpUrl.addQueryParameter("sortField", request.getSortField().get());
-        }
-        if (request.getSortDirection().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "sortDirection", request.getSortDirection().get().toString());
-        }
-        if (request.getFilter().isPresent()) {
-            httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
-        }
-        if (request.getFilterField().isPresent()) {
-            httpUrl.addQueryParameter("filterField", request.getFilterField().get());
-        }
-        if (request.getSearchValue().isPresent()) {
-            httpUrl.addQueryParameter("searchValue", request.getSearchValue().get());
-        }
-        if (request.getSearchField().isPresent()) {
-            httpUrl.addQueryParameter("searchField", request.getSearchField().get());
-        }
-        if (request.getPageSize().isPresent()) {
-            httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
-        }
-        if (request.getPageNumber().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "pageNumber", request.getPageNumber().get().toString());
-        }
-        if (request.getIncludeCounts().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "includeCounts", request.getIncludeCounts().get().toString());
-        }
-        if (request.getIncludeLinks().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "includeLinks", request.getIncludeLinks().get().toString());
-        }
-        if (request.getIncludeMessages().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "includeMessages", request.getIncludeMessages().get().toString());
+                .addPathSegment(workbookId.toString())
+                .addPathSegments("commits");
+        if (request.getCompleted().isPresent()) {
+            httpUrl.addQueryParameter("completed", request.getCompleted().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
@@ -439,7 +274,7 @@ public class WorkbooksClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RecordsResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListCommitsResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -450,232 +285,9 @@ public class WorkbooksClient {
     }
 
     /**
-     * Returns records from a sheet in a workbook
+     * Returns the commits for a workbook
      */
-    public RecordsResponse getRecordsDeprecated(String workbookId, String sheetId, ListRecordsRequest request) {
-        return getRecordsDeprecated(workbookId, sheetId, request, null);
-    }
-
-    /**
-     * Updates existing records in a workbook sheet
-     */
-    public VersionResponse updateRecordsDeprecated(
-            String workbookId, String sheetId, List<Record> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("records")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("PUT", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), VersionResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Updates existing records in a workbook sheet
-     */
-    public VersionResponse updateRecordsDeprecated(String workbookId, String sheetId, List<Record> request) {
-        return updateRecordsDeprecated(workbookId, sheetId, request, null);
-    }
-
-    /**
-     * Adds records to a workbook sheet
-     */
-    public RecordsResponse addRecordsDeprecated(
-            String workbookId, String sheetId, List<Map<String, CellValue>> request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("records")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RecordsResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Adds records to a workbook sheet
-     */
-    public RecordsResponse addRecordsDeprecated(
-            String workbookId, String sheetId, List<Map<String, CellValue>> request) {
-        return addRecordsDeprecated(workbookId, sheetId, request, null);
-    }
-
-    /**
-     * Deletes records from a workbook sheet
-     */
-    public Success deleteRecordsDeprecated(String workbookId, String sheetId) {
-        return deleteRecordsDeprecated(
-                workbookId, sheetId, DeleteRecordsRequestDeprecated.builder().build());
-    }
-
-    /**
-     * Deletes records from a workbook sheet
-     */
-    public Success deleteRecordsDeprecated(
-            String workbookId, String sheetId, DeleteRecordsRequestDeprecated request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("records");
-        if (request.getIds().isPresent()) {
-            httpUrl.addQueryParameter("ids", request.getIds().get());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("DELETE", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Deletes records from a workbook sheet
-     */
-    public Success deleteRecordsDeprecated(String workbookId, String sheetId, DeleteRecordsRequestDeprecated request) {
-        return deleteRecordsDeprecated(workbookId, sheetId, request, null);
-    }
-
-    /**
-     * Trigger data hooks and validation to run on a sheet
-     */
-    public Success validateSheetDeprecated(String workbookId, String sheetId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("validate")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Trigger data hooks and validation to run on a sheet
-     */
-    public Success validateSheetDeprecated(String workbookId, String sheetId) {
-        return validateSheetDeprecated(workbookId, sheetId, null);
-    }
-
-    /**
-     * Creates a new version of a workbook sheet
-     */
-    public VersionResponse createVersionDeprecated(String workbookId, String sheetId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("workbooks")
-                .addPathSegment(workbookId)
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId)
-                .addPathSegments("versions")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), VersionResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Creates a new version of a workbook sheet
-     */
-    public VersionResponse createVersionDeprecated(String workbookId, String sheetId) {
-        return createVersionDeprecated(workbookId, sheetId, null);
+    public ListCommitsResponse getWorkbookCommits(WorkbookId workbookId, ListWorkbookCommitsRequest request) {
+        return getWorkbookCommits(workbookId, request, null);
     }
 }

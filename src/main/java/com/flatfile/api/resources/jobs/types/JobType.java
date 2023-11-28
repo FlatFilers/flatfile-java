@@ -10,7 +10,11 @@ public enum JobType {
 
     WORKBOOK("workbook"),
 
-    SHEET("sheet");
+    SHEET("sheet"),
+
+    SPACE("space"),
+
+    DOCUMENT("document");
 
     private final String value;
 

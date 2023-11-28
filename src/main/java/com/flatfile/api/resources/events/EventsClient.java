@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.EventId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.events.requests.GetEventTokenRequest;
 import com.flatfile.api.resources.events.requests.ListEventsRequest;
@@ -45,10 +46,10 @@ public class EventsClient {
                 .addPathSegments("events");
         if (request.getEnvironmentId().isPresent()) {
             httpUrl.addQueryParameter(
-                    "environmentId", request.getEnvironmentId().get());
+                    "environmentId", request.getEnvironmentId().get().toString());
         }
         if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         if (request.getDomain().isPresent()) {
             httpUrl.addQueryParameter("domain", request.getDomain().get());
@@ -134,11 +135,11 @@ public class EventsClient {
         return create(request, null);
     }
 
-    public EventResponse get(String eventId, RequestOptions requestOptions) {
+    public EventResponse get(EventId eventId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("events")
-                .addPathSegment(eventId)
+                .addPathSegment(eventId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -160,15 +161,15 @@ public class EventsClient {
         }
     }
 
-    public EventResponse get(String eventId) {
+    public EventResponse get(EventId eventId) {
         return get(eventId, null);
     }
 
-    public Success ack(String eventId, RequestOptions requestOptions) {
+    public Success ack(EventId eventId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("events")
-                .addPathSegment(eventId)
+                .addPathSegment(eventId.toString())
                 .addPathSegments("ack")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -191,7 +192,7 @@ public class EventsClient {
         }
     }
 
-    public Success ack(String eventId) {
+    public Success ack(EventId eventId) {
         return ack(eventId, null);
     }
 
@@ -209,11 +210,11 @@ public class EventsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("subscription");
-        if (request.getSpaceId().isPresent()) {
-            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get());
-        }
         if (request.getScope().isPresent()) {
             httpUrl.addQueryParameter("scope", request.getScope().get());
+        }
+        if (request.getSpaceId().isPresent()) {
+            httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

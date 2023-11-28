@@ -28,9 +28,9 @@ public final class AccessToken {
 
     private final Optional<String> email;
 
-    private final Optional<String> userId;
+    private final Optional<UserId> userId;
 
-    private final Optional<String> accountId;
+    private final Optional<AccountId> accountId;
 
     private final Map<String, Object> additionalProperties;
 
@@ -39,8 +39,8 @@ public final class AccessToken {
             String expiresIn,
             String expires,
             Optional<String> email,
-            Optional<String> userId,
-            Optional<String> accountId,
+            Optional<UserId> userId,
+            Optional<AccountId> accountId,
             Map<String, Object> additionalProperties) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
@@ -72,12 +72,12 @@ public final class AccessToken {
     }
 
     @JsonProperty("userId")
-    public Optional<String> getUserId() {
+    public Optional<UserId> getUserId() {
         return userId;
     }
 
     @JsonProperty("accountId")
-    public Optional<String> getAccountId() {
+    public Optional<AccountId> getAccountId() {
         return accountId;
     }
 
@@ -136,13 +136,13 @@ public final class AccessToken {
 
         _FinalStage email(String email);
 
-        _FinalStage userId(Optional<String> userId);
+        _FinalStage userId(Optional<UserId> userId);
 
-        _FinalStage userId(String userId);
+        _FinalStage userId(UserId userId);
 
-        _FinalStage accountId(Optional<String> accountId);
+        _FinalStage accountId(Optional<AccountId> accountId);
 
-        _FinalStage accountId(String accountId);
+        _FinalStage accountId(AccountId accountId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -153,9 +153,9 @@ public final class AccessToken {
 
         private String expires;
 
-        private Optional<String> accountId = Optional.empty();
+        private Optional<AccountId> accountId = Optional.empty();
 
-        private Optional<String> userId = Optional.empty();
+        private Optional<UserId> userId = Optional.empty();
 
         private Optional<String> email = Optional.empty();
 
@@ -197,27 +197,27 @@ public final class AccessToken {
         }
 
         @Override
-        public _FinalStage accountId(String accountId) {
+        public _FinalStage accountId(AccountId accountId) {
             this.accountId = Optional.of(accountId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "accountId", nulls = Nulls.SKIP)
-        public _FinalStage accountId(Optional<String> accountId) {
+        public _FinalStage accountId(Optional<AccountId> accountId) {
             this.accountId = accountId;
             return this;
         }
 
         @Override
-        public _FinalStage userId(String userId) {
+        public _FinalStage userId(UserId userId) {
             this.userId = Optional.of(userId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "userId", nulls = Nulls.SKIP)
-        public _FinalStage userId(Optional<String> userId) {
+        public _FinalStage userId(Optional<UserId> userId) {
             this.userId = userId;
             return this;
         }

@@ -12,6 +12,9 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SecretId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,24 +23,24 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Secret.Builder.class)
 public final class Secret implements IWriteSecret {
-    private final String name;
+    private final SecretName name;
 
-    private final String value;
+    private final SecretValue value;
 
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
-    private final Optional<String> spaceId;
+    private final Optional<SpaceId> spaceId;
 
-    private final String id;
+    private final SecretId id;
 
     private final Map<String, Object> additionalProperties;
 
     private Secret(
-            String name,
-            String value,
-            String environmentId,
-            Optional<String> spaceId,
-            String id,
+            SecretName name,
+            SecretValue value,
+            EnvironmentId environmentId,
+            Optional<SpaceId> spaceId,
+            SecretId id,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.value = value;
@@ -49,30 +52,30 @@ public final class Secret implements IWriteSecret {
 
     @JsonProperty("name")
     @Override
-    public String getName() {
+    public SecretName getName() {
         return name;
     }
 
     @JsonProperty("value")
     @Override
-    public String getValue() {
+    public SecretValue getValue() {
         return value;
     }
 
     @JsonProperty("environmentId")
     @Override
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("spaceId")
     @Override
-    public Optional<String> getSpaceId() {
+    public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
     @JsonProperty("id")
-    public String getId() {
+    public SecretId getId() {
         return id;
     }
 
@@ -110,42 +113,42 @@ public final class Secret implements IWriteSecret {
     }
 
     public interface NameStage {
-        ValueStage name(String name);
+        ValueStage name(SecretName name);
 
         Builder from(Secret other);
     }
 
     public interface ValueStage {
-        EnvironmentIdStage value(String value);
+        EnvironmentIdStage value(SecretValue value);
     }
 
     public interface EnvironmentIdStage {
-        IdStage environmentId(String environmentId);
+        IdStage environmentId(EnvironmentId environmentId);
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(SecretId id);
     }
 
     public interface _FinalStage {
         Secret build();
 
-        _FinalStage spaceId(Optional<String> spaceId);
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
 
-        _FinalStage spaceId(String spaceId);
+        _FinalStage spaceId(SpaceId spaceId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements NameStage, ValueStage, EnvironmentIdStage, IdStage, _FinalStage {
-        private String name;
+        private SecretName name;
 
-        private String value;
+        private SecretValue value;
 
-        private String environmentId;
+        private EnvironmentId environmentId;
 
-        private String id;
+        private SecretId id;
 
-        private Optional<String> spaceId = Optional.empty();
+        private Optional<SpaceId> spaceId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -164,41 +167,41 @@ public final class Secret implements IWriteSecret {
 
         @Override
         @JsonSetter("name")
-        public ValueStage name(String name) {
+        public ValueStage name(SecretName name) {
             this.name = name;
             return this;
         }
 
         @Override
         @JsonSetter("value")
-        public EnvironmentIdStage value(String value) {
+        public EnvironmentIdStage value(SecretValue value) {
             this.value = value;
             return this;
         }
 
         @Override
         @JsonSetter("environmentId")
-        public IdStage environmentId(String environmentId) {
+        public IdStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
+        public _FinalStage id(SecretId id) {
             this.id = id;
             return this;
         }
 
         @Override
-        public _FinalStage spaceId(String spaceId) {
+        public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<String> spaceId) {
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }

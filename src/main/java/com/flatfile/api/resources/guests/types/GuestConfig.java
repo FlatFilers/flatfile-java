@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GuestConfig.Builder.class)
 public final class GuestConfig implements IGuestConfig {
-    private final String environmentId;
+    private final EnvironmentId environmentId;
 
     private final String email;
 
@@ -32,7 +33,7 @@ public final class GuestConfig implements IGuestConfig {
     private final Map<String, Object> additionalProperties;
 
     private GuestConfig(
-            String environmentId,
+            EnvironmentId environmentId,
             String email,
             String name,
             List<GuestSpace> spaces,
@@ -46,7 +47,7 @@ public final class GuestConfig implements IGuestConfig {
 
     @JsonProperty("environmentId")
     @Override
-    public String getEnvironmentId() {
+    public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
@@ -101,7 +102,7 @@ public final class GuestConfig implements IGuestConfig {
     }
 
     public interface EnvironmentIdStage {
-        EmailStage environmentId(String environmentId);
+        EmailStage environmentId(EnvironmentId environmentId);
 
         Builder from(GuestConfig other);
     }
@@ -126,7 +127,7 @@ public final class GuestConfig implements IGuestConfig {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements EnvironmentIdStage, EmailStage, NameStage, _FinalStage {
-        private String environmentId;
+        private EnvironmentId environmentId;
 
         private String email;
 
@@ -150,7 +151,7 @@ public final class GuestConfig implements IGuestConfig {
 
         @Override
         @JsonSetter("environmentId")
-        public EmailStage environmentId(String environmentId) {
+        public EmailStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }

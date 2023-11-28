@@ -13,6 +13,10 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Filter;
+import com.flatfile.api.resources.commons.types.FilterField;
+import com.flatfile.api.resources.commons.types.SearchField;
+import com.flatfile.api.resources.commons.types.SearchValue;
+import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -23,15 +27,15 @@ import java.util.Optional;
 public final class GetRecordCountsRequest {
     private final Optional<String> versionId;
 
-    private final Optional<String> sinceVersionId;
+    private final Optional<VersionId> sinceVersionId;
 
     private final Optional<Filter> filter;
 
-    private final Optional<String> filterField;
+    private final Optional<FilterField> filterField;
 
-    private final Optional<String> searchValue;
+    private final Optional<SearchValue> searchValue;
 
-    private final Optional<String> searchField;
+    private final Optional<SearchField> searchField;
 
     private final Optional<Boolean> byField;
 
@@ -41,11 +45,11 @@ public final class GetRecordCountsRequest {
 
     private GetRecordCountsRequest(
             Optional<String> versionId,
-            Optional<String> sinceVersionId,
+            Optional<VersionId> sinceVersionId,
             Optional<Filter> filter,
-            Optional<String> filterField,
-            Optional<String> searchValue,
-            Optional<String> searchField,
+            Optional<FilterField> filterField,
+            Optional<SearchValue> searchValue,
+            Optional<SearchField> searchField,
             Optional<Boolean> byField,
             Optional<String> q,
             Map<String, Object> additionalProperties) {
@@ -66,7 +70,7 @@ public final class GetRecordCountsRequest {
     }
 
     @JsonProperty("sinceVersionId")
-    public Optional<String> getSinceVersionId() {
+    public Optional<VersionId> getSinceVersionId() {
         return sinceVersionId;
     }
 
@@ -79,17 +83,17 @@ public final class GetRecordCountsRequest {
     }
 
     @JsonProperty("filterField")
-    public Optional<String> getFilterField() {
+    public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
     @JsonProperty("searchValue")
-    public Optional<String> getSearchValue() {
+    public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
     @JsonProperty("searchField")
-    public Optional<String> getSearchField() {
+    public Optional<SearchField> getSearchField() {
         return searchField;
     }
 
@@ -157,15 +161,15 @@ public final class GetRecordCountsRequest {
     public static final class Builder {
         private Optional<String> versionId = Optional.empty();
 
-        private Optional<String> sinceVersionId = Optional.empty();
+        private Optional<VersionId> sinceVersionId = Optional.empty();
 
         private Optional<Filter> filter = Optional.empty();
 
-        private Optional<String> filterField = Optional.empty();
+        private Optional<FilterField> filterField = Optional.empty();
 
-        private Optional<String> searchValue = Optional.empty();
+        private Optional<SearchValue> searchValue = Optional.empty();
 
-        private Optional<String> searchField = Optional.empty();
+        private Optional<SearchField> searchField = Optional.empty();
 
         private Optional<Boolean> byField = Optional.empty();
 
@@ -200,12 +204,12 @@ public final class GetRecordCountsRequest {
         }
 
         @JsonSetter(value = "sinceVersionId", nulls = Nulls.SKIP)
-        public Builder sinceVersionId(Optional<String> sinceVersionId) {
+        public Builder sinceVersionId(Optional<VersionId> sinceVersionId) {
             this.sinceVersionId = sinceVersionId;
             return this;
         }
 
-        public Builder sinceVersionId(String sinceVersionId) {
+        public Builder sinceVersionId(VersionId sinceVersionId) {
             this.sinceVersionId = Optional.of(sinceVersionId);
             return this;
         }
@@ -222,34 +226,34 @@ public final class GetRecordCountsRequest {
         }
 
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
-        public Builder filterField(Optional<String> filterField) {
+        public Builder filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }
 
-        public Builder filterField(String filterField) {
+        public Builder filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
-        public Builder searchValue(Optional<String> searchValue) {
+        public Builder searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
-        public Builder searchValue(String searchValue) {
+        public Builder searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
         @JsonSetter(value = "searchField", nulls = Nulls.SKIP)
-        public Builder searchField(Optional<String> searchField) {
+        public Builder searchField(Optional<SearchField> searchField) {
             this.searchField = searchField;
             return this;
         }
 
-        public Builder searchField(String searchField) {
+        public Builder searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
             return this;
         }

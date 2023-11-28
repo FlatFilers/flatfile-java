@@ -7,6 +7,7 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.spaces.requests.DeleteSpacesRequest;
 import com.flatfile.api.resources.spaces.requests.ListSpacesRequest;
@@ -44,7 +45,7 @@ public class SpacesClient {
                 .addPathSegments("spaces");
         if (request.getEnvironmentId().isPresent()) {
             httpUrl.addQueryParameter(
-                    "environmentId", request.getEnvironmentId().get());
+                    "environmentId", request.getEnvironmentId().get().toString());
         }
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
@@ -149,11 +150,11 @@ public class SpacesClient {
     /**
      * Returns a single space
      */
-    public SpaceResponse get(String spaceId, RequestOptions requestOptions) {
+    public SpaceResponse get(SpaceId spaceId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -178,18 +179,18 @@ public class SpacesClient {
     /**
      * Returns a single space
      */
-    public SpaceResponse get(String spaceId) {
+    public SpaceResponse get(SpaceId spaceId) {
         return get(spaceId, null);
     }
 
     /**
      * Delete a space
      */
-    public Success delete(String spaceId, RequestOptions requestOptions) {
+    public Success delete(SpaceId spaceId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -214,7 +215,7 @@ public class SpacesClient {
     /**
      * Delete a space
      */
-    public Success delete(String spaceId) {
+    public Success delete(SpaceId spaceId) {
         return delete(spaceId, null);
     }
 
@@ -225,7 +226,7 @@ public class SpacesClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces");
-        httpUrl.addQueryParameter("ids", request.getIds());
+        httpUrl.addQueryParameter("ids", request.getIds().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("DELETE", null)
@@ -256,18 +257,18 @@ public class SpacesClient {
     /**
      * Update a space, to change the name for example
      */
-    public SpaceResponse update(String spaceId) {
+    public SpaceResponse update(SpaceId spaceId) {
         return update(spaceId, SpaceConfig.builder().build());
     }
 
     /**
      * Update a space, to change the name for example
      */
-    public SpaceResponse update(String spaceId, SpaceConfig request, RequestOptions requestOptions) {
+    public SpaceResponse update(SpaceId spaceId, SpaceConfig request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .build();
         RequestBody body;
         try {
@@ -299,18 +300,18 @@ public class SpacesClient {
     /**
      * Update a space, to change the name for example
      */
-    public SpaceResponse update(String spaceId, SpaceConfig request) {
+    public SpaceResponse update(SpaceId spaceId, SpaceConfig request) {
         return update(spaceId, request, null);
     }
 
     /**
      * Sets archivedAt timestamp on a space
      */
-    public Success archiveSpace(String spaceId, RequestOptions requestOptions) {
+    public Success archiveSpace(SpaceId spaceId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces")
-                .addPathSegment(spaceId)
+                .addPathSegment(spaceId.toString())
                 .addPathSegments("archive")
                 .build();
         Request okhttpRequest = new Request.Builder()
@@ -336,7 +337,7 @@ public class SpacesClient {
     /**
      * Sets archivedAt timestamp on a space
      */
-    public Success archiveSpace(String spaceId) {
+    public Success archiveSpace(SpaceId spaceId) {
         return archiveSpace(spaceId, null);
     }
 }

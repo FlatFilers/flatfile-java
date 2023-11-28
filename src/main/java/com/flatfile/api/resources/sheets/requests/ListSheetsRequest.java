@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -18,11 +19,11 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListSheetsRequest.Builder.class)
 public final class ListSheetsRequest {
-    private final String workbookId;
+    private final WorkbookId workbookId;
 
     private final Map<String, Object> additionalProperties;
 
-    private ListSheetsRequest(String workbookId, Map<String, Object> additionalProperties) {
+    private ListSheetsRequest(WorkbookId workbookId, Map<String, Object> additionalProperties) {
         this.workbookId = workbookId;
         this.additionalProperties = additionalProperties;
     }
@@ -31,7 +32,7 @@ public final class ListSheetsRequest {
      * @return ID of workbook
      */
     @JsonProperty("workbookId")
-    public String getWorkbookId() {
+    public WorkbookId getWorkbookId() {
         return workbookId;
     }
 
@@ -65,7 +66,7 @@ public final class ListSheetsRequest {
     }
 
     public interface WorkbookIdStage {
-        _FinalStage workbookId(String workbookId);
+        _FinalStage workbookId(WorkbookId workbookId);
 
         Builder from(ListSheetsRequest other);
     }
@@ -76,7 +77,7 @@ public final class ListSheetsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements WorkbookIdStage, _FinalStage {
-        private String workbookId;
+        private WorkbookId workbookId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -95,7 +96,7 @@ public final class ListSheetsRequest {
          */
         @Override
         @JsonSetter("workbookId")
-        public _FinalStage workbookId(String workbookId) {
+        public _FinalStage workbookId(WorkbookId workbookId) {
             this.workbookId = workbookId;
             return this;
         }
