@@ -49,16 +49,25 @@ public final class Edge {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The description of the source field
+     */
     @JsonProperty("sourceField")
     public Property getSourceField() {
         return sourceField;
     }
 
+    /**
+     * @return The description of the destination field
+     */
     @JsonProperty("destinationField")
     public Property getDestinationField() {
         return destinationField;
     }
 
+    /**
+     * @return A list of preview values of the data in the destination field
+     */
     @JsonProperty("preview")
     public Optional<List<String>> getPreview() {
         return preview;
@@ -72,6 +81,9 @@ public final class Edge {
         return enumDetails;
     }
 
+    /**
+     * @return Metadata about the edge
+     */
     @JsonProperty("metadata")
     public Optional<Metadata> getMetadata() {
         return metadata;
@@ -163,6 +175,10 @@ public final class Edge {
             return this;
         }
 
+        /**
+         * <p>The description of the source field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("sourceField")
         public DestinationFieldStage sourceField(Property sourceField) {
@@ -170,6 +186,10 @@ public final class Edge {
             return this;
         }
 
+        /**
+         * <p>The description of the destination field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("destinationField")
         public _FinalStage destinationField(Property destinationField) {
@@ -177,6 +197,10 @@ public final class Edge {
             return this;
         }
 
+        /**
+         * <p>Metadata about the edge</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage metadata(Metadata metadata) {
             this.metadata = Optional.of(metadata);
@@ -207,6 +231,10 @@ public final class Edge {
             return this;
         }
 
+        /**
+         * <p>A list of preview values of the data in the destination field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage preview(List<String> preview) {
             this.preview = Optional.of(preview);

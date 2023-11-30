@@ -62,6 +62,9 @@ public final class ListSpacesRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The ID of the environment.
+     */
     @JsonProperty("environmentId")
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
@@ -83,26 +86,41 @@ public final class ListSpacesRequest {
         return pageNumber;
     }
 
+    /**
+     * @return Search query for spaces
+     */
     @JsonProperty("search")
     public Optional<String> getSearch() {
         return search;
     }
 
+    /**
+     * @return Flag to include archived spaces
+     */
     @JsonProperty("archived")
     public Optional<Boolean> getArchived() {
         return archived;
     }
 
+    /**
+     * @return Field to sort spaces by
+     */
     @JsonProperty("sortField")
     public Optional<GetSpacesSortField> getSortField() {
         return sortField;
     }
 
+    /**
+     * @return Direction of sorting
+     */
     @JsonProperty("sortDirection")
     public Optional<SortDirection> getSortDirection() {
         return sortDirection;
     }
 
+    /**
+     * @return Flag for collaborative (project) spaces
+     */
     @JsonProperty("isCollaborative")
     public Optional<Boolean> getIsCollaborative() {
         return isCollaborative;

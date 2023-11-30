@@ -6,10 +6,10 @@ package com.flatfile.api.resources.cells.types;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public final class IncludeCounts {
+public final class IncludeCountsDeprecated {
     private final boolean value;
 
-    private IncludeCounts(boolean value) {
+    private IncludeCountsDeprecated(boolean value) {
         this.value = value;
     }
 
@@ -20,7 +20,8 @@ public final class IncludeCounts {
 
     @Override
     public boolean equals(Object other) {
-        return this == other || (other instanceof IncludeCounts && this.value == ((IncludeCounts) other).value);
+        return this == other
+                || (other instanceof IncludeCountsDeprecated && this.value == ((IncludeCountsDeprecated) other).value);
     }
 
     @Override
@@ -34,11 +35,11 @@ public final class IncludeCounts {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static IncludeCounts of(boolean value) {
-        return new IncludeCounts(value);
+    public static IncludeCountsDeprecated of(boolean value) {
+        return new IncludeCountsDeprecated(value);
     }
 
-    public static IncludeCounts valueOf(String value) {
+    public static IncludeCountsDeprecated valueOf(String value) {
         return of(Boolean.parseBoolean(value));
     }
 }

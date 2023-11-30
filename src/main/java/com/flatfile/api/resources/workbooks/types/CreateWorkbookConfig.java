@@ -68,41 +68,65 @@ public final class CreateWorkbookConfig {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The name of the Workbook.
+     */
     @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    /**
+     * @return An optional list of labels for the Workbook.
+     */
     @JsonProperty("labels")
     public Optional<List<String>> getLabels() {
         return labels;
     }
 
+    /**
+     * @return Space to associate with the Workbook.
+     */
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
+    /**
+     * @return Environment to associate with the Workbook
+     */
     @JsonProperty("environmentId")
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
+    /**
+     * @return Optional namespace to apply to the Workbook.
+     */
     @JsonProperty("namespace")
     public Optional<String> getNamespace() {
         return namespace;
     }
 
+    /**
+     * @return Sheets to create on the Workbook.
+     */
     @JsonProperty("sheets")
     public Optional<List<SheetConfig>> getSheets() {
         return sheets;
     }
 
+    /**
+     * @return Actions to create on the Workbook.
+     */
     @JsonProperty("actions")
     public Optional<List<Action>> getActions() {
         return actions;
     }
 
+    /**
+     * @return The Workbook settings.
+     */
     @JsonProperty("settings")
     public Optional<WorkbookConfigSettings> getSettings() {
         return settings;
@@ -243,6 +267,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>The name of the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
@@ -267,6 +295,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>The Workbook settings.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage settings(WorkbookConfigSettings settings) {
             this.settings = Optional.of(settings);
@@ -280,6 +312,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>Actions to create on the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
@@ -293,6 +329,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>Sheets to create on the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage sheets(List<SheetConfig> sheets) {
             this.sheets = Optional.of(sheets);
@@ -306,6 +346,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>Optional namespace to apply to the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
@@ -319,6 +363,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>Environment to associate with the Workbook</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
@@ -332,6 +380,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>Space to associate with the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
@@ -345,6 +397,10 @@ public final class CreateWorkbookConfig {
             return this;
         }
 
+        /**
+         * <p>An optional list of labels for the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage labels(List<String> labels) {
             this.labels = Optional.of(labels);

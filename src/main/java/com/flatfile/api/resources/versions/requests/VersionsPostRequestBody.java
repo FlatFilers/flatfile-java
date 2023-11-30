@@ -35,11 +35,17 @@ public final class VersionsPostRequestBody {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The ID of the Sheet.
+     */
     @JsonProperty("sheetId")
     public Optional<SheetId> getSheetId() {
         return sheetId;
     }
 
+    /**
+     * @return Deprecated, creating or updating a group of records together will automatically generate a commitId to group those record changes together.
+     */
     @JsonProperty("parentVersionId")
     public Optional<VersionId> getParentVersionId() {
         return parentVersionId;

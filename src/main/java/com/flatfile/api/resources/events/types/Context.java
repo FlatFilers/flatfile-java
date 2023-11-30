@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.DocumentId;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.EventId;
@@ -54,7 +55,7 @@ public final class Context {
 
     private final Optional<VersionId> versionId;
 
-    private final Optional<VersionId> commitId;
+    private final Optional<CommitId> commitId;
 
     private final Optional<JobId> jobId;
 
@@ -80,7 +81,7 @@ public final class Context {
             Optional<SheetSlug> sheetSlug,
             Optional<SnapshotId> snapshotId,
             Optional<VersionId> versionId,
-            Optional<VersionId> commitId,
+            Optional<CommitId> commitId,
             Optional<JobId> jobId,
             Optional<FileId> fileId,
             Optional<DocumentId> documentId,
@@ -163,13 +164,16 @@ public final class Context {
         return snapshotId;
     }
 
+    /**
+     * @return Deprecated, use <code>commitId</code> instead.
+     */
     @JsonProperty("versionId")
     public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
     @JsonProperty("commitId")
-    public Optional<VersionId> getCommitId() {
+    public Optional<CommitId> getCommitId() {
         return commitId;
     }
 
@@ -312,9 +316,9 @@ public final class Context {
 
         _FinalStage versionId(VersionId versionId);
 
-        _FinalStage commitId(Optional<VersionId> commitId);
+        _FinalStage commitId(Optional<CommitId> commitId);
 
-        _FinalStage commitId(VersionId commitId);
+        _FinalStage commitId(CommitId commitId);
 
         _FinalStage jobId(Optional<JobId> jobId);
 
@@ -353,7 +357,7 @@ public final class Context {
 
         private Optional<JobId> jobId = Optional.empty();
 
-        private Optional<VersionId> commitId = Optional.empty();
+        private Optional<CommitId> commitId = Optional.empty();
 
         private Optional<VersionId> versionId = Optional.empty();
 
@@ -484,18 +488,22 @@ public final class Context {
         }
 
         @Override
-        public _FinalStage commitId(VersionId commitId) {
+        public _FinalStage commitId(CommitId commitId) {
             this.commitId = Optional.of(commitId);
             return this;
         }
 
         @Override
         @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
-        public _FinalStage commitId(Optional<VersionId> commitId) {
+        public _FinalStage commitId(Optional<CommitId> commitId) {
             this.commitId = commitId;
             return this;
         }
 
+        /**
+         * <p>Deprecated, use <code>commitId</code> instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);

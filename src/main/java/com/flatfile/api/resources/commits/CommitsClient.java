@@ -8,8 +8,8 @@ import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commits.types.CommitResponse;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.Success;
-import com.flatfile.api.resources.commons.types.VersionId;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -27,7 +27,7 @@ public class CommitsClient {
     /**
      * Returns the details of a commit version
      */
-    public CommitResponse get(VersionId commitId, RequestOptions requestOptions) {
+    public CommitResponse get(CommitId commitId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("commits")
@@ -56,14 +56,14 @@ public class CommitsClient {
     /**
      * Returns the details of a commit version
      */
-    public CommitResponse get(VersionId commitId) {
+    public CommitResponse get(CommitId commitId) {
         return get(commitId, null);
     }
 
     /**
      * Completes a commit version. This marks the commit as complete and acknowledges that the changes have been applied to the sheet.
      */
-    public Success complete(VersionId commitId, RequestOptions requestOptions) {
+    public Success complete(CommitId commitId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("commits")
@@ -93,14 +93,14 @@ public class CommitsClient {
     /**
      * Completes a commit version. This marks the commit as complete and acknowledges that the changes have been applied to the sheet.
      */
-    public Success complete(VersionId commitId) {
+    public Success complete(CommitId commitId) {
         return complete(commitId, null);
     }
 
     /**
      * Replays a commit:created event.
      */
-    public Success replay(VersionId commitId, RequestOptions requestOptions) {
+    public Success replay(CommitId commitId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("commits")
@@ -130,7 +130,7 @@ public class CommitsClient {
     /**
      * Replays a commit:created event.
      */
-    public Success replay(VersionId commitId) {
+    public Success replay(CommitId commitId) {
         return replay(commitId, null);
     }
 }

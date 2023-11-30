@@ -24,16 +24,10 @@ public class VersionsClient {
         this.clientOptions = clientOptions;
     }
 
-    /**
-     * Creates a new version id that can be used to group record updates
-     */
     public VersionResponse createId() {
         return createId(VersionsPostRequestBody.builder().build());
     }
 
-    /**
-     * Creates a new version id that can be used to group record updates
-     */
     public VersionResponse createId(VersionsPostRequestBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -66,9 +60,6 @@ public class VersionsClient {
         }
     }
 
-    /**
-     * Creates a new version id that can be used to group record updates
-     */
     public VersionResponse createId(VersionsPostRequestBody request) {
         return createId(request, null);
     }

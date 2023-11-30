@@ -40,16 +40,25 @@ public final class EnumDetails {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The mapping of source values to destination values
+     */
     @JsonProperty("mapping")
     public Optional<List<CategoryMapping>> getMapping() {
         return mapping;
     }
 
+    /**
+     * @return A list of source values that are not mapped from
+     */
     @JsonProperty("unusedSourceValues")
     public Optional<List<EnumValue>> getUnusedSourceValues() {
         return unusedSourceValues;
     }
 
+    /**
+     * @return A list of destination values that are not mapped to
+     */
     @JsonProperty("unusedDestinationValues")
     public Optional<List<EnumValue>> getUnusedDestinationValues() {
         return unusedDestinationValues;

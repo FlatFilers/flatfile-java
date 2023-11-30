@@ -11,7 +11,6 @@ import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.records.requests.DeleteRecordsRequest;
 import com.flatfile.api.resources.records.requests.FindAndReplaceRecordRequest;
-import com.flatfile.api.resources.records.requests.FindAndReplaceRecordRequestDeprecated;
 import com.flatfile.api.resources.records.requests.GetRecordsRequest;
 import com.flatfile.api.resources.records.types.GetRecordsResponse;
 import com.flatfile.api.resources.records.types.RecordData;
@@ -53,11 +52,18 @@ public class RecordsClient {
                 .addPathSegment(sheetId.toString())
                 .addPathSegments("records");
         if (request.getVersionId().isPresent()) {
-            httpUrl.addQueryParameter("versionId", request.getVersionId().get());
+            httpUrl.addQueryParameter("versionId", request.getVersionId().get().toString());
+        }
+        if (request.getCommitId().isPresent()) {
+            httpUrl.addQueryParameter("commitId", request.getCommitId().get().toString());
         }
         if (request.getSinceVersionId().isPresent()) {
             httpUrl.addQueryParameter(
                     "sinceVersionId", request.getSinceVersionId().get().toString());
+        }
+        if (request.getSinceCommitId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sinceCommitId", request.getSinceCommitId().get().toString());
         }
         if (request.getSortField().isPresent()) {
             httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
@@ -275,65 +281,7 @@ public class RecordsClient {
     }
 
     /**
-     * Searches for the given searchValue in a field and replaces all instances of that value with replaceValue
-     */
-    public RecordsResponse findAndReplaceDeprecated(
-            SheetId sheetId, FindAndReplaceRecordRequestDeprecated request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("sheets")
-                .addPathSegment(sheetId.toString())
-                .addPathSegments("replace");
-        httpUrl.addQueryParameter("fieldKey", request.getFieldKey());
-        httpUrl.addQueryParameter("searchValue", request.getSearchValue());
-        if (request.getFilter().isPresent()) {
-            httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
-        }
-        if (request.getPageSize().isPresent()) {
-            httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
-        }
-        if (request.getPageNumber().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "pageNumber", request.getPageNumber().get().toString());
-        }
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("replace", request.getReplace());
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("PUT", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), RecordsResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Searches for the given searchValue in a field and replaces all instances of that value with replaceValue
-     */
-    public RecordsResponse findAndReplaceDeprecated(SheetId sheetId, FindAndReplaceRecordRequestDeprecated request) {
-        return findAndReplaceDeprecated(sheetId, request, null);
-    }
-
-    /**
-     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a versionId for the updated records
+     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a commitId for the updated records
      */
     public VersionResponse findAndReplace(
             SheetId sheetId, FindAndReplaceRecordRequest request, RequestOptions requestOptions) {
@@ -396,7 +344,7 @@ public class RecordsClient {
     }
 
     /**
-     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a versionId for the updated records
+     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a commitId for the updated records
      */
     public VersionResponse findAndReplace(SheetId sheetId, FindAndReplaceRecordRequest request) {
         return findAndReplace(sheetId, request, null);

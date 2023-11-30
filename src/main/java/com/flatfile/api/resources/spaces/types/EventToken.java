@@ -44,6 +44,9 @@ public final class EventToken {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The ID of the Account.
+     */
     @JsonProperty("accountId")
     public Optional<AccountId> getAccountId() {
         return accountId;
@@ -65,6 +68,9 @@ public final class EventToken {
         return ttl;
     }
 
+    /**
+     * @return This should be your API key.
+     */
     @JsonProperty("token")
     public Optional<String> getToken() {
         return token;

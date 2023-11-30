@@ -59,30 +59,45 @@ public final class SheetUpdate implements ISheetUpdate {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The ID of the Sheet.
+     */
     @JsonProperty("id")
     @Override
     public Optional<SheetId> getId() {
         return id;
     }
 
+    /**
+     * @return The ID of the Workbook.
+     */
     @JsonProperty("workbookId")
     @Override
     public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
+    /**
+     * @return Describes shape of data as well as behavior.
+     */
     @JsonProperty("config")
     @Override
     public Optional<SheetConfig> getConfig() {
         return config;
     }
 
+    /**
+     * @return The amount of records in the Sheet.
+     */
     @JsonProperty("countRecords")
     @Override
     public Optional<RecordCounts> getCountRecords() {
         return countRecords;
     }
 
+    /**
+     * @return The scoped namespace of the Sheet.
+     */
     @JsonProperty("namespace")
     @Override
     public Optional<String> getNamespace() {

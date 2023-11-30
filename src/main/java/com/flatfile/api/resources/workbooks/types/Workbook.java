@@ -82,41 +82,65 @@ public final class Workbook {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return ID of the Workbook.
+     */
     @JsonProperty("id")
     public WorkbookId getId() {
         return id;
     }
 
+    /**
+     * @return Name of the Workbook.
+     */
     @JsonProperty("name")
     public Optional<String> getName() {
         return name;
     }
 
+    /**
+     * @return Associated Space ID of the Workbook.
+     */
     @JsonProperty("spaceId")
     public SpaceId getSpaceId() {
         return spaceId;
     }
 
+    /**
+     * @return Associated Environment ID of the Workbook.
+     */
     @JsonProperty("environmentId")
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
+    /**
+     * @return A list of Sheets associated with the Workbook.
+     */
     @JsonProperty("sheets")
     public Optional<List<Sheet>> getSheets() {
         return sheets;
     }
 
+    /**
+     * @return A list of labels for the Workbook.
+     */
     @JsonProperty("labels")
     public Optional<List<String>> getLabels() {
         return labels;
     }
 
+    /**
+     * @return A list of Actions associated with the Workbook.
+     */
     @JsonProperty("actions")
     public Optional<List<Action>> getActions() {
         return actions;
     }
 
+    /**
+     * @return The Workbook settings.
+     */
     @JsonProperty("settings")
     public Optional<WorkbookConfigSettings> getSettings() {
         return settings;
@@ -306,6 +330,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>ID of the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("id")
         public SpaceIdStage id(WorkbookId id) {
@@ -313,6 +341,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>Associated Space ID of the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("spaceId")
         public EnvironmentIdStage spaceId(SpaceId spaceId) {
@@ -320,6 +352,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>Associated Environment ID of the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("environmentId")
         public UpdatedAtStage environmentId(EnvironmentId environmentId) {
@@ -379,6 +415,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>The Workbook settings.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage settings(WorkbookConfigSettings settings) {
             this.settings = Optional.of(settings);
@@ -392,6 +432,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>A list of Actions associated with the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
@@ -405,6 +449,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>A list of labels for the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage labels(List<String> labels) {
             this.labels = Optional.of(labels);
@@ -418,6 +466,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>A list of Sheets associated with the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage sheets(List<Sheet> sheets) {
             this.sheets = Optional.of(sheets);
@@ -431,6 +483,10 @@ public final class Workbook {
             return this;
         }
 
+        /**
+         * <p>Name of the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage name(String name) {
             this.name = Optional.of(name);

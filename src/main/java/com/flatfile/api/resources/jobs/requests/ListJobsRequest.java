@@ -65,26 +65,41 @@ public final class ListJobsRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return When provided, only jobs for the given environment will be returned
+     */
     @JsonProperty("environmentId")
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
+    /**
+     * @return When provided, only jobs for the given space will be returned
+     */
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
+    /**
+     * @return When provided, only jobs for the given workbook will be returned
+     */
     @JsonProperty("workbookId")
     public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
 
+    /**
+     * @return When provided, only jobs for the given file will be returned
+     */
     @JsonProperty("fileId")
     public Optional<FileId> getFileId() {
         return fileId;
     }
 
+    /**
+     * @return When provided, only jobs that are parts of the given job will be returned
+     */
     @JsonProperty("parentId")
     public Optional<JobId> getParentId() {
         return parentId;
@@ -106,6 +121,9 @@ public final class ListJobsRequest {
         return pageNumber;
     }
 
+    /**
+     * @return Sort direction - asc (ascending) or desc (descending)
+     */
     @JsonProperty("sortDirection")
     public Optional<SortDirection> getSortDirection() {
         return sortDirection;

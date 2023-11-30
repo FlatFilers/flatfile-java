@@ -45,24 +45,36 @@ public final class WriteSecret implements IWriteSecret {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The reference name for a secret.
+     */
     @JsonProperty("name")
     @Override
     public SecretName getName() {
         return name;
     }
 
+    /**
+     * @return The secret value. This is hidden in the UI.
+     */
     @JsonProperty("value")
     @Override
     public SecretValue getValue() {
         return value;
     }
 
+    /**
+     * @return The Environment of the secret.
+     */
     @JsonProperty("environmentId")
     @Override
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
+    /**
+     * @return The Space of the secret.
+     */
     @JsonProperty("spaceId")
     @Override
     public Optional<SpaceId> getSpaceId() {
@@ -147,6 +159,10 @@ public final class WriteSecret implements IWriteSecret {
             return this;
         }
 
+        /**
+         * <p>The reference name for a secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("name")
         public ValueStage name(SecretName name) {
@@ -154,6 +170,10 @@ public final class WriteSecret implements IWriteSecret {
             return this;
         }
 
+        /**
+         * <p>The secret value. This is hidden in the UI.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("value")
         public EnvironmentIdStage value(SecretValue value) {
@@ -161,6 +181,10 @@ public final class WriteSecret implements IWriteSecret {
             return this;
         }
 
+        /**
+         * <p>The Environment of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
@@ -168,6 +192,10 @@ public final class WriteSecret implements IWriteSecret {
             return this;
         }
 
+        /**
+         * <p>The Space of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);

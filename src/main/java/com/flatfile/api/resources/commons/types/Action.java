@@ -88,76 +88,121 @@ public final class Action {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return <strong>This is deprecated. Use <code>operation</code> instead.</strong>
+     */
     @JsonProperty("slug")
     public Optional<String> getSlug() {
         return slug;
     }
 
+    /**
+     * @return This will become the job operation that is triggered
+     */
     @JsonProperty("operation")
     public Optional<String> getOperation() {
         return operation;
     }
 
+    /**
+     * @return Foreground and toolbarBlocking action mode will prevent interacting with the resource until complete
+     */
     @JsonProperty("mode")
     public Optional<ActionMode> getMode() {
         return mode;
     }
 
+    /**
+     * @return The text on the button itself.
+     */
     @JsonProperty("label")
     public String getLabel() {
         return label;
     }
 
+    /**
+     * @return A tooltip that appears when hovering the action button
+     */
     @JsonProperty("tooltip")
     public Optional<String> getTooltip() {
         return tooltip;
     }
 
+    /**
+     * @return <strong>This is deprecated.</strong>
+     */
     @JsonProperty("type")
     public Optional<String> getType() {
         return type;
     }
 
+    /**
+     * @return The text that appears in the dialog after the action is clicked.
+     */
     @JsonProperty("description")
     public Optional<String> getDescription() {
         return description;
     }
 
+    /**
+     * @return Determines if the action should happen on a regular cadence.
+     */
     @JsonProperty("schedule")
     public Optional<ActionSchedule> getSchedule() {
         return schedule;
     }
 
+    /**
+     * @return A primary action will be more visibly present, whether in Sheet or Workbook.
+     */
     @JsonProperty("primary")
     public Optional<Boolean> getPrimary() {
         return primary;
     }
 
+    /**
+     * @return Whether to show a modal to confirm the action
+     */
     @JsonProperty("confirm")
     public Optional<Boolean> getConfirm() {
         return confirm;
     }
 
+    /**
+     * @return Icon will work on primary actions. It will only accept an already existing Flatfile design system icon.
+     */
     @JsonProperty("icon")
     public Optional<String> getIcon() {
         return icon;
     }
 
+    /**
+     * @return <strong>This is deprecated. Use <code>constraints</code> instead.</strong>
+     */
     @JsonProperty("requireAllValid")
     public Optional<Boolean> getRequireAllValid() {
         return requireAllValid;
     }
 
+    /**
+     * @return <strong>This is deprecated. Use <code>constraints</code> instead.</strong>
+     */
     @JsonProperty("requireSelection")
     public Optional<Boolean> getRequireSelection() {
         return requireSelection;
     }
 
+    /**
+     * @return Adds an input form for this action after it is clicked.
+     */
     @JsonProperty("inputForm")
     public Optional<InputForm> getInputForm() {
         return inputForm;
     }
 
+    /**
+     * @return A limitation or restriction on the action.
+     */
     @JsonProperty("constraints")
     public Optional<List<ActionConstraint>> getConstraints() {
         return constraints;
@@ -344,6 +389,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>The text on the button itself.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("label")
         public _FinalStage label(String label) {
@@ -351,6 +400,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>A limitation or restriction on the action.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage constraints(List<ActionConstraint> constraints) {
             this.constraints = Optional.of(constraints);
@@ -364,6 +417,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>Adds an input form for this action after it is clicked.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage inputForm(InputForm inputForm) {
             this.inputForm = Optional.of(inputForm);
@@ -377,6 +434,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p><strong>This is deprecated. Use <code>constraints</code> instead.</strong></p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage requireSelection(Boolean requireSelection) {
             this.requireSelection = Optional.of(requireSelection);
@@ -390,6 +451,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p><strong>This is deprecated. Use <code>constraints</code> instead.</strong></p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage requireAllValid(Boolean requireAllValid) {
             this.requireAllValid = Optional.of(requireAllValid);
@@ -403,6 +468,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>Icon will work on primary actions. It will only accept an already existing Flatfile design system icon.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage icon(String icon) {
             this.icon = Optional.of(icon);
@@ -416,6 +485,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>Whether to show a modal to confirm the action</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage confirm(Boolean confirm) {
             this.confirm = Optional.of(confirm);
@@ -429,6 +502,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>A primary action will be more visibly present, whether in Sheet or Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage primary(Boolean primary) {
             this.primary = Optional.of(primary);
@@ -442,6 +519,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>Determines if the action should happen on a regular cadence.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage schedule(ActionSchedule schedule) {
             this.schedule = Optional.of(schedule);
@@ -455,6 +536,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>The text that appears in the dialog after the action is clicked.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
@@ -468,6 +553,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p><strong>This is deprecated.</strong></p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
@@ -481,6 +570,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>A tooltip that appears when hovering the action button</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage tooltip(String tooltip) {
             this.tooltip = Optional.of(tooltip);
@@ -494,6 +587,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>Foreground and toolbarBlocking action mode will prevent interacting with the resource until complete</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage mode(ActionMode mode) {
             this.mode = Optional.of(mode);
@@ -507,6 +604,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p>This will become the job operation that is triggered</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage operation(String operation) {
             this.operation = Optional.of(operation);
@@ -520,6 +621,10 @@ public final class Action {
             return this;
         }
 
+        /**
+         * <p><strong>This is deprecated. Use <code>operation</code> instead.</strong></p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage slug(String slug) {
             this.slug = Optional.of(slug);

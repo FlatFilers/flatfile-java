@@ -35,11 +35,17 @@ public final class SourceField {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The description of the source field
+     */
     @JsonProperty("sourceField")
     public Property getSourceField() {
         return sourceField;
     }
 
+    /**
+     * @return A list of preview values of the data in the source field
+     */
     @JsonProperty("preview")
     public Optional<List<String>> getPreview() {
         return preview;
@@ -106,6 +112,10 @@ public final class SourceField {
             return this;
         }
 
+        /**
+         * <p>The description of the source field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("sourceField")
         public _FinalStage sourceField(Property sourceField) {
@@ -113,6 +123,10 @@ public final class SourceField {
             return this;
         }
 
+        /**
+         * <p>A list of preview values of the data in the source field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage preview(List<String> preview) {
             this.preview = Optional.of(preview);

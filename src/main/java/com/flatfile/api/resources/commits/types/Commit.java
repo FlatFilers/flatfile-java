@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.SheetId;
-import com.flatfile.api.resources.commons.types.VersionId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Commit.Builder.class)
 public final class Commit {
-    private final VersionId id;
+    private final CommitId id;
 
     private final SheetId sheetId;
 
@@ -38,7 +38,7 @@ public final class Commit {
     private final Map<String, Object> additionalProperties;
 
     private Commit(
-            VersionId id,
+            CommitId id,
             SheetId sheetId,
             String createdBy,
             Optional<String> completedBy,
@@ -55,7 +55,7 @@ public final class Commit {
     }
 
     @JsonProperty("id")
-    public VersionId getId() {
+    public CommitId getId() {
         return id;
     }
 
@@ -131,7 +131,7 @@ public final class Commit {
     }
 
     public interface IdStage {
-        SheetIdStage id(VersionId id);
+        SheetIdStage id(CommitId id);
 
         Builder from(Commit other);
     }
@@ -162,7 +162,7 @@ public final class Commit {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, SheetIdStage, CreatedByStage, CreatedAtStage, _FinalStage {
-        private VersionId id;
+        private CommitId id;
 
         private SheetId sheetId;
 
@@ -192,7 +192,7 @@ public final class Commit {
 
         @Override
         @JsonSetter("id")
-        public SheetIdStage id(VersionId id) {
+        public SheetIdStage id(CommitId id) {
             this.id = id;
             return this;
         }

@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Success.Builder.class)
-public final class Success implements ISuccess {
+public final class Success {
     private final Optional<SuccessData> data;
 
     private final Map<String, Object> additionalProperties;
@@ -30,7 +30,6 @@ public final class Success implements ISuccess {
     }
 
     @JsonProperty("data")
-    @Override
     public Optional<SuccessData> getData() {
         return data;
     }

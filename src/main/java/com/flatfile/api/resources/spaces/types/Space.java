@@ -297,26 +297,41 @@ public final class Space implements IInternalSpaceConfigBase {
         return displayOrder;
     }
 
+    /**
+     * @return Access token for the space
+     */
     @JsonProperty("accessToken")
     public Optional<String> getAccessToken() {
         return accessToken;
     }
 
+    /**
+     * @return Flag for collaborative (project) spaces
+     */
     @JsonProperty("isCollaborative")
     public Optional<Boolean> getIsCollaborative() {
         return isCollaborative;
     }
 
+    /**
+     * @return Size information for the space
+     */
     @JsonProperty("size")
     public Optional<SpaceSize> getSize() {
         return size;
     }
 
+    /**
+     * @return Date when the space was upgraded
+     */
     @JsonProperty("upgradedAt")
     public Optional<OffsetDateTime> getUpgradedAt() {
         return upgradedAt;
     }
 
+    /**
+     * @return Type of guest authentication
+     */
     @JsonProperty("guestAuthentication")
     public List<GuestAuthenticationEnum> getGuestAuthentication() {
         return guestAuthentication;
@@ -653,12 +668,20 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
+        /**
+         * <p>Type of guest authentication</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage addAllGuestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
             this.guestAuthentication.addAll(guestAuthentication);
             return this;
         }
 
+        /**
+         * <p>Type of guest authentication</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage addGuestAuthentication(GuestAuthenticationEnum guestAuthentication) {
             this.guestAuthentication.add(guestAuthentication);
@@ -673,6 +696,10 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
+        /**
+         * <p>Date when the space was upgraded</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage upgradedAt(OffsetDateTime upgradedAt) {
             this.upgradedAt = Optional.of(upgradedAt);
@@ -686,6 +713,10 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
+        /**
+         * <p>Size information for the space</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage size(SpaceSize size) {
             this.size = Optional.of(size);
@@ -699,6 +730,10 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
+        /**
+         * <p>Flag for collaborative (project) spaces</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage isCollaborative(Boolean isCollaborative) {
             this.isCollaborative = Optional.of(isCollaborative);
@@ -712,6 +747,10 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
+        /**
+         * <p>Access token for the space</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage accessToken(String accessToken) {
             this.accessToken = Optional.of(accessToken);

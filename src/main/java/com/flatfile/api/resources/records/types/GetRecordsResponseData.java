@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.ISuccessData;
 import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
@@ -30,6 +31,8 @@ public final class GetRecordsResponseData implements ISuccessData {
 
     private final Optional<VersionId> versionId;
 
+    private final Optional<CommitId> commitId;
+
     private final Map<String, Object> additionalProperties;
 
     private GetRecordsResponseData(
@@ -37,11 +40,13 @@ public final class GetRecordsResponseData implements ISuccessData {
             RecordsWithLinks records,
             Optional<RecordCounts> counts,
             Optional<VersionId> versionId,
+            Optional<CommitId> commitId,
             Map<String, Object> additionalProperties) {
         this.success = success;
         this.records = records;
         this.counts = counts;
         this.versionId = versionId;
+        this.commitId = commitId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -61,9 +66,17 @@ public final class GetRecordsResponseData implements ISuccessData {
         return counts;
     }
 
+    /**
+     * @return Deprecated, use <code>commitId</code> instead.
+     */
     @JsonProperty("versionId")
     public Optional<VersionId> getVersionId() {
         return versionId;
+    }
+
+    @JsonProperty("commitId")
+    public Optional<CommitId> getCommitId() {
+        return commitId;
     }
 
     @Override
@@ -81,12 +94,13 @@ public final class GetRecordsResponseData implements ISuccessData {
         return success == other.success
                 && records.equals(other.records)
                 && counts.equals(other.counts)
-                && versionId.equals(other.versionId);
+                && versionId.equals(other.versionId)
+                && commitId.equals(other.commitId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.success, this.records, this.counts, this.versionId);
+        return Objects.hash(this.success, this.records, this.counts, this.versionId, this.commitId);
     }
 
     @Override
@@ -118,6 +132,10 @@ public final class GetRecordsResponseData implements ISuccessData {
         _FinalStage versionId(Optional<VersionId> versionId);
 
         _FinalStage versionId(VersionId versionId);
+
+        _FinalStage commitId(Optional<CommitId> commitId);
+
+        _FinalStage commitId(CommitId commitId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -125,6 +143,8 @@ public final class GetRecordsResponseData implements ISuccessData {
         private boolean success;
 
         private RecordsWithLinks records;
+
+        private Optional<CommitId> commitId = Optional.empty();
 
         private Optional<VersionId> versionId = Optional.empty();
 
@@ -141,6 +161,7 @@ public final class GetRecordsResponseData implements ISuccessData {
             records(other.getRecords());
             counts(other.getCounts());
             versionId(other.getVersionId());
+            commitId(other.getCommitId());
             return this;
         }
 
@@ -158,6 +179,23 @@ public final class GetRecordsResponseData implements ISuccessData {
             return this;
         }
 
+        @Override
+        public _FinalStage commitId(CommitId commitId) {
+            this.commitId = Optional.of(commitId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
+        public _FinalStage commitId(Optional<CommitId> commitId) {
+            this.commitId = commitId;
+            return this;
+        }
+
+        /**
+         * <p>Deprecated, use <code>commitId</code> instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
@@ -186,7 +224,7 @@ public final class GetRecordsResponseData implements ISuccessData {
 
         @Override
         public GetRecordsResponseData build() {
-            return new GetRecordsResponseData(success, records, counts, versionId, additionalProperties);
+            return new GetRecordsResponseData(success, records, counts, versionId, commitId, additionalProperties);
         }
     }
 }

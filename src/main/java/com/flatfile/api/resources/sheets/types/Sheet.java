@@ -71,36 +71,57 @@ public final class Sheet {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The ID of the Sheet.
+     */
     @JsonProperty("id")
     public SheetId getId() {
         return id;
     }
 
+    /**
+     * @return The ID of the Workbook.
+     */
     @JsonProperty("workbookId")
     public WorkbookId getWorkbookId() {
         return workbookId;
     }
 
+    /**
+     * @return The name of the Sheet.
+     */
     @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    /**
+     * @return Describes shape of data as well as behavior
+     */
     @JsonProperty("config")
     public SheetConfig getConfig() {
         return config;
     }
 
+    /**
+     * @return The amount of records in the Sheet.
+     */
     @JsonProperty("countRecords")
     public Optional<RecordCounts> getCountRecords() {
         return countRecords;
     }
 
+    /**
+     * @return The scoped namespace of the Sheet.
+     */
     @JsonProperty("namespace")
     public Optional<String> getNamespace() {
         return namespace;
     }
 
+    /**
+     * @return The actor who locked the Sheet.
+     */
     @JsonProperty("lockedBy")
     public Optional<String> getLockedBy() {
         return lockedBy;
@@ -122,6 +143,9 @@ public final class Sheet {
         return createdAt;
     }
 
+    /**
+     * @return The time the Sheet was locked.
+     */
     @JsonProperty("lockedAt")
     public Optional<OffsetDateTime> getLockedAt() {
         return lockedAt;
@@ -264,6 +288,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The ID of the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("id")
         public WorkbookIdStage id(SheetId id) {
@@ -271,6 +299,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The ID of the Workbook.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("workbookId")
         public NameStage workbookId(WorkbookId workbookId) {
@@ -278,6 +310,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The name of the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("name")
         public ConfigStage name(String name) {
@@ -285,6 +321,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>Describes shape of data as well as behavior</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("config")
         public UpdatedAtStage config(SheetConfig config) {
@@ -314,6 +354,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The time the Sheet was locked.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage lockedAt(OffsetDateTime lockedAt) {
             this.lockedAt = Optional.of(lockedAt);
@@ -327,6 +371,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The actor who locked the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage lockedBy(String lockedBy) {
             this.lockedBy = Optional.of(lockedBy);
@@ -340,6 +388,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The scoped namespace of the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
@@ -353,6 +405,10 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>The amount of records in the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage countRecords(RecordCounts countRecords) {
             this.countRecords = Optional.of(countRecords);

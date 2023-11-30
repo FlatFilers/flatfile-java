@@ -9,42 +9,36 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
-import com.flatfile.api.resources.commons.types.ISuccess;
-import com.flatfile.api.resources.commons.types.SuccessData;
 import com.flatfile.api.resources.records.types.RecordCounts;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RecordCountsResponseData.Builder.class)
-public final class RecordCountsResponseData implements ISuccess {
-    private final Optional<SuccessData> data;
-
+public final class RecordCountsResponseData {
     private final RecordCounts counts;
+
+    private final boolean success;
 
     private final Map<String, Object> additionalProperties;
 
-    private RecordCountsResponseData(
-            Optional<SuccessData> data, RecordCounts counts, Map<String, Object> additionalProperties) {
-        this.data = data;
+    private RecordCountsResponseData(RecordCounts counts, boolean success, Map<String, Object> additionalProperties) {
         this.counts = counts;
+        this.success = success;
         this.additionalProperties = additionalProperties;
-    }
-
-    @JsonProperty("data")
-    @Override
-    public Optional<SuccessData> getData() {
-        return data;
     }
 
     @JsonProperty("counts")
     public RecordCounts getCounts() {
         return counts;
+    }
+
+    @JsonProperty("success")
+    public boolean getSuccess() {
+        return success;
     }
 
     @Override
@@ -59,12 +53,12 @@ public final class RecordCountsResponseData implements ISuccess {
     }
 
     private boolean equalTo(RecordCountsResponseData other) {
-        return data.equals(other.data) && counts.equals(other.counts);
+        return counts.equals(other.counts) && success == other.success;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.data, this.counts);
+        return Objects.hash(this.counts, this.success);
     }
 
     @Override
@@ -77,24 +71,24 @@ public final class RecordCountsResponseData implements ISuccess {
     }
 
     public interface CountsStage {
-        _FinalStage counts(RecordCounts counts);
+        SuccessStage counts(RecordCounts counts);
 
         Builder from(RecordCountsResponseData other);
     }
 
+    public interface SuccessStage {
+        _FinalStage success(boolean success);
+    }
+
     public interface _FinalStage {
         RecordCountsResponseData build();
-
-        _FinalStage data(Optional<SuccessData> data);
-
-        _FinalStage data(SuccessData data);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements CountsStage, _FinalStage {
+    public static final class Builder implements CountsStage, SuccessStage, _FinalStage {
         private RecordCounts counts;
 
-        private Optional<SuccessData> data = Optional.empty();
+        private boolean success;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -103,34 +97,28 @@ public final class RecordCountsResponseData implements ISuccess {
 
         @Override
         public Builder from(RecordCountsResponseData other) {
-            data(other.getData());
             counts(other.getCounts());
+            success(other.getSuccess());
             return this;
         }
 
         @Override
         @JsonSetter("counts")
-        public _FinalStage counts(RecordCounts counts) {
+        public SuccessStage counts(RecordCounts counts) {
             this.counts = counts;
             return this;
         }
 
         @Override
-        public _FinalStage data(SuccessData data) {
-            this.data = Optional.of(data);
-            return this;
-        }
-
-        @Override
-        @JsonSetter(value = "data", nulls = Nulls.SKIP)
-        public _FinalStage data(Optional<SuccessData> data) {
-            this.data = data;
+        @JsonSetter("success")
+        public _FinalStage success(boolean success) {
+            this.success = success;
             return this;
         }
 
         @Override
         public RecordCountsResponseData build() {
-            return new RecordCountsResponseData(data, counts, additionalProperties);
+            return new RecordCountsResponseData(counts, success, additionalProperties);
         }
     }
 }

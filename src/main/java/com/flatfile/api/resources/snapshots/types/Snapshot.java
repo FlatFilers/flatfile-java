@@ -55,31 +55,49 @@ public final class Snapshot {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The ID of the Snapshot.
+     */
     @JsonProperty("id")
     public SnapshotId getId() {
         return id;
     }
 
+    /**
+     * @return The ID of the Sheet.
+     */
     @JsonProperty("sheetId")
     public SheetId getSheetId() {
         return sheetId;
     }
 
+    /**
+     * @return The title of the Snapshot.
+     */
     @JsonProperty("label")
     public Optional<String> getLabel() {
         return label;
     }
 
+    /**
+     * @return A summary of the Snapshot.
+     */
     @JsonProperty("summary")
     public Optional<SnapshotSummary> getSummary() {
         return summary;
     }
 
+    /**
+     * @return The time the Snapshot was created.
+     */
     @JsonProperty("createdAt")
     public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
+    /**
+     * @return The actor who created the Snapshot.
+     */
     @JsonProperty("createdBy")
     public UserId getCreatedBy() {
         return createdBy;
@@ -179,6 +197,10 @@ public final class Snapshot {
             return this;
         }
 
+        /**
+         * <p>The ID of the Snapshot.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("id")
         public SheetIdStage id(SnapshotId id) {
@@ -186,6 +208,10 @@ public final class Snapshot {
             return this;
         }
 
+        /**
+         * <p>The ID of the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("sheetId")
         public CreatedAtStage sheetId(SheetId sheetId) {
@@ -193,6 +219,10 @@ public final class Snapshot {
             return this;
         }
 
+        /**
+         * <p>The time the Snapshot was created.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("createdAt")
         public CreatedByStage createdAt(OffsetDateTime createdAt) {
@@ -200,6 +230,10 @@ public final class Snapshot {
             return this;
         }
 
+        /**
+         * <p>The actor who created the Snapshot.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("createdBy")
         public _FinalStage createdBy(UserId createdBy) {
@@ -207,6 +241,10 @@ public final class Snapshot {
             return this;
         }
 
+        /**
+         * <p>A summary of the Snapshot.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage summary(SnapshotSummary summary) {
             this.summary = Optional.of(summary);
@@ -220,6 +258,10 @@ public final class Snapshot {
             return this;
         }
 
+        /**
+         * <p>The title of the Snapshot.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);

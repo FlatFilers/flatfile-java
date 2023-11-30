@@ -106,6 +106,9 @@ public final class BooleanProperty implements IBaseProperty {
         return metadata;
     }
 
+    /**
+     * @return A unique presentation for a field in the UI.
+     */
     @JsonProperty("treatments")
     @Override
     public Optional<List<String>> getTreatments() {
@@ -283,6 +286,10 @@ public final class BooleanProperty implements IBaseProperty {
             return this;
         }
 
+        /**
+         * <p>A unique presentation for a field in the UI.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage treatments(List<String> treatments) {
             this.treatments = Optional.of(treatments);

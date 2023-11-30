@@ -52,31 +52,49 @@ public final class InputField {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Unique key for a Field.
+     */
     @JsonProperty("key")
     public String getKey() {
         return key;
     }
 
+    /**
+     * @return Visible name of a Field.
+     */
     @JsonProperty("label")
     public String getLabel() {
         return label;
     }
 
+    /**
+     * @return Brief description below the name of the Field.
+     */
     @JsonProperty("description")
     public Optional<String> getDescription() {
         return description;
     }
 
+    /**
+     * @return Field Types inform the user interface how to sort and display data.
+     */
     @JsonProperty("type")
     public String getType() {
         return type;
     }
 
+    /**
+     * @return Additional configuration for enum Fields.
+     */
     @JsonProperty("config")
     public Optional<InputConfig> getConfig() {
         return config;
     }
 
+    /**
+     * @return Indicate additional validations that will be applied to the Field.
+     */
     @JsonProperty("constraints")
     public Optional<List<InputConstraint>> getConstraints() {
         return constraints;
@@ -176,6 +194,10 @@ public final class InputField {
             return this;
         }
 
+        /**
+         * <p>Unique key for a Field.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("key")
         public LabelStage key(String key) {
@@ -183,6 +205,10 @@ public final class InputField {
             return this;
         }
 
+        /**
+         * <p>Visible name of a Field.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("label")
         public TypeStage label(String label) {
@@ -190,6 +216,10 @@ public final class InputField {
             return this;
         }
 
+        /**
+         * <p>Field Types inform the user interface how to sort and display data.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("type")
         public _FinalStage type(String type) {
@@ -197,6 +227,10 @@ public final class InputField {
             return this;
         }
 
+        /**
+         * <p>Indicate additional validations that will be applied to the Field.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage constraints(List<InputConstraint> constraints) {
             this.constraints = Optional.of(constraints);
@@ -210,6 +244,10 @@ public final class InputField {
             return this;
         }
 
+        /**
+         * <p>Additional configuration for enum Fields.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage config(InputConfig config) {
             this.config = Optional.of(config);
@@ -223,6 +261,10 @@ public final class InputField {
             return this;
         }
 
+        /**
+         * <p>Brief description below the name of the Field.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);

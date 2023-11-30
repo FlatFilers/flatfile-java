@@ -35,11 +35,17 @@ public final class ListSecrets {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The Environment of the secret.
+     */
     @JsonProperty("environmentId")
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
+    /**
+     * @return The Space of the secret.
+     */
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
@@ -106,6 +112,10 @@ public final class ListSecrets {
             return this;
         }
 
+        /**
+         * <p>The Environment of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
@@ -113,6 +123,10 @@ public final class ListSecrets {
             return this;
         }
 
+        /**
+         * <p>The Space of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);

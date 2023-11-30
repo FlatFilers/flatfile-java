@@ -35,11 +35,17 @@ public final class CategoryMapping {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The source value to map from
+     */
     @JsonProperty("sourceValue")
     public Optional<EnumValue> getSourceValue() {
         return sourceValue;
     }
 
+    /**
+     * @return The destination value to map to
+     */
     @JsonProperty("destinationValue")
     public Optional<EnumValue> getDestinationValue() {
         return destinationValue;

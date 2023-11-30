@@ -66,54 +66,81 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The name of your Sheet as it will appear to your end users.
+     */
     @JsonProperty("name")
     @Override
     public Optional<String> getName() {
         return name;
     }
 
+    /**
+     * @return A sentence or two describing the purpose of your Sheet.
+     */
     @JsonProperty("description")
     @Override
     public Optional<String> getDescription() {
         return description;
     }
 
+    /**
+     * @return A unique identifier for your Sheet.
+     */
     @JsonProperty("slug")
     @Override
     public Optional<String> getSlug() {
         return slug;
     }
 
+    /**
+     * @return A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users.
+     */
     @JsonProperty("readonly")
     @Override
     public Optional<Boolean> getReadonly() {
         return readonly;
     }
 
+    /**
+     * @return Allow end users to add fields during mapping.
+     */
     @JsonProperty("allowAdditionalFields")
     @Override
     public Optional<Boolean> getAllowAdditionalFields() {
         return allowAdditionalFields;
     }
 
+    /**
+     * @return The minimum confidence required to automatically map a field
+     */
     @JsonProperty("mappingConfidenceThreshold")
     @Override
     public Optional<Double> getMappingConfidenceThreshold() {
         return mappingConfidenceThreshold;
     }
 
+    /**
+     * @return Control Sheet-level access for all users.
+     */
     @JsonProperty("access")
     @Override
     public Optional<List<SheetAccess>> getAccess() {
         return access;
     }
 
+    /**
+     * @return Where you define your Sheet’s data schema.
+     */
     @JsonProperty("fields")
     @Override
     public Optional<List<Property>> getFields() {
         return fields;
     }
 
+    /**
+     * @return An array of actions that end users can perform on this Sheet.
+     */
     @JsonProperty("actions")
     @Override
     public Optional<List<Action>> getActions() {

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.EventId;
 import com.flatfile.api.resources.commons.types.Filter;
 import com.flatfile.api.resources.commons.types.FilterField;
@@ -29,9 +30,13 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetRecordsRequest.Builder.class)
 public final class GetRecordsRequest {
-    private final Optional<String> versionId;
+    private final Optional<VersionId> versionId;
+
+    private final Optional<CommitId> commitId;
 
     private final Optional<VersionId> sinceVersionId;
+
+    private final Optional<CommitId> sinceCommitId;
 
     private final Optional<SortField> sortField;
 
@@ -66,8 +71,10 @@ public final class GetRecordsRequest {
     private final Map<String, Object> additionalProperties;
 
     private GetRecordsRequest(
-            Optional<String> versionId,
+            Optional<VersionId> versionId,
+            Optional<CommitId> commitId,
             Optional<VersionId> sinceVersionId,
+            Optional<CommitId> sinceCommitId,
             Optional<SortField> sortField,
             Optional<SortDirection> sortDirection,
             Optional<Filter> filter,
@@ -85,7 +92,9 @@ public final class GetRecordsRequest {
             Optional<String> q,
             Map<String, Object> additionalProperties) {
         this.versionId = versionId;
+        this.commitId = commitId;
         this.sinceVersionId = sinceVersionId;
+        this.sinceCommitId = sinceCommitId;
         this.sortField = sortField;
         this.sortDirection = sortDirection;
         this.filter = filter;
@@ -104,14 +113,30 @@ public final class GetRecordsRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Deprecated, use <code>commitId</code> instead.
+     */
     @JsonProperty("versionId")
-    public Optional<String> getVersionId() {
+    public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
+    @JsonProperty("commitId")
+    public Optional<CommitId> getCommitId() {
+        return commitId;
+    }
+
+    /**
+     * @return Deprecated, use <code>sinceCommitId</code> instead.
+     */
     @JsonProperty("sinceVersionId")
     public Optional<VersionId> getSinceVersionId() {
         return sinceVersionId;
+    }
+
+    @JsonProperty("sinceCommitId")
+    public Optional<CommitId> getSinceCommitId() {
+        return sinceCommitId;
     }
 
     @JsonProperty("sortField")
@@ -232,7 +257,9 @@ public final class GetRecordsRequest {
 
     private boolean equalTo(GetRecordsRequest other) {
         return versionId.equals(other.versionId)
+                && commitId.equals(other.commitId)
                 && sinceVersionId.equals(other.sinceVersionId)
+                && sinceCommitId.equals(other.sinceCommitId)
                 && sortField.equals(other.sortField)
                 && sortDirection.equals(other.sortDirection)
                 && filter.equals(other.filter)
@@ -254,7 +281,9 @@ public final class GetRecordsRequest {
     public int hashCode() {
         return Objects.hash(
                 this.versionId,
+                this.commitId,
                 this.sinceVersionId,
+                this.sinceCommitId,
                 this.sortField,
                 this.sortDirection,
                 this.filter,
@@ -283,9 +312,13 @@ public final class GetRecordsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> versionId = Optional.empty();
+        private Optional<VersionId> versionId = Optional.empty();
+
+        private Optional<CommitId> commitId = Optional.empty();
 
         private Optional<VersionId> sinceVersionId = Optional.empty();
+
+        private Optional<CommitId> sinceCommitId = Optional.empty();
 
         private Optional<SortField> sortField = Optional.empty();
 
@@ -324,7 +357,9 @@ public final class GetRecordsRequest {
 
         public Builder from(GetRecordsRequest other) {
             versionId(other.getVersionId());
+            commitId(other.getCommitId());
             sinceVersionId(other.getSinceVersionId());
+            sinceCommitId(other.getSinceCommitId());
             sortField(other.getSortField());
             sortDirection(other.getSortDirection());
             filter(other.getFilter());
@@ -344,13 +379,24 @@ public final class GetRecordsRequest {
         }
 
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
-        public Builder versionId(Optional<String> versionId) {
+        public Builder versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }
 
-        public Builder versionId(String versionId) {
+        public Builder versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
+            return this;
+        }
+
+        @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
+        public Builder commitId(Optional<CommitId> commitId) {
+            this.commitId = commitId;
+            return this;
+        }
+
+        public Builder commitId(CommitId commitId) {
+            this.commitId = Optional.of(commitId);
             return this;
         }
 
@@ -362,6 +408,17 @@ public final class GetRecordsRequest {
 
         public Builder sinceVersionId(VersionId sinceVersionId) {
             this.sinceVersionId = Optional.of(sinceVersionId);
+            return this;
+        }
+
+        @JsonSetter(value = "sinceCommitId", nulls = Nulls.SKIP)
+        public Builder sinceCommitId(Optional<CommitId> sinceCommitId) {
+            this.sinceCommitId = sinceCommitId;
+            return this;
+        }
+
+        public Builder sinceCommitId(CommitId sinceCommitId) {
+            this.sinceCommitId = Optional.of(sinceCommitId);
             return this;
         }
 
@@ -533,7 +590,9 @@ public final class GetRecordsRequest {
         public GetRecordsRequest build() {
             return new GetRecordsRequest(
                     versionId,
+                    commitId,
                     sinceVersionId,
+                    sinceCommitId,
                     sortField,
                     sortDirection,
                     filter,

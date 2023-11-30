@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.RecordId;
 import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
@@ -27,6 +28,8 @@ public final class DiffRecord implements IRecordBase {
 
     private final Optional<VersionId> versionId;
 
+    private final Optional<CommitId> commitId;
+
     private final Optional<Boolean> valid;
 
     private final Optional<List<ValidationMessage>> messages;
@@ -40,6 +43,7 @@ public final class DiffRecord implements IRecordBase {
     private DiffRecord(
             RecordId id,
             Optional<VersionId> versionId,
+            Optional<CommitId> commitId,
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
@@ -47,6 +51,7 @@ public final class DiffRecord implements IRecordBase {
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.versionId = versionId;
+        this.commitId = commitId;
         this.valid = valid;
         this.messages = messages;
         this.metadata = metadata;
@@ -60,10 +65,19 @@ public final class DiffRecord implements IRecordBase {
         return id;
     }
 
+    /**
+     * @return Deprecated, use <code>commitId</code> instead.
+     */
     @JsonProperty("versionId")
     @Override
     public Optional<VersionId> getVersionId() {
         return versionId;
+    }
+
+    @JsonProperty("commitId")
+    @Override
+    public Optional<CommitId> getCommitId() {
+        return commitId;
     }
 
     @JsonProperty("valid")
@@ -103,6 +117,7 @@ public final class DiffRecord implements IRecordBase {
     private boolean equalTo(DiffRecord other) {
         return id.equals(other.id)
                 && versionId.equals(other.versionId)
+                && commitId.equals(other.commitId)
                 && valid.equals(other.valid)
                 && messages.equals(other.messages)
                 && metadata.equals(other.metadata)
@@ -111,7 +126,8 @@ public final class DiffRecord implements IRecordBase {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.versionId, this.valid, this.messages, this.metadata, this.values);
+        return Objects.hash(
+                this.id, this.versionId, this.commitId, this.valid, this.messages, this.metadata, this.values);
     }
 
     @Override
@@ -140,6 +156,10 @@ public final class DiffRecord implements IRecordBase {
 
         _FinalStage versionId(VersionId versionId);
 
+        _FinalStage commitId(Optional<CommitId> commitId);
+
+        _FinalStage commitId(CommitId commitId);
+
         _FinalStage valid(Optional<Boolean> valid);
 
         _FinalStage valid(Boolean valid);
@@ -165,6 +185,8 @@ public final class DiffRecord implements IRecordBase {
 
         private Optional<Boolean> valid = Optional.empty();
 
+        private Optional<CommitId> commitId = Optional.empty();
+
         private Optional<VersionId> versionId = Optional.empty();
 
         @JsonAnySetter
@@ -176,6 +198,7 @@ public final class DiffRecord implements IRecordBase {
         public Builder from(DiffRecord other) {
             id(other.getId());
             versionId(other.getVersionId());
+            commitId(other.getCommitId());
             valid(other.getValid());
             messages(other.getMessages());
             metadata(other.getMetadata());
@@ -237,6 +260,23 @@ public final class DiffRecord implements IRecordBase {
         }
 
         @Override
+        public _FinalStage commitId(CommitId commitId) {
+            this.commitId = Optional.of(commitId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
+        public _FinalStage commitId(Optional<CommitId> commitId) {
+            this.commitId = commitId;
+            return this;
+        }
+
+        /**
+         * <p>Deprecated, use <code>commitId</code> instead.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
@@ -251,7 +291,7 @@ public final class DiffRecord implements IRecordBase {
 
         @Override
         public DiffRecord build() {
-            return new DiffRecord(id, versionId, valid, messages, metadata, values, additionalProperties);
+            return new DiffRecord(id, versionId, commitId, valid, messages, metadata, values, additionalProperties);
         }
     }
 }

@@ -113,7 +113,7 @@ public final class FindAndReplaceRecordRequest {
     }
 
     /**
-     * @return The value to replace found values with
+     * @return A unique key used to identify a field in a sheet
      */
     @JsonProperty("fieldKey")
     public String getFieldKey() {
@@ -239,7 +239,7 @@ public final class FindAndReplaceRecordRequest {
         }
 
         /**
-         * <p>The value to replace found values with</p>
+         * <p>A unique key used to identify a field in a sheet</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

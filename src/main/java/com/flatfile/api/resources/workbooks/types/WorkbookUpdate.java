@@ -64,31 +64,49 @@ public final class WorkbookUpdate {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The name of the Workbook.
+     */
     @JsonProperty("name")
     public Optional<String> getName() {
         return name;
     }
 
+    /**
+     * @return An optional list of labels for the Workbook.
+     */
     @JsonProperty("labels")
     public Optional<List<String>> getLabels() {
         return labels;
     }
 
+    /**
+     * @return The Space Id associated with the Workbook.
+     */
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
+    /**
+     * @return The Environment Id associated with the Workbook.
+     */
     @JsonProperty("environmentId")
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
+    /**
+     * @return The namespace of the Workbook.
+     */
     @JsonProperty("namespace")
     public Optional<String> getNamespace() {
         return namespace;
     }
 
+    /**
+     * @return Describes shape of data as well as behavior
+     */
     @JsonProperty("sheets")
     public Optional<List<SheetConfigOrUpdate>> getSheets() {
         return sheets;

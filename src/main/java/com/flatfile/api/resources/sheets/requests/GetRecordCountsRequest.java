@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.Filter;
 import com.flatfile.api.resources.commons.types.FilterField;
 import com.flatfile.api.resources.commons.types.SearchField;
@@ -28,6 +29,10 @@ public final class GetRecordCountsRequest {
     private final Optional<String> versionId;
 
     private final Optional<VersionId> sinceVersionId;
+
+    private final Optional<CommitId> commitId;
+
+    private final Optional<CommitId> sinceCommitId;
 
     private final Optional<Filter> filter;
 
@@ -46,6 +51,8 @@ public final class GetRecordCountsRequest {
     private GetRecordCountsRequest(
             Optional<String> versionId,
             Optional<VersionId> sinceVersionId,
+            Optional<CommitId> commitId,
+            Optional<CommitId> sinceCommitId,
             Optional<Filter> filter,
             Optional<FilterField> filterField,
             Optional<SearchValue> searchValue,
@@ -55,6 +62,8 @@ public final class GetRecordCountsRequest {
             Map<String, Object> additionalProperties) {
         this.versionId = versionId;
         this.sinceVersionId = sinceVersionId;
+        this.commitId = commitId;
+        this.sinceCommitId = sinceCommitId;
         this.filter = filter;
         this.filterField = filterField;
         this.searchValue = searchValue;
@@ -64,14 +73,36 @@ public final class GetRecordCountsRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return <p>records that were changed in that version and only those records.</p>
+     */
     @JsonProperty("versionId")
     public Optional<String> getVersionId() {
         return versionId;
     }
 
+    /**
+     * @return Deprecated, use <code>sinceCommitId</code> instead.
+     */
     @JsonProperty("sinceVersionId")
     public Optional<VersionId> getSinceVersionId() {
         return sinceVersionId;
+    }
+
+    /**
+     * @return <p>records that were changed in that version in addition to any records from versions after that version.</p>
+     */
+    @JsonProperty("commitId")
+    public Optional<CommitId> getCommitId() {
+        return commitId;
+    }
+
+    /**
+     * @return Listing a commit ID here will return all records since the specified commit.
+     */
+    @JsonProperty("sinceCommitId")
+    public Optional<CommitId> getSinceCommitId() {
+        return sinceCommitId;
     }
 
     /**
@@ -82,16 +113,25 @@ public final class GetRecordCountsRequest {
         return filter;
     }
 
+    /**
+     * @return The field to filter the data on.
+     */
     @JsonProperty("filterField")
     public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
+    /**
+     * @return The value to search for data on.
+     */
     @JsonProperty("searchValue")
     public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
+    /**
+     * @return The field to search for data on.
+     */
     @JsonProperty("searchField")
     public Optional<SearchField> getSearchField() {
         return searchField;
@@ -127,6 +167,8 @@ public final class GetRecordCountsRequest {
     private boolean equalTo(GetRecordCountsRequest other) {
         return versionId.equals(other.versionId)
                 && sinceVersionId.equals(other.sinceVersionId)
+                && commitId.equals(other.commitId)
+                && sinceCommitId.equals(other.sinceCommitId)
                 && filter.equals(other.filter)
                 && filterField.equals(other.filterField)
                 && searchValue.equals(other.searchValue)
@@ -140,6 +182,8 @@ public final class GetRecordCountsRequest {
         return Objects.hash(
                 this.versionId,
                 this.sinceVersionId,
+                this.commitId,
+                this.sinceCommitId,
                 this.filter,
                 this.filterField,
                 this.searchValue,
@@ -163,6 +207,10 @@ public final class GetRecordCountsRequest {
 
         private Optional<VersionId> sinceVersionId = Optional.empty();
 
+        private Optional<CommitId> commitId = Optional.empty();
+
+        private Optional<CommitId> sinceCommitId = Optional.empty();
+
         private Optional<Filter> filter = Optional.empty();
 
         private Optional<FilterField> filterField = Optional.empty();
@@ -183,6 +231,8 @@ public final class GetRecordCountsRequest {
         public Builder from(GetRecordCountsRequest other) {
             versionId(other.getVersionId());
             sinceVersionId(other.getSinceVersionId());
+            commitId(other.getCommitId());
+            sinceCommitId(other.getSinceCommitId());
             filter(other.getFilter());
             filterField(other.getFilterField());
             searchValue(other.getSearchValue());
@@ -211,6 +261,28 @@ public final class GetRecordCountsRequest {
 
         public Builder sinceVersionId(VersionId sinceVersionId) {
             this.sinceVersionId = Optional.of(sinceVersionId);
+            return this;
+        }
+
+        @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
+        public Builder commitId(Optional<CommitId> commitId) {
+            this.commitId = commitId;
+            return this;
+        }
+
+        public Builder commitId(CommitId commitId) {
+            this.commitId = Optional.of(commitId);
+            return this;
+        }
+
+        @JsonSetter(value = "sinceCommitId", nulls = Nulls.SKIP)
+        public Builder sinceCommitId(Optional<CommitId> sinceCommitId) {
+            this.sinceCommitId = sinceCommitId;
+            return this;
+        }
+
+        public Builder sinceCommitId(CommitId sinceCommitId) {
+            this.sinceCommitId = Optional.of(sinceCommitId);
             return this;
         }
 
@@ -284,6 +356,8 @@ public final class GetRecordCountsRequest {
             return new GetRecordCountsRequest(
                     versionId,
                     sinceVersionId,
+                    commitId,
+                    sinceCommitId,
                     filter,
                     filterField,
                     searchValue,

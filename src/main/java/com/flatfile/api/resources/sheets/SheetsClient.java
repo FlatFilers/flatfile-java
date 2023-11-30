@@ -10,10 +10,12 @@ import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commits.types.ListCommitsResponse;
 import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.Success;
+import com.flatfile.api.resources.sheets.requests.GetFieldValuesRequest;
 import com.flatfile.api.resources.sheets.requests.GetRecordCountsRequest;
 import com.flatfile.api.resources.sheets.requests.GetRecordsCsvRequest;
 import com.flatfile.api.resources.sheets.requests.ListSheetCommitsRequest;
 import com.flatfile.api.resources.sheets.requests.ListSheetsRequest;
+import com.flatfile.api.resources.sheets.types.CellsResponse;
 import com.flatfile.api.resources.sheets.types.ListSheetsResponse;
 import com.flatfile.api.resources.sheets.types.RecordCountsResponse;
 import com.flatfile.api.resources.sheets.types.SheetResponse;
@@ -195,9 +197,16 @@ public class SheetsClient {
         if (request.getVersionId().isPresent()) {
             httpUrl.addQueryParameter("versionId", request.getVersionId().get());
         }
+        if (request.getCommitId().isPresent()) {
+            httpUrl.addQueryParameter("commitId", request.getCommitId().get().toString());
+        }
         if (request.getSinceVersionId().isPresent()) {
             httpUrl.addQueryParameter(
                     "sinceVersionId", request.getSinceVersionId().get().toString());
+        }
+        if (request.getSinceCommitId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sinceCommitId", request.getSinceCommitId().get().toString());
         }
         if (request.getSortField().isPresent()) {
             httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
@@ -274,6 +283,13 @@ public class SheetsClient {
         if (request.getSinceVersionId().isPresent()) {
             httpUrl.addQueryParameter(
                     "sinceVersionId", request.getSinceVersionId().get().toString());
+        }
+        if (request.getCommitId().isPresent()) {
+            httpUrl.addQueryParameter("commitId", request.getCommitId().get().toString());
+        }
+        if (request.getSinceCommitId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sinceCommitId", request.getSinceCommitId().get().toString());
         }
         if (request.getFilter().isPresent()) {
             httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
@@ -368,5 +384,157 @@ public class SheetsClient {
      */
     public ListCommitsResponse getSheetCommits(SheetId sheetId, ListSheetCommitsRequest request) {
         return getSheetCommits(sheetId, request, null);
+    }
+
+    /**
+     * Locks a sheet
+     */
+    public Success lockSheet(SheetId sheetId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("sheets")
+                .addPathSegment(sheetId.toString())
+                .addPathSegments("lock")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Locks a sheet
+     */
+    public Success lockSheet(SheetId sheetId) {
+        return lockSheet(sheetId, null);
+    }
+
+    /**
+     * Removes a lock from a sheet
+     */
+    public Success unlockSheet(SheetId sheetId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("sheets")
+                .addPathSegment(sheetId.toString())
+                .addPathSegments("unlock")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Removes a lock from a sheet
+     */
+    public Success unlockSheet(SheetId sheetId) {
+        return unlockSheet(sheetId, null);
+    }
+
+    /**
+     * Returns record cell values grouped by all fields in the sheet
+     */
+    public CellsResponse getCellValues(SheetId sheetId) {
+        return getCellValues(sheetId, GetFieldValuesRequest.builder().build());
+    }
+
+    /**
+     * Returns record cell values grouped by all fields in the sheet
+     */
+    public CellsResponse getCellValues(SheetId sheetId, GetFieldValuesRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("sheets")
+                .addPathSegment(sheetId.toString())
+                .addPathSegments("cells");
+        if (request.getFieldKey().isPresent()) {
+            httpUrl.addQueryParameter("fieldKey", request.getFieldKey().get().toString());
+        }
+        if (request.getSortField().isPresent()) {
+            httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
+        }
+        if (request.getSortDirection().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sortDirection", request.getSortDirection().get().toString());
+        }
+        if (request.getFilter().isPresent()) {
+            httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
+        }
+        if (request.getFilterField().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
+        }
+        if (request.getPageSize().isPresent()) {
+            httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
+        }
+        if (request.getPageNumber().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "pageNumber", request.getPageNumber().get().toString());
+        }
+        if (request.getDistinct().isPresent()) {
+            httpUrl.addQueryParameter("distinct", request.getDistinct().get().toString());
+        }
+        if (request.getIncludeCounts().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "includeCounts", request.getIncludeCounts().get().toString());
+        }
+        if (request.getSearchValue().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), CellsResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Returns record cell values grouped by all fields in the sheet
+     */
+    public CellsResponse getCellValues(SheetId sheetId, GetFieldValuesRequest request) {
+        return getCellValues(sheetId, request, null);
     }
 }

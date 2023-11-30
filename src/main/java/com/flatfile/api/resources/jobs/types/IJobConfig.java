@@ -24,7 +24,7 @@ public interface IJobConfig {
 
     Optional<JobStatus> getStatus();
 
-    Optional<Double> getProgress();
+    Optional<Integer> getProgress();
 
     Optional<FileId> getFileId();
 

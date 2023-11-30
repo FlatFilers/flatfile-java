@@ -67,46 +67,73 @@ public final class SheetConfig {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The name of your Sheet as it will appear to your end users.
+     */
     @JsonProperty("name")
     public String getName() {
         return name;
     }
 
+    /**
+     * @return A sentence or two describing the purpose of your Sheet.
+     */
     @JsonProperty("description")
     public Optional<String> getDescription() {
         return description;
     }
 
+    /**
+     * @return A unique identifier for your Sheet.
+     */
     @JsonProperty("slug")
     public Optional<String> getSlug() {
         return slug;
     }
 
+    /**
+     * @return A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users.
+     */
     @JsonProperty("readonly")
     public Optional<Boolean> getReadonly() {
         return readonly;
     }
 
+    /**
+     * @return Allow end users to add fields during mapping.
+     */
     @JsonProperty("allowAdditionalFields")
     public Optional<Boolean> getAllowAdditionalFields() {
         return allowAdditionalFields;
     }
 
+    /**
+     * @return The minimum confidence required to automatically map a field
+     */
     @JsonProperty("mappingConfidenceThreshold")
     public Optional<Double> getMappingConfidenceThreshold() {
         return mappingConfidenceThreshold;
     }
 
+    /**
+     * @return Control Sheet-level access for all users.
+     */
     @JsonProperty("access")
     public Optional<List<SheetAccess>> getAccess() {
         return access;
     }
 
+    /**
+     * @return Where you define your Sheet’s data schema.
+     */
     @JsonProperty("fields")
     public List<Property> getFields() {
         return fields;
     }
 
+    /**
+     * @return An array of actions that end users can perform on this Sheet.
+     */
     @JsonProperty("actions")
     public Optional<List<Action>> getActions() {
         return actions;
@@ -241,6 +268,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>The name of your Sheet as it will appear to your end users.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
@@ -248,6 +279,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>An array of actions that end users can perform on this Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
@@ -261,12 +296,20 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>Where you define your Sheet’s data schema.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage addAllFields(List<Property> fields) {
             this.fields.addAll(fields);
             return this;
         }
 
+        /**
+         * <p>Where you define your Sheet’s data schema.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage addFields(Property fields) {
             this.fields.add(fields);
@@ -281,6 +324,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>Control Sheet-level access for all users.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage access(List<SheetAccess> access) {
             this.access = Optional.of(access);
@@ -294,6 +341,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>The minimum confidence required to automatically map a field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage mappingConfidenceThreshold(Double mappingConfidenceThreshold) {
             this.mappingConfidenceThreshold = Optional.of(mappingConfidenceThreshold);
@@ -307,6 +358,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>Allow end users to add fields during mapping.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage allowAdditionalFields(Boolean allowAdditionalFields) {
             this.allowAdditionalFields = Optional.of(allowAdditionalFields);
@@ -320,6 +375,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage readonly(Boolean readonly) {
             this.readonly = Optional.of(readonly);
@@ -333,6 +392,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>A unique identifier for your Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage slug(String slug) {
             this.slug = Optional.of(slug);
@@ -346,6 +409,10 @@ public final class SheetConfig {
             return this;
         }
 
+        /**
+         * <p>A sentence or two describing the purpose of your Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);

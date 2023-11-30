@@ -57,6 +57,9 @@ public final class DocumentConfig implements IDocumentConfig {
         return body;
     }
 
+    /**
+     * @return Certain treatments will cause your Document to look or behave differently.
+     */
     @JsonProperty("treatments")
     @Override
     public Optional<List<String>> getTreatments() {
@@ -174,6 +177,10 @@ public final class DocumentConfig implements IDocumentConfig {
             return this;
         }
 
+        /**
+         * <p>Certain treatments will cause your Document to look or behave differently.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage treatments(List<String> treatments) {
             this.treatments = Optional.of(treatments);

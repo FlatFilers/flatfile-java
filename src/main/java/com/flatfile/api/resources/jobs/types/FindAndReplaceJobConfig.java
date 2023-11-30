@@ -70,26 +70,41 @@ public final class FindAndReplaceJobConfig {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The filter to apply to the records
+     */
     @JsonProperty("filter")
     public Optional<Filter> getFilter() {
         return filter;
     }
 
+    /**
+     * @return The field to filter on
+     */
     @JsonProperty("filterField")
     public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
+    /**
+     * @return The value to search for
+     */
     @JsonProperty("searchValue")
     public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
+    /**
+     * @return The field to search for the search value in
+     */
     @JsonProperty("searchField")
     public Optional<SearchField> getSearchField() {
         return searchField;
     }
 
+    /**
+     * @return The FFQL query to filter records
+     */
     @JsonProperty("q")
     public Optional<String> getQ() {
         return q;
@@ -316,6 +331,10 @@ public final class FindAndReplaceJobConfig {
             return this;
         }
 
+        /**
+         * <p>The FFQL query to filter records</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage q(String q) {
             this.q = Optional.of(q);
@@ -329,6 +348,10 @@ public final class FindAndReplaceJobConfig {
             return this;
         }
 
+        /**
+         * <p>The field to search for the search value in</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
@@ -342,6 +365,10 @@ public final class FindAndReplaceJobConfig {
             return this;
         }
 
+        /**
+         * <p>The value to search for</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
@@ -355,6 +382,10 @@ public final class FindAndReplaceJobConfig {
             return this;
         }
 
+        /**
+         * <p>The field to filter on</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
@@ -368,6 +399,10 @@ public final class FindAndReplaceJobConfig {
             return this;
         }
 
+        /**
+         * <p>The filter to apply to the records</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage filter(Filter filter) {
             this.filter = Optional.of(filter);

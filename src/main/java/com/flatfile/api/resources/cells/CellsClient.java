@@ -7,8 +7,8 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
-import com.flatfile.api.resources.cells.requests.GetFieldValuesRequest;
-import com.flatfile.api.resources.cells.types.CellsResponse;
+import com.flatfile.api.resources.cells.requests.GetFieldValuesRequestDeprecated;
+import com.flatfile.api.resources.cells.types.CellsResponseDeprecated;
 import com.flatfile.api.resources.commons.types.SheetId;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -26,14 +26,15 @@ public class CellsClient {
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getValues(SheetId sheetId) {
-        return getValues(sheetId, GetFieldValuesRequest.builder().build());
+    public CellsResponseDeprecated getValues(SheetId sheetId) {
+        return getValues(sheetId, GetFieldValuesRequestDeprecated.builder().build());
     }
 
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getValues(SheetId sheetId, GetFieldValuesRequest request, RequestOptions requestOptions) {
+    public CellsResponseDeprecated getValues(
+            SheetId sheetId, GetFieldValuesRequestDeprecated request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sheets")
@@ -84,7 +85,7 @@ public class CellsClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), CellsResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), CellsResponseDeprecated.class);
             }
             throw new ApiError(
                     response.code(),
@@ -97,7 +98,7 @@ public class CellsClient {
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getValues(SheetId sheetId, GetFieldValuesRequest request) {
+    public CellsResponseDeprecated getValues(SheetId sheetId, GetFieldValuesRequestDeprecated request) {
         return getValues(sheetId, request, null);
     }
 }

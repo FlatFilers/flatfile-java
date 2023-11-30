@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.Filter;
 import com.flatfile.api.resources.commons.types.FilterField;
 import com.flatfile.api.resources.commons.types.RecordId;
@@ -30,6 +31,8 @@ import java.util.Optional;
 @JsonDeserialize(builder = ExportOptions.Builder.class)
 public final class ExportOptions {
     private final Optional<VersionId> versionId;
+
+    private final Optional<CommitId> commitId;
 
     private final Optional<SortField> sortField;
 
@@ -51,6 +54,7 @@ public final class ExportOptions {
 
     private ExportOptions(
             Optional<VersionId> versionId,
+            Optional<CommitId> commitId,
             Optional<SortField> sortField,
             Optional<SortDirection> sortDirection,
             Optional<Filter> filter,
@@ -61,6 +65,7 @@ public final class ExportOptions {
             Optional<List<RecordId>> ids,
             Map<String, Object> additionalProperties) {
         this.versionId = versionId;
+        this.commitId = commitId;
         this.sortField = sortField;
         this.sortDirection = sortDirection;
         this.filter = filter;
@@ -72,41 +77,73 @@ public final class ExportOptions {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Deprecated, use <code>commitId</code> instead
+     */
     @JsonProperty("versionId")
     public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
+    /**
+     * @return If provided, the snapshot version of the workbook will be used for the export
+     */
+    @JsonProperty("commitId")
+    public Optional<CommitId> getCommitId() {
+        return commitId;
+    }
+
+    /**
+     * @return The field to sort the records on
+     */
     @JsonProperty("sortField")
     public Optional<SortField> getSortField() {
         return sortField;
     }
 
+    /**
+     * @return The direction to sort the records
+     */
     @JsonProperty("sortDirection")
     public Optional<SortDirection> getSortDirection() {
         return sortDirection;
     }
 
+    /**
+     * @return The filter to apply to the records
+     */
     @JsonProperty("filter")
     public Optional<Filter> getFilter() {
         return filter;
     }
 
+    /**
+     * @return The field to filter on
+     */
     @JsonProperty("filterField")
     public Optional<FilterField> getFilterField() {
         return filterField;
     }
 
+    /**
+     * @return The value to search for
+     */
     @JsonProperty("searchValue")
     public Optional<SearchValue> getSearchValue() {
         return searchValue;
     }
 
+    /**
+     * @return The field to search for the search value in
+     */
     @JsonProperty("searchField")
     public Optional<SearchField> getSearchField() {
         return searchField;
     }
 
+    /**
+     * @return The FFQL query to filter records
+     */
     @JsonProperty("q")
     public Optional<String> getQ() {
         return q;
@@ -133,6 +170,7 @@ public final class ExportOptions {
 
     private boolean equalTo(ExportOptions other) {
         return versionId.equals(other.versionId)
+                && commitId.equals(other.commitId)
                 && sortField.equals(other.sortField)
                 && sortDirection.equals(other.sortDirection)
                 && filter.equals(other.filter)
@@ -147,6 +185,7 @@ public final class ExportOptions {
     public int hashCode() {
         return Objects.hash(
                 this.versionId,
+                this.commitId,
                 this.sortField,
                 this.sortDirection,
                 this.filter,
@@ -169,6 +208,8 @@ public final class ExportOptions {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
         private Optional<VersionId> versionId = Optional.empty();
+
+        private Optional<CommitId> commitId = Optional.empty();
 
         private Optional<SortField> sortField = Optional.empty();
 
@@ -193,6 +234,7 @@ public final class ExportOptions {
 
         public Builder from(ExportOptions other) {
             versionId(other.getVersionId());
+            commitId(other.getCommitId());
             sortField(other.getSortField());
             sortDirection(other.getSortDirection());
             filter(other.getFilter());
@@ -212,6 +254,17 @@ public final class ExportOptions {
 
         public Builder versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
+            return this;
+        }
+
+        @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
+        public Builder commitId(Optional<CommitId> commitId) {
+            this.commitId = commitId;
+            return this;
+        }
+
+        public Builder commitId(CommitId commitId) {
+            this.commitId = Optional.of(commitId);
             return this;
         }
 
@@ -306,6 +359,7 @@ public final class ExportOptions {
         public ExportOptions build() {
             return new ExportOptions(
                     versionId,
+                    commitId,
                     sortField,
                     sortDirection,
                     filter,

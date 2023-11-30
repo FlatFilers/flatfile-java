@@ -45,6 +45,9 @@ public final class JobAckDetails {
         return info;
     }
 
+    /**
+     * @return the progress of the job. Whole number between 0 and 100
+     */
     @JsonProperty("progress")
     public Optional<Integer> getProgress() {
         return progress;

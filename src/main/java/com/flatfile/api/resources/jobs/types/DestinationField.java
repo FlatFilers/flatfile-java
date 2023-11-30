@@ -35,11 +35,17 @@ public final class DestinationField {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The description of the destination field
+     */
     @JsonProperty("destinationField")
     public Property getDestinationField() {
         return destinationField;
     }
 
+    /**
+     * @return A list of preview values of the data in the destination field
+     */
     @JsonProperty("preview")
     public Optional<List<String>> getPreview() {
         return preview;
@@ -106,6 +112,10 @@ public final class DestinationField {
             return this;
         }
 
+        /**
+         * <p>The description of the destination field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         @JsonSetter("destinationField")
         public _FinalStage destinationField(Property destinationField) {
@@ -113,6 +123,10 @@ public final class DestinationField {
             return this;
         }
 
+        /**
+         * <p>A list of preview values of the data in the destination field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage preview(List<String> preview) {
             this.preview = Optional.of(preview);

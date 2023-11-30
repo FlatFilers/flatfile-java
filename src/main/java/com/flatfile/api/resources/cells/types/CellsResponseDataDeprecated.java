@@ -8,22 +8,23 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.List;
 import java.util.Map;
 
-public final class CellsResponseData {
-    private final Map<String, List<CellValueWithCounts>> value;
+public final class CellsResponseDataDeprecated {
+    private final Map<String, List<CellValueWithCountsDeprecated>> value;
 
-    private CellsResponseData(Map<String, List<CellValueWithCounts>> value) {
+    private CellsResponseDataDeprecated(Map<String, List<CellValueWithCountsDeprecated>> value) {
         this.value = value;
     }
 
     @JsonValue
-    public Map<String, List<CellValueWithCounts>> get() {
+    public Map<String, List<CellValueWithCountsDeprecated>> get() {
         return this.value;
     }
 
     @Override
     public boolean equals(Object other) {
         return this == other
-                || (other instanceof CellsResponseData && this.value.equals(((CellsResponseData) other).value));
+                || (other instanceof CellsResponseDataDeprecated
+                        && this.value.equals(((CellsResponseDataDeprecated) other).value));
     }
 
     @Override
@@ -37,7 +38,7 @@ public final class CellsResponseData {
     }
 
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    public static CellsResponseData of(Map<String, List<CellValueWithCounts>> value) {
-        return new CellsResponseData(value);
+    public static CellsResponseDataDeprecated of(Map<String, List<CellValueWithCountsDeprecated>> value) {
+        return new CellsResponseDataDeprecated(value);
     }
 }

@@ -3,6 +3,7 @@
  */
 package com.flatfile.api.resources.records.types;
 
+import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.RecordId;
 import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.List;
@@ -13,6 +14,8 @@ public interface IRecordBase {
     RecordId getId();
 
     Optional<VersionId> getVersionId();
+
+    Optional<CommitId> getCommitId();
 
     Optional<Boolean> getValid();
 

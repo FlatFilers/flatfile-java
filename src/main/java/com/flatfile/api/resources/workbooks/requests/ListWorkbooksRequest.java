@@ -34,6 +34,9 @@ public final class ListWorkbooksRequest {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return The associated Space ID of the Workbook.
+     */
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;

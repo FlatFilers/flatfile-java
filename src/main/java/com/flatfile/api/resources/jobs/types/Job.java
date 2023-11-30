@@ -38,7 +38,7 @@ public final class Job implements IJobConfig {
 
     private final Optional<JobStatus> status;
 
-    private final Optional<Double> progress;
+    private final Optional<Integer> progress;
 
     private final Optional<FileId> fileId;
 
@@ -86,7 +86,7 @@ public final class Job implements IJobConfig {
             Optional<JobUpdateConfig> config,
             Optional<Trigger> trigger,
             Optional<JobStatus> status,
-            Optional<Double> progress,
+            Optional<Integer> progress,
             Optional<FileId> fileId,
             Optional<JobMode> mode,
             Optional<Map<String, Object>> input,
@@ -190,11 +190,11 @@ public final class Job implements IJobConfig {
     }
 
     /**
-     * @return the progress of the job
+     * @return the progress of the job. Whole number between 0 and 100
      */
     @JsonProperty("progress")
     @Override
-    public Optional<Double> getProgress() {
+    public Optional<Integer> getProgress() {
         return progress;
     }
 
@@ -473,9 +473,9 @@ public final class Job implements IJobConfig {
 
         _FinalStage status(JobStatus status);
 
-        _FinalStage progress(Optional<Double> progress);
+        _FinalStage progress(Optional<Integer> progress);
 
-        _FinalStage progress(Double progress);
+        _FinalStage progress(Integer progress);
 
         _FinalStage fileId(Optional<FileId> fileId);
 
@@ -583,7 +583,7 @@ public final class Job implements IJobConfig {
 
         private Optional<FileId> fileId = Optional.empty();
 
-        private Optional<Double> progress = Optional.empty();
+        private Optional<Integer> progress = Optional.empty();
 
         private Optional<JobStatus> status = Optional.empty();
 
@@ -939,18 +939,18 @@ public final class Job implements IJobConfig {
         }
 
         /**
-         * <p>the progress of the job</p>
+         * <p>the progress of the job. Whole number between 0 and 100</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override
-        public _FinalStage progress(Double progress) {
+        public _FinalStage progress(Integer progress) {
             this.progress = Optional.of(progress);
             return this;
         }
 
         @Override
         @JsonSetter(value = "progress", nulls = Nulls.SKIP)
-        public _FinalStage progress(Optional<Double> progress) {
+        public _FinalStage progress(Optional<Integer> progress) {
             this.progress = progress;
             return this;
         }

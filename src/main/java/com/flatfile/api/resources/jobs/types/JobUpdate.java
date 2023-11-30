@@ -25,7 +25,7 @@ public final class JobUpdate {
 
     private final Optional<JobStatus> status;
 
-    private final Optional<Double> progress;
+    private final Optional<Integer> progress;
 
     private final Optional<OffsetDateTime> outcomeAcknowledgedAt;
 
@@ -34,7 +34,7 @@ public final class JobUpdate {
     private JobUpdate(
             Optional<JobUpdateConfig> config,
             Optional<JobStatus> status,
-            Optional<Double> progress,
+            Optional<Integer> progress,
             Optional<OffsetDateTime> outcomeAcknowledgedAt,
             Map<String, Object> additionalProperties) {
         this.config = config;
@@ -58,10 +58,10 @@ public final class JobUpdate {
     }
 
     /**
-     * @return the progress of the job
+     * @return the progress of the job. Whole number between 0 and 100
      */
     @JsonProperty("progress")
-    public Optional<Double> getProgress() {
+    public Optional<Integer> getProgress() {
         return progress;
     }
 
@@ -111,7 +111,7 @@ public final class JobUpdate {
 
         private Optional<JobStatus> status = Optional.empty();
 
-        private Optional<Double> progress = Optional.empty();
+        private Optional<Integer> progress = Optional.empty();
 
         private Optional<OffsetDateTime> outcomeAcknowledgedAt = Optional.empty();
 
@@ -151,12 +151,12 @@ public final class JobUpdate {
         }
 
         @JsonSetter(value = "progress", nulls = Nulls.SKIP)
-        public Builder progress(Optional<Double> progress) {
+        public Builder progress(Optional<Integer> progress) {
             this.progress = progress;
             return this;
         }
 
-        public Builder progress(Double progress) {
+        public Builder progress(Integer progress) {
             this.progress = Optional.of(progress);
             return this;
         }
