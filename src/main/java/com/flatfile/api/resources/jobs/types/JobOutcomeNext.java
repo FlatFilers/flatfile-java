@@ -46,6 +46,10 @@ public final class JobOutcomeNext {
         return new JobOutcomeNext(new SnapshotValue(value));
     }
 
+    public static JobOutcomeNext retry(JobOutcomeNextRetry value) {
+        return new JobOutcomeNext(new RetryValue(value));
+    }
+
     public boolean isId() {
         return value instanceof IdValue;
     }
@@ -64,6 +68,10 @@ public final class JobOutcomeNext {
 
     public boolean isSnapshot() {
         return value instanceof SnapshotValue;
+    }
+
+    public boolean isRetry() {
+        return value instanceof RetryValue;
     }
 
     public boolean _isUnknown() {
@@ -105,6 +113,13 @@ public final class JobOutcomeNext {
         return Optional.empty();
     }
 
+    public Optional<JobOutcomeNextRetry> getRetry() {
+        if (isRetry()) {
+            return Optional.of(((RetryValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -128,6 +143,8 @@ public final class JobOutcomeNext {
 
         T visitSnapshot(JobOutcomeNextSnapshot snapshot);
 
+        T visitRetry(JobOutcomeNextRetry retry);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -137,7 +154,8 @@ public final class JobOutcomeNext {
         @JsonSubTypes.Type(UrlValue.class),
         @JsonSubTypes.Type(DownloadValue.class),
         @JsonSubTypes.Type(WaitValue.class),
-        @JsonSubTypes.Type(SnapshotValue.class)
+        @JsonSubTypes.Type(SnapshotValue.class),
+        @JsonSubTypes.Type(RetryValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -320,6 +338,44 @@ public final class JobOutcomeNext {
         }
 
         private boolean equalTo(SnapshotValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "JobOutcomeNext{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("retry")
+    private static final class RetryValue implements Value {
+        @JsonUnwrapped
+        private JobOutcomeNextRetry value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private RetryValue() {}
+
+        private RetryValue(JobOutcomeNextRetry value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitRetry(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof RetryValue && equalTo((RetryValue) other);
+        }
+
+        private boolean equalTo(RetryValue other) {
             return value.equals(other.value);
         }
 

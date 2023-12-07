@@ -24,11 +24,22 @@ public final class JobOutcomeNextId {
 
     private final Optional<String> label;
 
+    private final Optional<String> path;
+
+    private final Optional<String> query;
+
     private final Map<String, Object> additionalProperties;
 
-    private JobOutcomeNextId(String id, Optional<String> label, Map<String, Object> additionalProperties) {
+    private JobOutcomeNextId(
+            String id,
+            Optional<String> label,
+            Optional<String> path,
+            Optional<String> query,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.label = label;
+        this.path = path;
+        this.query = query;
         this.additionalProperties = additionalProperties;
     }
 
@@ -40,6 +51,16 @@ public final class JobOutcomeNextId {
     @JsonProperty("label")
     public Optional<String> getLabel() {
         return label;
+    }
+
+    @JsonProperty("path")
+    public Optional<String> getPath() {
+        return path;
+    }
+
+    @JsonProperty("query")
+    public Optional<String> getQuery() {
+        return query;
     }
 
     @Override
@@ -54,12 +75,12 @@ public final class JobOutcomeNextId {
     }
 
     private boolean equalTo(JobOutcomeNextId other) {
-        return id.equals(other.id) && label.equals(other.label);
+        return id.equals(other.id) && label.equals(other.label) && path.equals(other.path) && query.equals(other.query);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.label);
+        return Objects.hash(this.id, this.label, this.path, this.query);
     }
 
     @Override
@@ -83,11 +104,23 @@ public final class JobOutcomeNextId {
         _FinalStage label(Optional<String> label);
 
         _FinalStage label(String label);
+
+        _FinalStage path(Optional<String> path);
+
+        _FinalStage path(String path);
+
+        _FinalStage query(Optional<String> query);
+
+        _FinalStage query(String query);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
         private String id;
+
+        private Optional<String> query = Optional.empty();
+
+        private Optional<String> path = Optional.empty();
 
         private Optional<String> label = Optional.empty();
 
@@ -100,6 +133,8 @@ public final class JobOutcomeNextId {
         public Builder from(JobOutcomeNextId other) {
             id(other.getId());
             label(other.getLabel());
+            path(other.getPath());
+            query(other.getQuery());
             return this;
         }
 
@@ -107,6 +142,32 @@ public final class JobOutcomeNextId {
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
+            return this;
+        }
+
+        @Override
+        public _FinalStage query(String query) {
+            this.query = Optional.of(query);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "query", nulls = Nulls.SKIP)
+        public _FinalStage query(Optional<String> query) {
+            this.query = query;
+            return this;
+        }
+
+        @Override
+        public _FinalStage path(String path) {
+            this.path = Optional.of(path);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "path", nulls = Nulls.SKIP)
+        public _FinalStage path(Optional<String> path) {
+            this.path = path;
             return this;
         }
 
@@ -125,7 +186,7 @@ public final class JobOutcomeNextId {
 
         @Override
         public JobOutcomeNextId build() {
-            return new JobOutcomeNextId(id, label, additionalProperties);
+            return new JobOutcomeNextId(id, label, path, query, additionalProperties);
         }
     }
 }

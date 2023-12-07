@@ -68,6 +68,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
     private final OffsetDateTime updatedAt;
 
+    private final Optional<OffsetDateTime> expiredAt;
+
     private final Optional<String> guestLink;
 
     private final String name;
@@ -106,6 +108,7 @@ public final class Space implements IInternalSpaceConfigBase {
             Optional<String> createdByUserName,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
+            Optional<OffsetDateTime> expiredAt,
             Optional<String> guestLink,
             String name,
             Optional<Integer> displayOrder,
@@ -134,6 +137,7 @@ public final class Space implements IInternalSpaceConfigBase {
         this.createdByUserName = createdByUserName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.expiredAt = expiredAt;
         this.guestLink = guestLink;
         this.name = name;
         this.displayOrder = displayOrder;
@@ -274,6 +278,14 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     /**
+     * @return Date when space was expired
+     */
+    @JsonProperty("expiredAt")
+    public Optional<OffsetDateTime> getExpiredAt() {
+        return expiredAt;
+    }
+
+    /**
      * @return Guest link to the space
      */
     @JsonProperty("guestLink")
@@ -368,6 +380,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 && createdByUserName.equals(other.createdByUserName)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
+                && expiredAt.equals(other.expiredAt)
                 && guestLink.equals(other.guestLink)
                 && name.equals(other.name)
                 && displayOrder.equals(other.displayOrder)
@@ -400,6 +413,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 this.createdByUserName,
                 this.createdAt,
                 this.updatedAt,
+                this.expiredAt,
                 this.guestLink,
                 this.name,
                 this.displayOrder,
@@ -504,6 +518,10 @@ public final class Space implements IInternalSpaceConfigBase {
 
         _FinalStage createdByUserName(String createdByUserName);
 
+        _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt);
+
+        _FinalStage expiredAt(OffsetDateTime expiredAt);
+
         _FinalStage guestLink(Optional<String> guestLink);
 
         _FinalStage guestLink(String guestLink);
@@ -558,6 +576,8 @@ public final class Space implements IInternalSpaceConfigBase {
         private Optional<Integer> displayOrder = Optional.empty();
 
         private Optional<String> guestLink = Optional.empty();
+
+        private Optional<OffsetDateTime> expiredAt = Optional.empty();
 
         private Optional<String> createdByUserName = Optional.empty();
 
@@ -617,6 +637,7 @@ public final class Space implements IInternalSpaceConfigBase {
             createdByUserName(other.getCreatedByUserName());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            expiredAt(other.getExpiredAt());
             guestLink(other.getGuestLink());
             name(other.getName());
             displayOrder(other.getDisplayOrder());
@@ -795,6 +816,23 @@ public final class Space implements IInternalSpaceConfigBase {
         @JsonSetter(value = "guestLink", nulls = Nulls.SKIP)
         public _FinalStage guestLink(Optional<String> guestLink) {
             this.guestLink = guestLink;
+            return this;
+        }
+
+        /**
+         * <p>Date when space was expired</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage expiredAt(OffsetDateTime expiredAt) {
+            this.expiredAt = Optional.of(expiredAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "expiredAt", nulls = Nulls.SKIP)
+        public _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt) {
+            this.expiredAt = expiredAt;
             return this;
         }
 
@@ -1048,6 +1086,7 @@ public final class Space implements IInternalSpaceConfigBase {
                     createdByUserName,
                     createdAt,
                     updatedAt,
+                    expiredAt,
                     guestLink,
                     name,
                     displayOrder,

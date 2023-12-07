@@ -8,21 +8,13 @@ import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.UserId;
-import com.flatfile.api.resources.users.requests.CreateApiTokenRequest;
-import com.flatfile.api.resources.users.requests.ExchangeTokenRequest;
-import com.flatfile.api.resources.users.requests.ListApiTokensRequest;
 import com.flatfile.api.resources.users.requests.ListUsersRequest;
-import com.flatfile.api.resources.users.types.ApiTokenResponse;
-import com.flatfile.api.resources.users.types.ExchangeTokenResponse;
-import com.flatfile.api.resources.users.types.ListApiTokensResponse;
 import com.flatfile.api.resources.users.types.ListUsersResponse;
 import com.flatfile.api.resources.users.types.UserResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UsersClient {
@@ -110,137 +102,5 @@ public class UsersClient {
      */
     public UserResponse get(UserId userId) {
         return get(userId, null);
-    }
-
-    /**
-     * Gets all the api tokens for a user.
-     */
-    public ListApiTokensResponse listApiTokens(
-            UserId userId, ListApiTokensRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("users")
-                .addPathSegment(userId.toString())
-                .addPathSegments("api-token");
-        httpUrl.addQueryParameter("tenantId", request.getTenantId());
-        if (request.getPageSize().isPresent()) {
-            httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
-        }
-        if (request.getPageNumber().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "pageNumber", request.getPageNumber().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListApiTokensResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Gets all the api tokens for a user.
-     */
-    public ListApiTokensResponse listApiTokens(UserId userId, ListApiTokensRequest request) {
-        return listApiTokens(userId, request, null);
-    }
-
-    /**
-     * Creates an api token for authenticating against Flatfile APIs.
-     */
-    public ApiTokenResponse createApiToken(
-            UserId userId, CreateApiTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("users")
-                .addPathSegment(userId.toString())
-                .addPathSegments("api-token");
-        httpUrl.addQueryParameter("tenantId", request.getTenantId());
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ApiTokenResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Creates an api token for authenticating against Flatfile APIs.
-     */
-    public ApiTokenResponse createApiToken(UserId userId, CreateApiTokenRequest request) {
-        return createApiToken(userId, request, null);
-    }
-
-    /**
-     * Exchange an invitation for an access token
-     */
-    public ExchangeTokenResponse exchangeToken() {
-        return exchangeToken(ExchangeTokenRequest.builder().build());
-    }
-
-    /**
-     * Exchange an invitation for an access token
-     */
-    public ExchangeTokenResponse exchangeToken(ExchangeTokenRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("invitations/exchange")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("POST", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ExchangeTokenResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Exchange an invitation for an access token
-     */
-    public ExchangeTokenResponse exchangeToken(ExchangeTokenRequest request) {
-        return exchangeToken(request, null);
     }
 }

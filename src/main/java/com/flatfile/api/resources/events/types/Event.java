@@ -50,6 +50,10 @@ public final class Event {
         return new Event(new SpaceDeletedValue(value));
     }
 
+    public static Event spaceExpired(GenericEvent value) {
+        return new Event(new SpaceExpiredValue(value));
+    }
+
     public static Event documentCreated(GenericEvent value) {
         return new Event(new DocumentCreatedValue(value));
     }
@@ -72,6 +76,10 @@ public final class Event {
 
     public static Event workbookDeleted(GenericEvent value) {
         return new Event(new WorkbookDeletedValue(value));
+    }
+
+    public static Event workbookExpired(GenericEvent value) {
+        return new Event(new WorkbookExpiredValue(value));
     }
 
     public static Event sheetCreated(GenericEvent value) {
@@ -112,6 +120,10 @@ public final class Event {
 
     public static Event fileDeleted(GenericEvent value) {
         return new Event(new FileDeletedValue(value));
+    }
+
+    public static Event fileExpired(GenericEvent value) {
+        return new Event(new FileExpiredValue(value));
     }
 
     public static Event jobCreated(GenericEvent value) {
@@ -190,6 +202,10 @@ public final class Event {
         return value instanceof SpaceDeletedValue;
     }
 
+    public boolean isSpaceExpired() {
+        return value instanceof SpaceExpiredValue;
+    }
+
     public boolean isDocumentCreated() {
         return value instanceof DocumentCreatedValue;
     }
@@ -212,6 +228,10 @@ public final class Event {
 
     public boolean isWorkbookDeleted() {
         return value instanceof WorkbookDeletedValue;
+    }
+
+    public boolean isWorkbookExpired() {
+        return value instanceof WorkbookExpiredValue;
     }
 
     public boolean isSheetCreated() {
@@ -252,6 +272,10 @@ public final class Event {
 
     public boolean isFileDeleted() {
         return value instanceof FileDeletedValue;
+    }
+
+    public boolean isFileExpired() {
+        return value instanceof FileExpiredValue;
     }
 
     public boolean isJobCreated() {
@@ -352,6 +376,13 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getSpaceExpired() {
+        if (isSpaceExpired()) {
+            return Optional.of(((SpaceExpiredValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<GenericEvent> getDocumentCreated() {
         if (isDocumentCreated()) {
             return Optional.of(((DocumentCreatedValue) value).value);
@@ -390,6 +421,13 @@ public final class Event {
     public Optional<GenericEvent> getWorkbookDeleted() {
         if (isWorkbookDeleted()) {
             return Optional.of(((WorkbookDeletedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getWorkbookExpired() {
+        if (isWorkbookExpired()) {
+            return Optional.of(((WorkbookExpiredValue) value).value);
         }
         return Optional.empty();
     }
@@ -460,6 +498,13 @@ public final class Event {
     public Optional<GenericEvent> getFileDeleted() {
         if (isFileDeleted()) {
             return Optional.of(((FileDeletedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getFileExpired() {
+        if (isFileExpired()) {
+            return Optional.of(((FileExpiredValue) value).value);
         }
         return Optional.empty();
     }
@@ -580,6 +625,8 @@ public final class Event {
 
         T visitSpaceDeleted(GenericEvent spaceDeleted);
 
+        T visitSpaceExpired(GenericEvent spaceExpired);
+
         T visitDocumentCreated(GenericEvent documentCreated);
 
         T visitDocumentUpdated(GenericEvent documentUpdated);
@@ -591,6 +638,8 @@ public final class Event {
         T visitWorkbookUpdated(GenericEvent workbookUpdated);
 
         T visitWorkbookDeleted(GenericEvent workbookDeleted);
+
+        T visitWorkbookExpired(GenericEvent workbookExpired);
 
         T visitSheetCreated(GenericEvent sheetCreated);
 
@@ -611,6 +660,8 @@ public final class Event {
         T visitFileUpdated(GenericEvent fileUpdated);
 
         T visitFileDeleted(GenericEvent fileDeleted);
+
+        T visitFileExpired(GenericEvent fileExpired);
 
         T visitJobCreated(GenericEvent jobCreated);
 
@@ -649,12 +700,14 @@ public final class Event {
         @JsonSubTypes.Type(SpaceCreatedValue.class),
         @JsonSubTypes.Type(SpaceUpdatedValue.class),
         @JsonSubTypes.Type(SpaceDeletedValue.class),
+        @JsonSubTypes.Type(SpaceExpiredValue.class),
         @JsonSubTypes.Type(DocumentCreatedValue.class),
         @JsonSubTypes.Type(DocumentUpdatedValue.class),
         @JsonSubTypes.Type(DocumentDeletedValue.class),
         @JsonSubTypes.Type(WorkbookCreatedValue.class),
         @JsonSubTypes.Type(WorkbookUpdatedValue.class),
         @JsonSubTypes.Type(WorkbookDeletedValue.class),
+        @JsonSubTypes.Type(WorkbookExpiredValue.class),
         @JsonSubTypes.Type(SheetCreatedValue.class),
         @JsonSubTypes.Type(SheetUpdatedValue.class),
         @JsonSubTypes.Type(SheetDeletedValue.class),
@@ -665,6 +718,7 @@ public final class Event {
         @JsonSubTypes.Type(FileCreatedValue.class),
         @JsonSubTypes.Type(FileUpdatedValue.class),
         @JsonSubTypes.Type(FileDeletedValue.class),
+        @JsonSubTypes.Type(FileExpiredValue.class),
         @JsonSubTypes.Type(JobCreatedValue.class),
         @JsonSubTypes.Type(JobUpdatedValue.class),
         @JsonSubTypes.Type(JobDeletedValue.class),
@@ -912,6 +966,44 @@ public final class Event {
         }
     }
 
+    @JsonTypeName("space:expired")
+    private static final class SpaceExpiredValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SpaceExpiredValue() {}
+
+        private SpaceExpiredValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSpaceExpired(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SpaceExpiredValue && equalTo((SpaceExpiredValue) other);
+        }
+
+        private boolean equalTo(SpaceExpiredValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
     @JsonTypeName("document:created")
     private static final class DocumentCreatedValue implements Value {
         @JsonUnwrapped
@@ -1126,6 +1218,44 @@ public final class Event {
         }
 
         private boolean equalTo(WorkbookDeletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("workbook:expired")
+    private static final class WorkbookExpiredValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private WorkbookExpiredValue() {}
+
+        private WorkbookExpiredValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitWorkbookExpired(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof WorkbookExpiredValue && equalTo((WorkbookExpiredValue) other);
+        }
+
+        private boolean equalTo(WorkbookExpiredValue other) {
             return value.equals(other.value);
         }
 
@@ -1506,6 +1636,44 @@ public final class Event {
         }
 
         private boolean equalTo(FileDeletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("file:expired")
+    private static final class FileExpiredValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private FileExpiredValue() {}
+
+        private FileExpiredValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFileExpired(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FileExpiredValue && equalTo((FileExpiredValue) other);
+        }
+
+        private boolean equalTo(FileExpiredValue other) {
             return value.equals(other.value);
         }
 

@@ -49,6 +49,8 @@ public final class File {
 
     private final OffsetDateTime updatedAt;
 
+    private final Optional<OffsetDateTime> expiredAt;
+
     private final SpaceId spaceId;
 
     private final Optional<WorkbookId> workbookId;
@@ -71,6 +73,7 @@ public final class File {
             int bytesReceived,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
+            Optional<OffsetDateTime> expiredAt,
             SpaceId spaceId,
             Optional<WorkbookId> workbookId,
             Optional<SheetId> sheetId,
@@ -87,6 +90,7 @@ public final class File {
         this.bytesReceived = bytesReceived;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.expiredAt = expiredAt;
         this.spaceId = spaceId;
         this.workbookId = workbookId;
         this.sheetId = sheetId;
@@ -179,6 +183,14 @@ public final class File {
         return updatedAt;
     }
 
+    /**
+     * @return Date the file was expired
+     */
+    @JsonProperty("expiredAt")
+    public Optional<OffsetDateTime> getExpiredAt() {
+        return expiredAt;
+    }
+
     @JsonProperty("spaceId")
     public SpaceId getSpaceId() {
         return spaceId;
@@ -222,6 +234,7 @@ public final class File {
                 && bytesReceived == other.bytesReceived
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
+                && expiredAt.equals(other.expiredAt)
                 && spaceId.equals(other.spaceId)
                 && workbookId.equals(other.workbookId)
                 && sheetId.equals(other.sheetId)
@@ -242,6 +255,7 @@ public final class File {
                 this.bytesReceived,
                 this.createdAt,
                 this.updatedAt,
+                this.expiredAt,
                 this.spaceId,
                 this.workbookId,
                 this.sheetId,
@@ -310,6 +324,10 @@ public final class File {
 
         _FinalStage mode(Mode mode);
 
+        _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt);
+
+        _FinalStage expiredAt(OffsetDateTime expiredAt);
+
         _FinalStage workbookId(Optional<WorkbookId> workbookId);
 
         _FinalStage workbookId(WorkbookId workbookId);
@@ -365,6 +383,8 @@ public final class File {
 
         private Optional<WorkbookId> workbookId = Optional.empty();
 
+        private Optional<OffsetDateTime> expiredAt = Optional.empty();
+
         private Optional<Mode> mode = Optional.empty();
 
         @JsonAnySetter
@@ -385,6 +405,7 @@ public final class File {
             bytesReceived(other.getBytesReceived());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            expiredAt(other.getExpiredAt());
             spaceId(other.getSpaceId());
             workbookId(other.getWorkbookId());
             sheetId(other.getSheetId());
@@ -545,6 +566,23 @@ public final class File {
         }
 
         /**
+         * <p>Date the file was expired</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage expiredAt(OffsetDateTime expiredAt) {
+            this.expiredAt = Optional.of(expiredAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "expiredAt", nulls = Nulls.SKIP)
+        public _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt) {
+            this.expiredAt = expiredAt;
+            return this;
+        }
+
+        /**
          * <p>The storage mode of file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -575,6 +613,7 @@ public final class File {
                     bytesReceived,
                     createdAt,
                     updatedAt,
+                    expiredAt,
                     spaceId,
                     workbookId,
                     sheetId,

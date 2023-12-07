@@ -18,6 +18,8 @@ public enum EventTopic {
 
     SPACE_DELETED("space:deleted"),
 
+    SPACE_EXPIRED("space:expired"),
+
     DOCUMENT_CREATED("document:created"),
 
     DOCUMENT_UPDATED("document:updated"),
@@ -29,6 +31,8 @@ public enum EventTopic {
     WORKBOOK_UPDATED("workbook:updated"),
 
     WORKBOOK_DELETED("workbook:deleted"),
+
+    WORKBOOK_EXPIRED("workbook:expired"),
 
     SHEET_CREATED("sheet:created"),
 
@@ -49,6 +53,8 @@ public enum EventTopic {
     FILE_UPDATED("file:updated"),
 
     FILE_DELETED("file:deleted"),
+
+    FILE_EXPIRED("file:expired"),
 
     JOB_CREATED("job:created"),
 

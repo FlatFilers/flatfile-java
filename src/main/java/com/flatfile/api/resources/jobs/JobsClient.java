@@ -21,6 +21,8 @@ import com.flatfile.api.resources.jobs.types.JobResponse;
 import com.flatfile.api.resources.jobs.types.JobSplitDetails;
 import com.flatfile.api.resources.jobs.types.JobUpdate;
 import com.flatfile.api.resources.jobs.types.ListJobsResponse;
+import com.flatfile.api.resources.jobs.types.MutateJobConfig;
+import com.flatfile.api.resources.records.types.DiffRecordsResponse;
 import java.io.IOException;
 import java.util.Optional;
 import okhttp3.Headers;
@@ -637,6 +639,86 @@ public class JobsClient {
      */
     public JobResponse cancel(JobId jobId, Optional<JobCancelDetails> request) {
         return cancel(jobId, request, null);
+    }
+
+    /**
+     * Retry a failt job and return the job
+     */
+    public JobResponse retry(JobId jobId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("jobs")
+                .addPathSegment(jobId.toString())
+                .addPathSegments("retry")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), JobResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Retry a failt job and return the job
+     */
+    public JobResponse retry(JobId jobId) {
+        return retry(jobId, null);
+    }
+
+    /**
+     * Preview the results of a mutation
+     */
+    public DiffRecordsResponse previewMutation(MutateJobConfig request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("jobs")
+                .addPathSegments("preview-mutation")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), DiffRecordsResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Preview the results of a mutation
+     */
+    public DiffRecordsResponse previewMutation(MutateJobConfig request) {
+        return previewMutation(request, null);
     }
 
     /**

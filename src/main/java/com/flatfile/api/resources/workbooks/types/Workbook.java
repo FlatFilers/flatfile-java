@@ -51,6 +51,8 @@ public final class Workbook {
 
     private final OffsetDateTime createdAt;
 
+    private final Optional<OffsetDateTime> expiredAt;
+
     private final Map<String, Object> additionalProperties;
 
     private Workbook(
@@ -66,6 +68,7 @@ public final class Workbook {
             Optional<String> namespace,
             OffsetDateTime updatedAt,
             OffsetDateTime createdAt,
+            Optional<OffsetDateTime> expiredAt,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -79,6 +82,7 @@ public final class Workbook {
         this.namespace = namespace;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
+        this.expiredAt = expiredAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -175,6 +179,14 @@ public final class Workbook {
         return createdAt;
     }
 
+    /**
+     * @return Date the workbook was created
+     */
+    @JsonProperty("expiredAt")
+    public Optional<OffsetDateTime> getExpiredAt() {
+        return expiredAt;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -198,7 +210,8 @@ public final class Workbook {
                 && metadata.equals(other.metadata)
                 && namespace.equals(other.namespace)
                 && updatedAt.equals(other.updatedAt)
-                && createdAt.equals(other.createdAt);
+                && createdAt.equals(other.createdAt)
+                && expiredAt.equals(other.expiredAt);
     }
 
     @Override
@@ -215,7 +228,8 @@ public final class Workbook {
                 this.metadata,
                 this.namespace,
                 this.updatedAt,
-                this.createdAt);
+                this.createdAt,
+                this.expiredAt);
     }
 
     @Override
@@ -279,6 +293,10 @@ public final class Workbook {
         _FinalStage namespace(Optional<String> namespace);
 
         _FinalStage namespace(String namespace);
+
+        _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt);
+
+        _FinalStage expiredAt(OffsetDateTime expiredAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -293,6 +311,8 @@ public final class Workbook {
         private OffsetDateTime updatedAt;
 
         private OffsetDateTime createdAt;
+
+        private Optional<OffsetDateTime> expiredAt = Optional.empty();
 
         private Optional<String> namespace = Optional.empty();
 
@@ -327,6 +347,7 @@ public final class Workbook {
             namespace(other.getNamespace());
             updatedAt(other.getUpdatedAt());
             createdAt(other.getCreatedAt());
+            expiredAt(other.getExpiredAt());
             return this;
         }
 
@@ -382,6 +403,23 @@ public final class Workbook {
         @JsonSetter("createdAt")
         public _FinalStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
+            return this;
+        }
+
+        /**
+         * <p>Date the workbook was created</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage expiredAt(OffsetDateTime expiredAt) {
+            this.expiredAt = Optional.of(expiredAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "expiredAt", nulls = Nulls.SKIP)
+        public _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt) {
+            this.expiredAt = expiredAt;
             return this;
         }
 
@@ -515,6 +553,7 @@ public final class Workbook {
                     namespace,
                     updatedAt,
                     createdAt,
+                    expiredAt,
                     additionalProperties);
         }
     }

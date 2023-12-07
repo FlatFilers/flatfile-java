@@ -6,7 +6,6 @@ package com.flatfile.api;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.Suppliers;
 import com.flatfile.api.resources.agents.AgentsClient;
-import com.flatfile.api.resources.cells.CellsClient;
 import com.flatfile.api.resources.commits.CommitsClient;
 import com.flatfile.api.resources.documents.DocumentsClient;
 import com.flatfile.api.resources.environments.EnvironmentsClient;
@@ -29,8 +28,6 @@ public class Flatfile {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AgentsClient> agentsClient;
-
-    protected final Supplier<CellsClient> cellsClient;
 
     protected final Supplier<CommitsClient> commitsClient;
 
@@ -67,7 +64,6 @@ public class Flatfile {
     public Flatfile(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.agentsClient = Suppliers.memoize(() -> new AgentsClient(clientOptions));
-        this.cellsClient = Suppliers.memoize(() -> new CellsClient(clientOptions));
         this.commitsClient = Suppliers.memoize(() -> new CommitsClient(clientOptions));
         this.documentsClient = Suppliers.memoize(() -> new DocumentsClient(clientOptions));
         this.environmentsClient = Suppliers.memoize(() -> new EnvironmentsClient(clientOptions));
@@ -88,10 +84,6 @@ public class Flatfile {
 
     public AgentsClient agents() {
         return this.agentsClient.get();
-    }
-
-    public CellsClient cells() {
-        return this.cellsClient.get();
     }
 
     public CommitsClient commits() {
