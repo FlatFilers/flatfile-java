@@ -57,6 +57,9 @@ public class SpacesClient {
         if (request.getSearch().isPresent()) {
             httpUrl.addQueryParameter("search", request.getSearch().get());
         }
+        if (request.getNamespace().isPresent()) {
+            httpUrl.addQueryParameter("namespace", request.getNamespace().get());
+        }
         if (request.getArchived().isPresent()) {
             httpUrl.addQueryParameter("archived", request.getArchived().get().toString());
         }

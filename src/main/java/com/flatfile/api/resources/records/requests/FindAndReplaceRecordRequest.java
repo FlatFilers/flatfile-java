@@ -97,7 +97,7 @@ public final class FindAndReplaceRecordRequest {
     }
 
     /**
-     * @return A value to find for a given field in a sheet. Wrap the value in &quot;&quot; for exact match
+     * @return A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes (&quot;Bob&quot;)
      */
     @JsonProperty("find")
     public Optional<CellValueUnion> getFind() {
@@ -267,7 +267,7 @@ public final class FindAndReplaceRecordRequest {
         }
 
         /**
-         * <p>A value to find for a given field in a sheet. Wrap the value in &quot;&quot; for exact match</p>
+         * <p>A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes (&quot;Bob&quot;)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @Override

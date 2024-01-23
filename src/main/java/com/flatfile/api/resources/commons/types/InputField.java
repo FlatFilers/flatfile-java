@@ -29,6 +29,8 @@ public final class InputField {
 
     private final String type;
 
+    private final Optional<Object> defaultValue;
+
     private final Optional<InputConfig> config;
 
     private final Optional<List<InputConstraint>> constraints;
@@ -40,6 +42,7 @@ public final class InputField {
             String label,
             Optional<String> description,
             String type,
+            Optional<Object> defaultValue,
             Optional<InputConfig> config,
             Optional<List<InputConstraint>> constraints,
             Map<String, Object> additionalProperties) {
@@ -47,6 +50,7 @@ public final class InputField {
         this.label = label;
         this.description = description;
         this.type = type;
+        this.defaultValue = defaultValue;
         this.config = config;
         this.constraints = constraints;
         this.additionalProperties = additionalProperties;
@@ -85,6 +89,14 @@ public final class InputField {
     }
 
     /**
+     * @return Default value for a Field.
+     */
+    @JsonProperty("defaultValue")
+    public Optional<Object> getDefaultValue() {
+        return defaultValue;
+    }
+
+    /**
      * @return Additional configuration for enum Fields.
      */
     @JsonProperty("config")
@@ -116,13 +128,15 @@ public final class InputField {
                 && label.equals(other.label)
                 && description.equals(other.description)
                 && type.equals(other.type)
+                && defaultValue.equals(other.defaultValue)
                 && config.equals(other.config)
                 && constraints.equals(other.constraints);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.key, this.label, this.description, this.type, this.config, this.constraints);
+        return Objects.hash(
+                this.key, this.label, this.description, this.type, this.defaultValue, this.config, this.constraints);
     }
 
     @Override
@@ -155,6 +169,10 @@ public final class InputField {
 
         _FinalStage description(String description);
 
+        _FinalStage defaultValue(Optional<Object> defaultValue);
+
+        _FinalStage defaultValue(Object defaultValue);
+
         _FinalStage config(Optional<InputConfig> config);
 
         _FinalStage config(InputConfig config);
@@ -176,6 +194,8 @@ public final class InputField {
 
         private Optional<InputConfig> config = Optional.empty();
 
+        private Optional<Object> defaultValue = Optional.empty();
+
         private Optional<String> description = Optional.empty();
 
         @JsonAnySetter
@@ -189,6 +209,7 @@ public final class InputField {
             label(other.getLabel());
             description(other.getDescription());
             type(other.getType());
+            defaultValue(other.getDefaultValue());
             config(other.getConfig());
             constraints(other.getConstraints());
             return this;
@@ -262,6 +283,23 @@ public final class InputField {
         }
 
         /**
+         * <p>Default value for a Field.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage defaultValue(Object defaultValue) {
+            this.defaultValue = Optional.of(defaultValue);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "defaultValue", nulls = Nulls.SKIP)
+        public _FinalStage defaultValue(Optional<Object> defaultValue) {
+            this.defaultValue = defaultValue;
+            return this;
+        }
+
+        /**
          * <p>Brief description below the name of the Field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -280,7 +318,8 @@ public final class InputField {
 
         @Override
         public InputField build() {
-            return new InputField(key, label, description, type, config, constraints, additionalProperties);
+            return new InputField(
+                    key, label, description, type, defaultValue, config, constraints, additionalProperties);
         }
     }
 }

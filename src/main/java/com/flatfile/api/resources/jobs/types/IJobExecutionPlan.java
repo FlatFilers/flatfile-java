@@ -4,6 +4,7 @@
 package com.flatfile.api.resources.jobs.types;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IJobExecutionPlan {
     List<Edge> getFieldMapping();
@@ -11,4 +12,6 @@ public interface IJobExecutionPlan {
     List<SourceField> getUnmappedSourceFields();
 
     List<DestinationField> getUnmappedDestinationFields();
+
+    Optional<String> getProgramId();
 }

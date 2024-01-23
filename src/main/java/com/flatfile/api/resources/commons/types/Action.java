@@ -31,6 +31,8 @@ public final class Action {
 
     private final Optional<String> tooltip;
 
+    private final Optional<List<ActionMessage>> messages;
+
     private final Optional<String> type;
 
     private final Optional<String> description;
@@ -59,6 +61,7 @@ public final class Action {
             Optional<ActionMode> mode,
             String label,
             Optional<String> tooltip,
+            Optional<List<ActionMessage>> messages,
             Optional<String> type,
             Optional<String> description,
             Optional<ActionSchedule> schedule,
@@ -75,6 +78,7 @@ public final class Action {
         this.mode = mode;
         this.label = label;
         this.tooltip = tooltip;
+        this.messages = messages;
         this.type = type;
         this.description = description;
         this.schedule = schedule;
@@ -126,6 +130,11 @@ public final class Action {
     @JsonProperty("tooltip")
     public Optional<String> getTooltip() {
         return tooltip;
+    }
+
+    @JsonProperty("messages")
+    public Optional<List<ActionMessage>> getMessages() {
+        return messages;
     }
 
     /**
@@ -225,6 +234,7 @@ public final class Action {
                 && mode.equals(other.mode)
                 && label.equals(other.label)
                 && tooltip.equals(other.tooltip)
+                && messages.equals(other.messages)
                 && type.equals(other.type)
                 && description.equals(other.description)
                 && schedule.equals(other.schedule)
@@ -245,6 +255,7 @@ public final class Action {
                 this.mode,
                 this.label,
                 this.tooltip,
+                this.messages,
                 this.type,
                 this.description,
                 this.schedule,
@@ -290,6 +301,10 @@ public final class Action {
         _FinalStage tooltip(Optional<String> tooltip);
 
         _FinalStage tooltip(String tooltip);
+
+        _FinalStage messages(Optional<List<ActionMessage>> messages);
+
+        _FinalStage messages(List<ActionMessage> messages);
 
         _FinalStage type(Optional<String> type);
 
@@ -356,6 +371,8 @@ public final class Action {
 
         private Optional<String> type = Optional.empty();
 
+        private Optional<List<ActionMessage>> messages = Optional.empty();
+
         private Optional<String> tooltip = Optional.empty();
 
         private Optional<ActionMode> mode = Optional.empty();
@@ -376,6 +393,7 @@ public final class Action {
             mode(other.getMode());
             label(other.getLabel());
             tooltip(other.getTooltip());
+            messages(other.getMessages());
             type(other.getType());
             description(other.getDescription());
             schedule(other.getSchedule());
@@ -570,6 +588,19 @@ public final class Action {
             return this;
         }
 
+        @Override
+        public _FinalStage messages(List<ActionMessage> messages) {
+            this.messages = Optional.of(messages);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "messages", nulls = Nulls.SKIP)
+        public _FinalStage messages(Optional<List<ActionMessage>> messages) {
+            this.messages = messages;
+            return this;
+        }
+
         /**
          * <p>A tooltip that appears when hovering the action button</p>
          * @return Reference to {@code this} so that method calls can be chained together.
@@ -646,6 +677,7 @@ public final class Action {
                     mode,
                     label,
                     tooltip,
+                    messages,
                     type,
                     description,
                     schedule,

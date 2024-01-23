@@ -30,6 +30,8 @@ public final class Sheet {
 
     private final String name;
 
+    private final String slug;
+
     private final SheetConfig config;
 
     private final Optional<RecordCounts> countRecords;
@@ -50,6 +52,7 @@ public final class Sheet {
             SheetId id,
             WorkbookId workbookId,
             String name,
+            String slug,
             SheetConfig config,
             Optional<RecordCounts> countRecords,
             Optional<String> namespace,
@@ -61,6 +64,7 @@ public final class Sheet {
         this.id = id;
         this.workbookId = workbookId;
         this.name = name;
+        this.slug = slug;
         this.config = config;
         this.countRecords = countRecords;
         this.namespace = namespace;
@@ -93,6 +97,14 @@ public final class Sheet {
     @JsonProperty("name")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return The slug of the Sheet.
+     */
+    @JsonProperty("slug")
+    public String getSlug() {
+        return slug;
     }
 
     /**
@@ -166,6 +178,7 @@ public final class Sheet {
         return id.equals(other.id)
                 && workbookId.equals(other.workbookId)
                 && name.equals(other.name)
+                && slug.equals(other.slug)
                 && config.equals(other.config)
                 && countRecords.equals(other.countRecords)
                 && namespace.equals(other.namespace)
@@ -181,6 +194,7 @@ public final class Sheet {
                 this.id,
                 this.workbookId,
                 this.name,
+                this.slug,
                 this.config,
                 this.countRecords,
                 this.namespace,
@@ -210,7 +224,11 @@ public final class Sheet {
     }
 
     public interface NameStage {
-        ConfigStage name(String name);
+        SlugStage name(String name);
+    }
+
+    public interface SlugStage {
+        ConfigStage slug(String slug);
     }
 
     public interface ConfigStage {
@@ -247,12 +265,21 @@ public final class Sheet {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, WorkbookIdStage, NameStage, ConfigStage, UpdatedAtStage, CreatedAtStage, _FinalStage {
+            implements IdStage,
+                    WorkbookIdStage,
+                    NameStage,
+                    SlugStage,
+                    ConfigStage,
+                    UpdatedAtStage,
+                    CreatedAtStage,
+                    _FinalStage {
         private SheetId id;
 
         private WorkbookId workbookId;
 
         private String name;
+
+        private String slug;
 
         private SheetConfig config;
 
@@ -278,6 +305,7 @@ public final class Sheet {
             id(other.getId());
             workbookId(other.getWorkbookId());
             name(other.getName());
+            slug(other.getSlug());
             config(other.getConfig());
             countRecords(other.getCountRecords());
             namespace(other.getNamespace());
@@ -316,8 +344,19 @@ public final class Sheet {
          */
         @Override
         @JsonSetter("name")
-        public ConfigStage name(String name) {
+        public SlugStage name(String name) {
             this.name = name;
+            return this;
+        }
+
+        /**
+         * <p>The slug of the Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        @JsonSetter("slug")
+        public ConfigStage slug(String slug) {
+            this.slug = slug;
             return this;
         }
 
@@ -428,6 +467,7 @@ public final class Sheet {
                     id,
                     workbookId,
                     name,
+                    slug,
                     config,
                     countRecords,
                     namespace,

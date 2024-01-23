@@ -16,7 +16,11 @@ public enum Domain {
 
     DOCUMENT("document"),
 
-    SHEET("sheet");
+    SHEET("sheet"),
+
+    PROGRAM("program"),
+
+    SECRET("secret");
 
     private final String value;
 

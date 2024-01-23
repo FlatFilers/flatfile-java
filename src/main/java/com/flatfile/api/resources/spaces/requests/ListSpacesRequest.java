@@ -31,6 +31,8 @@ public final class ListSpacesRequest {
 
     private final Optional<String> search;
 
+    private final Optional<String> namespace;
+
     private final Optional<Boolean> archived;
 
     private final Optional<GetSpacesSortField> sortField;
@@ -46,6 +48,7 @@ public final class ListSpacesRequest {
             Optional<Integer> pageSize,
             Optional<Integer> pageNumber,
             Optional<String> search,
+            Optional<String> namespace,
             Optional<Boolean> archived,
             Optional<GetSpacesSortField> sortField,
             Optional<SortDirection> sortDirection,
@@ -55,6 +58,7 @@ public final class ListSpacesRequest {
         this.pageSize = pageSize;
         this.pageNumber = pageNumber;
         this.search = search;
+        this.namespace = namespace;
         this.archived = archived;
         this.sortField = sortField;
         this.sortDirection = sortDirection;
@@ -92,6 +96,14 @@ public final class ListSpacesRequest {
     @JsonProperty("search")
     public Optional<String> getSearch() {
         return search;
+    }
+
+    /**
+     * @return Search by namespace
+     */
+    @JsonProperty("namespace")
+    public Optional<String> getNamespace() {
+        return namespace;
     }
 
     /**
@@ -142,6 +154,7 @@ public final class ListSpacesRequest {
                 && pageSize.equals(other.pageSize)
                 && pageNumber.equals(other.pageNumber)
                 && search.equals(other.search)
+                && namespace.equals(other.namespace)
                 && archived.equals(other.archived)
                 && sortField.equals(other.sortField)
                 && sortDirection.equals(other.sortDirection)
@@ -155,6 +168,7 @@ public final class ListSpacesRequest {
                 this.pageSize,
                 this.pageNumber,
                 this.search,
+                this.namespace,
                 this.archived,
                 this.sortField,
                 this.sortDirection,
@@ -180,6 +194,8 @@ public final class ListSpacesRequest {
 
         private Optional<String> search = Optional.empty();
 
+        private Optional<String> namespace = Optional.empty();
+
         private Optional<Boolean> archived = Optional.empty();
 
         private Optional<GetSpacesSortField> sortField = Optional.empty();
@@ -198,6 +214,7 @@ public final class ListSpacesRequest {
             pageSize(other.getPageSize());
             pageNumber(other.getPageNumber());
             search(other.getSearch());
+            namespace(other.getNamespace());
             archived(other.getArchived());
             sortField(other.getSortField());
             sortDirection(other.getSortDirection());
@@ -246,6 +263,17 @@ public final class ListSpacesRequest {
 
         public Builder search(String search) {
             this.search = Optional.of(search);
+            return this;
+        }
+
+        @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
+        public Builder namespace(Optional<String> namespace) {
+            this.namespace = namespace;
+            return this;
+        }
+
+        public Builder namespace(String namespace) {
+            this.namespace = Optional.of(namespace);
             return this;
         }
 
@@ -299,6 +327,7 @@ public final class ListSpacesRequest {
                     pageSize,
                     pageNumber,
                     search,
+                    namespace,
                     archived,
                     sortField,
                     sortDirection,

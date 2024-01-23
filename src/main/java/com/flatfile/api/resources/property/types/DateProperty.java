@@ -75,6 +75,9 @@ public final class DateProperty implements IBaseProperty {
         return label;
     }
 
+    /**
+     * @return A short description of the field. Markdown syntax is supported.
+     */
     @JsonProperty("description")
     @Override
     public Optional<String> getDescription() {
@@ -315,6 +318,10 @@ public final class DateProperty implements IBaseProperty {
             return this;
         }
 
+        /**
+         * <p>A short description of the field. Markdown syntax is supported.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);

@@ -18,7 +18,13 @@ public enum EventTopic {
 
     SPACE_DELETED("space:deleted"),
 
+    SPACE_ARCHIVED("space:archived"),
+
     SPACE_EXPIRED("space:expired"),
+
+    SPACE_GUEST_ADDED("space:guestAdded"),
+
+    SPACE_GUEST_REMOVED("space:guestRemoved"),
 
     DOCUMENT_CREATED("document:created"),
 
@@ -74,13 +80,23 @@ public enum EventTopic {
 
     JOB_FAILED("job:failed"),
 
+    PROGRAM_CREATED("program:created"),
+
+    PROGRAM_UPDATED("program:updated"),
+
     COMMIT_CREATED("commit:created"),
 
     COMMIT_UPDATED("commit:updated"),
 
     COMMIT_COMPLETED("commit:completed"),
 
-    LAYER_CREATED("layer:created");
+    LAYER_CREATED("layer:created"),
+
+    SECRET_CREATED("secret:created"),
+
+    SECRET_UPDATED("secret:updated"),
+
+    SECRET_DELETED("secret:deleted");
 
     private final String value;
 

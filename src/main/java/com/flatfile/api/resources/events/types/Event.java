@@ -50,8 +50,20 @@ public final class Event {
         return new Event(new SpaceDeletedValue(value));
     }
 
+    public static Event spaceArchived(GenericEvent value) {
+        return new Event(new SpaceArchivedValue(value));
+    }
+
     public static Event spaceExpired(GenericEvent value) {
         return new Event(new SpaceExpiredValue(value));
+    }
+
+    public static Event spaceGuestAdded(GenericEvent value) {
+        return new Event(new SpaceGuestAddedValue(value));
+    }
+
+    public static Event spaceGuestRemoved(GenericEvent value) {
+        return new Event(new SpaceGuestRemovedValue(value));
     }
 
     public static Event documentCreated(GenericEvent value) {
@@ -162,6 +174,14 @@ public final class Event {
         return new Event(new JobPartsCompletedValue(value));
     }
 
+    public static Event programCreated(GenericEvent value) {
+        return new Event(new ProgramCreatedValue(value));
+    }
+
+    public static Event programUpdated(GenericEvent value) {
+        return new Event(new ProgramUpdatedValue(value));
+    }
+
     public static Event commitCreated(GenericEvent value) {
         return new Event(new CommitCreatedValue(value));
     }
@@ -172,6 +192,18 @@ public final class Event {
 
     public static Event commitCompleted(GenericEvent value) {
         return new Event(new CommitCompletedValue(value));
+    }
+
+    public static Event secretCreated(GenericEvent value) {
+        return new Event(new SecretCreatedValue(value));
+    }
+
+    public static Event secretUpdated(GenericEvent value) {
+        return new Event(new SecretUpdatedValue(value));
+    }
+
+    public static Event secretDeleted(GenericEvent value) {
+        return new Event(new SecretDeletedValue(value));
     }
 
     public static Event layerCreated(GenericEvent value) {
@@ -202,8 +234,20 @@ public final class Event {
         return value instanceof SpaceDeletedValue;
     }
 
+    public boolean isSpaceArchived() {
+        return value instanceof SpaceArchivedValue;
+    }
+
     public boolean isSpaceExpired() {
         return value instanceof SpaceExpiredValue;
+    }
+
+    public boolean isSpaceGuestAdded() {
+        return value instanceof SpaceGuestAddedValue;
+    }
+
+    public boolean isSpaceGuestRemoved() {
+        return value instanceof SpaceGuestRemovedValue;
     }
 
     public boolean isDocumentCreated() {
@@ -314,6 +358,14 @@ public final class Event {
         return value instanceof JobPartsCompletedValue;
     }
 
+    public boolean isProgramCreated() {
+        return value instanceof ProgramCreatedValue;
+    }
+
+    public boolean isProgramUpdated() {
+        return value instanceof ProgramUpdatedValue;
+    }
+
     public boolean isCommitCreated() {
         return value instanceof CommitCreatedValue;
     }
@@ -324,6 +376,18 @@ public final class Event {
 
     public boolean isCommitCompleted() {
         return value instanceof CommitCompletedValue;
+    }
+
+    public boolean isSecretCreated() {
+        return value instanceof SecretCreatedValue;
+    }
+
+    public boolean isSecretUpdated() {
+        return value instanceof SecretUpdatedValue;
+    }
+
+    public boolean isSecretDeleted() {
+        return value instanceof SecretDeletedValue;
     }
 
     public boolean isLayerCreated() {
@@ -376,9 +440,30 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getSpaceArchived() {
+        if (isSpaceArchived()) {
+            return Optional.of(((SpaceArchivedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<GenericEvent> getSpaceExpired() {
         if (isSpaceExpired()) {
             return Optional.of(((SpaceExpiredValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getSpaceGuestAdded() {
+        if (isSpaceGuestAdded()) {
+            return Optional.of(((SpaceGuestAddedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getSpaceGuestRemoved() {
+        if (isSpaceGuestRemoved()) {
+            return Optional.of(((SpaceGuestRemovedValue) value).value);
         }
         return Optional.empty();
     }
@@ -572,6 +657,20 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getProgramCreated() {
+        if (isProgramCreated()) {
+            return Optional.of(((ProgramCreatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getProgramUpdated() {
+        if (isProgramUpdated()) {
+            return Optional.of(((ProgramUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<GenericEvent> getCommitCreated() {
         if (isCommitCreated()) {
             return Optional.of(((CommitCreatedValue) value).value);
@@ -589,6 +688,27 @@ public final class Event {
     public Optional<GenericEvent> getCommitCompleted() {
         if (isCommitCompleted()) {
             return Optional.of(((CommitCompletedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getSecretCreated() {
+        if (isSecretCreated()) {
+            return Optional.of(((SecretCreatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getSecretUpdated() {
+        if (isSecretUpdated()) {
+            return Optional.of(((SecretUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getSecretDeleted() {
+        if (isSecretDeleted()) {
+            return Optional.of(((SecretDeletedValue) value).value);
         }
         return Optional.empty();
     }
@@ -625,7 +745,13 @@ public final class Event {
 
         T visitSpaceDeleted(GenericEvent spaceDeleted);
 
+        T visitSpaceArchived(GenericEvent spaceArchived);
+
         T visitSpaceExpired(GenericEvent spaceExpired);
+
+        T visitSpaceGuestAdded(GenericEvent spaceGuestAdded);
+
+        T visitSpaceGuestRemoved(GenericEvent spaceGuestRemoved);
 
         T visitDocumentCreated(GenericEvent documentCreated);
 
@@ -681,11 +807,21 @@ public final class Event {
 
         T visitJobPartsCompleted(GenericEvent jobPartsCompleted);
 
+        T visitProgramCreated(GenericEvent programCreated);
+
+        T visitProgramUpdated(GenericEvent programUpdated);
+
         T visitCommitCreated(GenericEvent commitCreated);
 
         T visitCommitUpdated(GenericEvent commitUpdated);
 
         T visitCommitCompleted(GenericEvent commitCompleted);
+
+        T visitSecretCreated(GenericEvent secretCreated);
+
+        T visitSecretUpdated(GenericEvent secretUpdated);
+
+        T visitSecretDeleted(GenericEvent secretDeleted);
 
         T visitLayerCreated(GenericEvent layerCreated);
 
@@ -700,7 +836,10 @@ public final class Event {
         @JsonSubTypes.Type(SpaceCreatedValue.class),
         @JsonSubTypes.Type(SpaceUpdatedValue.class),
         @JsonSubTypes.Type(SpaceDeletedValue.class),
+        @JsonSubTypes.Type(SpaceArchivedValue.class),
         @JsonSubTypes.Type(SpaceExpiredValue.class),
+        @JsonSubTypes.Type(SpaceGuestAddedValue.class),
+        @JsonSubTypes.Type(SpaceGuestRemovedValue.class),
         @JsonSubTypes.Type(DocumentCreatedValue.class),
         @JsonSubTypes.Type(DocumentUpdatedValue.class),
         @JsonSubTypes.Type(DocumentDeletedValue.class),
@@ -728,9 +867,14 @@ public final class Event {
         @JsonSubTypes.Type(JobScheduledValue.class),
         @JsonSubTypes.Type(JobOutcomeAcknowledgedValue.class),
         @JsonSubTypes.Type(JobPartsCompletedValue.class),
+        @JsonSubTypes.Type(ProgramCreatedValue.class),
+        @JsonSubTypes.Type(ProgramUpdatedValue.class),
         @JsonSubTypes.Type(CommitCreatedValue.class),
         @JsonSubTypes.Type(CommitUpdatedValue.class),
         @JsonSubTypes.Type(CommitCompletedValue.class),
+        @JsonSubTypes.Type(SecretCreatedValue.class),
+        @JsonSubTypes.Type(SecretUpdatedValue.class),
+        @JsonSubTypes.Type(SecretDeletedValue.class),
         @JsonSubTypes.Type(LayerCreatedValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -966,6 +1110,44 @@ public final class Event {
         }
     }
 
+    @JsonTypeName("space:archived")
+    private static final class SpaceArchivedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SpaceArchivedValue() {}
+
+        private SpaceArchivedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSpaceArchived(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SpaceArchivedValue && equalTo((SpaceArchivedValue) other);
+        }
+
+        private boolean equalTo(SpaceArchivedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
     @JsonTypeName("space:expired")
     private static final class SpaceExpiredValue implements Value {
         @JsonUnwrapped
@@ -990,6 +1172,82 @@ public final class Event {
         }
 
         private boolean equalTo(SpaceExpiredValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("space:guestAdded")
+    private static final class SpaceGuestAddedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SpaceGuestAddedValue() {}
+
+        private SpaceGuestAddedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSpaceGuestAdded(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SpaceGuestAddedValue && equalTo((SpaceGuestAddedValue) other);
+        }
+
+        private boolean equalTo(SpaceGuestAddedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("space:guestRemoved")
+    private static final class SpaceGuestRemovedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SpaceGuestRemovedValue() {}
+
+        private SpaceGuestRemovedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSpaceGuestRemoved(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SpaceGuestRemovedValue && equalTo((SpaceGuestRemovedValue) other);
+        }
+
+        private boolean equalTo(SpaceGuestRemovedValue other) {
             return value.equals(other.value);
         }
 
@@ -2030,6 +2288,82 @@ public final class Event {
         }
     }
 
+    @JsonTypeName("program:created")
+    private static final class ProgramCreatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ProgramCreatedValue() {}
+
+        private ProgramCreatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitProgramCreated(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ProgramCreatedValue && equalTo((ProgramCreatedValue) other);
+        }
+
+        private boolean equalTo(ProgramCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("program:updated")
+    private static final class ProgramUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ProgramUpdatedValue() {}
+
+        private ProgramUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitProgramUpdated(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ProgramUpdatedValue && equalTo((ProgramUpdatedValue) other);
+        }
+
+        private boolean equalTo(ProgramUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
     @JsonTypeName("commit:created")
     private static final class CommitCreatedValue implements Value {
         @JsonUnwrapped
@@ -2130,6 +2464,120 @@ public final class Event {
         }
 
         private boolean equalTo(CommitCompletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("secret:created")
+    private static final class SecretCreatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SecretCreatedValue() {}
+
+        private SecretCreatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSecretCreated(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SecretCreatedValue && equalTo((SecretCreatedValue) other);
+        }
+
+        private boolean equalTo(SecretCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("secret:updated")
+    private static final class SecretUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SecretUpdatedValue() {}
+
+        private SecretUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSecretUpdated(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SecretUpdatedValue && equalTo((SecretUpdatedValue) other);
+        }
+
+        private boolean equalTo(SecretUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("secret:deleted")
+    private static final class SecretDeletedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SecretDeletedValue() {}
+
+        private SecretDeletedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSecretDeleted(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SecretDeletedValue && equalTo((SecretDeletedValue) other);
+        }
+
+        private boolean equalTo(SecretDeletedValue other) {
             return value.equals(other.value);
         }
 

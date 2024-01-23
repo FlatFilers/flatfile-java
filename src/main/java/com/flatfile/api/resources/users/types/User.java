@@ -9,13 +9,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.AccountId;
 import com.flatfile.api.resources.commons.types.UserId;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = User.Builder.class)
@@ -28,13 +32,38 @@ public final class User implements IUserConfig {
 
     private final UserId id;
 
+    private final String idp;
+
+    private final Optional<String> idpRef;
+
+    private final Map<String, Object> metadata;
+
+    private final OffsetDateTime createdAt;
+
+    private final OffsetDateTime updatedAt;
+
     private final Map<String, Object> additionalProperties;
 
-    private User(String email, String name, AccountId accountId, UserId id, Map<String, Object> additionalProperties) {
+    private User(
+            String email,
+            String name,
+            AccountId accountId,
+            UserId id,
+            String idp,
+            Optional<String> idpRef,
+            Map<String, Object> metadata,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            Map<String, Object> additionalProperties) {
         this.email = email;
         this.name = name;
         this.accountId = accountId;
         this.id = id;
+        this.idp = idp;
+        this.idpRef = idpRef;
+        this.metadata = metadata;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -61,6 +90,31 @@ public final class User implements IUserConfig {
         return id;
     }
 
+    @JsonProperty("idp")
+    public String getIdp() {
+        return idp;
+    }
+
+    @JsonProperty("idpRef")
+    public Optional<String> getIdpRef() {
+        return idpRef;
+    }
+
+    @JsonProperty("metadata")
+    public Map<String, Object> getMetadata() {
+        return metadata;
+    }
+
+    @JsonProperty("createdAt")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updatedAt")
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -76,12 +130,26 @@ public final class User implements IUserConfig {
         return email.equals(other.email)
                 && name.equals(other.name)
                 && accountId.equals(other.accountId)
-                && id.equals(other.id);
+                && id.equals(other.id)
+                && idp.equals(other.idp)
+                && idpRef.equals(other.idpRef)
+                && metadata.equals(other.metadata)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.email, this.name, this.accountId, this.id);
+        return Objects.hash(
+                this.email,
+                this.name,
+                this.accountId,
+                this.id,
+                this.idp,
+                this.idpRef,
+                this.metadata,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @Override
@@ -108,15 +176,45 @@ public final class User implements IUserConfig {
     }
 
     public interface IdStage {
-        _FinalStage id(UserId id);
+        IdpStage id(UserId id);
+    }
+
+    public interface IdpStage {
+        CreatedAtStage idp(String idp);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        _FinalStage updatedAt(OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
         User build();
+
+        _FinalStage idpRef(Optional<String> idpRef);
+
+        _FinalStage idpRef(String idpRef);
+
+        _FinalStage metadata(Map<String, Object> metadata);
+
+        _FinalStage putAllMetadata(Map<String, Object> metadata);
+
+        _FinalStage metadata(String key, Object value);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements EmailStage, NameStage, AccountIdStage, IdStage, _FinalStage {
+    public static final class Builder
+            implements EmailStage,
+                    NameStage,
+                    AccountIdStage,
+                    IdStage,
+                    IdpStage,
+                    CreatedAtStage,
+                    UpdatedAtStage,
+                    _FinalStage {
         private String email;
 
         private String name;
@@ -124,6 +222,16 @@ public final class User implements IUserConfig {
         private AccountId accountId;
 
         private UserId id;
+
+        private String idp;
+
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
+
+        private Map<String, Object> metadata = new LinkedHashMap<>();
+
+        private Optional<String> idpRef = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -136,6 +244,11 @@ public final class User implements IUserConfig {
             name(other.getName());
             accountId(other.getAccountId());
             id(other.getId());
+            idp(other.getIdp());
+            idpRef(other.getIdpRef());
+            metadata(other.getMetadata());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
             return this;
         }
 
@@ -162,14 +275,69 @@ public final class User implements IUserConfig {
 
         @Override
         @JsonSetter("id")
-        public _FinalStage id(UserId id) {
+        public IdpStage id(UserId id) {
             this.id = id;
             return this;
         }
 
         @Override
+        @JsonSetter("idp")
+        public CreatedAtStage idp(String idp) {
+            this.idp = idp;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("createdAt")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("updatedAt")
+        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @Override
+        public _FinalStage metadata(String key, Object value) {
+            this.metadata.put(key, value);
+            return this;
+        }
+
+        @Override
+        public _FinalStage putAllMetadata(Map<String, Object> metadata) {
+            this.metadata.putAll(metadata);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Map<String, Object> metadata) {
+            this.metadata.clear();
+            this.metadata.putAll(metadata);
+            return this;
+        }
+
+        @Override
+        public _FinalStage idpRef(String idpRef) {
+            this.idpRef = Optional.of(idpRef);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "idpRef", nulls = Nulls.SKIP)
+        public _FinalStage idpRef(Optional<String> idpRef) {
+            this.idpRef = idpRef;
+            return this;
+        }
+
+        @Override
         public User build() {
-            return new User(email, name, accountId, id, additionalProperties);
+            return new User(
+                    email, name, accountId, id, idp, idpRef, metadata, createdAt, updatedAt, additionalProperties);
         }
     }
 }

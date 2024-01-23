@@ -9,20 +9,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = NumberConfig.Builder.class)
 public final class NumberConfig {
-    private final int decimalPlaces;
+    private final Optional<Integer> decimalPlaces;
 
     private final Map<String, Object> additionalProperties;
 
-    private NumberConfig(int decimalPlaces, Map<String, Object> additionalProperties) {
+    private NumberConfig(Optional<Integer> decimalPlaces, Map<String, Object> additionalProperties) {
         this.decimalPlaces = decimalPlaces;
         this.additionalProperties = additionalProperties;
     }
@@ -31,7 +33,7 @@ public final class NumberConfig {
      * @return Number of decimal places to round data to
      */
     @JsonProperty("decimalPlaces")
-    public int getDecimalPlaces() {
+    public Optional<Integer> getDecimalPlaces() {
         return decimalPlaces;
     }
 
@@ -47,7 +49,7 @@ public final class NumberConfig {
     }
 
     private boolean equalTo(NumberConfig other) {
-        return decimalPlaces == other.decimalPlaces;
+        return decimalPlaces.equals(other.decimalPlaces);
     }
 
     @Override
@@ -60,47 +62,35 @@ public final class NumberConfig {
         return ObjectMappers.stringify(this);
     }
 
-    public static DecimalPlacesStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface DecimalPlacesStage {
-        _FinalStage decimalPlaces(int decimalPlaces);
-
-        Builder from(NumberConfig other);
-    }
-
-    public interface _FinalStage {
-        NumberConfig build();
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements DecimalPlacesStage, _FinalStage {
-        private int decimalPlaces;
+    public static final class Builder {
+        private Optional<Integer> decimalPlaces = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
         public Builder from(NumberConfig other) {
             decimalPlaces(other.getDecimalPlaces());
             return this;
         }
 
-        /**
-         * <p>Number of decimal places to round data to</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("decimalPlaces")
-        public _FinalStage decimalPlaces(int decimalPlaces) {
+        @JsonSetter(value = "decimalPlaces", nulls = Nulls.SKIP)
+        public Builder decimalPlaces(Optional<Integer> decimalPlaces) {
             this.decimalPlaces = decimalPlaces;
             return this;
         }
 
-        @Override
+        public Builder decimalPlaces(Integer decimalPlaces) {
+            this.decimalPlaces = Optional.of(decimalPlaces);
+            return this;
+        }
+
         public NumberConfig build() {
             return new NumberConfig(decimalPlaces, additionalProperties);
         }

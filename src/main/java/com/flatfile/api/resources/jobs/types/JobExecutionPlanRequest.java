@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = JobExecutionPlanRequest.Builder.class)
@@ -28,6 +29,8 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
     private final List<SourceField> unmappedSourceFields;
 
     private final List<DestinationField> unmappedDestinationFields;
+
+    private final Optional<String> programId;
 
     private final FileId fileId;
 
@@ -39,12 +42,14 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
             List<Edge> fieldMapping,
             List<SourceField> unmappedSourceFields,
             List<DestinationField> unmappedDestinationFields,
+            Optional<String> programId,
             FileId fileId,
             JobId jobId,
             Map<String, Object> additionalProperties) {
         this.fieldMapping = fieldMapping;
         this.unmappedSourceFields = unmappedSourceFields;
         this.unmappedDestinationFields = unmappedDestinationFields;
+        this.programId = programId;
         this.fileId = fileId;
         this.jobId = jobId;
         this.additionalProperties = additionalProperties;
@@ -66,6 +71,12 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
     @Override
     public List<DestinationField> getUnmappedDestinationFields() {
         return unmappedDestinationFields;
+    }
+
+    @JsonProperty("programId")
+    @Override
+    public Optional<String> getProgramId() {
+        return programId;
     }
 
     @JsonProperty("fileId")
@@ -93,6 +104,7 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
         return fieldMapping.equals(other.fieldMapping)
                 && unmappedSourceFields.equals(other.unmappedSourceFields)
                 && unmappedDestinationFields.equals(other.unmappedDestinationFields)
+                && programId.equals(other.programId)
                 && fileId.equals(other.fileId)
                 && jobId.equals(other.jobId);
     }
@@ -100,7 +112,12 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields, this.fileId, this.jobId);
+                this.fieldMapping,
+                this.unmappedSourceFields,
+                this.unmappedDestinationFields,
+                this.programId,
+                this.fileId,
+                this.jobId);
     }
 
     @Override
@@ -142,6 +159,10 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
         _FinalStage addUnmappedDestinationFields(DestinationField unmappedDestinationFields);
 
         _FinalStage addAllUnmappedDestinationFields(List<DestinationField> unmappedDestinationFields);
+
+        _FinalStage programId(Optional<String> programId);
+
+        _FinalStage programId(String programId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -149,6 +170,8 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
         private FileId fileId;
 
         private JobId jobId;
+
+        private Optional<String> programId = Optional.empty();
 
         private List<DestinationField> unmappedDestinationFields = new ArrayList<>();
 
@@ -166,6 +189,7 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
             fieldMapping(other.getFieldMapping());
             unmappedSourceFields(other.getUnmappedSourceFields());
             unmappedDestinationFields(other.getUnmappedDestinationFields());
+            programId(other.getProgramId());
             fileId(other.getFileId());
             jobId(other.getJobId());
             return this;
@@ -182,6 +206,19 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
         @JsonSetter("jobId")
         public _FinalStage jobId(JobId jobId) {
             this.jobId = jobId;
+            return this;
+        }
+
+        @Override
+        public _FinalStage programId(String programId) {
+            this.programId = Optional.of(programId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "programId", nulls = Nulls.SKIP)
+        public _FinalStage programId(Optional<String> programId) {
+            this.programId = programId;
             return this;
         }
 
@@ -248,7 +285,13 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
         @Override
         public JobExecutionPlanRequest build() {
             return new JobExecutionPlanRequest(
-                    fieldMapping, unmappedSourceFields, unmappedDestinationFields, fileId, jobId, additionalProperties);
+                    fieldMapping,
+                    unmappedSourceFields,
+                    unmappedDestinationFields,
+                    programId,
+                    fileId,
+                    jobId,
+                    additionalProperties);
         }
     }
 }

@@ -70,6 +70,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
     private final Optional<OffsetDateTime> expiredAt;
 
+    private final Optional<OffsetDateTime> lastActivityAt;
+
     private final Optional<String> guestLink;
 
     private final String name;
@@ -109,6 +111,7 @@ public final class Space implements IInternalSpaceConfigBase {
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<OffsetDateTime> expiredAt,
+            Optional<OffsetDateTime> lastActivityAt,
             Optional<String> guestLink,
             String name,
             Optional<Integer> displayOrder,
@@ -138,6 +141,7 @@ public final class Space implements IInternalSpaceConfigBase {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.expiredAt = expiredAt;
+        this.lastActivityAt = lastActivityAt;
         this.guestLink = guestLink;
         this.name = name;
         this.displayOrder = displayOrder;
@@ -286,6 +290,14 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     /**
+     * @return Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day.
+     */
+    @JsonProperty("lastActivityAt")
+    public Optional<OffsetDateTime> getLastActivityAt() {
+        return lastActivityAt;
+    }
+
+    /**
      * @return Guest link to the space
      */
     @JsonProperty("guestLink")
@@ -381,6 +393,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
                 && expiredAt.equals(other.expiredAt)
+                && lastActivityAt.equals(other.lastActivityAt)
                 && guestLink.equals(other.guestLink)
                 && name.equals(other.name)
                 && displayOrder.equals(other.displayOrder)
@@ -414,6 +427,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 this.createdAt,
                 this.updatedAt,
                 this.expiredAt,
+                this.lastActivityAt,
                 this.guestLink,
                 this.name,
                 this.displayOrder,
@@ -522,6 +536,10 @@ public final class Space implements IInternalSpaceConfigBase {
 
         _FinalStage expiredAt(OffsetDateTime expiredAt);
 
+        _FinalStage lastActivityAt(Optional<OffsetDateTime> lastActivityAt);
+
+        _FinalStage lastActivityAt(OffsetDateTime lastActivityAt);
+
         _FinalStage guestLink(Optional<String> guestLink);
 
         _FinalStage guestLink(String guestLink);
@@ -576,6 +594,8 @@ public final class Space implements IInternalSpaceConfigBase {
         private Optional<Integer> displayOrder = Optional.empty();
 
         private Optional<String> guestLink = Optional.empty();
+
+        private Optional<OffsetDateTime> lastActivityAt = Optional.empty();
 
         private Optional<OffsetDateTime> expiredAt = Optional.empty();
 
@@ -638,6 +658,7 @@ public final class Space implements IInternalSpaceConfigBase {
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             expiredAt(other.getExpiredAt());
+            lastActivityAt(other.getLastActivityAt());
             guestLink(other.getGuestLink());
             name(other.getName());
             displayOrder(other.getDisplayOrder());
@@ -816,6 +837,23 @@ public final class Space implements IInternalSpaceConfigBase {
         @JsonSetter(value = "guestLink", nulls = Nulls.SKIP)
         public _FinalStage guestLink(Optional<String> guestLink) {
             this.guestLink = guestLink;
+            return this;
+        }
+
+        /**
+         * <p>Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage lastActivityAt(OffsetDateTime lastActivityAt) {
+            this.lastActivityAt = Optional.of(lastActivityAt);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "lastActivityAt", nulls = Nulls.SKIP)
+        public _FinalStage lastActivityAt(Optional<OffsetDateTime> lastActivityAt) {
+            this.lastActivityAt = lastActivityAt;
             return this;
         }
 
@@ -1087,6 +1125,7 @@ public final class Space implements IInternalSpaceConfigBase {
                     createdAt,
                     updatedAt,
                     expiredAt,
+                    lastActivityAt,
                     guestLink,
                     name,
                     displayOrder,

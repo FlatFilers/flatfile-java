@@ -42,6 +42,10 @@ public final class SheetConfig {
 
     private final Optional<List<Action>> actions;
 
+    private final Optional<Object> metadata;
+
+    private final Optional<List<SheetConstraint>> constraints;
+
     private final Map<String, Object> additionalProperties;
 
     private SheetConfig(
@@ -54,6 +58,8 @@ public final class SheetConfig {
             Optional<List<SheetAccess>> access,
             List<Property> fields,
             Optional<List<Action>> actions,
+            Optional<Object> metadata,
+            Optional<List<SheetConstraint>> constraints,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.description = description;
@@ -64,6 +70,8 @@ public final class SheetConfig {
         this.access = access;
         this.fields = fields;
         this.actions = actions;
+        this.metadata = metadata;
+        this.constraints = constraints;
         this.additionalProperties = additionalProperties;
     }
 
@@ -139,6 +147,22 @@ public final class SheetConfig {
         return actions;
     }
 
+    /**
+     * @return Useful for any contextual metadata regarding the schema. Store any valid json
+     */
+    @JsonProperty("metadata")
+    public Optional<Object> getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * @return An array of constraints that end users can perform on this Sheet.
+     */
+    @JsonProperty("constraints")
+    public Optional<List<SheetConstraint>> getConstraints() {
+        return constraints;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -159,7 +183,9 @@ public final class SheetConfig {
                 && mappingConfidenceThreshold.equals(other.mappingConfidenceThreshold)
                 && access.equals(other.access)
                 && fields.equals(other.fields)
-                && actions.equals(other.actions);
+                && actions.equals(other.actions)
+                && metadata.equals(other.metadata)
+                && constraints.equals(other.constraints);
     }
 
     @Override
@@ -173,7 +199,9 @@ public final class SheetConfig {
                 this.mappingConfidenceThreshold,
                 this.access,
                 this.fields,
-                this.actions);
+                this.actions,
+                this.metadata,
+                this.constraints);
     }
 
     @Override
@@ -227,11 +255,23 @@ public final class SheetConfig {
         _FinalStage actions(Optional<List<Action>> actions);
 
         _FinalStage actions(List<Action> actions);
+
+        _FinalStage metadata(Optional<Object> metadata);
+
+        _FinalStage metadata(Object metadata);
+
+        _FinalStage constraints(Optional<List<SheetConstraint>> constraints);
+
+        _FinalStage constraints(List<SheetConstraint> constraints);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements NameStage, _FinalStage {
         private String name;
+
+        private Optional<List<SheetConstraint>> constraints = Optional.empty();
+
+        private Optional<Object> metadata = Optional.empty();
 
         private Optional<List<Action>> actions = Optional.empty();
 
@@ -265,6 +305,8 @@ public final class SheetConfig {
             access(other.getAccess());
             fields(other.getFields());
             actions(other.getActions());
+            metadata(other.getMetadata());
+            constraints(other.getConstraints());
             return this;
         }
 
@@ -276,6 +318,40 @@ public final class SheetConfig {
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
+            return this;
+        }
+
+        /**
+         * <p>An array of constraints that end users can perform on this Sheet.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage constraints(List<SheetConstraint> constraints) {
+            this.constraints = Optional.of(constraints);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "constraints", nulls = Nulls.SKIP)
+        public _FinalStage constraints(Optional<List<SheetConstraint>> constraints) {
+            this.constraints = constraints;
+            return this;
+        }
+
+        /**
+         * <p>Useful for any contextual metadata regarding the schema. Store any valid json</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @Override
+        public _FinalStage metadata(Object metadata) {
+            this.metadata = Optional.of(metadata);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Optional<Object> metadata) {
+            this.metadata = metadata;
             return this;
         }
 
@@ -438,6 +514,8 @@ public final class SheetConfig {
                     access,
                     fields,
                     actions,
+                    metadata,
+                    constraints,
                     additionalProperties);
         }
     }

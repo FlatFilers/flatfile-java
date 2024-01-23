@@ -19,6 +19,7 @@ import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.EventId;
 import com.flatfile.api.resources.commons.types.FileId;
 import com.flatfile.api.resources.commons.types.JobId;
+import com.flatfile.api.resources.commons.types.ProgramId;
 import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.SnapshotId;
 import com.flatfile.api.resources.commons.types.SpaceId;
@@ -59,6 +60,8 @@ public final class Context {
 
     private final Optional<JobId> jobId;
 
+    private final Optional<ProgramId> programId;
+
     private final Optional<FileId> fileId;
 
     private final Optional<DocumentId> documentId;
@@ -83,6 +86,7 @@ public final class Context {
             Optional<VersionId> versionId,
             Optional<CommitId> commitId,
             Optional<JobId> jobId,
+            Optional<ProgramId> programId,
             Optional<FileId> fileId,
             Optional<DocumentId> documentId,
             Optional<EventId> precedingEventId,
@@ -101,6 +105,7 @@ public final class Context {
         this.versionId = versionId;
         this.commitId = commitId;
         this.jobId = jobId;
+        this.programId = programId;
         this.fileId = fileId;
         this.documentId = documentId;
         this.precedingEventId = precedingEventId;
@@ -182,6 +187,11 @@ public final class Context {
         return jobId;
     }
 
+    @JsonProperty("programId")
+    public Optional<ProgramId> getProgramId() {
+        return programId;
+    }
+
     @JsonProperty("fileId")
     public Optional<FileId> getFileId() {
         return fileId;
@@ -230,6 +240,7 @@ public final class Context {
                 && versionId.equals(other.versionId)
                 && commitId.equals(other.commitId)
                 && jobId.equals(other.jobId)
+                && programId.equals(other.programId)
                 && fileId.equals(other.fileId)
                 && documentId.equals(other.documentId)
                 && precedingEventId.equals(other.precedingEventId)
@@ -252,6 +263,7 @@ public final class Context {
                 this.versionId,
                 this.commitId,
                 this.jobId,
+                this.programId,
                 this.fileId,
                 this.documentId,
                 this.precedingEventId,
@@ -324,6 +336,10 @@ public final class Context {
 
         _FinalStage jobId(JobId jobId);
 
+        _FinalStage programId(Optional<ProgramId> programId);
+
+        _FinalStage programId(ProgramId programId);
+
         _FinalStage fileId(Optional<FileId> fileId);
 
         _FinalStage fileId(FileId fileId);
@@ -354,6 +370,8 @@ public final class Context {
         private Optional<DocumentId> documentId = Optional.empty();
 
         private Optional<FileId> fileId = Optional.empty();
+
+        private Optional<ProgramId> programId = Optional.empty();
 
         private Optional<JobId> jobId = Optional.empty();
 
@@ -397,6 +415,7 @@ public final class Context {
             versionId(other.getVersionId());
             commitId(other.getCommitId());
             jobId(other.getJobId());
+            programId(other.getProgramId());
             fileId(other.getFileId());
             documentId(other.getDocumentId());
             precedingEventId(other.getPrecedingEventId());
@@ -471,6 +490,19 @@ public final class Context {
         @JsonSetter(value = "fileId", nulls = Nulls.SKIP)
         public _FinalStage fileId(Optional<FileId> fileId) {
             this.fileId = fileId;
+            return this;
+        }
+
+        @Override
+        public _FinalStage programId(ProgramId programId) {
+            this.programId = Optional.of(programId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "programId", nulls = Nulls.SKIP)
+        public _FinalStage programId(Optional<ProgramId> programId) {
+            this.programId = programId;
             return this;
         }
 
@@ -645,6 +677,7 @@ public final class Context {
                     versionId,
                     commitId,
                     jobId,
+                    programId,
                     fileId,
                     documentId,
                     precedingEventId,

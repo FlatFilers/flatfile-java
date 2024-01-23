@@ -29,6 +29,8 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
     private final Optional<List<DestinationField>> unmappedDestinationFields;
 
+    private final Optional<String> programId;
+
     private final FileId fileId;
 
     private final JobId jobId;
@@ -39,12 +41,14 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
             Optional<List<Edge>> fieldMapping,
             Optional<List<SourceField>> unmappedSourceFields,
             Optional<List<DestinationField>> unmappedDestinationFields,
+            Optional<String> programId,
             FileId fileId,
             JobId jobId,
             Map<String, Object> additionalProperties) {
         this.fieldMapping = fieldMapping;
         this.unmappedSourceFields = unmappedSourceFields;
         this.unmappedDestinationFields = unmappedDestinationFields;
+        this.programId = programId;
         this.fileId = fileId;
         this.jobId = jobId;
         this.additionalProperties = additionalProperties;
@@ -66,6 +70,12 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
     @Override
     public Optional<List<DestinationField>> getUnmappedDestinationFields() {
         return unmappedDestinationFields;
+    }
+
+    @JsonProperty("programId")
+    @Override
+    public Optional<String> getProgramId() {
+        return programId;
     }
 
     @JsonProperty("fileId")
@@ -93,6 +103,7 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
         return fieldMapping.equals(other.fieldMapping)
                 && unmappedSourceFields.equals(other.unmappedSourceFields)
                 && unmappedDestinationFields.equals(other.unmappedDestinationFields)
+                && programId.equals(other.programId)
                 && fileId.equals(other.fileId)
                 && jobId.equals(other.jobId);
     }
@@ -100,7 +111,12 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
     @Override
     public int hashCode() {
         return Objects.hash(
-                this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields, this.fileId, this.jobId);
+                this.fieldMapping,
+                this.unmappedSourceFields,
+                this.unmappedDestinationFields,
+                this.programId,
+                this.fileId,
+                this.jobId);
     }
 
     @Override
@@ -136,6 +152,10 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
         _FinalStage unmappedDestinationFields(Optional<List<DestinationField>> unmappedDestinationFields);
 
         _FinalStage unmappedDestinationFields(List<DestinationField> unmappedDestinationFields);
+
+        _FinalStage programId(Optional<String> programId);
+
+        _FinalStage programId(String programId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -143,6 +163,8 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
         private FileId fileId;
 
         private JobId jobId;
+
+        private Optional<String> programId = Optional.empty();
 
         private Optional<List<DestinationField>> unmappedDestinationFields = Optional.empty();
 
@@ -160,6 +182,7 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
             fieldMapping(other.getFieldMapping());
             unmappedSourceFields(other.getUnmappedSourceFields());
             unmappedDestinationFields(other.getUnmappedDestinationFields());
+            programId(other.getProgramId());
             fileId(other.getFileId());
             jobId(other.getJobId());
             return this;
@@ -176,6 +199,19 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
         @JsonSetter("jobId")
         public _FinalStage jobId(JobId jobId) {
             this.jobId = jobId;
+            return this;
+        }
+
+        @Override
+        public _FinalStage programId(String programId) {
+            this.programId = Optional.of(programId);
+            return this;
+        }
+
+        @Override
+        @JsonSetter(value = "programId", nulls = Nulls.SKIP)
+        public _FinalStage programId(Optional<String> programId) {
+            this.programId = programId;
             return this;
         }
 
@@ -221,7 +257,13 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
         @Override
         public JobExecutionPlanConfigRequest build() {
             return new JobExecutionPlanConfigRequest(
-                    fieldMapping, unmappedSourceFields, unmappedDestinationFields, fileId, jobId, additionalProperties);
+                    fieldMapping,
+                    unmappedSourceFields,
+                    unmappedDestinationFields,
+                    programId,
+                    fileId,
+                    jobId,
+                    additionalProperties);
         }
     }
 }

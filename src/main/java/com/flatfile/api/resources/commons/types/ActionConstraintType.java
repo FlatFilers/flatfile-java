@@ -8,7 +8,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ActionConstraintType {
     HAS_ALL_VALID("hasAllValid"),
 
-    HAS_SELECTION("hasSelection");
+    HAS_SELECTION("hasSelection"),
+
+    HAS_DATA("hasData");
 
     private final String value;
 

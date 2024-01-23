@@ -27,16 +27,20 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
 
     private final Optional<List<DestinationField>> unmappedDestinationFields;
 
+    private final Optional<String> programId;
+
     private final Map<String, Object> additionalProperties;
 
     private JobExecutionPlanConfig(
             Optional<List<Edge>> fieldMapping,
             Optional<List<SourceField>> unmappedSourceFields,
             Optional<List<DestinationField>> unmappedDestinationFields,
+            Optional<String> programId,
             Map<String, Object> additionalProperties) {
         this.fieldMapping = fieldMapping;
         this.unmappedSourceFields = unmappedSourceFields;
         this.unmappedDestinationFields = unmappedDestinationFields;
+        this.programId = programId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -58,6 +62,12 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
         return unmappedDestinationFields;
     }
 
+    @JsonProperty("programId")
+    @Override
+    public Optional<String> getProgramId() {
+        return programId;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -72,12 +82,14 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
     private boolean equalTo(JobExecutionPlanConfig other) {
         return fieldMapping.equals(other.fieldMapping)
                 && unmappedSourceFields.equals(other.unmappedSourceFields)
-                && unmappedDestinationFields.equals(other.unmappedDestinationFields);
+                && unmappedDestinationFields.equals(other.unmappedDestinationFields)
+                && programId.equals(other.programId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields);
+        return Objects.hash(
+                this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields, this.programId);
     }
 
     @Override
@@ -97,6 +109,8 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
 
         private Optional<List<DestinationField>> unmappedDestinationFields = Optional.empty();
 
+        private Optional<String> programId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -106,6 +120,7 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
             fieldMapping(other.getFieldMapping());
             unmappedSourceFields(other.getUnmappedSourceFields());
             unmappedDestinationFields(other.getUnmappedDestinationFields());
+            programId(other.getProgramId());
             return this;
         }
 
@@ -142,9 +157,20 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
             return this;
         }
 
+        @JsonSetter(value = "programId", nulls = Nulls.SKIP)
+        public Builder programId(Optional<String> programId) {
+            this.programId = programId;
+            return this;
+        }
+
+        public Builder programId(String programId) {
+            this.programId = Optional.of(programId);
+            return this;
+        }
+
         public JobExecutionPlanConfig build() {
             return new JobExecutionPlanConfig(
-                    fieldMapping, unmappedSourceFields, unmappedDestinationFields, additionalProperties);
+                    fieldMapping, unmappedSourceFields, unmappedDestinationFields, programId, additionalProperties);
         }
     }
 }

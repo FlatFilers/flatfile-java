@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = JobExecutionPlan.Builder.class)
@@ -27,16 +28,20 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
 
     private final List<DestinationField> unmappedDestinationFields;
 
+    private final Optional<String> programId;
+
     private final Map<String, Object> additionalProperties;
 
     private JobExecutionPlan(
             List<Edge> fieldMapping,
             List<SourceField> unmappedSourceFields,
             List<DestinationField> unmappedDestinationFields,
+            Optional<String> programId,
             Map<String, Object> additionalProperties) {
         this.fieldMapping = fieldMapping;
         this.unmappedSourceFields = unmappedSourceFields;
         this.unmappedDestinationFields = unmappedDestinationFields;
+        this.programId = programId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -58,6 +63,12 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
         return unmappedDestinationFields;
     }
 
+    @JsonProperty("programId")
+    @Override
+    public Optional<String> getProgramId() {
+        return programId;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -72,12 +83,14 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
     private boolean equalTo(JobExecutionPlan other) {
         return fieldMapping.equals(other.fieldMapping)
                 && unmappedSourceFields.equals(other.unmappedSourceFields)
-                && unmappedDestinationFields.equals(other.unmappedDestinationFields);
+                && unmappedDestinationFields.equals(other.unmappedDestinationFields)
+                && programId.equals(other.programId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields);
+        return Objects.hash(
+                this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields, this.programId);
     }
 
     @Override
@@ -97,6 +110,8 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
 
         private List<DestinationField> unmappedDestinationFields = new ArrayList<>();
 
+        private Optional<String> programId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -106,6 +121,7 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
             fieldMapping(other.getFieldMapping());
             unmappedSourceFields(other.getUnmappedSourceFields());
             unmappedDestinationFields(other.getUnmappedDestinationFields());
+            programId(other.getProgramId());
             return this;
         }
 
@@ -160,9 +176,20 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
             return this;
         }
 
+        @JsonSetter(value = "programId", nulls = Nulls.SKIP)
+        public Builder programId(Optional<String> programId) {
+            this.programId = programId;
+            return this;
+        }
+
+        public Builder programId(String programId) {
+            this.programId = Optional.of(programId);
+            return this;
+        }
+
         public JobExecutionPlan build() {
             return new JobExecutionPlan(
-                    fieldMapping, unmappedSourceFields, unmappedDestinationFields, additionalProperties);
+                    fieldMapping, unmappedSourceFields, unmappedDestinationFields, programId, additionalProperties);
         }
     }
 }

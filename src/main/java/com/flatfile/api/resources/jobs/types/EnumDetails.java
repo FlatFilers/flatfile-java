@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EnumDetails.Builder.class)
 public final class EnumDetails {
-    private final Optional<List<CategoryMapping>> mapping;
+    private final List<CategoryMapping> mapping;
 
     private final Optional<List<EnumValue>> unusedSourceValues;
 
@@ -30,7 +31,7 @@ public final class EnumDetails {
     private final Map<String, Object> additionalProperties;
 
     private EnumDetails(
-            Optional<List<CategoryMapping>> mapping,
+            List<CategoryMapping> mapping,
             Optional<List<EnumValue>> unusedSourceValues,
             Optional<List<EnumValue>> unusedDestinationValues,
             Map<String, Object> additionalProperties) {
@@ -44,7 +45,7 @@ public final class EnumDetails {
      * @return The mapping of source values to destination values
      */
     @JsonProperty("mapping")
-    public Optional<List<CategoryMapping>> getMapping() {
+    public List<CategoryMapping> getMapping() {
         return mapping;
     }
 
@@ -97,7 +98,7 @@ public final class EnumDetails {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<List<CategoryMapping>> mapping = Optional.empty();
+        private List<CategoryMapping> mapping = new ArrayList<>();
 
         private Optional<List<EnumValue>> unusedSourceValues = Optional.empty();
 
@@ -116,13 +117,19 @@ public final class EnumDetails {
         }
 
         @JsonSetter(value = "mapping", nulls = Nulls.SKIP)
-        public Builder mapping(Optional<List<CategoryMapping>> mapping) {
-            this.mapping = mapping;
+        public Builder mapping(List<CategoryMapping> mapping) {
+            this.mapping.clear();
+            this.mapping.addAll(mapping);
             return this;
         }
 
-        public Builder mapping(List<CategoryMapping> mapping) {
-            this.mapping = Optional.of(mapping);
+        public Builder addMapping(CategoryMapping mapping) {
+            this.mapping.add(mapping);
+            return this;
+        }
+
+        public Builder addAllMapping(List<CategoryMapping> mapping) {
+            this.mapping.addAll(mapping);
             return this;
         }
 
