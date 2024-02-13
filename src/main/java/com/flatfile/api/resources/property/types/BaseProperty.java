@@ -61,7 +61,7 @@ public final class BaseProperty implements IBaseProperty {
     }
 
     @JsonProperty("key")
-    @Override
+    @java.lang.Override
     public String getKey() {
         return key;
     }
@@ -70,7 +70,7 @@ public final class BaseProperty implements IBaseProperty {
      * @return User friendly field name
      */
     @JsonProperty("label")
-    @Override
+    @java.lang.Override
     public Optional<String> getLabel() {
         return label;
     }
@@ -79,19 +79,19 @@ public final class BaseProperty implements IBaseProperty {
      * @return A short description of the field. Markdown syntax is supported.
      */
     @JsonProperty("description")
-    @Override
+    @java.lang.Override
     public Optional<String> getDescription() {
         return description;
     }
 
     @JsonProperty("constraints")
-    @Override
+    @java.lang.Override
     public Optional<List<Constraint>> getConstraints() {
         return constraints;
     }
 
     @JsonProperty("readonly")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getReadonly() {
         return readonly;
     }
@@ -100,7 +100,7 @@ public final class BaseProperty implements IBaseProperty {
      * @return Useful for any contextual metadata regarding the schema. Store any valid json here.
      */
     @JsonProperty("metadata")
-    @Override
+    @java.lang.Override
     public Optional<Object> getMetadata() {
         return metadata;
     }
@@ -109,18 +109,18 @@ public final class BaseProperty implements IBaseProperty {
      * @return A unique presentation for a field in the UI.
      */
     @JsonProperty("treatments")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getTreatments() {
         return treatments;
     }
 
     @JsonProperty("alternativeNames")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getAlternativeNames() {
         return alternativeNames;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BaseProperty && equalTo((BaseProperty) other);
@@ -142,7 +142,7 @@ public final class BaseProperty implements IBaseProperty {
                 && alternativeNames.equals(other.alternativeNames);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.key,
@@ -155,7 +155,7 @@ public final class BaseProperty implements IBaseProperty {
                 this.alternativeNames);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -225,7 +225,7 @@ public final class BaseProperty implements IBaseProperty {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BaseProperty other) {
             key(other.getKey());
             label(other.getLabel());
@@ -238,20 +238,20 @@ public final class BaseProperty implements IBaseProperty {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("key")
         public _FinalStage key(String key) {
             this.key = key;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage alternativeNames(List<String> alternativeNames) {
             this.alternativeNames = Optional.of(alternativeNames);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "alternativeNames", nulls = Nulls.SKIP)
         public _FinalStage alternativeNames(Optional<List<String>> alternativeNames) {
             this.alternativeNames = alternativeNames;
@@ -262,13 +262,13 @@ public final class BaseProperty implements IBaseProperty {
          * <p>A unique presentation for a field in the UI.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage treatments(List<String> treatments) {
             this.treatments = Optional.of(treatments);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "treatments", nulls = Nulls.SKIP)
         public _FinalStage treatments(Optional<List<String>> treatments) {
             this.treatments = treatments;
@@ -279,39 +279,39 @@ public final class BaseProperty implements IBaseProperty {
          * <p>Useful for any contextual metadata regarding the schema. Store any valid json here.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Object metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage readonly(Boolean readonly) {
             this.readonly = Optional.of(readonly);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "readonly", nulls = Nulls.SKIP)
         public _FinalStage readonly(Optional<Boolean> readonly) {
             this.readonly = readonly;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage constraints(List<Constraint> constraints) {
             this.constraints = Optional.of(constraints);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "constraints", nulls = Nulls.SKIP)
         public _FinalStage constraints(Optional<List<Constraint>> constraints) {
             this.constraints = constraints;
@@ -322,13 +322,13 @@ public final class BaseProperty implements IBaseProperty {
          * <p>A short description of the field. Markdown syntax is supported.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
@@ -339,20 +339,20 @@ public final class BaseProperty implements IBaseProperty {
          * <p>User friendly field name</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BaseProperty build() {
             return new BaseProperty(
                     key,

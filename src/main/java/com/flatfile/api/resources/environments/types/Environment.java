@@ -128,7 +128,7 @@ public final class Environment {
         return languageOverride;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Environment && equalTo((Environment) other);
@@ -152,7 +152,7 @@ public final class Environment {
                 && languageOverride.equals(other.languageOverride);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -167,7 +167,7 @@ public final class Environment {
                 this.languageOverride);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -255,7 +255,7 @@ public final class Environment {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Environment other) {
             id(other.getId());
             accountId(other.getAccountId());
@@ -270,14 +270,14 @@ public final class Environment {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public AccountIdStage id(EnvironmentId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("accountId")
         public NameStage accountId(AccountId accountId) {
             this.accountId = accountId;
@@ -288,7 +288,7 @@ public final class Environment {
          * <p>The name of the environment</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public IsProdStage name(String name) {
             this.name = name;
@@ -299,65 +299,65 @@ public final class Environment {
          * <p>Whether or not the environment is a production environment</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("isProd")
         public _FinalStage isProd(boolean isProd) {
             this.isProd = isProd;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage languageOverride(String languageOverride) {
             this.languageOverride = Optional.of(languageOverride);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "languageOverride", nulls = Nulls.SKIP)
         public _FinalStage languageOverride(Optional<String> languageOverride) {
             this.languageOverride = languageOverride;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
             this.namespaces = Optional.of(namespaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespaces", nulls = Nulls.SKIP)
         public _FinalStage namespaces(Optional<List<String>> namespaces) {
             this.namespaces = namespaces;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage translationsPath(String translationsPath) {
             this.translationsPath = Optional.of(translationsPath);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "translationsPath", nulls = Nulls.SKIP)
         public _FinalStage translationsPath(Optional<String> translationsPath) {
             this.translationsPath = translationsPath;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(String key, Object value) {
             this.metadata.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllMetadata(Map<String, Object> metadata) {
             this.metadata.putAll(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Map<String, Object> metadata) {
             this.metadata.clear();
@@ -365,19 +365,19 @@ public final class Environment {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage features(String key, Object value) {
             this.features.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllFeatures(Map<String, Object> features) {
             this.features.putAll(features);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "features", nulls = Nulls.SKIP)
         public _FinalStage features(Map<String, Object> features) {
             this.features.clear();
@@ -385,19 +385,19 @@ public final class Environment {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllGuestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
             this.guestAuthentication.addAll(guestAuthentication);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addGuestAuthentication(GuestAuthenticationEnum guestAuthentication) {
             this.guestAuthentication.add(guestAuthentication);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "guestAuthentication", nulls = Nulls.SKIP)
         public _FinalStage guestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
             this.guestAuthentication.clear();
@@ -405,7 +405,7 @@ public final class Environment {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Environment build() {
             return new Environment(
                     id,

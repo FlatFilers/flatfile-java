@@ -894,12 +894,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitAgentCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof AgentCreatedValue && equalTo((AgentCreatedValue) other);
@@ -909,12 +909,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -932,12 +932,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitAgentUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof AgentUpdatedValue && equalTo((AgentUpdatedValue) other);
@@ -947,12 +947,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -970,12 +970,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitAgentDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof AgentDeletedValue && equalTo((AgentDeletedValue) other);
@@ -985,12 +985,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1008,12 +1008,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceCreatedValue && equalTo((SpaceCreatedValue) other);
@@ -1023,12 +1023,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1046,12 +1046,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceUpdatedValue && equalTo((SpaceUpdatedValue) other);
@@ -1061,12 +1061,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1084,12 +1084,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceDeletedValue && equalTo((SpaceDeletedValue) other);
@@ -1099,12 +1099,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1122,12 +1122,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceArchived(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceArchivedValue && equalTo((SpaceArchivedValue) other);
@@ -1137,12 +1137,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1160,12 +1160,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceExpired(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceExpiredValue && equalTo((SpaceExpiredValue) other);
@@ -1175,12 +1175,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1198,12 +1198,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceGuestAdded(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceGuestAddedValue && equalTo((SpaceGuestAddedValue) other);
@@ -1213,12 +1213,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1236,12 +1236,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSpaceGuestRemoved(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SpaceGuestRemovedValue && equalTo((SpaceGuestRemovedValue) other);
@@ -1251,12 +1251,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1274,12 +1274,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitDocumentCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof DocumentCreatedValue && equalTo((DocumentCreatedValue) other);
@@ -1289,12 +1289,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1312,12 +1312,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitDocumentUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof DocumentUpdatedValue && equalTo((DocumentUpdatedValue) other);
@@ -1327,12 +1327,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1350,12 +1350,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitDocumentDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof DocumentDeletedValue && equalTo((DocumentDeletedValue) other);
@@ -1365,12 +1365,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1388,12 +1388,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWorkbookCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WorkbookCreatedValue && equalTo((WorkbookCreatedValue) other);
@@ -1403,12 +1403,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1426,12 +1426,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWorkbookUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WorkbookUpdatedValue && equalTo((WorkbookUpdatedValue) other);
@@ -1441,12 +1441,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1464,12 +1464,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWorkbookDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WorkbookDeletedValue && equalTo((WorkbookDeletedValue) other);
@@ -1479,12 +1479,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1502,12 +1502,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWorkbookExpired(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WorkbookExpiredValue && equalTo((WorkbookExpiredValue) other);
@@ -1517,12 +1517,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1540,12 +1540,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSheetCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SheetCreatedValue && equalTo((SheetCreatedValue) other);
@@ -1555,12 +1555,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1578,12 +1578,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSheetUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SheetUpdatedValue && equalTo((SheetUpdatedValue) other);
@@ -1593,12 +1593,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1616,12 +1616,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSheetDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SheetDeletedValue && equalTo((SheetDeletedValue) other);
@@ -1631,12 +1631,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1654,12 +1654,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSnapshotCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SnapshotCreatedValue && equalTo((SnapshotCreatedValue) other);
@@ -1669,12 +1669,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1692,12 +1692,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRecordsCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RecordsCreatedValue && equalTo((RecordsCreatedValue) other);
@@ -1707,12 +1707,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1730,12 +1730,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRecordsUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RecordsUpdatedValue && equalTo((RecordsUpdatedValue) other);
@@ -1745,12 +1745,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1768,12 +1768,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRecordsDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RecordsDeletedValue && equalTo((RecordsDeletedValue) other);
@@ -1783,12 +1783,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1806,12 +1806,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFileCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof FileCreatedValue && equalTo((FileCreatedValue) other);
@@ -1821,12 +1821,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1844,12 +1844,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFileUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof FileUpdatedValue && equalTo((FileUpdatedValue) other);
@@ -1859,12 +1859,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1882,12 +1882,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFileDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof FileDeletedValue && equalTo((FileDeletedValue) other);
@@ -1897,12 +1897,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1920,12 +1920,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFileExpired(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof FileExpiredValue && equalTo((FileExpiredValue) other);
@@ -1935,12 +1935,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1958,12 +1958,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobCreatedValue && equalTo((JobCreatedValue) other);
@@ -1973,12 +1973,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -1996,12 +1996,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobUpdatedValue && equalTo((JobUpdatedValue) other);
@@ -2011,12 +2011,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2034,12 +2034,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobDeletedValue && equalTo((JobDeletedValue) other);
@@ -2049,12 +2049,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2072,12 +2072,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobFailed(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobFailedValue && equalTo((JobFailedValue) other);
@@ -2087,12 +2087,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2110,12 +2110,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobCompleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobCompletedValue && equalTo((JobCompletedValue) other);
@@ -2125,12 +2125,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2148,12 +2148,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobReady(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobReadyValue && equalTo((JobReadyValue) other);
@@ -2163,12 +2163,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2186,12 +2186,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobScheduled(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobScheduledValue && equalTo((JobScheduledValue) other);
@@ -2201,12 +2201,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2224,12 +2224,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobOutcomeAcknowledged(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobOutcomeAcknowledgedValue && equalTo((JobOutcomeAcknowledgedValue) other);
@@ -2239,12 +2239,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2262,12 +2262,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitJobPartsCompleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof JobPartsCompletedValue && equalTo((JobPartsCompletedValue) other);
@@ -2277,12 +2277,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2300,12 +2300,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitProgramCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof ProgramCreatedValue && equalTo((ProgramCreatedValue) other);
@@ -2315,12 +2315,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2338,12 +2338,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitProgramUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof ProgramUpdatedValue && equalTo((ProgramUpdatedValue) other);
@@ -2353,12 +2353,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2376,12 +2376,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitCommitCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof CommitCreatedValue && equalTo((CommitCreatedValue) other);
@@ -2391,12 +2391,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2414,12 +2414,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitCommitUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof CommitUpdatedValue && equalTo((CommitUpdatedValue) other);
@@ -2429,12 +2429,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2452,12 +2452,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitCommitCompleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof CommitCompletedValue && equalTo((CommitCompletedValue) other);
@@ -2467,12 +2467,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2490,12 +2490,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSecretCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SecretCreatedValue && equalTo((SecretCreatedValue) other);
@@ -2505,12 +2505,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2528,12 +2528,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSecretUpdated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SecretUpdatedValue && equalTo((SecretUpdatedValue) other);
@@ -2543,12 +2543,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2566,12 +2566,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSecretDeleted(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SecretDeletedValue && equalTo((SecretDeletedValue) other);
@@ -2581,12 +2581,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2604,12 +2604,12 @@ public final class Event {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitLayerCreated(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof LayerCreatedValue && equalTo((LayerCreatedValue) other);
@@ -2619,12 +2619,12 @@ public final class Event {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "value: " + value + "}";
         }
@@ -2639,12 +2639,12 @@ public final class Event {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -2654,12 +2654,12 @@ public final class Event {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Event{" + "type: " + type + ", value: " + value + "}";
         }

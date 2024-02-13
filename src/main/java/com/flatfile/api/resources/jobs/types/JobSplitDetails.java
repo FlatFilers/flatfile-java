@@ -42,7 +42,7 @@ public final class JobSplitDetails {
         return runInParallel;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobSplitDetails && equalTo((JobSplitDetails) other);
@@ -57,12 +57,12 @@ public final class JobSplitDetails {
         return parts.equals(other.parts) && runInParallel.equals(other.runInParallel);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.parts, this.runInParallel);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class JobSplitDetails {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobSplitDetails other) {
             parts(other.getParts());
             runInParallel(other.getRunInParallel());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("parts")
         public _FinalStage parts(JobParts parts) {
             this.parts = parts;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage runInParallel(Boolean runInParallel) {
             this.runInParallel = Optional.of(runInParallel);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "runInParallel", nulls = Nulls.SKIP)
         public _FinalStage runInParallel(Optional<Boolean> runInParallel) {
             this.runInParallel = runInParallel;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobSplitDetails build() {
             return new JobSplitDetails(parts, runInParallel, additionalProperties);
         }

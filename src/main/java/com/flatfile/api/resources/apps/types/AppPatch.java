@@ -91,7 +91,7 @@ public final class AppPatch {
         return activatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AppPatch && equalTo((AppPatch) other);
@@ -112,13 +112,13 @@ public final class AppPatch {
                 && activatedAt.equals(other.activatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name, this.namespace, this.entity, this.entityPlural, this.icon, this.metadata, this.activatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

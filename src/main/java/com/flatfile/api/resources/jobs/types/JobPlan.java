@@ -40,7 +40,7 @@ public final class JobPlan {
         return plan;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobPlan && equalTo((JobPlan) other);
@@ -55,12 +55,12 @@ public final class JobPlan {
         return job.equals(other.job) && plan.equals(other.plan);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.job, this.plan);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class JobPlan {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobPlan other) {
             job(other.getJob());
             plan(other.getPlan());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("job")
         public PlanStage job(Job job) {
             this.job = job;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("plan")
         public _FinalStage plan(JobExecutionPlan plan) {
             this.plan = plan;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobPlan build() {
             return new JobPlan(job, plan, additionalProperties);
         }

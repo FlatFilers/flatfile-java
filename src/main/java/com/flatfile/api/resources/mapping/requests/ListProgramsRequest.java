@@ -151,7 +151,7 @@ public final class ListProgramsRequest {
         return destinationKeys;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListProgramsRequest && equalTo((ListProgramsRequest) other);
@@ -175,7 +175,7 @@ public final class ListProgramsRequest {
                 && destinationKeys.equals(other.destinationKeys);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.pageSize,
@@ -190,7 +190,7 @@ public final class ListProgramsRequest {
                 this.destinationKeys);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

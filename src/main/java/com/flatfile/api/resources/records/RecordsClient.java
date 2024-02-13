@@ -5,6 +5,7 @@ package com.flatfile.api.resources.records;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.SheetId;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -40,6 +40,13 @@ public class RecordsClient {
      */
     public GetRecordsResponse get(SheetId sheetId) {
         return get(sheetId, GetRecordsRequest.builder().build());
+    }
+
+    /**
+     * Returns records from a sheet in a workbook
+     */
+    public GetRecordsResponse get(SheetId sheetId, GetRecordsRequest request) {
+        return get(sheetId, request, null);
     }
 
     /**
@@ -140,10 +147,10 @@ public class RecordsClient {
     }
 
     /**
-     * Returns records from a sheet in a workbook
+     * Updates existing records in a workbook sheet
      */
-    public GetRecordsResponse get(SheetId sheetId, GetRecordsRequest request) {
-        return get(sheetId, request, null);
+    public VersionResponse update(SheetId sheetId, Records request) {
+        return update(sheetId, request, null);
     }
 
     /**
@@ -159,7 +166,7 @@ public class RecordsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -184,10 +191,10 @@ public class RecordsClient {
     }
 
     /**
-     * Updates existing records in a workbook sheet
+     * Adds records to a workbook sheet
      */
-    public VersionResponse update(SheetId sheetId, Records request) {
-        return update(sheetId, request, null);
+    public RecordsResponse insert(SheetId sheetId, List<RecordData> request) {
+        return insert(sheetId, request, null);
     }
 
     /**
@@ -203,7 +210,7 @@ public class RecordsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -228,17 +235,10 @@ public class RecordsClient {
     }
 
     /**
-     * Adds records to a workbook sheet
-     */
-    public RecordsResponse insert(SheetId sheetId, List<RecordData> request) {
-        return insert(sheetId, request, null);
-    }
-
-    /**
      * Deletes records from a workbook sheet
      */
-    public Success delete(SheetId sheetId) {
-        return delete(sheetId, DeleteRecordsRequest.builder().build());
+    public Success delete(SheetId sheetId, DeleteRecordsRequest request) {
+        return delete(sheetId, request, null);
     }
 
     /**
@@ -250,9 +250,7 @@ public class RecordsClient {
                 .addPathSegments("sheets")
                 .addPathSegment(sheetId.toString())
                 .addPathSegments("records");
-        if (request.getIds().isPresent()) {
-            httpUrl.addQueryParameter("ids", request.getIds().get().toString());
-        }
+        httpUrl.addQueryParameter("ids", request.getIds().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("DELETE", null)
@@ -274,10 +272,10 @@ public class RecordsClient {
     }
 
     /**
-     * Deletes records from a workbook sheet
+     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a commitId for the updated records
      */
-    public Success delete(SheetId sheetId, DeleteRecordsRequest request) {
-        return delete(sheetId, request, null);
+    public VersionResponse findAndReplace(SheetId sheetId, FindAndReplaceRecordRequest request) {
+        return findAndReplace(sheetId, request, null);
     }
 
     /**
@@ -319,7 +317,7 @@ public class RecordsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -341,12 +339,5 @@ public class RecordsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (&quot;&quot;). Returns a commitId for the updated records
-     */
-    public VersionResponse findAndReplace(SheetId sheetId, FindAndReplaceRecordRequest request) {
-        return findAndReplace(sheetId, request, null);
     }
 }

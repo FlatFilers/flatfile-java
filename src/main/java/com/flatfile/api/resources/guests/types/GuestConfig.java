@@ -46,30 +46,30 @@ public final class GuestConfig implements IGuestConfig {
     }
 
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("email")
-    @Override
+    @java.lang.Override
     public String getEmail() {
         return email;
     }
 
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("spaces")
-    @Override
+    @java.lang.Override
     public List<GuestSpace> getSpaces() {
         return spaces;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GuestConfig && equalTo((GuestConfig) other);
@@ -87,12 +87,12 @@ public final class GuestConfig implements IGuestConfig {
                 && spaces.equals(other.spaces);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId, this.email, this.name, this.spaces);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -140,7 +140,7 @@ public final class GuestConfig implements IGuestConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GuestConfig other) {
             environmentId(other.getEnvironmentId());
             email(other.getEmail());
@@ -149,40 +149,40 @@ public final class GuestConfig implements IGuestConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public EmailStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public NameStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSpaces(List<GuestSpace> spaces) {
             this.spaces.addAll(spaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSpaces(GuestSpace spaces) {
             this.spaces.add(spaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaces", nulls = Nulls.SKIP)
         public _FinalStage spaces(List<GuestSpace> spaces) {
             this.spaces.clear();
@@ -190,7 +190,7 @@ public final class GuestConfig implements IGuestConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GuestConfig build() {
             return new GuestConfig(environmentId, email, name, spaces, additionalProperties);
         }

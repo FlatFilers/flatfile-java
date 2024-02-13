@@ -52,7 +52,7 @@ public final class SnapshotSummary {
         return deletedSince;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SnapshotSummary && equalTo((SnapshotSummary) other);
@@ -69,12 +69,12 @@ public final class SnapshotSummary {
                 && deletedSince.equals(other.deletedSince);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.createdSince, this.updatedSince, this.deletedSince);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class SnapshotSummary {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SnapshotSummary other) {
             createdSince(other.getCreatedSince());
             updatedSince(other.getUpdatedSince());
@@ -122,28 +122,28 @@ public final class SnapshotSummary {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("createdSince")
         public UpdatedSinceStage createdSince(SummarySection createdSince) {
             this.createdSince = createdSince;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedSince")
         public DeletedSinceStage updatedSince(SummarySection updatedSince) {
             this.updatedSince = updatedSince;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("deletedSince")
         public _FinalStage deletedSince(SummarySection deletedSince) {
             this.deletedSince = deletedSince;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SnapshotSummary build() {
             return new SnapshotSummary(createdSince, updatedSince, deletedSince, additionalProperties);
         }

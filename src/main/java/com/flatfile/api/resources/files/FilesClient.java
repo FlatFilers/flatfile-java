@@ -5,6 +5,7 @@ package com.flatfile.api.resources.files;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.FileId;
@@ -35,6 +36,10 @@ public class FilesClient {
 
     public ListFilesResponse list() {
         return list(ListFilesRequest.builder().build());
+    }
+
+    public ListFilesResponse list(ListFilesRequest request) {
+        return list(request, null);
     }
 
     public ListFilesResponse list(ListFilesRequest request, RequestOptions requestOptions) {
@@ -74,8 +79,8 @@ public class FilesClient {
         }
     }
 
-    public ListFilesResponse list(ListFilesRequest request) {
-        return list(request, null);
+    public FileResponse upload(File file, CreateFileRequest request) {
+        return upload(file, request, null);
     }
 
     public FileResponse upload(File file, CreateFileRequest request, RequestOptions requestOptions) {
@@ -91,9 +96,9 @@ public class FilesClient {
             if (request.getMode().isPresent()) {
                 body.addFormDataPart("mode", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMode()));
             }
-            String mimeType = Files.probeContentType(file.toPath());
-            MediaType mediaType = mimeType != null ? MediaType.parse(mimeType) : null;
-            body.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMediaType = fileMimeType != null ? MediaType.parse(mimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMediaType, file));
             if (request.getActions().isPresent()) {
                 body.addFormDataPart("actions", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getActions()));
             }
@@ -119,8 +124,8 @@ public class FilesClient {
         }
     }
 
-    public FileResponse upload(File file, CreateFileRequest request) {
-        return upload(file, request, null);
+    public FileResponse get(String fileId) {
+        return get(fileId, null);
     }
 
     public FileResponse get(String fileId, RequestOptions requestOptions) {
@@ -149,8 +154,8 @@ public class FilesClient {
         }
     }
 
-    public FileResponse get(String fileId) {
-        return get(fileId, null);
+    public Success delete(String fileId) {
+        return delete(fileId, null);
     }
 
     public Success delete(String fileId, RequestOptions requestOptions) {
@@ -179,15 +184,18 @@ public class FilesClient {
         }
     }
 
-    public Success delete(String fileId) {
-        return delete(fileId, null);
-    }
-
     /**
      * Update a file, to change the workbook id for example
      */
     public FileResponse update(String fileId) {
         return update(fileId, UpdateFileRequest.builder().build());
+    }
+
+    /**
+     * Update a file, to change the workbook id for example
+     */
+    public FileResponse update(String fileId, UpdateFileRequest request) {
+        return update(fileId, request, null);
     }
 
     /**
@@ -202,7 +210,7 @@ public class FilesClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -226,11 +234,8 @@ public class FilesClient {
         }
     }
 
-    /**
-     * Update a file, to change the workbook id for example
-     */
-    public FileResponse update(String fileId, UpdateFileRequest request) {
-        return update(fileId, request, null);
+    public InputStream download(FileId fileId) {
+        return download(fileId, null);
     }
 
     public InputStream download(FileId fileId, RequestOptions requestOptions) {
@@ -258,9 +263,5 @@ public class FilesClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public InputStream download(FileId fileId) {
-        return download(fileId, null);
     }
 }

@@ -45,7 +45,7 @@ public final class GetAgentLogsResponse {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetAgentLogsResponse && equalTo((GetAgentLogsResponse) other);
@@ -60,12 +60,12 @@ public final class GetAgentLogsResponse {
         return pagination.equals(other.pagination) && data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.pagination, this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -64,7 +64,7 @@ public final class GetSnapshotRecordsRequest {
         return changeType;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetSnapshotRecordsRequest && equalTo((GetSnapshotRecordsRequest) other);
@@ -81,12 +81,12 @@ public final class GetSnapshotRecordsRequest {
                 && changeType.equals(other.changeType);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.pageSize, this.pageNumber, this.changeType);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

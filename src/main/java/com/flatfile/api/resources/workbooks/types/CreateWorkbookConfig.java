@@ -140,7 +140,7 @@ public final class CreateWorkbookConfig {
         return metadata;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateWorkbookConfig && equalTo((CreateWorkbookConfig) other);
@@ -163,7 +163,7 @@ public final class CreateWorkbookConfig {
                 && metadata.equals(other.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -177,7 +177,7 @@ public final class CreateWorkbookConfig {
                 this.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -253,7 +253,7 @@ public final class CreateWorkbookConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateWorkbookConfig other) {
             name(other.getName());
             labels(other.getLabels());
@@ -271,7 +271,7 @@ public final class CreateWorkbookConfig {
          * <p>The name of the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
@@ -282,13 +282,13 @@ public final class CreateWorkbookConfig {
          * <p>Metadata for the workbook</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Object metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
@@ -299,13 +299,13 @@ public final class CreateWorkbookConfig {
          * <p>The Workbook settings.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage settings(WorkbookConfigSettings settings) {
             this.settings = Optional.of(settings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "settings", nulls = Nulls.SKIP)
         public _FinalStage settings(Optional<WorkbookConfigSettings> settings) {
             this.settings = settings;
@@ -316,13 +316,13 @@ public final class CreateWorkbookConfig {
          * <p>Actions to create on the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -333,13 +333,13 @@ public final class CreateWorkbookConfig {
          * <p>Sheets to create on the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage sheets(List<SheetConfig> sheets) {
             this.sheets = Optional.of(sheets);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sheets", nulls = Nulls.SKIP)
         public _FinalStage sheets(Optional<List<SheetConfig>> sheets) {
             this.sheets = sheets;
@@ -350,13 +350,13 @@ public final class CreateWorkbookConfig {
          * <p>Optional namespace to apply to the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public _FinalStage namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -367,13 +367,13 @@ public final class CreateWorkbookConfig {
          * <p>Environment to associate with the Workbook</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
         public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
@@ -384,13 +384,13 @@ public final class CreateWorkbookConfig {
          * <p>Space to associate with the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
         public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
@@ -401,20 +401,20 @@ public final class CreateWorkbookConfig {
          * <p>An optional list of labels for the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage labels(List<String> labels) {
             this.labels = Optional.of(labels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
         public _FinalStage labels(Optional<List<String>> labels) {
             this.labels = labels;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateWorkbookConfig build() {
             return new CreateWorkbookConfig(
                     name,

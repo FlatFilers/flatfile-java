@@ -58,7 +58,7 @@ public final class ProgramSummary {
         return deletedRuleCount;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProgramSummary && equalTo((ProgramSummary) other);
@@ -75,12 +75,12 @@ public final class ProgramSummary {
                 && deletedRuleCount == other.deletedRuleCount;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.totalRuleCount, this.addedRuleCount, this.deletedRuleCount);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -121,7 +121,7 @@ public final class ProgramSummary {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ProgramSummary other) {
             totalRuleCount(other.getTotalRuleCount());
             addedRuleCount(other.getAddedRuleCount());
@@ -133,7 +133,7 @@ public final class ProgramSummary {
          * <p>Total number of mapping rules</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("totalRuleCount")
         public AddedRuleCountStage totalRuleCount(int totalRuleCount) {
             this.totalRuleCount = totalRuleCount;
@@ -144,7 +144,7 @@ public final class ProgramSummary {
          * <p>Number of mapping rules added</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("addedRuleCount")
         public DeletedRuleCountStage addedRuleCount(int addedRuleCount) {
             this.addedRuleCount = addedRuleCount;
@@ -155,14 +155,14 @@ public final class ProgramSummary {
          * <p>Number of mapping rules deleted</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("deletedRuleCount")
         public _FinalStage deletedRuleCount(int deletedRuleCount) {
             this.deletedRuleCount = deletedRuleCount;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ProgramSummary build() {
             return new ProgramSummary(totalRuleCount, addedRuleCount, deletedRuleCount, additionalProperties);
         }

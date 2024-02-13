@@ -129,7 +129,7 @@ public final class ListJobsRequest {
         return sortDirection;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListJobsRequest && equalTo((ListJobsRequest) other);
@@ -151,7 +151,7 @@ public final class ListJobsRequest {
                 && sortDirection.equals(other.sortDirection);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.environmentId,
@@ -164,7 +164,7 @@ public final class ListJobsRequest {
                 this.sortDirection);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

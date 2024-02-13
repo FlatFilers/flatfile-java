@@ -43,7 +43,7 @@ public final class SummarySection {
         return byField;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SummarySection && equalTo((SummarySection) other);
@@ -58,12 +58,12 @@ public final class SummarySection {
         return total == other.total && byField.equals(other.byField);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.total, this.byField);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,34 +97,34 @@ public final class SummarySection {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SummarySection other) {
             total(other.getTotal());
             byField(other.getByField());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("total")
         public _FinalStage total(int total) {
             this.total = total;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage byField(Map<String, Integer> byField) {
             this.byField = Optional.of(byField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "byField", nulls = Nulls.SKIP)
         public _FinalStage byField(Optional<Map<String, Integer>> byField) {
             this.byField = byField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SummarySection build() {
             return new SummarySection(total, byField, additionalProperties);
         }

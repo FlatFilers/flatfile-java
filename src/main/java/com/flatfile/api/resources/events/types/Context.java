@@ -215,7 +215,7 @@ public final class Context {
         return actorId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Context && equalTo((Context) other);
@@ -247,7 +247,7 @@ public final class Context {
                 && actorId.equals(other.actorId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.namespaces,
@@ -270,7 +270,7 @@ public final class Context {
                 this.actorId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -400,7 +400,7 @@ public final class Context {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Context other) {
             namespaces(other.getNamespaces());
             slugs(other.getSlugs());
@@ -423,14 +423,14 @@ public final class Context {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("accountId")
         public EnvironmentIdStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
@@ -441,91 +441,91 @@ public final class Context {
          * <p>Can be a UserId, GuestId, or AgentId</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage actorId(String actorId) {
             this.actorId = Optional.of(actorId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actorId", nulls = Nulls.SKIP)
         public _FinalStage actorId(Optional<String> actorId) {
             this.actorId = actorId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage precedingEventId(EventId precedingEventId) {
             this.precedingEventId = Optional.of(precedingEventId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "precedingEventId", nulls = Nulls.SKIP)
         public _FinalStage precedingEventId(Optional<EventId> precedingEventId) {
             this.precedingEventId = precedingEventId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage documentId(DocumentId documentId) {
             this.documentId = Optional.of(documentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "documentId", nulls = Nulls.SKIP)
         public _FinalStage documentId(Optional<DocumentId> documentId) {
             this.documentId = documentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage fileId(FileId fileId) {
             this.fileId = Optional.of(fileId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fileId", nulls = Nulls.SKIP)
         public _FinalStage fileId(Optional<FileId> fileId) {
             this.fileId = fileId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage programId(ProgramId programId) {
             this.programId = Optional.of(programId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "programId", nulls = Nulls.SKIP)
         public _FinalStage programId(Optional<ProgramId> programId) {
             this.programId = programId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage jobId(JobId jobId) {
             this.jobId = Optional.of(jobId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "jobId", nulls = Nulls.SKIP)
         public _FinalStage jobId(Optional<JobId> jobId) {
             this.jobId = jobId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
             this.commitId = Optional.of(commitId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
         public _FinalStage commitId(Optional<CommitId> commitId) {
             this.commitId = commitId;
@@ -536,91 +536,91 @@ public final class Context {
          * <p>Deprecated, use <code>commitId</code> instead.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
         public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage snapshotId(SnapshotId snapshotId) {
             this.snapshotId = Optional.of(snapshotId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "snapshotId", nulls = Nulls.SKIP)
         public _FinalStage snapshotId(Optional<SnapshotId> snapshotId) {
             this.snapshotId = snapshotId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sheetSlug(SheetSlug sheetSlug) {
             this.sheetSlug = Optional.of(sheetSlug);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sheetSlug", nulls = Nulls.SKIP)
         public _FinalStage sheetSlug(Optional<SheetSlug> sheetSlug) {
             this.sheetSlug = sheetSlug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = Optional.of(sheetId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sheetId", nulls = Nulls.SKIP)
         public _FinalStage sheetId(Optional<SheetId> sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
         public _FinalStage workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
         public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage actionName(ActionName actionName) {
             this.actionName = Optional.of(actionName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actionName", nulls = Nulls.SKIP)
         public _FinalStage actionName(Optional<ActionName> actionName) {
             this.actionName = actionName;
@@ -631,13 +631,13 @@ public final class Context {
          * <p>The slugs of related resources</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage slugs(EventContextSlugs slugs) {
             this.slugs = Optional.of(slugs);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "slugs", nulls = Nulls.SKIP)
         public _FinalStage slugs(Optional<EventContextSlugs> slugs) {
             this.slugs = slugs;
@@ -648,20 +648,20 @@ public final class Context {
          * <p>The namespaces of the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
             this.namespaces = Optional.of(namespaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespaces", nulls = Nulls.SKIP)
         public _FinalStage namespaces(Optional<List<String>> namespaces) {
             this.namespaces = namespaces;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Context build() {
             return new Context(
                     namespaces,

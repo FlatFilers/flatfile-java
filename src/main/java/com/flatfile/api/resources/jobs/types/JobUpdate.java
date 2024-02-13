@@ -29,6 +29,8 @@ public final class JobUpdate {
 
     private final Optional<OffsetDateTime> outcomeAcknowledgedAt;
 
+    private final Optional<String> info;
+
     private final Map<String, Object> additionalProperties;
 
     private JobUpdate(
@@ -36,11 +38,13 @@ public final class JobUpdate {
             Optional<JobStatus> status,
             Optional<Integer> progress,
             Optional<OffsetDateTime> outcomeAcknowledgedAt,
+            Optional<String> info,
             Map<String, Object> additionalProperties) {
         this.config = config;
         this.status = status;
         this.progress = progress;
         this.outcomeAcknowledgedAt = outcomeAcknowledgedAt;
+        this.info = info;
         this.additionalProperties = additionalProperties;
     }
 
@@ -73,7 +77,15 @@ public final class JobUpdate {
         return outcomeAcknowledgedAt;
     }
 
-    @Override
+    /**
+     * @return Current status of job in text
+     */
+    @JsonProperty("info")
+    public Optional<String> getInfo() {
+        return info;
+    }
+
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobUpdate && equalTo((JobUpdate) other);
@@ -88,15 +100,16 @@ public final class JobUpdate {
         return config.equals(other.config)
                 && status.equals(other.status)
                 && progress.equals(other.progress)
-                && outcomeAcknowledgedAt.equals(other.outcomeAcknowledgedAt);
+                && outcomeAcknowledgedAt.equals(other.outcomeAcknowledgedAt)
+                && info.equals(other.info);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.config, this.status, this.progress, this.outcomeAcknowledgedAt);
+        return Objects.hash(this.config, this.status, this.progress, this.outcomeAcknowledgedAt, this.info);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -115,6 +128,8 @@ public final class JobUpdate {
 
         private Optional<OffsetDateTime> outcomeAcknowledgedAt = Optional.empty();
 
+        private Optional<String> info = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -125,6 +140,7 @@ public final class JobUpdate {
             status(other.getStatus());
             progress(other.getProgress());
             outcomeAcknowledgedAt(other.getOutcomeAcknowledgedAt());
+            info(other.getInfo());
             return this;
         }
 
@@ -172,8 +188,19 @@ public final class JobUpdate {
             return this;
         }
 
+        @JsonSetter(value = "info", nulls = Nulls.SKIP)
+        public Builder info(Optional<String> info) {
+            this.info = info;
+            return this;
+        }
+
+        public Builder info(String info) {
+            this.info = Optional.of(info);
+            return this;
+        }
+
         public JobUpdate build() {
-            return new JobUpdate(config, status, progress, outcomeAcknowledgedAt, additionalProperties);
+            return new JobUpdate(config, status, progress, outcomeAcknowledgedAt, info, additionalProperties);
         }
     }
 }

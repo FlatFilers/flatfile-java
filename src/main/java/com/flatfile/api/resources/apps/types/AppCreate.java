@@ -90,7 +90,7 @@ public final class AppCreate {
         return metadata;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AppCreate && equalTo((AppCreate) other);
@@ -111,13 +111,13 @@ public final class AppCreate {
                 && metadata.equals(other.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name, this.namespace, this.type, this.entity, this.entityPlural, this.icon, this.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -181,7 +181,7 @@ public final class AppCreate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AppCreate other) {
             name(other.getName());
             namespace(other.getNamespace());
@@ -193,80 +193,80 @@ public final class AppCreate {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public NamespaceStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("namespace")
         public TypeStage namespace(String namespace) {
             this.namespace = namespace;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(AppType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Object metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage icon(String icon) {
             this.icon = Optional.of(icon);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon", nulls = Nulls.SKIP)
         public _FinalStage icon(Optional<String> icon) {
             this.icon = icon;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage entityPlural(String entityPlural) {
             this.entityPlural = Optional.of(entityPlural);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "entityPlural", nulls = Nulls.SKIP)
         public _FinalStage entityPlural(Optional<String> entityPlural) {
             this.entityPlural = entityPlural;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage entity(String entity) {
             this.entity = Optional.of(entity);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "entity", nulls = Nulls.SKIP)
         public _FinalStage entity(Optional<String> entity) {
             this.entity = entity;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AppCreate build() {
             return new AppCreate(name, namespace, type, entity, entityPlural, icon, metadata, additionalProperties);
         }

@@ -30,6 +30,8 @@ public final class JobOutcome {
 
     private final Optional<String> message;
 
+    private final Optional<Boolean> hideDefaultButton;
+
     private final Map<String, Object> additionalProperties;
 
     private JobOutcome(
@@ -38,12 +40,14 @@ public final class JobOutcome {
             Optional<JobOutcomeNext> next,
             Optional<String> heading,
             Optional<String> message,
+            Optional<Boolean> hideDefaultButton,
             Map<String, Object> additionalProperties) {
         this.acknowledge = acknowledge;
         this.buttonText = buttonText;
         this.next = next;
         this.heading = heading;
         this.message = message;
+        this.hideDefaultButton = hideDefaultButton;
         this.additionalProperties = additionalProperties;
     }
 
@@ -72,7 +76,12 @@ public final class JobOutcome {
         return message;
     }
 
-    @Override
+    @JsonProperty("hideDefaultButton")
+    public Optional<Boolean> getHideDefaultButton() {
+        return hideDefaultButton;
+    }
+
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobOutcome && equalTo((JobOutcome) other);
@@ -88,15 +97,17 @@ public final class JobOutcome {
                 && buttonText.equals(other.buttonText)
                 && next.equals(other.next)
                 && heading.equals(other.heading)
-                && message.equals(other.message);
+                && message.equals(other.message)
+                && hideDefaultButton.equals(other.hideDefaultButton);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.acknowledge, this.buttonText, this.next, this.heading, this.message);
+        return Objects.hash(
+                this.acknowledge, this.buttonText, this.next, this.heading, this.message, this.hideDefaultButton);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -117,6 +128,8 @@ public final class JobOutcome {
 
         private Optional<String> message = Optional.empty();
 
+        private Optional<Boolean> hideDefaultButton = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -128,6 +141,7 @@ public final class JobOutcome {
             next(other.getNext());
             heading(other.getHeading());
             message(other.getMessage());
+            hideDefaultButton(other.getHideDefaultButton());
             return this;
         }
 
@@ -186,8 +200,20 @@ public final class JobOutcome {
             return this;
         }
 
+        @JsonSetter(value = "hideDefaultButton", nulls = Nulls.SKIP)
+        public Builder hideDefaultButton(Optional<Boolean> hideDefaultButton) {
+            this.hideDefaultButton = hideDefaultButton;
+            return this;
+        }
+
+        public Builder hideDefaultButton(Boolean hideDefaultButton) {
+            this.hideDefaultButton = Optional.of(hideDefaultButton);
+            return this;
+        }
+
         public JobOutcome build() {
-            return new JobOutcome(acknowledge, buttonText, next, heading, message, additionalProperties);
+            return new JobOutcome(
+                    acknowledge, buttonText, next, heading, message, hideDefaultButton, additionalProperties);
         }
     }
 }

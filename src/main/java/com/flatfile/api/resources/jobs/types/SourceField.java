@@ -51,7 +51,7 @@ public final class SourceField {
         return preview;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SourceField && equalTo((SourceField) other);
@@ -66,12 +66,12 @@ public final class SourceField {
         return sourceField.equals(other.sourceField) && preview.equals(other.preview);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sourceField, this.preview);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -105,7 +105,7 @@ public final class SourceField {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SourceField other) {
             sourceField(other.getSourceField());
             preview(other.getPreview());
@@ -116,7 +116,7 @@ public final class SourceField {
          * <p>The description of the source field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sourceField")
         public _FinalStage sourceField(Property sourceField) {
             this.sourceField = sourceField;
@@ -127,20 +127,20 @@ public final class SourceField {
          * <p>A list of preview values of the data in the source field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage preview(List<String> preview) {
             this.preview = Optional.of(preview);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "preview", nulls = Nulls.SKIP)
         public _FinalStage preview(Optional<List<String>> preview) {
             this.preview = preview;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SourceField build() {
             return new SourceField(sourceField, preview, additionalProperties);
         }

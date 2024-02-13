@@ -22,14 +22,16 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListSecrets.Builder.class)
 public final class ListSecrets {
-    private final EnvironmentId environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final Optional<SpaceId> spaceId;
 
     private final Map<String, Object> additionalProperties;
 
     private ListSecrets(
-            EnvironmentId environmentId, Optional<SpaceId> spaceId, Map<String, Object> additionalProperties) {
+            Optional<EnvironmentId> environmentId,
+            Optional<SpaceId> spaceId,
+            Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.spaceId = spaceId;
         this.additionalProperties = additionalProperties;
@@ -39,7 +41,7 @@ public final class ListSecrets {
      * @return The Environment of the secret.
      */
     @JsonProperty("environmentId")
-    public EnvironmentId getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -51,7 +53,7 @@ public final class ListSecrets {
         return spaceId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListSecrets && equalTo((ListSecrets) other);
@@ -66,37 +68,23 @@ public final class ListSecrets {
         return environmentId.equals(other.environmentId) && spaceId.equals(other.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId, this.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
 
-    public static EnvironmentIdStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
-
-        Builder from(ListSecrets other);
-    }
-
-    public interface _FinalStage {
-        ListSecrets build();
-
-        _FinalStage spaceId(Optional<SpaceId> spaceId);
-
-        _FinalStage spaceId(SpaceId spaceId);
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements EnvironmentIdStage, _FinalStage {
-        private EnvironmentId environmentId;
+    public static final class Builder {
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
         private Optional<SpaceId> spaceId = Optional.empty();
 
@@ -105,42 +93,34 @@ public final class ListSecrets {
 
         private Builder() {}
 
-        @Override
         public Builder from(ListSecrets other) {
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
             return this;
         }
 
-        /**
-         * <p>The Environment of the secret.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
+        @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        /**
-         * <p>The Space of the secret.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+        public Builder environmentId(EnvironmentId environmentId) {
+            this.environmentId = Optional.of(environmentId);
             return this;
         }
 
-        @Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
-        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
+        public Builder spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        public Builder spaceId(SpaceId spaceId) {
+            this.spaceId = Optional.of(spaceId);
+            return this;
+        }
+
         public ListSecrets build() {
             return new ListSecrets(environmentId, spaceId, additionalProperties);
         }

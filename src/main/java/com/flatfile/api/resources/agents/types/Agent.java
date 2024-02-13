@@ -50,7 +50,7 @@ public final class Agent implements IAgentConfig {
      * @return The topics the agent should listen for
      */
     @JsonProperty("topics")
-    @Override
+    @java.lang.Override
     public Optional<List<EventTopic>> getTopics() {
         return topics;
     }
@@ -59,7 +59,7 @@ public final class Agent implements IAgentConfig {
      * @return The compiler of the agent
      */
     @JsonProperty("compiler")
-    @Override
+    @java.lang.Override
     public Optional<Compiler> getCompiler() {
         return compiler;
     }
@@ -68,7 +68,7 @@ public final class Agent implements IAgentConfig {
      * @return The source of the agent
      */
     @JsonProperty("source")
-    @Override
+    @java.lang.Override
     public Optional<String> getSource() {
         return source;
     }
@@ -78,7 +78,7 @@ public final class Agent implements IAgentConfig {
         return id;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Agent && equalTo((Agent) other);
@@ -96,12 +96,12 @@ public final class Agent implements IAgentConfig {
                 && id.equals(other.id);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.topics, this.compiler, this.source, this.id);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -147,7 +147,7 @@ public final class Agent implements IAgentConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Agent other) {
             topics(other.getTopics());
             compiler(other.getCompiler());
@@ -156,7 +156,7 @@ public final class Agent implements IAgentConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(AgentId id) {
             this.id = id;
@@ -167,13 +167,13 @@ public final class Agent implements IAgentConfig {
          * <p>The source of the agent</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage source(String source) {
             this.source = Optional.of(source);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "source", nulls = Nulls.SKIP)
         public _FinalStage source(Optional<String> source) {
             this.source = source;
@@ -184,13 +184,13 @@ public final class Agent implements IAgentConfig {
          * <p>The compiler of the agent</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage compiler(Compiler compiler) {
             this.compiler = Optional.of(compiler);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "compiler", nulls = Nulls.SKIP)
         public _FinalStage compiler(Optional<Compiler> compiler) {
             this.compiler = compiler;
@@ -201,20 +201,20 @@ public final class Agent implements IAgentConfig {
          * <p>The topics the agent should listen for</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage topics(List<EventTopic> topics) {
             this.topics = Optional.of(topics);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "topics", nulls = Nulls.SKIP)
         public _FinalStage topics(Optional<List<EventTopic>> topics) {
             this.topics = topics;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Agent build() {
             return new Agent(topics, compiler, source, id, additionalProperties);
         }

@@ -63,7 +63,7 @@ public final class Progress {
         return percent;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Progress && equalTo((Progress) other);
@@ -78,12 +78,12 @@ public final class Progress {
         return current.equals(other.current) && total.equals(other.total) && percent.equals(other.percent);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.current, this.total, this.percent);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

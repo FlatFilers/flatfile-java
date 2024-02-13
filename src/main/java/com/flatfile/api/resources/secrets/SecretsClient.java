@@ -5,6 +5,7 @@ package com.flatfile.api.resources.secrets;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.SecretId;
@@ -14,7 +15,6 @@ import com.flatfile.api.resources.secrets.types.WriteSecret;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -29,11 +29,28 @@ public class SecretsClient {
     /**
      * Fetch all secrets for a given environmentId and optionally apply space overrides
      */
+    public SecretsResponse list() {
+        return list(ListSecrets.builder().build());
+    }
+
+    /**
+     * Fetch all secrets for a given environmentId and optionally apply space overrides
+     */
+    public SecretsResponse list(ListSecrets request) {
+        return list(request, null);
+    }
+
+    /**
+     * Fetch all secrets for a given environmentId and optionally apply space overrides
+     */
     public SecretsResponse list(ListSecrets request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("secrets");
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
+        if (request.getEnvironmentId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "environmentId", request.getEnvironmentId().get().toString());
+        }
         if (request.getSpaceId().isPresent()) {
             httpUrl.addQueryParameter("spaceId", request.getSpaceId().get().toString());
         }
@@ -58,10 +75,10 @@ public class SecretsClient {
     }
 
     /**
-     * Fetch all secrets for a given environmentId and optionally apply space overrides
+     * Insert or Update a Secret by name for environment or space
      */
-    public SecretsResponse list(ListSecrets request) {
-        return list(request, null);
+    public SecretsResponse upsert(WriteSecret request) {
+        return upsert(request, null);
     }
 
     /**
@@ -75,7 +92,7 @@ public class SecretsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -100,10 +117,10 @@ public class SecretsClient {
     }
 
     /**
-     * Insert or Update a Secret by name for environment or space
+     * Deletes a specific Secret from the Environment or Space as is the case
      */
-    public SecretsResponse upsert(WriteSecret request) {
-        return upsert(request, null);
+    public SecretsResponse delete(SecretId secretId) {
+        return delete(secretId, null);
     }
 
     /**
@@ -133,12 +150,5 @@ public class SecretsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Deletes a specific Secret from the Environment or Space as is the case
-     */
-    public SecretsResponse delete(SecretId secretId) {
-        return delete(secretId, null);
     }
 }

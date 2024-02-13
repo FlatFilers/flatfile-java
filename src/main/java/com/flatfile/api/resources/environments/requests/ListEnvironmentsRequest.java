@@ -49,7 +49,7 @@ public final class ListEnvironmentsRequest {
         return pageNumber;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListEnvironmentsRequest && equalTo((ListEnvironmentsRequest) other);
@@ -64,12 +64,12 @@ public final class ListEnvironmentsRequest {
         return pageSize.equals(other.pageSize) && pageNumber.equals(other.pageNumber);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.pageSize, this.pageNumber);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

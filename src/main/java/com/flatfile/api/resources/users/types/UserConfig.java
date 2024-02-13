@@ -35,24 +35,24 @@ public final class UserConfig implements IUserConfig {
     }
 
     @JsonProperty("email")
-    @Override
+    @java.lang.Override
     public String getEmail() {
         return email;
     }
 
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("accountId")
-    @Override
+    @java.lang.Override
     public AccountId getAccountId() {
         return accountId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserConfig && equalTo((UserConfig) other);
@@ -67,12 +67,12 @@ public final class UserConfig implements IUserConfig {
         return email.equals(other.email) && name.equals(other.name) && accountId.equals(other.accountId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.email, this.name, this.accountId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -112,7 +112,7 @@ public final class UserConfig implements IUserConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserConfig other) {
             email(other.getEmail());
             name(other.getName());
@@ -120,28 +120,28 @@ public final class UserConfig implements IUserConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public NameStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public AccountIdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("accountId")
         public _FinalStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserConfig build() {
             return new UserConfig(email, name, accountId, additionalProperties);
         }

@@ -36,7 +36,7 @@ public final class ListSnapshotRequest {
         return sheetId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListSnapshotRequest && equalTo((ListSnapshotRequest) other);
@@ -51,12 +51,12 @@ public final class ListSnapshotRequest {
         return sheetId.equals(other.sheetId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sheetId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -84,7 +84,7 @@ public final class ListSnapshotRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ListSnapshotRequest other) {
             sheetId(other.getSheetId());
             return this;
@@ -94,14 +94,14 @@ public final class ListSnapshotRequest {
          * <p>ID of sheet</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sheetId")
         public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ListSnapshotRequest build() {
             return new ListSnapshotRequest(sheetId, additionalProperties);
         }

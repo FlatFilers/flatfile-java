@@ -33,12 +33,12 @@ public final class ArrayableProperty implements IArrayableProperty {
      * @return Will allow multiple values and store as an array
      */
     @JsonProperty("isArray")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getIsArray() {
         return isArray;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ArrayableProperty && equalTo((ArrayableProperty) other);
@@ -53,12 +53,12 @@ public final class ArrayableProperty implements IArrayableProperty {
         return isArray.equals(other.isArray);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.isArray);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -89,7 +89,7 @@ public final class ProgramConfig {
         return save;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ProgramConfig && equalTo((ProgramConfig) other);
@@ -108,12 +108,12 @@ public final class ProgramConfig {
                 && save.equals(other.save);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.source, this.destination, this.familyId, this.namespace, this.save);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -165,7 +165,7 @@ public final class ProgramConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ProgramConfig other) {
             source(other.getSource());
             destination(other.getDestination());
@@ -179,7 +179,7 @@ public final class ProgramConfig {
          * <p>Source schema</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public DestinationStage source(SheetConfig source) {
             this.source = source;
@@ -190,7 +190,7 @@ public final class ProgramConfig {
          * <p>Destination schema</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("destination")
         public _FinalStage destination(SheetConfig destination) {
             this.destination = destination;
@@ -201,13 +201,13 @@ public final class ProgramConfig {
          * <p>Whether to save the program for editing later. Defaults to false. If true, the response will contain an ID and access token.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage save(Boolean save) {
             this.save = Optional.of(save);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "save", nulls = Nulls.SKIP)
         public _FinalStage save(Optional<Boolean> save) {
             this.save = save;
@@ -218,13 +218,13 @@ public final class ProgramConfig {
          * <p>Namespace of the program</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public _FinalStage namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -235,20 +235,20 @@ public final class ProgramConfig {
          * <p>ID of the family to add the program to</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage familyId(FamilyId familyId) {
             this.familyId = Optional.of(familyId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "familyId", nulls = Nulls.SKIP)
         public _FinalStage familyId(Optional<FamilyId> familyId) {
             this.familyId = familyId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ProgramConfig build() {
             return new ProgramConfig(source, destination, familyId, namespace, save, additionalProperties);
         }

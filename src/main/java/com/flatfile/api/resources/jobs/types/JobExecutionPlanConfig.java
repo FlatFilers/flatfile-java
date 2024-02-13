@@ -45,30 +45,30 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
     }
 
     @JsonProperty("fieldMapping")
-    @Override
+    @java.lang.Override
     public Optional<List<Edge>> getFieldMapping() {
         return fieldMapping;
     }
 
     @JsonProperty("unmappedSourceFields")
-    @Override
+    @java.lang.Override
     public Optional<List<SourceField>> getUnmappedSourceFields() {
         return unmappedSourceFields;
     }
 
     @JsonProperty("unmappedDestinationFields")
-    @Override
+    @java.lang.Override
     public Optional<List<DestinationField>> getUnmappedDestinationFields() {
         return unmappedDestinationFields;
     }
 
     @JsonProperty("programId")
-    @Override
+    @java.lang.Override
     public Optional<String> getProgramId() {
         return programId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobExecutionPlanConfig && equalTo((JobExecutionPlanConfig) other);
@@ -86,13 +86,13 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
                 && programId.equals(other.programId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.fieldMapping, this.unmappedSourceFields, this.unmappedDestinationFields, this.programId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -77,7 +77,7 @@ public final class GetEnvironmentAgentExecutionsRequest {
         return pageNumber;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetEnvironmentAgentExecutionsRequest
@@ -97,12 +97,12 @@ public final class GetEnvironmentAgentExecutionsRequest {
                 && pageNumber.equals(other.pageNumber);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId, this.spaceId, this.success, this.pageSize, this.pageNumber);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -154,7 +154,7 @@ public final class GetEnvironmentAgentExecutionsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetEnvironmentAgentExecutionsRequest other) {
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
@@ -164,66 +164,66 @@ public final class GetEnvironmentAgentExecutionsRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage pageNumber(PageNumber pageNumber) {
             this.pageNumber = Optional.of(pageNumber);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
         public _FinalStage pageNumber(Optional<PageNumber> pageNumber) {
             this.pageNumber = pageNumber;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage pageSize(PageSize pageSize) {
             this.pageSize = Optional.of(pageSize);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
         public _FinalStage pageSize(Optional<PageSize> pageSize) {
             this.pageSize = pageSize;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage success(SuccessQueryParameter success) {
             this.success = Optional.of(success);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "success", nulls = Nulls.SKIP)
         public _FinalStage success(Optional<SuccessQueryParameter> success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
         public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetEnvironmentAgentExecutionsRequest build() {
             return new GetEnvironmentAgentExecutionsRequest(
                     environmentId, spaceId, success, pageSize, pageNumber, additionalProperties);

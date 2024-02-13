@@ -51,7 +51,7 @@ public final class GetRecordsResponseData implements ISuccessData {
     }
 
     @JsonProperty("success")
-    @Override
+    @java.lang.Override
     public boolean getSuccess() {
         return success;
     }
@@ -79,7 +79,7 @@ public final class GetRecordsResponseData implements ISuccessData {
         return commitId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetRecordsResponseData && equalTo((GetRecordsResponseData) other);
@@ -98,12 +98,12 @@ public final class GetRecordsResponseData implements ISuccessData {
                 && commitId.equals(other.commitId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.success, this.records, this.counts, this.versionId, this.commitId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -155,7 +155,7 @@ public final class GetRecordsResponseData implements ISuccessData {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetRecordsResponseData other) {
             success(other.getSuccess());
             records(other.getRecords());
@@ -165,27 +165,27 @@ public final class GetRecordsResponseData implements ISuccessData {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public RecordsStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("records")
         public _FinalStage records(RecordsWithLinks records) {
             this.records = records;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
             this.commitId = Optional.of(commitId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
         public _FinalStage commitId(Optional<CommitId> commitId) {
             this.commitId = commitId;
@@ -196,33 +196,33 @@ public final class GetRecordsResponseData implements ISuccessData {
          * <p>Deprecated, use <code>commitId</code> instead.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
         public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage counts(RecordCounts counts) {
             this.counts = Optional.of(counts);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "counts", nulls = Nulls.SKIP)
         public _FinalStage counts(Optional<RecordCounts> counts) {
             this.counts = counts;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetRecordsResponseData build() {
             return new GetRecordsResponseData(success, records, counts, versionId, commitId, additionalProperties);
         }

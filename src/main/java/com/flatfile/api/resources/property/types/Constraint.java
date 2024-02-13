@@ -38,6 +38,10 @@ public final class Constraint {
         return new Constraint(new ComputedValue());
     }
 
+    public static Constraint external(ExternalConstraint value) {
+        return new Constraint(new ExternalValue(value));
+    }
+
     public boolean isRequired() {
         return value instanceof RequiredValue;
     }
@@ -50,6 +54,10 @@ public final class Constraint {
         return value instanceof ComputedValue;
     }
 
+    public boolean isExternal() {
+        return value instanceof ExternalValue;
+    }
+
     public boolean _isUnknown() {
         return value instanceof _UnknownValue;
     }
@@ -57,6 +65,13 @@ public final class Constraint {
     public Optional<UniqueConstraint> getUnique() {
         if (isUnique()) {
             return Optional.of(((UniqueValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<ExternalConstraint> getExternal() {
+        if (isExternal()) {
+            return Optional.of(((ExternalValue) value).value);
         }
         return Optional.empty();
     }
@@ -80,6 +95,8 @@ public final class Constraint {
 
         T visitComputed();
 
+        T visitExternal(ExternalConstraint external);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -87,7 +104,8 @@ public final class Constraint {
     @JsonSubTypes({
         @JsonSubTypes.Type(RequiredValue.class),
         @JsonSubTypes.Type(UniqueValue.class),
-        @JsonSubTypes.Type(ComputedValue.class)
+        @JsonSubTypes.Type(ComputedValue.class),
+        @JsonSubTypes.Type(ExternalValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -99,18 +117,18 @@ public final class Constraint {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private RequiredValue() {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRequired();
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RequiredValue;
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Constraint{" + "}";
         }
@@ -128,12 +146,12 @@ public final class Constraint {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitUnique(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof UniqueValue && equalTo((UniqueValue) other);
@@ -143,12 +161,12 @@ public final class Constraint {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Constraint{" + "value: " + value + "}";
         }
@@ -159,20 +177,58 @@ public final class Constraint {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private ComputedValue() {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitComputed();
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof ComputedValue;
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Constraint{" + "}";
+        }
+    }
+
+    @JsonTypeName("external")
+    private static final class ExternalValue implements Value {
+        @JsonUnwrapped
+        private ExternalConstraint value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ExternalValue() {}
+
+        private ExternalValue(ExternalConstraint value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitExternal(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ExternalValue && equalTo((ExternalValue) other);
+        }
+
+        private boolean equalTo(ExternalValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Constraint{" + "value: " + value + "}";
         }
     }
 
@@ -185,12 +241,12 @@ public final class Constraint {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -200,12 +256,12 @@ public final class Constraint {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "Constraint{" + "type: " + type + ", value: " + value + "}";
         }

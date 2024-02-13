@@ -35,7 +35,7 @@ public final class Errors {
         return errors;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Errors && equalTo((Errors) other);
@@ -50,12 +50,12 @@ public final class Errors {
         return errors.equals(other.errors);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.errors);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

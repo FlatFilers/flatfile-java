@@ -112,7 +112,7 @@ public final class EnumPropertyOption {
         return alternativeNames;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EnumPropertyOption && equalTo((EnumPropertyOption) other);
@@ -133,13 +133,13 @@ public final class EnumPropertyOption {
                 && alternativeNames.equals(other.alternativeNames);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.label, this.description, this.color, this.icon, this.meta, this.value, this.alternativeNames);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -203,7 +203,7 @@ public final class EnumPropertyOption {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(EnumPropertyOption other) {
             label(other.getLabel());
             description(other.getDescription());
@@ -219,7 +219,7 @@ public final class EnumPropertyOption {
          * <p>The value or ID of this option. This value will be sent in egress.  The type is a string | integer | boolean.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
         public _FinalStage value(Object value) {
             this.value = value;
@@ -230,13 +230,13 @@ public final class EnumPropertyOption {
          * <p>Alternative names to match this enum option to</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage alternativeNames(List<String> alternativeNames) {
             this.alternativeNames = Optional.of(alternativeNames);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "alternativeNames", nulls = Nulls.SKIP)
         public _FinalStage alternativeNames(Optional<List<String>> alternativeNames) {
             this.alternativeNames = alternativeNames;
@@ -247,13 +247,13 @@ public final class EnumPropertyOption {
          * <p>An arbitrary JSON object to be associated with this option and made available to hooks</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage meta(Map<String, Object> meta) {
             this.meta = Optional.of(meta);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "meta", nulls = Nulls.SKIP)
         public _FinalStage meta(Optional<Map<String, Object>> meta) {
             this.meta = meta;
@@ -264,13 +264,13 @@ public final class EnumPropertyOption {
          * <p>A reference pointer to a previously registered icon</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage icon(String icon) {
             this.icon = Optional.of(icon);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon", nulls = Nulls.SKIP)
         public _FinalStage icon(Optional<String> icon) {
             this.icon = icon;
@@ -281,13 +281,13 @@ public final class EnumPropertyOption {
          * <p>An optional color to assign this option</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage color(String color) {
             this.color = Optional.of(color);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "color", nulls = Nulls.SKIP)
         public _FinalStage color(Optional<String> color) {
             this.color = color;
@@ -298,13 +298,13 @@ public final class EnumPropertyOption {
          * <p>A short description for this option</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
@@ -315,20 +315,20 @@ public final class EnumPropertyOption {
          * <p>A visual label for this option, defaults to value if not provided</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public EnumPropertyOption build() {
             return new EnumPropertyOption(
                     label, description, color, icon, meta, value, alternativeNames, additionalProperties);

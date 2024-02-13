@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.UserId;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -27,9 +28,9 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
     private final Optional<Object> config;
 
-    private final Optional<Integer> confidence;
+    private final Optional<OffsetDateTime> acceptedAt;
 
-    private final Optional<UserId> contributor;
+    private final Optional<UserId> acceptedBy;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,14 +38,14 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
             String name,
             String type,
             Optional<Object> config,
-            Optional<Integer> confidence,
-            Optional<UserId> contributor,
+            Optional<OffsetDateTime> acceptedAt,
+            Optional<UserId> acceptedBy,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.type = type;
         this.config = config;
-        this.confidence = confidence;
-        this.contributor = contributor;
+        this.acceptedAt = acceptedAt;
+        this.acceptedBy = acceptedBy;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,42 +53,42 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
      * @return Name of the mapping rule
      */
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("type")
-    @Override
+    @java.lang.Override
     public String getType() {
         return type;
     }
 
     @JsonProperty("config")
-    @Override
+    @java.lang.Override
     public Optional<Object> getConfig() {
         return config;
     }
 
     /**
-     * @return Confidence of the mapping rule
+     * @return Time the mapping rule was last updated
      */
-    @JsonProperty("confidence")
-    @Override
-    public Optional<Integer> getConfidence() {
-        return confidence;
+    @JsonProperty("acceptedAt")
+    @java.lang.Override
+    public Optional<OffsetDateTime> getAcceptedAt() {
+        return acceptedAt;
     }
 
     /**
      * @return User ID of the contributor of the mapping rule
      */
-    @JsonProperty("contributor")
-    @Override
-    public Optional<UserId> getContributor() {
-        return contributor;
+    @JsonProperty("acceptedBy")
+    @java.lang.Override
+    public Optional<UserId> getAcceptedBy() {
+        return acceptedBy;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MappingRuleConfig && equalTo((MappingRuleConfig) other);
@@ -102,16 +103,16 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
         return name.equals(other.name)
                 && type.equals(other.type)
                 && config.equals(other.config)
-                && confidence.equals(other.confidence)
-                && contributor.equals(other.contributor);
+                && acceptedAt.equals(other.acceptedAt)
+                && acceptedBy.equals(other.acceptedBy);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.type, this.config, this.confidence, this.contributor);
+        return Objects.hash(this.name, this.type, this.config, this.acceptedAt, this.acceptedBy);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -137,13 +138,13 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
         _FinalStage config(Object config);
 
-        _FinalStage confidence(Optional<Integer> confidence);
+        _FinalStage acceptedAt(Optional<OffsetDateTime> acceptedAt);
 
-        _FinalStage confidence(Integer confidence);
+        _FinalStage acceptedAt(OffsetDateTime acceptedAt);
 
-        _FinalStage contributor(Optional<UserId> contributor);
+        _FinalStage acceptedBy(Optional<UserId> acceptedBy);
 
-        _FinalStage contributor(UserId contributor);
+        _FinalStage acceptedBy(UserId acceptedBy);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -152,9 +153,9 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
         private String type;
 
-        private Optional<UserId> contributor = Optional.empty();
+        private Optional<UserId> acceptedBy = Optional.empty();
 
-        private Optional<Integer> confidence = Optional.empty();
+        private Optional<OffsetDateTime> acceptedAt = Optional.empty();
 
         private Optional<Object> config = Optional.empty();
 
@@ -163,13 +164,13 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MappingRuleConfig other) {
             name(other.getName());
             type(other.getType());
             config(other.getConfig());
-            confidence(other.getConfidence());
-            contributor(other.getContributor());
+            acceptedAt(other.getAcceptedAt());
+            acceptedBy(other.getAcceptedBy());
             return this;
         }
 
@@ -177,14 +178,14 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
          * <p>Name of the mapping rule</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public TypeStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(String type) {
             this.type = type;
@@ -195,52 +196,52 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
          * <p>User ID of the contributor of the mapping rule</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
-        public _FinalStage contributor(UserId contributor) {
-            this.contributor = Optional.of(contributor);
+        @java.lang.Override
+        public _FinalStage acceptedBy(UserId acceptedBy) {
+            this.acceptedBy = Optional.of(acceptedBy);
             return this;
         }
 
-        @Override
-        @JsonSetter(value = "contributor", nulls = Nulls.SKIP)
-        public _FinalStage contributor(Optional<UserId> contributor) {
-            this.contributor = contributor;
+        @java.lang.Override
+        @JsonSetter(value = "acceptedBy", nulls = Nulls.SKIP)
+        public _FinalStage acceptedBy(Optional<UserId> acceptedBy) {
+            this.acceptedBy = acceptedBy;
             return this;
         }
 
         /**
-         * <p>Confidence of the mapping rule</p>
+         * <p>Time the mapping rule was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
-        public _FinalStage confidence(Integer confidence) {
-            this.confidence = Optional.of(confidence);
+        @java.lang.Override
+        public _FinalStage acceptedAt(OffsetDateTime acceptedAt) {
+            this.acceptedAt = Optional.of(acceptedAt);
             return this;
         }
 
-        @Override
-        @JsonSetter(value = "confidence", nulls = Nulls.SKIP)
-        public _FinalStage confidence(Optional<Integer> confidence) {
-            this.confidence = confidence;
+        @java.lang.Override
+        @JsonSetter(value = "acceptedAt", nulls = Nulls.SKIP)
+        public _FinalStage acceptedAt(Optional<OffsetDateTime> acceptedAt) {
+            this.acceptedAt = acceptedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage config(Object config) {
             this.config = Optional.of(config);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "config", nulls = Nulls.SKIP)
         public _FinalStage config(Optional<Object> config) {
             this.config = config;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MappingRuleConfig build() {
-            return new MappingRuleConfig(name, type, config, confidence, contributor, additionalProperties);
+            return new MappingRuleConfig(name, type, config, acceptedAt, acceptedBy, additionalProperties);
         }
     }
 }

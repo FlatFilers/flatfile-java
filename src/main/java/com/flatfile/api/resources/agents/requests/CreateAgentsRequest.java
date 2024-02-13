@@ -43,7 +43,7 @@ public final class CreateAgentsRequest {
         return body;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateAgentsRequest && equalTo((CreateAgentsRequest) other);
@@ -58,12 +58,12 @@ public final class CreateAgentsRequest {
         return environmentId.equals(other.environmentId) && body.equals(other.body);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId, this.body);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,28 +97,28 @@ public final class CreateAgentsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateAgentsRequest other) {
             environmentId(other.getEnvironmentId());
             body(other.getBody());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public BodyStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("body")
         public _FinalStage body(AgentConfig body) {
             this.body = body;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateAgentsRequest build() {
             return new CreateAgentsRequest(environmentId, body, additionalProperties);
         }

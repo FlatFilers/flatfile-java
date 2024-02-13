@@ -70,7 +70,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return The name of your Sheet as it will appear to your end users.
      */
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public Optional<String> getName() {
         return name;
     }
@@ -79,7 +79,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return A sentence or two describing the purpose of your Sheet.
      */
     @JsonProperty("description")
-    @Override
+    @java.lang.Override
     public Optional<String> getDescription() {
         return description;
     }
@@ -88,7 +88,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return A unique identifier for your Sheet.
      */
     @JsonProperty("slug")
-    @Override
+    @java.lang.Override
     public Optional<String> getSlug() {
         return slug;
     }
@@ -97,7 +97,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users.
      */
     @JsonProperty("readonly")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getReadonly() {
         return readonly;
     }
@@ -106,7 +106,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return Allow end users to add fields during mapping.
      */
     @JsonProperty("allowAdditionalFields")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAllowAdditionalFields() {
         return allowAdditionalFields;
     }
@@ -115,7 +115,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return The minimum confidence required to automatically map a field
      */
     @JsonProperty("mappingConfidenceThreshold")
-    @Override
+    @java.lang.Override
     public Optional<Double> getMappingConfidenceThreshold() {
         return mappingConfidenceThreshold;
     }
@@ -124,7 +124,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return Control Sheet-level access for all users.
      */
     @JsonProperty("access")
-    @Override
+    @java.lang.Override
     public Optional<List<SheetAccess>> getAccess() {
         return access;
     }
@@ -133,7 +133,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return Where you define your Sheet’s data schema.
      */
     @JsonProperty("fields")
-    @Override
+    @java.lang.Override
     public Optional<List<Property>> getFields() {
         return fields;
     }
@@ -142,12 +142,12 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
      * @return An array of actions that end users can perform on this Sheet.
      */
     @JsonProperty("actions")
-    @Override
+    @java.lang.Override
     public Optional<List<Action>> getActions() {
         return actions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SheetConfigUpdate && equalTo((SheetConfigUpdate) other);
@@ -170,7 +170,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
                 && actions.equals(other.actions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -184,7 +184,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
                 this.actions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -103,7 +103,7 @@ public final class DeleteRecordsJobConfig {
         return exceptions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeleteRecordsJobConfig && equalTo((DeleteRecordsJobConfig) other);
@@ -124,13 +124,13 @@ public final class DeleteRecordsJobConfig {
                 && exceptions.equals(other.exceptions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.filter, this.filterField, this.searchValue, this.searchField, this.q, this.sheet, this.exceptions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -194,7 +194,7 @@ public final class DeleteRecordsJobConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DeleteRecordsJobConfig other) {
             filter(other.getFilter());
             filterField(other.getFilterField());
@@ -206,7 +206,7 @@ public final class DeleteRecordsJobConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sheet")
         public _FinalStage sheet(SheetId sheet) {
             this.sheet = sheet;
@@ -217,13 +217,13 @@ public final class DeleteRecordsJobConfig {
          * <p>List of record ids to exclude from deletion</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage exceptions(List<RecordId> exceptions) {
             this.exceptions = Optional.of(exceptions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "exceptions", nulls = Nulls.SKIP)
         public _FinalStage exceptions(Optional<List<RecordId>> exceptions) {
             this.exceptions = exceptions;
@@ -234,72 +234,72 @@ public final class DeleteRecordsJobConfig {
          * <p>FFQL query to filter records</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage q(String q) {
             this.q = Optional.of(q);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "q", nulls = Nulls.SKIP)
         public _FinalStage q(Optional<String> q) {
             this.q = q;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "searchField", nulls = Nulls.SKIP)
         public _FinalStage searchField(Optional<SearchField> searchField) {
             this.searchField = searchField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
         public _FinalStage searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
         public _FinalStage filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage filter(Filter filter) {
             this.filter = Optional.of(filter);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filter", nulls = Nulls.SKIP)
         public _FinalStage filter(Optional<Filter> filter) {
             this.filter = filter;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DeleteRecordsJobConfig build() {
             return new DeleteRecordsJobConfig(
                     filter, filterField, searchValue, searchField, q, sheet, exceptions, additionalProperties);

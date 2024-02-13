@@ -39,24 +39,24 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
     }
 
     @JsonProperty("type")
-    @Override
+    @java.lang.Override
     public DataRetentionPolicyEnum getType() {
         return type;
     }
 
     @JsonProperty("period")
-    @Override
+    @java.lang.Override
     public int getPeriod() {
         return period;
     }
 
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DataRetentionPolicyConfig && equalTo((DataRetentionPolicyConfig) other);
@@ -71,12 +71,12 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
         return type.equals(other.type) && period == other.period && environmentId.equals(other.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.period, this.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -116,7 +116,7 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DataRetentionPolicyConfig other) {
             type(other.getType());
             period(other.getPeriod());
@@ -124,28 +124,28 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public PeriodStage type(DataRetentionPolicyEnum type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("period")
         public EnvironmentIdStage period(int period) {
             this.period = period;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DataRetentionPolicyConfig build() {
             return new DataRetentionPolicyConfig(type, period, environmentId, additionalProperties);
         }

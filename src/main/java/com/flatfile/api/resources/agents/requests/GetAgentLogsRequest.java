@@ -33,7 +33,7 @@ public final class GetAgentLogsRequest {
         return environmentId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetAgentLogsRequest && equalTo((GetAgentLogsRequest) other);
@@ -48,12 +48,12 @@ public final class GetAgentLogsRequest {
         return environmentId.equals(other.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -81,20 +81,20 @@ public final class GetAgentLogsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetAgentLogsRequest other) {
             environmentId(other.getEnvironmentId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetAgentLogsRequest build() {
             return new GetAgentLogsRequest(environmentId, additionalProperties);
         }

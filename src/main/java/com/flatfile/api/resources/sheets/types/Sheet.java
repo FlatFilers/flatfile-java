@@ -163,7 +163,7 @@ public final class Sheet {
         return lockedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Sheet && equalTo((Sheet) other);
@@ -188,7 +188,7 @@ public final class Sheet {
                 && lockedAt.equals(other.lockedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -204,7 +204,7 @@ public final class Sheet {
                 this.lockedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -300,7 +300,7 @@ public final class Sheet {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Sheet other) {
             id(other.getId());
             workbookId(other.getWorkbookId());
@@ -320,7 +320,7 @@ public final class Sheet {
          * <p>The ID of the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public WorkbookIdStage id(SheetId id) {
             this.id = id;
@@ -331,7 +331,7 @@ public final class Sheet {
          * <p>The ID of the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("workbookId")
         public NameStage workbookId(WorkbookId workbookId) {
             this.workbookId = workbookId;
@@ -342,7 +342,7 @@ public final class Sheet {
          * <p>The name of the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public SlugStage name(String name) {
             this.name = name;
@@ -353,7 +353,7 @@ public final class Sheet {
          * <p>The slug of the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("slug")
         public ConfigStage slug(String slug) {
             this.slug = slug;
@@ -364,7 +364,7 @@ public final class Sheet {
          * <p>Describes shape of data as well as behavior</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("config")
         public UpdatedAtStage config(SheetConfig config) {
             this.config = config;
@@ -375,7 +375,7 @@ public final class Sheet {
          * <p>Date the sheet was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public CreatedAtStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
@@ -386,7 +386,7 @@ public final class Sheet {
          * <p>Date the sheet was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public _FinalStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -397,13 +397,13 @@ public final class Sheet {
          * <p>The time the Sheet was locked.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage lockedAt(OffsetDateTime lockedAt) {
             this.lockedAt = Optional.of(lockedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lockedAt", nulls = Nulls.SKIP)
         public _FinalStage lockedAt(Optional<OffsetDateTime> lockedAt) {
             this.lockedAt = lockedAt;
@@ -414,13 +414,13 @@ public final class Sheet {
          * <p>The actor who locked the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage lockedBy(String lockedBy) {
             this.lockedBy = Optional.of(lockedBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lockedBy", nulls = Nulls.SKIP)
         public _FinalStage lockedBy(Optional<String> lockedBy) {
             this.lockedBy = lockedBy;
@@ -431,13 +431,13 @@ public final class Sheet {
          * <p>The scoped namespace of the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public _FinalStage namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -448,20 +448,20 @@ public final class Sheet {
          * <p>The amount of records in the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage countRecords(RecordCounts countRecords) {
             this.countRecords = Optional.of(countRecords);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "countRecords", nulls = Nulls.SKIP)
         public _FinalStage countRecords(Optional<RecordCounts> countRecords) {
             this.countRecords = countRecords;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Sheet build() {
             return new Sheet(
                     id,

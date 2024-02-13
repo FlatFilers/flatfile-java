@@ -40,7 +40,7 @@ public final class ActionMessage {
         return content;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ActionMessage && equalTo((ActionMessage) other);
@@ -55,12 +55,12 @@ public final class ActionMessage {
         return type.equals(other.type) && content.equals(other.content);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.content);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class ActionMessage {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ActionMessage other) {
             type(other.getType());
             content(other.getContent());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public ContentStage type(ActionMessageType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("content")
         public _FinalStage content(String content) {
             this.content = content;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ActionMessage build() {
             return new ActionMessage(type, content, additionalProperties);
         }

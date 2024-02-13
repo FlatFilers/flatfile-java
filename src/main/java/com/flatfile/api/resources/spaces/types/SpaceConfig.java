@@ -95,19 +95,19 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
     }
 
     @JsonProperty("spaceConfigId")
-    @Override
+    @java.lang.Override
     public Optional<SpaceConfigId> getSpaceConfigId() {
         return spaceConfigId;
     }
 
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("primaryWorkbookId")
-    @Override
+    @java.lang.Override
     public Optional<WorkbookId> getPrimaryWorkbookId() {
         return primaryWorkbookId;
     }
@@ -116,49 +116,49 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
      * @return Metadata for the space
      */
     @JsonProperty("metadata")
-    @Override
+    @java.lang.Override
     public Optional<Object> getMetadata() {
         return metadata;
     }
 
     @JsonProperty("actions")
-    @Override
+    @java.lang.Override
     public Optional<List<Action>> getActions() {
         return actions;
     }
 
     @JsonProperty("access")
-    @Override
+    @java.lang.Override
     public Optional<List<SpaceAccess>> getAccess() {
         return access;
     }
 
     @JsonProperty("autoConfigure")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAutoConfigure() {
         return autoConfigure;
     }
 
     @JsonProperty("namespace")
-    @Override
+    @java.lang.Override
     public Optional<String> getNamespace() {
         return namespace;
     }
 
     @JsonProperty("labels")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getLabels() {
         return labels;
     }
 
     @JsonProperty("translationsPath")
-    @Override
+    @java.lang.Override
     public Optional<String> getTranslationsPath() {
         return translationsPath;
     }
 
     @JsonProperty("languageOverride")
-    @Override
+    @java.lang.Override
     public Optional<String> getLanguageOverride() {
         return languageOverride;
     }
@@ -167,7 +167,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
      * @return Date when space was archived
      */
     @JsonProperty("archivedAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getArchivedAt() {
         return archivedAt;
     }
@@ -193,7 +193,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
         return guestAuthentication;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SpaceConfig && equalTo((SpaceConfig) other);
@@ -222,7 +222,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                 && guestAuthentication.equals(other.guestAuthentication);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.spaceConfigId,
@@ -242,7 +242,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                 this.guestAuthentication);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

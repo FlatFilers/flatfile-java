@@ -103,7 +103,7 @@ public final class Snapshot {
         return createdBy;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Snapshot && equalTo((Snapshot) other);
@@ -123,12 +123,12 @@ public final class Snapshot {
                 && createdBy.equals(other.createdBy);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.sheetId, this.label, this.summary, this.createdAt, this.createdBy);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -186,7 +186,7 @@ public final class Snapshot {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Snapshot other) {
             id(other.getId());
             sheetId(other.getSheetId());
@@ -201,7 +201,7 @@ public final class Snapshot {
          * <p>The ID of the Snapshot.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SheetIdStage id(SnapshotId id) {
             this.id = id;
@@ -212,7 +212,7 @@ public final class Snapshot {
          * <p>The ID of the Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sheetId")
         public CreatedAtStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
@@ -223,7 +223,7 @@ public final class Snapshot {
          * <p>The time the Snapshot was created.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public CreatedByStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -234,7 +234,7 @@ public final class Snapshot {
          * <p>The actor who created the Snapshot.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdBy")
         public _FinalStage createdBy(UserId createdBy) {
             this.createdBy = createdBy;
@@ -245,13 +245,13 @@ public final class Snapshot {
          * <p>A summary of the Snapshot.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage summary(SnapshotSummary summary) {
             this.summary = Optional.of(summary);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "summary", nulls = Nulls.SKIP)
         public _FinalStage summary(Optional<SnapshotSummary> summary) {
             this.summary = summary;
@@ -262,20 +262,20 @@ public final class Snapshot {
          * <p>The title of the Snapshot.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Snapshot build() {
             return new Snapshot(id, sheetId, label, summary, createdAt, createdBy, additionalProperties);
         }

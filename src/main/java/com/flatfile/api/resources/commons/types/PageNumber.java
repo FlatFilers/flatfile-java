@@ -18,17 +18,17 @@ public final class PageNumber {
         return this.value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return this == other || (other instanceof PageNumber && this.value == ((PageNumber) other).value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Integer.hashCode(value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return Integer.toString(value);
     }

@@ -7,14 +7,11 @@ import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
-import com.flatfile.api.resources.roles.requests.AssignRoleRequest;
-import com.flatfile.api.resources.roles.types.AssignRoleResponse;
+import com.flatfile.api.resources.roles.types.ListRolesResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class RolesClient {
@@ -25,24 +22,23 @@ public class RolesClient {
     }
 
     /**
-     * Assign an existing role to the specified actor in the specified resource context
+     * List all roles for an account
      */
-    public AssignRoleResponse assign(String roleId, AssignRoleRequest request, RequestOptions requestOptions) {
+    public ListRolesResponse list() {
+        return list(null);
+    }
+
+    /**
+     * List all roles for an account
+     */
+    public ListRolesResponse list(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("roles")
-                .addPathSegment(roleId)
                 .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -50,7 +46,7 @@ public class RolesClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), AssignRoleResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListRolesResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -58,12 +54,5 @@ public class RolesClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Assign an existing role to the specified actor in the specified resource context
-     */
-    public AssignRoleResponse assign(String roleId, AssignRoleRequest request) {
-        return assign(roleId, request, null);
     }
 }

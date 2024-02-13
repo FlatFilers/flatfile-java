@@ -53,19 +53,19 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
     }
 
     @JsonProperty("type")
-    @Override
+    @java.lang.Override
     public DataRetentionPolicyEnum getType() {
         return type;
     }
 
     @JsonProperty("period")
-    @Override
+    @java.lang.Override
     public int getPeriod() {
         return period;
     }
 
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
@@ -91,7 +91,7 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DataRetentionPolicy && equalTo((DataRetentionPolicy) other);
@@ -111,12 +111,12 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.period, this.environmentId, this.id, this.createdAt, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -181,7 +181,7 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DataRetentionPolicy other) {
             type(other.getType());
             period(other.getPeriod());
@@ -192,28 +192,28 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public PeriodStage type(DataRetentionPolicyEnum type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("period")
         public EnvironmentIdStage period(int period) {
             this.period = period;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public IdStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(DataRetentionPolicyId id) {
             this.id = id;
@@ -224,7 +224,7 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
          * <p>Date the policy was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -235,14 +235,14 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
          * <p>Date the policy was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DataRetentionPolicy build() {
             return new DataRetentionPolicy(type, period, environmentId, id, createdAt, updatedAt, additionalProperties);
         }

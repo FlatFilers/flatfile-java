@@ -91,7 +91,7 @@ public final class GenericEvent implements IBaseEvent {
      * @return The domain of the event
      */
     @JsonProperty("domain")
-    @Override
+    @java.lang.Override
     public Domain getDomain() {
         return domain;
     }
@@ -100,7 +100,7 @@ public final class GenericEvent implements IBaseEvent {
      * @return The context of the event
      */
     @JsonProperty("context")
-    @Override
+    @java.lang.Override
     public Context getContext() {
         return context;
     }
@@ -109,7 +109,7 @@ public final class GenericEvent implements IBaseEvent {
      * @return The attributes of the event
      */
     @JsonProperty("attributes")
-    @Override
+    @java.lang.Override
     public Optional<EventAttributes> getAttributes() {
         return attributes;
     }
@@ -118,7 +118,7 @@ public final class GenericEvent implements IBaseEvent {
      * @return The callback url to acknowledge the event
      */
     @JsonProperty("callbackUrl")
-    @Override
+    @java.lang.Override
     public Optional<String> getCallbackUrl() {
         return callbackUrl;
     }
@@ -127,25 +127,25 @@ public final class GenericEvent implements IBaseEvent {
      * @return The url to retrieve the data associated with the event
      */
     @JsonProperty("dataUrl")
-    @Override
+    @java.lang.Override
     public Optional<String> getDataUrl() {
         return dataUrl;
     }
 
     @JsonProperty("target")
-    @Override
+    @java.lang.Override
     public Optional<String> getTarget() {
         return target;
     }
 
     @JsonProperty("origin")
-    @Override
+    @java.lang.Override
     public Optional<Origin> getOrigin() {
         return origin;
     }
 
     @JsonProperty("namespaces")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getNamespaces() {
         return namespaces;
     }
@@ -192,7 +192,7 @@ public final class GenericEvent implements IBaseEvent {
         return payload;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GenericEvent && equalTo((GenericEvent) other);
@@ -220,7 +220,7 @@ public final class GenericEvent implements IBaseEvent {
                 && payload.equals(other.payload);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.domain,
@@ -239,7 +239,7 @@ public final class GenericEvent implements IBaseEvent {
                 this.payload);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -347,7 +347,7 @@ public final class GenericEvent implements IBaseEvent {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GenericEvent other) {
             domain(other.getDomain());
             context(other.getContext());
@@ -370,7 +370,7 @@ public final class GenericEvent implements IBaseEvent {
          * <p>The domain of the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("domain")
         public ContextStage domain(Domain domain) {
             this.domain = domain;
@@ -381,14 +381,14 @@ public final class GenericEvent implements IBaseEvent {
          * <p>The context of the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("context")
         public IdStage context(Context context) {
             this.context = context;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(EventId id) {
             this.id = id;
@@ -399,26 +399,26 @@ public final class GenericEvent implements IBaseEvent {
          * <p>Date the event was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public _FinalStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage payload(String key, Object value) {
             this.payload.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllPayload(Map<String, Object> payload) {
             this.payload.putAll(payload);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "payload", nulls = Nulls.SKIP)
         public _FinalStage payload(Map<String, Object> payload) {
             this.payload.clear();
@@ -430,13 +430,13 @@ public final class GenericEvent implements IBaseEvent {
          * <p>The actor (user or system) who acknowledged the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage acknowledgedBy(String acknowledgedBy) {
             this.acknowledgedBy = Optional.of(acknowledgedBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "acknowledgedBy", nulls = Nulls.SKIP)
         public _FinalStage acknowledgedBy(Optional<String> acknowledgedBy) {
             this.acknowledgedBy = acknowledgedBy;
@@ -447,13 +447,13 @@ public final class GenericEvent implements IBaseEvent {
          * <p>Date the event was acknowledged</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage acknowledgedAt(OffsetDateTime acknowledgedAt) {
             this.acknowledgedAt = Optional.of(acknowledgedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "acknowledgedAt", nulls = Nulls.SKIP)
         public _FinalStage acknowledgedAt(Optional<OffsetDateTime> acknowledgedAt) {
             this.acknowledgedAt = acknowledgedAt;
@@ -464,52 +464,52 @@ public final class GenericEvent implements IBaseEvent {
          * <p>Date the event was deleted</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
             this.deletedAt = Optional.of(deletedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "deletedAt", nulls = Nulls.SKIP)
         public _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt) {
             this.deletedAt = deletedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
             this.namespaces = Optional.of(namespaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespaces", nulls = Nulls.SKIP)
         public _FinalStage namespaces(Optional<List<String>> namespaces) {
             this.namespaces = namespaces;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage origin(Origin origin) {
             this.origin = Optional.of(origin);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "origin", nulls = Nulls.SKIP)
         public _FinalStage origin(Optional<Origin> origin) {
             this.origin = origin;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage target(String target) {
             this.target = Optional.of(target);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "target", nulls = Nulls.SKIP)
         public _FinalStage target(Optional<String> target) {
             this.target = target;
@@ -520,13 +520,13 @@ public final class GenericEvent implements IBaseEvent {
          * <p>The url to retrieve the data associated with the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage dataUrl(String dataUrl) {
             this.dataUrl = Optional.of(dataUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "dataUrl", nulls = Nulls.SKIP)
         public _FinalStage dataUrl(Optional<String> dataUrl) {
             this.dataUrl = dataUrl;
@@ -537,13 +537,13 @@ public final class GenericEvent implements IBaseEvent {
          * <p>The callback url to acknowledge the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage callbackUrl(String callbackUrl) {
             this.callbackUrl = Optional.of(callbackUrl);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "callbackUrl", nulls = Nulls.SKIP)
         public _FinalStage callbackUrl(Optional<String> callbackUrl) {
             this.callbackUrl = callbackUrl;
@@ -554,20 +554,20 @@ public final class GenericEvent implements IBaseEvent {
          * <p>The attributes of the event</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage attributes(EventAttributes attributes) {
             this.attributes = Optional.of(attributes);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "attributes", nulls = Nulls.SKIP)
         public _FinalStage attributes(Optional<EventAttributes> attributes) {
             this.attributes = attributes;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GenericEvent build() {
             return new GenericEvent(
                     domain,

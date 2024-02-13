@@ -27,6 +27,13 @@ public class CommitsClient {
     /**
      * Returns the details of a commit version
      */
+    public CommitResponse get(CommitId commitId) {
+        return get(commitId, null);
+    }
+
+    /**
+     * Returns the details of a commit version
+     */
     public CommitResponse get(CommitId commitId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,10 +61,10 @@ public class CommitsClient {
     }
 
     /**
-     * Returns the details of a commit version
+     * Completes a commit version. This marks the commit as complete and acknowledges that the changes have been applied to the sheet.
      */
-    public CommitResponse get(CommitId commitId) {
-        return get(commitId, null);
+    public Success complete(CommitId commitId) {
+        return complete(commitId, null);
     }
 
     /**
@@ -91,10 +98,10 @@ public class CommitsClient {
     }
 
     /**
-     * Completes a commit version. This marks the commit as complete and acknowledges that the changes have been applied to the sheet.
+     * Replays a commit:created event.
      */
-    public Success complete(CommitId commitId) {
-        return complete(commitId, null);
+    public Success replay(CommitId commitId) {
+        return replay(commitId, null);
     }
 
     /**
@@ -125,12 +132,5 @@ public class CommitsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Replays a commit:created event.
-     */
-    public Success replay(CommitId commitId) {
-        return replay(commitId, null);
     }
 }

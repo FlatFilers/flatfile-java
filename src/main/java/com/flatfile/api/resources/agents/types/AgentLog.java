@@ -79,7 +79,7 @@ public final class AgentLog {
         return log;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AgentLog && equalTo((AgentLog) other);
@@ -98,12 +98,12 @@ public final class AgentLog {
                 && log.equals(other.log);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.eventId, this.success, this.createdAt, this.completedAt, this.log);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -156,7 +156,7 @@ public final class AgentLog {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(AgentLog other) {
             eventId(other.getEventId());
             success(other.getSuccess());
@@ -166,7 +166,7 @@ public final class AgentLog {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("eventId")
         public SuccessStage eventId(EventId eventId) {
             this.eventId = eventId;
@@ -177,21 +177,21 @@ public final class AgentLog {
          * <p>Whether the agent execution was successful</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public CreatedAtStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public CompletedAtStage createdAt(String createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("completedAt")
         public _FinalStage completedAt(String completedAt) {
             this.completedAt = completedAt;
@@ -202,20 +202,20 @@ public final class AgentLog {
          * <p>The log of the agent execution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage log(String log) {
             this.log = Optional.of(log);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "log", nulls = Nulls.SKIP)
         public _FinalStage log(Optional<String> log) {
             this.log = log;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public AgentLog build() {
             return new AgentLog(eventId, success, createdAt, completedAt, log, additionalProperties);
         }

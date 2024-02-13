@@ -43,7 +43,7 @@ public final class JobOutcomeNextWait {
         return confetti;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobOutcomeNextWait && equalTo((JobOutcomeNextWait) other);
@@ -58,12 +58,12 @@ public final class JobOutcomeNextWait {
         return fade.equals(other.fade) && confetti.equals(other.confetti);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.fade, this.confetti);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

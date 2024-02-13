@@ -163,7 +163,7 @@ public final class SheetConfig {
         return constraints;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SheetConfig && equalTo((SheetConfig) other);
@@ -188,7 +188,7 @@ public final class SheetConfig {
                 && constraints.equals(other.constraints);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -204,7 +204,7 @@ public final class SheetConfig {
                 this.constraints);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -294,7 +294,7 @@ public final class SheetConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SheetConfig other) {
             name(other.getName());
             description(other.getDescription());
@@ -314,7 +314,7 @@ public final class SheetConfig {
          * <p>The name of your Sheet as it will appear to your end users.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
@@ -325,13 +325,13 @@ public final class SheetConfig {
          * <p>An array of constraints that end users can perform on this Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage constraints(List<SheetConstraint> constraints) {
             this.constraints = Optional.of(constraints);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "constraints", nulls = Nulls.SKIP)
         public _FinalStage constraints(Optional<List<SheetConstraint>> constraints) {
             this.constraints = constraints;
@@ -342,13 +342,13 @@ public final class SheetConfig {
          * <p>Useful for any contextual metadata regarding the schema. Store any valid json</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Object metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
@@ -359,13 +359,13 @@ public final class SheetConfig {
          * <p>An array of actions that end users can perform on this Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -376,7 +376,7 @@ public final class SheetConfig {
          * <p>Where you define your Sheet’s data schema.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllFields(List<Property> fields) {
             this.fields.addAll(fields);
             return this;
@@ -386,13 +386,13 @@ public final class SheetConfig {
          * <p>Where you define your Sheet’s data schema.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addFields(Property fields) {
             this.fields.add(fields);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fields", nulls = Nulls.SKIP)
         public _FinalStage fields(List<Property> fields) {
             this.fields.clear();
@@ -404,13 +404,13 @@ public final class SheetConfig {
          * <p>Control Sheet-level access for all users.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage access(List<SheetAccess> access) {
             this.access = Optional.of(access);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "access", nulls = Nulls.SKIP)
         public _FinalStage access(Optional<List<SheetAccess>> access) {
             this.access = access;
@@ -421,13 +421,13 @@ public final class SheetConfig {
          * <p>The minimum confidence required to automatically map a field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage mappingConfidenceThreshold(Double mappingConfidenceThreshold) {
             this.mappingConfidenceThreshold = Optional.of(mappingConfidenceThreshold);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "mappingConfidenceThreshold", nulls = Nulls.SKIP)
         public _FinalStage mappingConfidenceThreshold(Optional<Double> mappingConfidenceThreshold) {
             this.mappingConfidenceThreshold = mappingConfidenceThreshold;
@@ -438,13 +438,13 @@ public final class SheetConfig {
          * <p>Allow end users to add fields during mapping.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage allowAdditionalFields(Boolean allowAdditionalFields) {
             this.allowAdditionalFields = Optional.of(allowAdditionalFields);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "allowAdditionalFields", nulls = Nulls.SKIP)
         public _FinalStage allowAdditionalFields(Optional<Boolean> allowAdditionalFields) {
             this.allowAdditionalFields = allowAdditionalFields;
@@ -455,13 +455,13 @@ public final class SheetConfig {
          * <p>A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage readonly(Boolean readonly) {
             this.readonly = Optional.of(readonly);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "readonly", nulls = Nulls.SKIP)
         public _FinalStage readonly(Optional<Boolean> readonly) {
             this.readonly = readonly;
@@ -472,13 +472,13 @@ public final class SheetConfig {
          * <p>A unique identifier for your Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage slug(String slug) {
             this.slug = Optional.of(slug);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "slug", nulls = Nulls.SKIP)
         public _FinalStage slug(Optional<String> slug) {
             this.slug = slug;
@@ -489,20 +489,20 @@ public final class SheetConfig {
          * <p>A sentence or two describing the purpose of your Sheet.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SheetConfig build() {
             return new SheetConfig(
                     name,

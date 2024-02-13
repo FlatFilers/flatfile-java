@@ -157,7 +157,7 @@ public final class ExportOptions {
         return ids;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ExportOptions && equalTo((ExportOptions) other);
@@ -181,7 +181,7 @@ public final class ExportOptions {
                 && ids.equals(other.ids);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.versionId,
@@ -196,7 +196,7 @@ public final class ExportOptions {
                 this.ids);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

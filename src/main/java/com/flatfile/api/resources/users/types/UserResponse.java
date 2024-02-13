@@ -32,7 +32,7 @@ public final class UserResponse {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UserResponse && equalTo((UserResponse) other);
@@ -47,12 +47,12 @@ public final class UserResponse {
         return data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class UserResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(UserResponse other) {
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(User data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public UserResponse build() {
             return new UserResponse(data, additionalProperties);
         }

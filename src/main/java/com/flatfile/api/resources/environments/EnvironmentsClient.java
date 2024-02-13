@@ -5,6 +5,7 @@ package com.flatfile.api.resources.environments;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.Success;
@@ -19,7 +20,6 @@ import com.flatfile.api.resources.spaces.types.EventTokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,6 +36,13 @@ public class EnvironmentsClient {
      */
     public ListEnvironmentsResponse list() {
         return list(ListEnvironmentsRequest.builder().build());
+    }
+
+    /**
+     * Get all environments
+     */
+    public ListEnvironmentsResponse list(ListEnvironmentsRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -73,10 +80,10 @@ public class EnvironmentsClient {
     }
 
     /**
-     * Get all environments
+     * Create a new environment
      */
-    public ListEnvironmentsResponse list(ListEnvironmentsRequest request) {
-        return list(request, null);
+    public EnvironmentResponse create(EnvironmentConfigCreate request) {
+        return create(request, null);
     }
 
     /**
@@ -90,7 +97,7 @@ public class EnvironmentsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -115,10 +122,10 @@ public class EnvironmentsClient {
     }
 
     /**
-     * Create a new environment
+     * Get a token which can be used to subscribe to events for this environment
      */
-    public EnvironmentResponse create(EnvironmentConfigCreate request) {
-        return create(request, null);
+    public EventTokenResponse getEnvironmentEventToken(GetEnvironmentEventTokenRequest request) {
+        return getEnvironmentEventToken(request, null);
     }
 
     /**
@@ -152,10 +159,10 @@ public class EnvironmentsClient {
     }
 
     /**
-     * Get a token which can be used to subscribe to events for this environment
+     * Returns a single environment
      */
-    public EventTokenResponse getEnvironmentEventToken(GetEnvironmentEventTokenRequest request) {
-        return getEnvironmentEventToken(request, null);
+    public EnvironmentResponse get(String environmentId) {
+        return get(environmentId, null);
     }
 
     /**
@@ -188,17 +195,17 @@ public class EnvironmentsClient {
     }
 
     /**
-     * Returns a single environment
+     * Updates a single environment, to change the name for example
      */
-    public EnvironmentResponse get(String environmentId) {
-        return get(environmentId, null);
+    public Environment update(String environmentId) {
+        return update(environmentId, EnvironmentConfigUpdate.builder().build());
     }
 
     /**
      * Updates a single environment, to change the name for example
      */
-    public Environment update(String environmentId) {
-        return update(environmentId, EnvironmentConfigUpdate.builder().build());
+    public Environment update(String environmentId, EnvironmentConfigUpdate request) {
+        return update(environmentId, request, null);
     }
 
     /**
@@ -213,7 +220,7 @@ public class EnvironmentsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -238,10 +245,10 @@ public class EnvironmentsClient {
     }
 
     /**
-     * Updates a single environment, to change the name for example
+     * Deletes a single environment
      */
-    public Environment update(String environmentId, EnvironmentConfigUpdate request) {
-        return update(environmentId, request, null);
+    public Success delete(String environmentId) {
+        return delete(environmentId, null);
     }
 
     /**
@@ -271,12 +278,5 @@ public class EnvironmentsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Deletes a single environment
-     */
-    public Success delete(String environmentId) {
-        return delete(environmentId, null);
     }
 }

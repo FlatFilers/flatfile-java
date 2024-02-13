@@ -65,7 +65,7 @@ public final class SpaceSize {
         return numFiles;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SpaceSize && equalTo((SpaceSize) other);
@@ -84,12 +84,12 @@ public final class SpaceSize {
                 && numFiles == other.numFiles;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.id, this.numUsers, this.pdv, this.numFiles);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -142,7 +142,7 @@ public final class SpaceSize {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SpaceSize other) {
             name(other.getName());
             id(other.getId());
@@ -152,42 +152,42 @@ public final class SpaceSize {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public IdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NumUsersStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("numUsers")
         public PdvStage numUsers(int numUsers) {
             this.numUsers = numUsers;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("pdv")
         public NumFilesStage pdv(int pdv) {
             this.pdv = pdv;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("numFiles")
         public _FinalStage numFiles(int numFiles) {
             this.numFiles = numFiles;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SpaceSize build() {
             return new SpaceSize(name, id, numUsers, pdv, numFiles, additionalProperties);
         }

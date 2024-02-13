@@ -5,6 +5,7 @@ package com.flatfile.api.resources.apps;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.apps.types.AppCreate;
@@ -15,7 +16,6 @@ import com.flatfile.api.resources.commons.types.AppId;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -25,6 +25,13 @@ public class AppsClient {
 
     public AppsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Returns apps in an account
+     */
+    public AppsResponse list() {
+        return list(null);
     }
 
     /**
@@ -56,10 +63,10 @@ public class AppsClient {
     }
 
     /**
-     * Returns apps in an account
+     * Returns an app
      */
-    public AppsResponse list() {
-        return list(null);
+    public AppResponse get(AppId appId) {
+        return get(appId, null);
     }
 
     /**
@@ -92,17 +99,17 @@ public class AppsClient {
     }
 
     /**
-     * Returns an app
+     * Updates an app
      */
-    public AppResponse get(AppId appId) {
-        return get(appId, null);
+    public AppResponse update(AppId appId) {
+        return update(appId, AppPatch.builder().build());
     }
 
     /**
      * Updates an app
      */
-    public AppResponse update(AppId appId) {
-        return update(appId, AppPatch.builder().build());
+    public AppResponse update(AppId appId, AppPatch request) {
+        return update(appId, request, null);
     }
 
     /**
@@ -117,7 +124,7 @@ public class AppsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -142,10 +149,10 @@ public class AppsClient {
     }
 
     /**
-     * Updates an app
+     * Creates an app
      */
-    public AppResponse update(AppId appId, AppPatch request) {
-        return update(appId, request, null);
+    public AppResponse create(AppCreate request) {
+        return create(request, null);
     }
 
     /**
@@ -159,7 +166,7 @@ public class AppsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -181,12 +188,5 @@ public class AppsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Creates an app
-     */
-    public AppResponse create(AppCreate request) {
-        return create(request, null);
     }
 }

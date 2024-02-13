@@ -18,17 +18,17 @@ public final class Distinct {
         return this.value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return this == other || (other instanceof Distinct && this.value == ((Distinct) other).value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Boolean.hashCode(value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return Boolean.toString(value);
     }

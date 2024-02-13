@@ -9,36 +9,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.RecordId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DeleteRecordsRequest.Builder.class)
 public final class DeleteRecordsRequest {
-    private final Optional<RecordId> ids;
+    private final RecordId ids;
 
     private final Map<String, Object> additionalProperties;
 
-    private DeleteRecordsRequest(Optional<RecordId> ids, Map<String, Object> additionalProperties) {
+    private DeleteRecordsRequest(RecordId ids, Map<String, Object> additionalProperties) {
         this.ids = ids;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records
+     * @return A list of record IDs to delete. Maximum of 100 allowed.
      */
     @JsonProperty("ids")
-    public Optional<RecordId> getIds() {
+    public RecordId getIds() {
         return ids;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeleteRecordsRequest && equalTo((DeleteRecordsRequest) other);
@@ -53,45 +51,57 @@ public final class DeleteRecordsRequest {
         return ids.equals(other.ids);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.ids);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static IdsStage builder() {
         return new Builder();
     }
 
+    public interface IdsStage {
+        _FinalStage ids(RecordId ids);
+
+        Builder from(DeleteRecordsRequest other);
+    }
+
+    public interface _FinalStage {
+        DeleteRecordsRequest build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<RecordId> ids = Optional.empty();
+    public static final class Builder implements IdsStage, _FinalStage {
+        private RecordId ids;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(DeleteRecordsRequest other) {
             ids(other.getIds());
             return this;
         }
 
-        @JsonSetter(value = "ids", nulls = Nulls.SKIP)
-        public Builder ids(Optional<RecordId> ids) {
+        /**
+         * <p>A list of record IDs to delete. Maximum of 100 allowed.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("ids")
+        public _FinalStage ids(RecordId ids) {
             this.ids = ids;
             return this;
         }
 
-        public Builder ids(RecordId ids) {
-            this.ids = Optional.of(ids);
-            return this;
-        }
-
+        @java.lang.Override
         public DeleteRecordsRequest build() {
             return new DeleteRecordsRequest(ids, additionalProperties);
         }

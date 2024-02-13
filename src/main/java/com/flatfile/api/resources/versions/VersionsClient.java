@@ -5,6 +5,7 @@ package com.flatfile.api.resources.versions;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.versions.requests.VersionsPostRequestBody;
@@ -12,7 +13,6 @@ import com.flatfile.api.resources.versions.types.VersionResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -28,6 +28,10 @@ public class VersionsClient {
         return createId(VersionsPostRequestBody.builder().build());
     }
 
+    public VersionResponse createId(VersionsPostRequestBody request) {
+        return createId(request, null);
+    }
+
     public VersionResponse createId(VersionsPostRequestBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -36,7 +40,7 @@ public class VersionsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -58,9 +62,5 @@ public class VersionsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public VersionResponse createId(VersionsPostRequestBody request) {
-        return createId(request, null);
     }
 }

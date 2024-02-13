@@ -5,6 +5,7 @@ package com.flatfile.api.resources.mapping;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.MappingId;
@@ -18,10 +19,10 @@ import com.flatfile.api.resources.mapping.types.MappingRulesResponse;
 import com.flatfile.api.resources.mapping.types.ProgramConfig;
 import com.flatfile.api.resources.mapping.types.ProgramResponse;
 import com.flatfile.api.resources.mapping.types.ProgramsResponse;
+import com.flatfile.api.resources.mapping.types.UpdateMappingRulesRequest;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,6 +37,13 @@ public class MappingClient {
     /**
      * Creates a list of mapping rules based on two provided schemas
      */
+    public ProgramResponse createMappingProgram(ProgramConfig request) {
+        return createMappingProgram(request, null);
+    }
+
+    /**
+     * Creates a list of mapping rules based on two provided schemas
+     */
     public ProgramResponse createMappingProgram(ProgramConfig request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -44,7 +52,7 @@ public class MappingClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -69,10 +77,38 @@ public class MappingClient {
     }
 
     /**
-     * Creates a list of mapping rules based on two provided schemas
+     * Deletes all history for the authenticated user
      */
-    public ProgramResponse createMappingProgram(ProgramConfig request) {
-        return createMappingProgram(request, null);
+    public Success deleteAllHistoryForUser() {
+        return deleteAllHistoryForUser(null);
+    }
+
+    /**
+     * Deletes all history for the authenticated user
+     */
+    public Success deleteAllHistoryForUser(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("mapping")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -80,6 +116,13 @@ public class MappingClient {
      */
     public ProgramsResponse listMappingPrograms() {
         return listMappingPrograms(ListProgramsRequest.builder().build());
+    }
+
+    /**
+     * List all mapping programs
+     */
+    public ProgramsResponse listMappingPrograms(ListProgramsRequest request) {
+        return listMappingPrograms(request, null);
     }
 
     /**
@@ -145,10 +188,10 @@ public class MappingClient {
     }
 
     /**
-     * List all mapping programs
+     * Get a mapping program
      */
-    public ProgramsResponse listMappingPrograms(ListProgramsRequest request) {
-        return listMappingPrograms(request, null);
+    public ProgramResponse getMappingProgram(ProgramId programId) {
+        return getMappingProgram(programId, null);
     }
 
     /**
@@ -181,10 +224,10 @@ public class MappingClient {
     }
 
     /**
-     * Get a mapping program
+     * Updates a mapping program
      */
-    public ProgramResponse getMappingProgram(ProgramId programId) {
-        return getMappingProgram(programId, null);
+    public ProgramResponse updateMappingProgram(ProgramId programId, ProgramConfig request) {
+        return updateMappingProgram(programId, request, null);
     }
 
     /**
@@ -200,7 +243,7 @@ public class MappingClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -225,10 +268,10 @@ public class MappingClient {
     }
 
     /**
-     * Updates a mapping program
+     * Deletes a mapping program
      */
-    public ProgramResponse updateMappingProgram(ProgramId programId, ProgramConfig request) {
-        return updateMappingProgram(programId, request, null);
+    public Success deleteMappingProgram(ProgramId programId) {
+        return deleteMappingProgram(programId, null);
     }
 
     /**
@@ -261,10 +304,10 @@ public class MappingClient {
     }
 
     /**
-     * Deletes a mapping program
+     * Add mapping rules to a program
      */
-    public Success deleteMappingProgram(ProgramId programId) {
-        return deleteMappingProgram(programId, null);
+    public MappingRulesResponse createRules(ProgramId programId, CreateMappingRulesRequest request) {
+        return createRules(programId, request, null);
     }
 
     /**
@@ -281,7 +324,7 @@ public class MappingClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -306,10 +349,10 @@ public class MappingClient {
     }
 
     /**
-     * Add mapping rules to a program
+     * List all mapping rules in a program
      */
-    public MappingRulesResponse createRules(ProgramId programId, CreateMappingRulesRequest request) {
-        return createRules(programId, request, null);
+    public MappingRulesResponse listRules(ProgramId programId) {
+        return listRules(programId, null);
     }
 
     /**
@@ -343,10 +386,10 @@ public class MappingClient {
     }
 
     /**
-     * List all mapping rules in a program
+     * Get a mapping rule from a program
      */
-    public MappingRulesResponse listRules(ProgramId programId) {
-        return listRules(programId, null);
+    public MappingRuleResponse getRule(ProgramId programId, MappingId mappingId) {
+        return getRule(programId, mappingId, null);
     }
 
     /**
@@ -381,10 +424,10 @@ public class MappingClient {
     }
 
     /**
-     * Get a mapping rule from a program
+     * Updates a mapping rule in a program
      */
-    public MappingRuleResponse getRule(ProgramId programId, MappingId mappingId) {
-        return getRule(programId, mappingId, null);
+    public MappingRuleResponse updateRule(ProgramId programId, MappingId mappingId, MappingRuleConfig request) {
+        return updateRule(programId, mappingId, request, null);
     }
 
     /**
@@ -402,7 +445,7 @@ public class MappingClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -427,10 +470,55 @@ public class MappingClient {
     }
 
     /**
-     * Updates a mapping rule in a program
+     * Updates a list of mapping rules in a program
      */
-    public MappingRuleResponse updateRule(ProgramId programId, MappingId mappingId, MappingRuleConfig request) {
-        return updateRule(programId, mappingId, request, null);
+    public MappingRulesResponse updateRules(ProgramId programId, UpdateMappingRulesRequest request) {
+        return updateRules(programId, request, null);
+    }
+
+    /**
+     * Updates a list of mapping rules in a program
+     */
+    public MappingRulesResponse updateRules(
+            ProgramId programId, UpdateMappingRulesRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("mapping")
+                .addPathSegment(programId.toString())
+                .addPathSegments("rules")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), MappingRulesResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Deletes a mapping rule from a program
+     */
+    public Success deleteRule(ProgramId programId, MappingId mappingId) {
+        return deleteRule(programId, mappingId, null);
     }
 
     /**
@@ -462,12 +550,5 @@ public class MappingClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Deletes a mapping rule from a program
-     */
-    public Success deleteRule(ProgramId programId, MappingId mappingId) {
-        return deleteRule(programId, mappingId, null);
     }
 }

@@ -51,7 +51,7 @@ public final class VersionsPostRequestBody {
         return parentVersionId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof VersionsPostRequestBody && equalTo((VersionsPostRequestBody) other);
@@ -66,12 +66,12 @@ public final class VersionsPostRequestBody {
         return sheetId.equals(other.sheetId) && parentVersionId.equals(other.parentVersionId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sheetId, this.parentVersionId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

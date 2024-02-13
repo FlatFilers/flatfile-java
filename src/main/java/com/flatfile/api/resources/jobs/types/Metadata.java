@@ -54,7 +54,7 @@ public final class Metadata {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Metadata && equalTo((Metadata) other);
@@ -69,12 +69,12 @@ public final class Metadata {
         return certainty.equals(other.certainty) && confidence.equals(other.confidence) && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.certainty, this.confidence, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

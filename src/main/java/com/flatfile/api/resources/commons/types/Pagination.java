@@ -57,7 +57,7 @@ public final class Pagination {
         return totalCount;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Pagination && equalTo((Pagination) other);
@@ -72,12 +72,12 @@ public final class Pagination {
         return currentPage == other.currentPage && pageCount == other.pageCount && totalCount == other.totalCount;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.currentPage, this.pageCount, this.totalCount);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -117,7 +117,7 @@ public final class Pagination {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Pagination other) {
             currentPage(other.getCurrentPage());
             pageCount(other.getPageCount());
@@ -129,7 +129,7 @@ public final class Pagination {
          * <p>current page of results</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("currentPage")
         public PageCountStage currentPage(int currentPage) {
             this.currentPage = currentPage;
@@ -140,7 +140,7 @@ public final class Pagination {
          * <p>total number of pages of results</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("pageCount")
         public TotalCountStage pageCount(int pageCount) {
             this.pageCount = pageCount;
@@ -151,14 +151,14 @@ public final class Pagination {
          * <p>total available results</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("totalCount")
         public _FinalStage totalCount(int totalCount) {
             this.totalCount = totalCount;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Pagination build() {
             return new Pagination(currentPage, pageCount, totalCount, additionalProperties);
         }

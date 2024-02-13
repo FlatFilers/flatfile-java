@@ -174,12 +174,12 @@ public final class JobOutcomeNext {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitId(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof IdValue && equalTo((IdValue) other);
@@ -189,12 +189,12 @@ public final class JobOutcomeNext {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "value: " + value + "}";
         }
@@ -212,12 +212,12 @@ public final class JobOutcomeNext {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitUrl(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof UrlValue && equalTo((UrlValue) other);
@@ -227,12 +227,12 @@ public final class JobOutcomeNext {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "value: " + value + "}";
         }
@@ -250,12 +250,12 @@ public final class JobOutcomeNext {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitDownload(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof DownloadValue && equalTo((DownloadValue) other);
@@ -265,12 +265,12 @@ public final class JobOutcomeNext {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "value: " + value + "}";
         }
@@ -288,12 +288,12 @@ public final class JobOutcomeNext {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitWait(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof WaitValue && equalTo((WaitValue) other);
@@ -303,12 +303,12 @@ public final class JobOutcomeNext {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "value: " + value + "}";
         }
@@ -326,12 +326,12 @@ public final class JobOutcomeNext {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitSnapshot(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof SnapshotValue && equalTo((SnapshotValue) other);
@@ -341,12 +341,12 @@ public final class JobOutcomeNext {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "value: " + value + "}";
         }
@@ -364,12 +364,12 @@ public final class JobOutcomeNext {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitRetry(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof RetryValue && equalTo((RetryValue) other);
@@ -379,12 +379,12 @@ public final class JobOutcomeNext {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "value: " + value + "}";
         }
@@ -399,12 +399,12 @@ public final class JobOutcomeNext {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -414,12 +414,12 @@ public final class JobOutcomeNext {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "JobOutcomeNext{" + "type: " + type + ", value: " + value + "}";
         }

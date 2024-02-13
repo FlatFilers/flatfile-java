@@ -124,7 +124,7 @@ public final class MutateJobConfig {
         return ids;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof MutateJobConfig && equalTo((MutateJobConfig) other);
@@ -147,7 +147,7 @@ public final class MutateJobConfig {
                 && ids.equals(other.ids);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.sheetId,
@@ -161,7 +161,7 @@ public final class MutateJobConfig {
                 this.ids);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -237,7 +237,7 @@ public final class MutateJobConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(MutateJobConfig other) {
             sheetId(other.getSheetId());
             mutateRecord(other.getMutateRecord());
@@ -251,7 +251,7 @@ public final class MutateJobConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sheetId")
         public MutateRecordStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
@@ -262,7 +262,7 @@ public final class MutateJobConfig {
          * <p>A JavaScript function that will be run on each record in the sheet, it should return a mutated record.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("mutateRecord")
         public _FinalStage mutateRecord(String mutateRecord) {
             this.mutateRecord = mutateRecord;
@@ -273,78 +273,78 @@ public final class MutateJobConfig {
          * <p>The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage ids(List<RecordId> ids) {
             this.ids = Optional.of(ids);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "ids", nulls = Nulls.SKIP)
         public _FinalStage ids(Optional<List<RecordId>> ids) {
             this.ids = ids;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage q(String q) {
             this.q = Optional.of(q);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "q", nulls = Nulls.SKIP)
         public _FinalStage q(Optional<String> q) {
             this.q = q;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage searchField(SearchField searchField) {
             this.searchField = Optional.of(searchField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "searchField", nulls = Nulls.SKIP)
         public _FinalStage searchField(Optional<SearchField> searchField) {
             this.searchField = searchField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
         public _FinalStage searchValue(Optional<SearchValue> searchValue) {
             this.searchValue = searchValue;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
         public _FinalStage filterField(Optional<FilterField> filterField) {
             this.filterField = filterField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage filter(Filter filter) {
             this.filter = Optional.of(filter);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filter", nulls = Nulls.SKIP)
         public _FinalStage filter(Optional<Filter> filter) {
             this.filter = filter;
@@ -355,20 +355,20 @@ public final class MutateJobConfig {
          * <p>If the mutation was generated through some sort of id-ed process, this links this job and that process.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage mutationId(String mutationId) {
             this.mutationId = Optional.of(mutationId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "mutationId", nulls = Nulls.SKIP)
         public _FinalStage mutationId(Optional<String> mutationId) {
             this.mutationId = mutationId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public MutateJobConfig build() {
             return new MutateJobConfig(
                     sheetId,

@@ -5,6 +5,7 @@ package com.flatfile.api.resources.spaces;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.SpaceId;
@@ -17,7 +18,6 @@ import com.flatfile.api.resources.spaces.types.SpaceResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -34,6 +34,13 @@ public class SpacesClient {
      */
     public ListSpacesResponse list() {
         return list(ListSpacesRequest.builder().build());
+    }
+
+    /**
+     * Returns all spaces for an account or environment
+     */
+    public ListSpacesResponse list(ListSpacesRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -95,17 +102,17 @@ public class SpacesClient {
     }
 
     /**
-     * Returns all spaces for an account or environment
+     * Creates a new space based on an existing Space Config
      */
-    public ListSpacesResponse list(ListSpacesRequest request) {
-        return list(request, null);
+    public SpaceResponse create() {
+        return create(SpaceConfig.builder().build());
     }
 
     /**
      * Creates a new space based on an existing Space Config
      */
-    public SpaceResponse create() {
-        return create(SpaceConfig.builder().build());
+    public SpaceResponse create(SpaceConfig request) {
+        return create(request, null);
     }
 
     /**
@@ -119,7 +126,7 @@ public class SpacesClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -144,10 +151,10 @@ public class SpacesClient {
     }
 
     /**
-     * Creates a new space based on an existing Space Config
+     * Returns a single space
      */
-    public SpaceResponse create(SpaceConfig request) {
-        return create(request, null);
+    public SpaceResponse get(SpaceId spaceId) {
+        return get(spaceId, null);
     }
 
     /**
@@ -180,10 +187,10 @@ public class SpacesClient {
     }
 
     /**
-     * Returns a single space
+     * Delete a space
      */
-    public SpaceResponse get(SpaceId spaceId) {
-        return get(spaceId, null);
+    public Success delete(SpaceId spaceId) {
+        return delete(spaceId, null);
     }
 
     /**
@@ -216,10 +223,10 @@ public class SpacesClient {
     }
 
     /**
-     * Delete a space
+     * Delete multiple spaces by id
      */
-    public Success delete(SpaceId spaceId) {
-        return delete(spaceId, null);
+    public Success bulkDelete(DeleteSpacesRequest request) {
+        return bulkDelete(request, null);
     }
 
     /**
@@ -251,17 +258,17 @@ public class SpacesClient {
     }
 
     /**
-     * Delete multiple spaces by id
+     * Update a space, to change the name for example
      */
-    public Success bulkDelete(DeleteSpacesRequest request) {
-        return bulkDelete(request, null);
+    public SpaceResponse update(SpaceId spaceId) {
+        return update(spaceId, SpaceConfig.builder().build());
     }
 
     /**
      * Update a space, to change the name for example
      */
-    public SpaceResponse update(SpaceId spaceId) {
-        return update(spaceId, SpaceConfig.builder().build());
+    public SpaceResponse update(SpaceId spaceId, SpaceConfig request) {
+        return update(spaceId, request, null);
     }
 
     /**
@@ -276,7 +283,7 @@ public class SpacesClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -301,10 +308,10 @@ public class SpacesClient {
     }
 
     /**
-     * Update a space, to change the name for example
+     * Sets archivedAt timestamp on a space
      */
-    public SpaceResponse update(SpaceId spaceId, SpaceConfig request) {
-        return update(spaceId, request, null);
+    public Success archiveSpace(SpaceId spaceId) {
+        return archiveSpace(spaceId, null);
     }
 
     /**
@@ -335,12 +342,5 @@ public class SpacesClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Sets archivedAt timestamp on a space
-     */
-    public Success archiveSpace(SpaceId spaceId) {
-        return archiveSpace(spaceId, null);
     }
 }

@@ -52,7 +52,7 @@ public final class EventAttributes {
         return progress;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EventAttributes && equalTo((EventAttributes) other);
@@ -67,12 +67,12 @@ public final class EventAttributes {
         return targetUpdatedAt.equals(other.targetUpdatedAt) && progress.equals(other.progress);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.targetUpdatedAt, this.progress);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

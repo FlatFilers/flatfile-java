@@ -42,7 +42,7 @@ public final class JobOutcomeNextUrl {
         return label;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobOutcomeNextUrl && equalTo((JobOutcomeNextUrl) other);
@@ -57,12 +57,12 @@ public final class JobOutcomeNextUrl {
         return url.equals(other.url) && label.equals(other.label);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.url, this.label);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class JobOutcomeNextUrl {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobOutcomeNextUrl other) {
             url(other.getUrl());
             label(other.getLabel());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("url")
         public _FinalStage url(String url) {
             this.url = url;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobOutcomeNextUrl build() {
             return new JobOutcomeNextUrl(url, label, additionalProperties);
         }

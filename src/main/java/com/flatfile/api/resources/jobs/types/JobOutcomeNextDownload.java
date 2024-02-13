@@ -51,7 +51,7 @@ public final class JobOutcomeNextDownload {
         return fileName;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobOutcomeNextDownload && equalTo((JobOutcomeNextDownload) other);
@@ -66,12 +66,12 @@ public final class JobOutcomeNextDownload {
         return url.equals(other.url) && label.equals(other.label) && fileName.equals(other.fileName);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.url, this.label, this.fileName);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -111,7 +111,7 @@ public final class JobOutcomeNextDownload {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobOutcomeNextDownload other) {
             url(other.getUrl());
             label(other.getLabel());
@@ -119,40 +119,40 @@ public final class JobOutcomeNextDownload {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("url")
         public _FinalStage url(String url) {
             this.url = url;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage fileName(String fileName) {
             this.fileName = Optional.of(fileName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fileName", nulls = Nulls.SKIP)
         public _FinalStage fileName(Optional<String> fileName) {
             this.fileName = fileName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobOutcomeNextDownload build() {
             return new JobOutcomeNextDownload(url, label, fileName, additionalProperties);
         }

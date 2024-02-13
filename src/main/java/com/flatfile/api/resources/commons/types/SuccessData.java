@@ -28,12 +28,12 @@ public final class SuccessData implements ISuccessData {
     }
 
     @JsonProperty("success")
-    @Override
+    @java.lang.Override
     public boolean getSuccess() {
         return success;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SuccessData && equalTo((SuccessData) other);
@@ -48,12 +48,12 @@ public final class SuccessData implements ISuccessData {
         return success == other.success;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.success);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -81,20 +81,20 @@ public final class SuccessData implements ISuccessData {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(SuccessData other) {
             success(other.getSuccess());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public _FinalStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public SuccessData build() {
             return new SuccessData(success, additionalProperties);
         }

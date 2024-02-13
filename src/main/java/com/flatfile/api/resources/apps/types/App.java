@@ -137,7 +137,7 @@ public final class App {
         return activatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof App && equalTo((App) other);
@@ -163,7 +163,7 @@ public final class App {
                 && activatedAt.equals(other.activatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -180,7 +180,7 @@ public final class App {
                 this.activatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -284,7 +284,7 @@ public final class App {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(App other) {
             id(other.getId());
             name(other.getName());
@@ -301,109 +301,109 @@ public final class App {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(AppId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public NamespaceStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("namespace")
         public TypeStage namespace(String namespace) {
             this.namespace = namespace;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public EntityStage type(AppType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("entity")
         public EntityPluralStage entity(String entity) {
             this.entity = entity;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("entityPlural")
         public MetadataStage entityPlural(String entityPlural) {
             this.entityPlural = entityPlural;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("metadata")
         public CreatedAtStage metadata(Object metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage activatedAt(OffsetDateTime activatedAt) {
             this.activatedAt = Optional.of(activatedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "activatedAt", nulls = Nulls.SKIP)
         public _FinalStage activatedAt(Optional<OffsetDateTime> activatedAt) {
             this.activatedAt = activatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
             this.deletedAt = Optional.of(deletedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "deletedAt", nulls = Nulls.SKIP)
         public _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt) {
             this.deletedAt = deletedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage icon(String icon) {
             this.icon = Optional.of(icon);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon", nulls = Nulls.SKIP)
         public _FinalStage icon(Optional<String> icon) {
             this.icon = icon;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public App build() {
             return new App(
                     id,

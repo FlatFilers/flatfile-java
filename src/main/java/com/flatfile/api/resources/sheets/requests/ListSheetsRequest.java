@@ -36,7 +36,7 @@ public final class ListSheetsRequest {
         return workbookId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListSheetsRequest && equalTo((ListSheetsRequest) other);
@@ -51,12 +51,12 @@ public final class ListSheetsRequest {
         return workbookId.equals(other.workbookId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.workbookId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -84,7 +84,7 @@ public final class ListSheetsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ListSheetsRequest other) {
             workbookId(other.getWorkbookId());
             return this;
@@ -94,14 +94,14 @@ public final class ListSheetsRequest {
          * <p>ID of workbook</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("workbookId")
         public _FinalStage workbookId(WorkbookId workbookId) {
             this.workbookId = workbookId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ListSheetsRequest build() {
             return new ListSheetsRequest(workbookId, additionalProperties);
         }

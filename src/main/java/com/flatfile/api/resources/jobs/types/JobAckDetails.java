@@ -58,7 +58,7 @@ public final class JobAckDetails {
         return estimatedCompletionAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobAckDetails && equalTo((JobAckDetails) other);
@@ -75,12 +75,12 @@ public final class JobAckDetails {
                 && estimatedCompletionAt.equals(other.estimatedCompletionAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.info, this.progress, this.estimatedCompletionAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

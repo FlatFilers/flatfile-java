@@ -5,8 +5,10 @@ package com.flatfile.api.resources.guests;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.ActorRoleId;
 import com.flatfile.api.resources.commons.types.GuestId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.guests.requests.GetGuestTokenRequest;
@@ -18,11 +20,13 @@ import com.flatfile.api.resources.guests.types.GuestResponse;
 import com.flatfile.api.resources.guests.types.GuestTokenResponse;
 import com.flatfile.api.resources.guests.types.Invite;
 import com.flatfile.api.resources.guests.types.ListGuestsResponse;
+import com.flatfile.api.resources.roles.types.AssignActorRoleRequest;
+import com.flatfile.api.resources.roles.types.AssignRoleResponse;
+import com.flatfile.api.resources.roles.types.ListActorRolesResponse;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -32,6 +36,13 @@ public class GuestsClient {
 
     public GuestsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Returns all guests
+     */
+    public ListGuestsResponse list(ListGuestsRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -66,10 +77,10 @@ public class GuestsClient {
     }
 
     /**
-     * Returns all guests
+     * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
      */
-    public ListGuestsResponse list(ListGuestsRequest request) {
-        return list(request, null);
+    public CreateGuestResponse create(List<GuestConfig> request) {
+        return create(request, null);
     }
 
     /**
@@ -83,7 +94,7 @@ public class GuestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -108,10 +119,10 @@ public class GuestsClient {
     }
 
     /**
-     * Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.
+     * Returns a single guest
      */
-    public CreateGuestResponse create(List<GuestConfig> request) {
-        return create(request, null);
+    public GuestResponse get(GuestId guestId) {
+        return get(guestId, null);
     }
 
     /**
@@ -144,10 +155,10 @@ public class GuestsClient {
     }
 
     /**
-     * Returns a single guest
+     * Deletes a single guest
      */
-    public GuestResponse get(GuestId guestId) {
-        return get(guestId, null);
+    public Success delete(GuestId guestId) {
+        return delete(guestId, null);
     }
 
     /**
@@ -180,17 +191,17 @@ public class GuestsClient {
     }
 
     /**
-     * Deletes a single guest
+     * Updates a single guest, for example to change name or email
      */
-    public Success delete(GuestId guestId) {
-        return delete(guestId, null);
+    public GuestResponse update(GuestId guestId) {
+        return update(guestId, GuestConfigUpdate.builder().build());
     }
 
     /**
      * Updates a single guest, for example to change name or email
      */
-    public GuestResponse update(GuestId guestId) {
-        return update(guestId, GuestConfigUpdate.builder().build());
+    public GuestResponse update(GuestId guestId, GuestConfigUpdate request) {
+        return update(guestId, request, null);
     }
 
     /**
@@ -205,7 +216,7 @@ public class GuestsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -230,17 +241,17 @@ public class GuestsClient {
     }
 
     /**
-     * Updates a single guest, for example to change name or email
+     * Returns a single guest token
      */
-    public GuestResponse update(GuestId guestId, GuestConfigUpdate request) {
-        return update(guestId, request, null);
+    public GuestTokenResponse getGuestToken(GuestId guestId) {
+        return getGuestToken(guestId, GetGuestTokenRequest.builder().build());
     }
 
     /**
      * Returns a single guest token
      */
-    public GuestTokenResponse getGuestToken(GuestId guestId) {
-        return getGuestToken(guestId, GetGuestTokenRequest.builder().build());
+    public GuestTokenResponse getGuestToken(GuestId guestId, GetGuestTokenRequest request) {
+        return getGuestToken(guestId, request, null);
     }
 
     /**
@@ -277,30 +288,108 @@ public class GuestsClient {
     }
 
     /**
-     * Returns a single guest token
+     * Lists roles assigned to a guest.
      */
-    public GuestTokenResponse getGuestToken(GuestId guestId, GetGuestTokenRequest request) {
-        return getGuestToken(guestId, request, null);
+    public ListActorRolesResponse listGuestRoles(GuestId guestId) {
+        return listGuestRoles(guestId, null);
     }
 
     /**
-     * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
+     * Lists roles assigned to a guest.
      */
-    public Success invite(List<Invite> request, RequestOptions requestOptions) {
+    public ListActorRolesResponse listGuestRoles(GuestId guestId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegments("invitations")
+                .addPathSegments("guests")
+                .addPathSegment(guestId.toString())
+                .addPathSegments("roles")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListActorRolesResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Assigns a role to a guest.
+     */
+    public AssignRoleResponse assignGuestRole(GuestId guestId, AssignActorRoleRequest request) {
+        return assignGuestRole(guestId, request, null);
+    }
+
+    /**
+     * Assigns a role to a guest.
+     */
+    public AssignRoleResponse assignGuestRole(
+            GuestId guestId, AssignActorRoleRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("guests")
+                .addPathSegment(guestId.toString())
+                .addPathSegments("roles")
                 .build();
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), AssignRoleResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Removes a role from a guest.
+     */
+    public Success deleteGuestRole(GuestId guestId, ActorRoleId actorRoleId) {
+        return deleteGuestRole(guestId, actorRoleId, null);
+    }
+
+    /**
+     * Removes a role from a guest.
+     */
+    public Success deleteGuestRole(GuestId guestId, ActorRoleId actorRoleId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("guests")
+                .addPathSegment(guestId.toString())
+                .addPathSegments("roles")
+                .addPathSegment(actorRoleId.toString())
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -323,5 +412,40 @@ public class GuestsClient {
      */
     public Success invite(List<Invite> request) {
         return invite(request, null);
+    }
+
+    /**
+     * Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.
+     */
+    public Success invite(List<Invite> request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("invitations")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

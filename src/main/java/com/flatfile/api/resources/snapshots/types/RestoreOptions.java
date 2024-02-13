@@ -49,7 +49,7 @@ public final class RestoreOptions {
         return deleted;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RestoreOptions && equalTo((RestoreOptions) other);
@@ -64,12 +64,12 @@ public final class RestoreOptions {
         return created == other.created && updated == other.updated && deleted == other.deleted;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.created, this.updated, this.deleted);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -109,7 +109,7 @@ public final class RestoreOptions {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RestoreOptions other) {
             created(other.getCreated());
             updated(other.getUpdated());
@@ -117,28 +117,28 @@ public final class RestoreOptions {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("created")
         public UpdatedStage created(boolean created) {
             this.created = created;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updated")
         public DeletedStage updated(boolean updated) {
             this.updated = updated;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("deleted")
         public _FinalStage deleted(boolean deleted) {
             this.deleted = deleted;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RestoreOptions build() {
             return new RestoreOptions(created, updated, deleted, additionalProperties);
         }

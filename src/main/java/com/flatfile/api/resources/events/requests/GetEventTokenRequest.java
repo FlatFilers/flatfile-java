@@ -50,7 +50,7 @@ public final class GetEventTokenRequest {
         return spaceId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetEventTokenRequest && equalTo((GetEventTokenRequest) other);
@@ -65,12 +65,12 @@ public final class GetEventTokenRequest {
         return scope.equals(other.scope) && spaceId.equals(other.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.scope, this.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -5,6 +5,7 @@ package com.flatfile.api.resources.jobs;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.JobId;
@@ -27,7 +28,6 @@ import java.io.IOException;
 import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -41,6 +41,10 @@ public class JobsClient {
 
     public ListJobsResponse list() {
         return list(ListJobsRequest.builder().build());
+    }
+
+    public ListJobsResponse list(ListJobsRequest request) {
+        return list(request, null);
     }
 
     public ListJobsResponse list(ListJobsRequest request, RequestOptions requestOptions) {
@@ -95,8 +99,8 @@ public class JobsClient {
         }
     }
 
-    public ListJobsResponse list(ListJobsRequest request) {
-        return list(request, null);
+    public JobResponse create(JobConfig request) {
+        return create(request, null);
     }
 
     public JobResponse create(JobConfig request, RequestOptions requestOptions) {
@@ -107,7 +111,7 @@ public class JobsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -131,8 +135,8 @@ public class JobsClient {
         }
     }
 
-    public JobResponse create(JobConfig request) {
-        return create(request, null);
+    public JobResponse get(JobId jobId) {
+        return get(jobId, null);
     }
 
     public JobResponse get(JobId jobId, RequestOptions requestOptions) {
@@ -161,12 +165,12 @@ public class JobsClient {
         }
     }
 
-    public JobResponse get(JobId jobId) {
-        return get(jobId, null);
-    }
-
     public JobResponse update(JobId jobId) {
         return update(jobId, JobUpdate.builder().build());
+    }
+
+    public JobResponse update(JobId jobId, JobUpdate request) {
+        return update(jobId, request, null);
     }
 
     public JobResponse update(JobId jobId, JobUpdate request, RequestOptions requestOptions) {
@@ -178,7 +182,7 @@ public class JobsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -202,8 +206,8 @@ public class JobsClient {
         }
     }
 
-    public JobResponse update(JobId jobId, JobUpdate request) {
-        return update(jobId, request, null);
+    public Success delete(JobId jobId) {
+        return delete(jobId, null);
     }
 
     public Success delete(JobId jobId, RequestOptions requestOptions) {
@@ -232,8 +236,11 @@ public class JobsClient {
         }
     }
 
-    public Success delete(JobId jobId) {
-        return delete(jobId, null);
+    /**
+     * Execute a job and return the job
+     */
+    public Success execute(String jobId) {
+        return execute(jobId, null);
     }
 
     /**
@@ -267,10 +274,10 @@ public class JobsClient {
     }
 
     /**
-     * Execute a job and return the job
+     * Returns a single job's execution plan
      */
-    public Success execute(String jobId) {
-        return execute(jobId, null);
+    public JobPlanResponse getExecutionPlan(JobId jobId) {
+        return getExecutionPlan(jobId, null);
     }
 
     /**
@@ -304,10 +311,10 @@ public class JobsClient {
     }
 
     /**
-     * Returns a single job's execution plan
+     * Update a job's entire execution plan
      */
-    public JobPlanResponse getExecutionPlan(JobId jobId) {
-        return getExecutionPlan(jobId, null);
+    public JobPlanResponse updateExecutionPlan(JobId jobId, JobExecutionPlanRequest request) {
+        return updateExecutionPlan(jobId, request, null);
     }
 
     /**
@@ -324,58 +331,13 @@ public class JobsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("PUT", body)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), JobPlanResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Update a job's entire execution plan
-     */
-    public JobPlanResponse updateExecutionPlan(JobId jobId, JobExecutionPlanRequest request) {
-        return updateExecutionPlan(jobId, request, null);
-    }
-
-    /**
-     * Update one or more individual fields on a job's execution plan
-     */
-    public JobPlanResponse updateExecutionPlanFields(
-            String jobId, JobExecutionPlanConfigRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("jobs")
-                .addPathSegment(jobId)
-                .addPathSegments("plan")
-                .build();
-        RequestBody body;
-        try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -401,10 +363,55 @@ public class JobsClient {
     }
 
     /**
+     * Update one or more individual fields on a job's execution plan
+     */
+    public JobPlanResponse updateExecutionPlanFields(
+            String jobId, JobExecutionPlanConfigRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("jobs")
+                .addPathSegment(jobId)
+                .addPathSegments("plan")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), JobPlanResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Acknowledge a job and return the job
      */
     public JobResponse ack(JobId jobId) {
         return ack(jobId, Optional.empty());
+    }
+
+    /**
+     * Acknowledge a job and return the job
+     */
+    public JobResponse ack(JobId jobId, Optional<JobAckDetails> request) {
+        return ack(jobId, request, null);
     }
 
     /**
@@ -419,8 +426,11 @@ public class JobsClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -445,10 +455,10 @@ public class JobsClient {
     }
 
     /**
-     * Acknowledge a job and return the job
+     * Acknowledge a job outcome and return the job
      */
-    public JobResponse ack(JobId jobId, Optional<JobAckDetails> request) {
-        return ack(jobId, request, null);
+    public JobResponse ackOutcome(JobId jobId) {
+        return ackOutcome(jobId, null);
     }
 
     /**
@@ -482,17 +492,17 @@ public class JobsClient {
     }
 
     /**
-     * Acknowledge a job outcome and return the job
+     * Complete a job and return the job
      */
-    public JobResponse ackOutcome(JobId jobId) {
-        return ackOutcome(jobId, null);
+    public JobResponse complete(JobId jobId) {
+        return complete(jobId, Optional.empty());
     }
 
     /**
      * Complete a job and return the job
      */
-    public JobResponse complete(JobId jobId) {
-        return complete(jobId, Optional.empty());
+    public JobResponse complete(JobId jobId, Optional<JobCompleteDetails> request) {
+        return complete(jobId, request, null);
     }
 
     /**
@@ -507,8 +517,11 @@ public class JobsClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -533,17 +546,17 @@ public class JobsClient {
     }
 
     /**
-     * Complete a job and return the job
+     * Fail a job and return the job
      */
-    public JobResponse complete(JobId jobId, Optional<JobCompleteDetails> request) {
-        return complete(jobId, request, null);
+    public JobResponse fail(JobId jobId) {
+        return fail(jobId, Optional.empty());
     }
 
     /**
      * Fail a job and return the job
      */
-    public JobResponse fail(JobId jobId) {
-        return fail(jobId, Optional.empty());
+    public JobResponse fail(JobId jobId, Optional<JobCompleteDetails> request) {
+        return fail(jobId, request, null);
     }
 
     /**
@@ -558,8 +571,11 @@ public class JobsClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -584,17 +600,17 @@ public class JobsClient {
     }
 
     /**
-     * Fail a job and return the job
+     * Cancel a job and return the job
      */
-    public JobResponse fail(JobId jobId, Optional<JobCompleteDetails> request) {
-        return fail(jobId, request, null);
+    public JobResponse cancel(JobId jobId) {
+        return cancel(jobId, Optional.empty());
     }
 
     /**
      * Cancel a job and return the job
      */
-    public JobResponse cancel(JobId jobId) {
-        return cancel(jobId, Optional.empty());
+    public JobResponse cancel(JobId jobId, Optional<JobCancelDetails> request) {
+        return cancel(jobId, request, null);
     }
 
     /**
@@ -609,8 +625,11 @@ public class JobsClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -635,10 +654,10 @@ public class JobsClient {
     }
 
     /**
-     * Cancel a job and return the job
+     * Retry a failt job and return the job
      */
-    public JobResponse cancel(JobId jobId, Optional<JobCancelDetails> request) {
-        return cancel(jobId, request, null);
+    public JobResponse retry(JobId jobId) {
+        return retry(jobId, null);
     }
 
     /**
@@ -672,10 +691,10 @@ public class JobsClient {
     }
 
     /**
-     * Retry a failt job and return the job
+     * Preview the results of a mutation
      */
-    public JobResponse retry(JobId jobId) {
-        return retry(jobId, null);
+    public DiffRecordsResponse previewMutation(MutateJobConfig request) {
+        return previewMutation(request, null);
     }
 
     /**
@@ -690,7 +709,7 @@ public class JobsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -715,10 +734,10 @@ public class JobsClient {
     }
 
     /**
-     * Preview the results of a mutation
+     * Split a job and return the job
      */
-    public DiffRecordsResponse previewMutation(MutateJobConfig request) {
-        return previewMutation(request, null);
+    public JobResponse split(JobId jobId, JobSplitDetails request) {
+        return split(jobId, request, null);
     }
 
     /**
@@ -734,7 +753,7 @@ public class JobsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -756,12 +775,5 @@ public class JobsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Split a job and return the job
-     */
-    public JobResponse split(JobId jobId, JobSplitDetails request) {
-        return split(jobId, request, null);
     }
 }

@@ -33,7 +33,7 @@ public final class DeleteAgentRequest {
         return environmentId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeleteAgentRequest && equalTo((DeleteAgentRequest) other);
@@ -48,12 +48,12 @@ public final class DeleteAgentRequest {
         return environmentId.equals(other.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -81,20 +81,20 @@ public final class DeleteAgentRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DeleteAgentRequest other) {
             environmentId(other.getEnvironmentId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DeleteAgentRequest build() {
             return new DeleteAgentRequest(environmentId, additionalProperties);
         }

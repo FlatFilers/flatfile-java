@@ -5,6 +5,7 @@ package com.flatfile.api.resources.dataretentionpolicies;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.DataRetentionPolicyId;
@@ -16,7 +17,6 @@ import com.flatfile.api.resources.dataretentionpolicies.types.ListDataRetentionP
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -33,6 +33,13 @@ public class DataRetentionPoliciesClient {
      */
     public ListDataRetentionPoliciesResponse list() {
         return list(ListDataRetentionPoliciesRequest.builder().build());
+    }
+
+    /**
+     * Returns all data retention policies on an account matching a filter for environmentId
+     */
+    public ListDataRetentionPoliciesResponse list(ListDataRetentionPoliciesRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -69,10 +76,10 @@ public class DataRetentionPoliciesClient {
     }
 
     /**
-     * Returns all data retention policies on an account matching a filter for environmentId
+     * Add a new data retention policy to the space
      */
-    public ListDataRetentionPoliciesResponse list(ListDataRetentionPoliciesRequest request) {
-        return list(request, null);
+    public DataRetentionPolicyResponse create(DataRetentionPolicyConfig request) {
+        return create(request, null);
     }
 
     /**
@@ -86,7 +93,7 @@ public class DataRetentionPoliciesClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -111,10 +118,10 @@ public class DataRetentionPoliciesClient {
     }
 
     /**
-     * Add a new data retention policy to the space
+     * Returns a single data retention policy
      */
-    public DataRetentionPolicyResponse create(DataRetentionPolicyConfig request) {
-        return create(request, null);
+    public DataRetentionPolicyResponse get(DataRetentionPolicyId id) {
+        return get(id, null);
     }
 
     /**
@@ -147,10 +154,10 @@ public class DataRetentionPoliciesClient {
     }
 
     /**
-     * Returns a single data retention policy
+     * Updates a single data retention policy
      */
-    public DataRetentionPolicyResponse get(DataRetentionPolicyId id) {
-        return get(id, null);
+    public DataRetentionPolicyResponse update(DataRetentionPolicyId id, DataRetentionPolicyConfig request) {
+        return update(id, request, null);
     }
 
     /**
@@ -166,7 +173,7 @@ public class DataRetentionPoliciesClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -191,10 +198,10 @@ public class DataRetentionPoliciesClient {
     }
 
     /**
-     * Updates a single data retention policy
+     * Deletes a single data retention policy
      */
-    public DataRetentionPolicyResponse update(DataRetentionPolicyId id, DataRetentionPolicyConfig request) {
-        return update(id, request, null);
+    public Success delete(DataRetentionPolicyId id) {
+        return delete(id, null);
     }
 
     /**
@@ -224,12 +231,5 @@ public class DataRetentionPoliciesClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Deletes a single data retention policy
-     */
-    public Success delete(DataRetentionPolicyId id) {
-        return delete(id, null);
     }
 }

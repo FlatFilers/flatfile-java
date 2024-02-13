@@ -28,6 +28,8 @@ public final class RecordCounts {
 
     private final Optional<Map<String, Integer>> errorsByField;
 
+    private final Optional<Map<String, FieldRecordCounts>> byField;
+
     private final Map<String, Object> additionalProperties;
 
     private RecordCounts(
@@ -35,11 +37,13 @@ public final class RecordCounts {
             int valid,
             int error,
             Optional<Map<String, Integer>> errorsByField,
+            Optional<Map<String, FieldRecordCounts>> byField,
             Map<String, Object> additionalProperties) {
         this.total = total;
         this.valid = valid;
         this.error = error;
         this.errorsByField = errorsByField;
+        this.byField = byField;
         this.additionalProperties = additionalProperties;
     }
 
@@ -63,7 +67,15 @@ public final class RecordCounts {
         return errorsByField;
     }
 
-    @Override
+    /**
+     * @return Counts for valid, error, and total records grouped by field key
+     */
+    @JsonProperty("byField")
+    public Optional<Map<String, FieldRecordCounts>> getByField() {
+        return byField;
+    }
+
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordCounts && equalTo((RecordCounts) other);
@@ -78,15 +90,16 @@ public final class RecordCounts {
         return total == other.total
                 && valid == other.valid
                 && error == other.error
-                && errorsByField.equals(other.errorsByField);
+                && errorsByField.equals(other.errorsByField)
+                && byField.equals(other.byField);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.total, this.valid, this.error, this.errorsByField);
+        return Objects.hash(this.total, this.valid, this.error, this.errorsByField, this.byField);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -115,6 +128,10 @@ public final class RecordCounts {
         _FinalStage errorsByField(Optional<Map<String, Integer>> errorsByField);
 
         _FinalStage errorsByField(Map<String, Integer> errorsByField);
+
+        _FinalStage byField(Optional<Map<String, FieldRecordCounts>> byField);
+
+        _FinalStage byField(Map<String, FieldRecordCounts> byField);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -125,6 +142,8 @@ public final class RecordCounts {
 
         private int error;
 
+        private Optional<Map<String, FieldRecordCounts>> byField = Optional.empty();
+
         private Optional<Map<String, Integer>> errorsByField = Optional.empty();
 
         @JsonAnySetter
@@ -132,52 +151,70 @@ public final class RecordCounts {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RecordCounts other) {
             total(other.getTotal());
             valid(other.getValid());
             error(other.getError());
             errorsByField(other.getErrorsByField());
+            byField(other.getByField());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("total")
         public ValidStage total(int total) {
             this.total = total;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("valid")
         public ErrorStage valid(int valid) {
             this.valid = valid;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("error")
         public _FinalStage error(int error) {
             this.error = error;
             return this;
         }
 
-        @Override
+        /**
+         * <p>Counts for valid, error, and total records grouped by field key</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage byField(Map<String, FieldRecordCounts> byField) {
+            this.byField = Optional.of(byField);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "byField", nulls = Nulls.SKIP)
+        public _FinalStage byField(Optional<Map<String, FieldRecordCounts>> byField) {
+            this.byField = byField;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage errorsByField(Map<String, Integer> errorsByField) {
             this.errorsByField = Optional.of(errorsByField);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "errorsByField", nulls = Nulls.SKIP)
         public _FinalStage errorsByField(Optional<Map<String, Integer>> errorsByField) {
             this.errorsByField = errorsByField;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RecordCounts build() {
-            return new RecordCounts(total, valid, error, errorsByField, additionalProperties);
+            return new RecordCounts(total, valid, error, errorsByField, byField, additionalProperties);
         }
     }
 }

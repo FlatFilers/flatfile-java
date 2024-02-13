@@ -60,25 +60,25 @@ public final class Guest implements IGuestConfig {
     }
 
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public EnvironmentId getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("email")
-    @Override
+    @java.lang.Override
     public String getEmail() {
         return email;
     }
 
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("spaces")
-    @Override
+    @java.lang.Override
     public List<GuestSpace> getSpaces() {
         return spaces;
     }
@@ -104,7 +104,7 @@ public final class Guest implements IGuestConfig {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Guest && equalTo((Guest) other);
@@ -125,13 +125,13 @@ public final class Guest implements IGuestConfig {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.environmentId, this.email, this.name, this.spaces, this.id, this.createdAt, this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -198,7 +198,7 @@ public final class Guest implements IGuestConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Guest other) {
             environmentId(other.getEnvironmentId());
             email(other.getEmail());
@@ -210,28 +210,28 @@ public final class Guest implements IGuestConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public EmailStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public NameStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public IdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(GuestId id) {
             this.id = id;
@@ -242,7 +242,7 @@ public final class Guest implements IGuestConfig {
          * <p>Date the guest object was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -253,26 +253,26 @@ public final class Guest implements IGuestConfig {
          * <p>Date the guest object was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllSpaces(List<GuestSpace> spaces) {
             this.spaces.addAll(spaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addSpaces(GuestSpace spaces) {
             this.spaces.add(spaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaces", nulls = Nulls.SKIP)
         public _FinalStage spaces(List<GuestSpace> spaces) {
             this.spaces.clear();
@@ -280,7 +280,7 @@ public final class Guest implements IGuestConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Guest build() {
             return new Guest(environmentId, email, name, spaces, id, createdAt, updatedAt, additionalProperties);
         }

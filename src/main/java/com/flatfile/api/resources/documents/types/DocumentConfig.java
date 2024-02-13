@@ -46,13 +46,13 @@ public final class DocumentConfig implements IDocumentConfig {
     }
 
     @JsonProperty("title")
-    @Override
+    @java.lang.Override
     public String getTitle() {
         return title;
     }
 
     @JsonProperty("body")
-    @Override
+    @java.lang.Override
     public String getBody() {
         return body;
     }
@@ -61,18 +61,18 @@ public final class DocumentConfig implements IDocumentConfig {
      * @return Certain treatments will cause your Document to look or behave differently.
      */
     @JsonProperty("treatments")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getTreatments() {
         return treatments;
     }
 
     @JsonProperty("actions")
-    @Override
+    @java.lang.Override
     public Optional<List<Action>> getActions() {
         return actions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DocumentConfig && equalTo((DocumentConfig) other);
@@ -90,12 +90,12 @@ public final class DocumentConfig implements IDocumentConfig {
                 && actions.equals(other.actions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.title, this.body, this.treatments, this.actions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -141,7 +141,7 @@ public final class DocumentConfig implements IDocumentConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DocumentConfig other) {
             title(other.getTitle());
             body(other.getBody());
@@ -150,27 +150,27 @@ public final class DocumentConfig implements IDocumentConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public BodyStage title(String title) {
             this.title = title;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("body")
         public _FinalStage body(String body) {
             this.body = body;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -181,20 +181,20 @@ public final class DocumentConfig implements IDocumentConfig {
          * <p>Certain treatments will cause your Document to look or behave differently.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage treatments(List<String> treatments) {
             this.treatments = Optional.of(treatments);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "treatments", nulls = Nulls.SKIP)
         public _FinalStage treatments(Optional<List<String>> treatments) {
             this.treatments = treatments;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DocumentConfig build() {
             return new DocumentConfig(title, body, treatments, actions, additionalProperties);
         }

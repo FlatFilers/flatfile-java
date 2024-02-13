@@ -34,7 +34,7 @@ public final class UniqueConstraint {
         return config;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UniqueConstraint && equalTo((UniqueConstraint) other);
@@ -49,12 +49,12 @@ public final class UniqueConstraint {
         return config.equals(other.config);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.config);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

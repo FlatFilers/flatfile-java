@@ -49,7 +49,7 @@ public final class ListGuestsRequest {
         return email;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListGuestsRequest && equalTo((ListGuestsRequest) other);
@@ -64,12 +64,12 @@ public final class ListGuestsRequest {
         return spaceId.equals(other.spaceId) && email.equals(other.email);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.spaceId, this.email);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -103,7 +103,7 @@ public final class ListGuestsRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ListGuestsRequest other) {
             spaceId(other.getSpaceId());
             email(other.getEmail());
@@ -114,7 +114,7 @@ public final class ListGuestsRequest {
          * <p>ID of space to return</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("spaceId")
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
@@ -125,20 +125,20 @@ public final class ListGuestsRequest {
          * <p>Email of guest to return</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage email(String email) {
             this.email = Optional.of(email);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "email", nulls = Nulls.SKIP)
         public _FinalStage email(Optional<String> email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ListGuestsRequest build() {
             return new ListGuestsRequest(spaceId, email, additionalProperties);
         }

@@ -63,7 +63,7 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return The ID of the Sheet.
      */
     @JsonProperty("id")
-    @Override
+    @java.lang.Override
     public Optional<SheetId> getId() {
         return id;
     }
@@ -72,7 +72,7 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return The ID of the Workbook.
      */
     @JsonProperty("workbookId")
-    @Override
+    @java.lang.Override
     public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
@@ -81,7 +81,7 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return Describes shape of data as well as behavior.
      */
     @JsonProperty("config")
-    @Override
+    @java.lang.Override
     public Optional<SheetConfig> getConfig() {
         return config;
     }
@@ -90,7 +90,7 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return The amount of records in the Sheet.
      */
     @JsonProperty("countRecords")
-    @Override
+    @java.lang.Override
     public Optional<RecordCounts> getCountRecords() {
         return countRecords;
     }
@@ -99,7 +99,7 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return The scoped namespace of the Sheet.
      */
     @JsonProperty("namespace")
-    @Override
+    @java.lang.Override
     public Optional<String> getNamespace() {
         return namespace;
     }
@@ -108,7 +108,7 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return Date the sheet was last updated
      */
     @JsonProperty("updatedAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getUpdatedAt() {
         return updatedAt;
     }
@@ -117,12 +117,12 @@ public final class SheetUpdate implements ISheetUpdate {
      * @return Date the sheet was created
      */
     @JsonProperty("createdAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getCreatedAt() {
         return createdAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SheetUpdate && equalTo((SheetUpdate) other);
@@ -143,7 +143,7 @@ public final class SheetUpdate implements ISheetUpdate {
                 && createdAt.equals(other.createdAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -155,7 +155,7 @@ public final class SheetUpdate implements ISheetUpdate {
                 this.createdAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

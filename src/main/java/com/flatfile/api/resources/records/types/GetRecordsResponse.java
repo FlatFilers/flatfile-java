@@ -32,7 +32,7 @@ public final class GetRecordsResponse {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetRecordsResponse && equalTo((GetRecordsResponse) other);
@@ -47,12 +47,12 @@ public final class GetRecordsResponse {
         return data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class GetRecordsResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetRecordsResponse other) {
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(GetRecordsResponseData data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetRecordsResponse build() {
             return new GetRecordsResponse(data, additionalProperties);
         }

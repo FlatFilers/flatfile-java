@@ -74,7 +74,7 @@ public final class CreateFileRequest {
         return actions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CreateFileRequest && equalTo((CreateFileRequest) other);
@@ -92,12 +92,12 @@ public final class CreateFileRequest {
                 && actions.equals(other.actions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.spaceId, this.environmentId, this.mode, this.actions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -143,7 +143,7 @@ public final class CreateFileRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CreateFileRequest other) {
             spaceId(other.getSpaceId());
             environmentId(other.getEnvironmentId());
@@ -152,14 +152,14 @@ public final class CreateFileRequest {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("spaceId")
         public EnvironmentIdStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
@@ -170,13 +170,13 @@ public final class CreateFileRequest {
          * <p>The actions attached to the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -187,20 +187,20 @@ public final class CreateFileRequest {
          * <p>The storage mode of file to insert, defaults to &quot;import&quot;</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage mode(Mode mode) {
             this.mode = Optional.of(mode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "mode", nulls = Nulls.SKIP)
         public _FinalStage mode(Optional<Mode> mode) {
             this.mode = mode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CreateFileRequest build() {
             return new CreateFileRequest(spaceId, environmentId, mode, actions, additionalProperties);
         }

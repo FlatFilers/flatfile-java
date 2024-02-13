@@ -65,7 +65,7 @@ public final class EnumDetails {
         return unusedDestinationValues;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EnumDetails && equalTo((EnumDetails) other);
@@ -82,12 +82,12 @@ public final class EnumDetails {
                 && unusedDestinationValues.equals(other.unusedDestinationValues);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.mapping, this.unusedSourceValues, this.unusedDestinationValues);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

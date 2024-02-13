@@ -5,6 +5,7 @@ package com.flatfile.api.resources.documents;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.DocumentId;
@@ -16,7 +17,6 @@ import com.flatfile.api.resources.documents.types.ListDocumentsResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -26,6 +26,13 @@ public class DocumentsClient {
 
     public DocumentsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Returns all documents for a space
+     */
+    public ListDocumentsResponse list(SpaceId spaceId) {
+        return list(spaceId, null);
     }
 
     /**
@@ -59,10 +66,10 @@ public class DocumentsClient {
     }
 
     /**
-     * Returns all documents for a space
+     * Add a new document to the space
      */
-    public ListDocumentsResponse list(SpaceId spaceId) {
-        return list(spaceId, null);
+    public DocumentResponse create(SpaceId spaceId, DocumentConfig request) {
+        return create(spaceId, request, null);
     }
 
     /**
@@ -78,7 +85,7 @@ public class DocumentsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -103,10 +110,10 @@ public class DocumentsClient {
     }
 
     /**
-     * Add a new document to the space
+     * Returns a single document
      */
-    public DocumentResponse create(SpaceId spaceId, DocumentConfig request) {
-        return create(spaceId, request, null);
+    public DocumentResponse get(SpaceId spaceId, DocumentId documentId) {
+        return get(spaceId, documentId, null);
     }
 
     /**
@@ -141,10 +148,10 @@ public class DocumentsClient {
     }
 
     /**
-     * Returns a single document
+     * updates a single document, for only the body and title
      */
-    public DocumentResponse get(SpaceId spaceId, DocumentId documentId) {
-        return get(spaceId, documentId, null);
+    public DocumentResponse update(SpaceId spaceId, DocumentId documentId, DocumentConfig request) {
+        return update(spaceId, documentId, request, null);
     }
 
     /**
@@ -162,7 +169,7 @@ public class DocumentsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -187,10 +194,10 @@ public class DocumentsClient {
     }
 
     /**
-     * updates a single document, for only the body and title
+     * Deletes a single document
      */
-    public DocumentResponse update(SpaceId spaceId, DocumentId documentId, DocumentConfig request) {
-        return update(spaceId, documentId, request, null);
+    public Success delete(SpaceId spaceId, DocumentId documentId) {
+        return delete(spaceId, documentId, null);
     }
 
     /**
@@ -222,12 +229,5 @@ public class DocumentsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Deletes a single document
-     */
-    public Success delete(SpaceId spaceId, DocumentId documentId) {
-        return delete(spaceId, documentId, null);
     }
 }

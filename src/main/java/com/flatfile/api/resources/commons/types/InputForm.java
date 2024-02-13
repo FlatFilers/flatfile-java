@@ -43,7 +43,7 @@ public final class InputForm {
         return fields;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InputForm && equalTo((InputForm) other);
@@ -58,12 +58,12 @@ public final class InputForm {
         return type.equals(other.type) && fields.equals(other.fields);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type, this.fields);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -99,33 +99,33 @@ public final class InputForm {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(InputForm other) {
             type(other.getType());
             fields(other.getFields());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(InputFormType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addAllFields(List<InputField> fields) {
             this.fields.addAll(fields);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage addFields(InputField fields) {
             this.fields.add(fields);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fields", nulls = Nulls.SKIP)
         public _FinalStage fields(List<InputField> fields) {
             this.fields.clear();
@@ -133,7 +133,7 @@ public final class InputForm {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public InputForm build() {
             return new InputForm(type, fields, additionalProperties);
         }

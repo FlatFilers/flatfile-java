@@ -33,7 +33,7 @@ public final class GuestWorkbook {
         return id;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GuestWorkbook && equalTo((GuestWorkbook) other);
@@ -48,12 +48,12 @@ public final class GuestWorkbook {
         return id.equals(other.id);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -81,20 +81,20 @@ public final class GuestWorkbook {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GuestWorkbook other) {
             id(other.getId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(WorkbookId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GuestWorkbook build() {
             return new GuestWorkbook(id, additionalProperties);
         }

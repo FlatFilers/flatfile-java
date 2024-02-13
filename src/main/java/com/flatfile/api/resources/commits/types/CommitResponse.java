@@ -32,7 +32,7 @@ public final class CommitResponse {
         return data;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CommitResponse && equalTo((CommitResponse) other);
@@ -47,12 +47,12 @@ public final class CommitResponse {
         return data.equals(other.data);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.data);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class CommitResponse {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CommitResponse other) {
             data(other.getData());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("data")
         public _FinalStage data(Commit data) {
             this.data = data;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CommitResponse build() {
             return new CommitResponse(data, additionalProperties);
         }

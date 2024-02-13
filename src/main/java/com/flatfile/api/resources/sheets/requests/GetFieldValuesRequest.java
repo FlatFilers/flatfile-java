@@ -139,7 +139,7 @@ public final class GetFieldValuesRequest {
         return searchValue;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetFieldValuesRequest && equalTo((GetFieldValuesRequest) other);
@@ -163,7 +163,7 @@ public final class GetFieldValuesRequest {
                 && searchValue.equals(other.searchValue);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.fieldKey,
@@ -178,7 +178,7 @@ public final class GetFieldValuesRequest {
                 this.searchValue);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

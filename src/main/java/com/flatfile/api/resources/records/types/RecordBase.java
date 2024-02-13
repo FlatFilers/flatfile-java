@@ -56,7 +56,7 @@ public final class RecordBase implements IRecordBase {
     }
 
     @JsonProperty("id")
-    @Override
+    @java.lang.Override
     public RecordId getId() {
         return id;
     }
@@ -65,36 +65,36 @@ public final class RecordBase implements IRecordBase {
      * @return Deprecated, use <code>commitId</code> instead.
      */
     @JsonProperty("versionId")
-    @Override
+    @java.lang.Override
     public Optional<VersionId> getVersionId() {
         return versionId;
     }
 
     @JsonProperty("commitId")
-    @Override
+    @java.lang.Override
     public Optional<CommitId> getCommitId() {
         return commitId;
     }
 
     @JsonProperty("valid")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getValid() {
         return valid;
     }
 
     @JsonProperty("messages")
-    @Override
+    @java.lang.Override
     public Optional<List<ValidationMessage>> getMessages() {
         return messages;
     }
 
     @JsonProperty("metadata")
-    @Override
+    @java.lang.Override
     public Optional<Map<String, Object>> getMetadata() {
         return metadata;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordBase && equalTo((RecordBase) other);
@@ -114,12 +114,12 @@ public final class RecordBase implements IRecordBase {
                 && metadata.equals(other.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.versionId, this.commitId, this.valid, this.messages, this.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -177,7 +177,7 @@ public final class RecordBase implements IRecordBase {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RecordBase other) {
             id(other.getId());
             versionId(other.getVersionId());
@@ -188,59 +188,59 @@ public final class RecordBase implements IRecordBase {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(RecordId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Map<String, Object>> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage messages(List<ValidationMessage> messages) {
             this.messages = Optional.of(messages);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "messages", nulls = Nulls.SKIP)
         public _FinalStage messages(Optional<List<ValidationMessage>> messages) {
             this.messages = messages;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage valid(Boolean valid) {
             this.valid = Optional.of(valid);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "valid", nulls = Nulls.SKIP)
         public _FinalStage valid(Optional<Boolean> valid) {
             this.valid = valid;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
             this.commitId = Optional.of(commitId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "commitId", nulls = Nulls.SKIP)
         public _FinalStage commitId(Optional<CommitId> commitId) {
             this.commitId = commitId;
@@ -251,20 +251,20 @@ public final class RecordBase implements IRecordBase {
          * <p>Deprecated, use <code>commitId</code> instead.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = Optional.of(versionId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "versionId", nulls = Nulls.SKIP)
         public _FinalStage versionId(Optional<VersionId> versionId) {
             this.versionId = versionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RecordBase build() {
             return new RecordBase(id, versionId, commitId, valid, messages, metadata, additionalProperties);
         }

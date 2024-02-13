@@ -40,7 +40,7 @@ public final class JobOutcomeNextSnapshot {
         return sheetId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobOutcomeNextSnapshot && equalTo((JobOutcomeNextSnapshot) other);
@@ -55,12 +55,12 @@ public final class JobOutcomeNextSnapshot {
         return snapshotId.equals(other.snapshotId) && sheetId.equals(other.sheetId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.snapshotId, this.sheetId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -94,28 +94,28 @@ public final class JobOutcomeNextSnapshot {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobOutcomeNextSnapshot other) {
             snapshotId(other.getSnapshotId());
             sheetId(other.getSheetId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("snapshotId")
         public SheetIdStage snapshotId(String snapshotId) {
             this.snapshotId = snapshotId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sheetId")
         public _FinalStage sheetId(String sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobOutcomeNextSnapshot build() {
             return new JobOutcomeNextSnapshot(snapshotId, sheetId, additionalProperties);
         }

@@ -42,7 +42,7 @@ public final class PipelineJobConfig {
         return destinationSheetId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof PipelineJobConfig && equalTo((PipelineJobConfig) other);
@@ -57,12 +57,12 @@ public final class PipelineJobConfig {
         return sourceSheetId.equals(other.sourceSheetId) && destinationSheetId.equals(other.destinationSheetId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sourceSheetId, this.destinationSheetId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,28 +96,28 @@ public final class PipelineJobConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(PipelineJobConfig other) {
             sourceSheetId(other.getSourceSheetId());
             destinationSheetId(other.getDestinationSheetId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sourceSheetId")
         public DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId) {
             this.sourceSheetId = sourceSheetId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("destinationSheetId")
         public _FinalStage destinationSheetId(SheetId destinationSheetId) {
             this.destinationSheetId = destinationSheetId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public PipelineJobConfig build() {
             return new PipelineJobConfig(sourceSheetId, destinationSheetId, additionalProperties);
         }

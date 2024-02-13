@@ -138,7 +138,7 @@ public final class ListSpacesRequest {
         return isCollaborative;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListSpacesRequest && equalTo((ListSpacesRequest) other);
@@ -161,7 +161,7 @@ public final class ListSpacesRequest {
                 && isCollaborative.equals(other.isCollaborative);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.environmentId,
@@ -175,7 +175,7 @@ public final class ListSpacesRequest {
                 this.isCollaborative);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

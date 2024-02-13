@@ -63,7 +63,7 @@ public final class JobOutcomeNextId {
         return query;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobOutcomeNextId && equalTo((JobOutcomeNextId) other);
@@ -78,12 +78,12 @@ public final class JobOutcomeNextId {
         return id.equals(other.id) && label.equals(other.label) && path.equals(other.path) && query.equals(other.query);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.label, this.path, this.query);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -129,7 +129,7 @@ public final class JobOutcomeNextId {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobOutcomeNextId other) {
             id(other.getId());
             label(other.getLabel());
@@ -138,53 +138,53 @@ public final class JobOutcomeNextId {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage query(String query) {
             this.query = Optional.of(query);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "query", nulls = Nulls.SKIP)
         public _FinalStage query(Optional<String> query) {
             this.query = query;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage path(String path) {
             this.path = Optional.of(path);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "path", nulls = Nulls.SKIP)
         public _FinalStage path(Optional<String> path) {
             this.path = path;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage label(String label) {
             this.label = Optional.of(label);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "label", nulls = Nulls.SKIP)
         public _FinalStage label(Optional<String> label) {
             this.label = label;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobOutcomeNextId build() {
             return new JobOutcomeNextId(id, label, path, query, additionalProperties);
         }

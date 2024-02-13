@@ -152,7 +152,7 @@ public final class Program {
         return accessToken;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Program && equalTo((Program) other);
@@ -176,7 +176,7 @@ public final class Program {
                 && accessToken.equals(other.accessToken);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.rules,
@@ -191,7 +191,7 @@ public final class Program {
                 this.accessToken);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

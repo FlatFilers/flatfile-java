@@ -5,9 +5,15 @@ package com.flatfile.api.resources.users;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.types.ActorRoleId;
+import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.commons.types.UserId;
+import com.flatfile.api.resources.roles.types.AssignActorRoleRequest;
+import com.flatfile.api.resources.roles.types.AssignRoleResponse;
+import com.flatfile.api.resources.roles.types.ListActorRolesResponse;
 import com.flatfile.api.resources.users.requests.ListUsersRequest;
 import com.flatfile.api.resources.users.types.ListUsersResponse;
 import com.flatfile.api.resources.users.types.UserResponse;
@@ -15,6 +21,7 @@ import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UsersClient {
@@ -29,6 +36,13 @@ public class UsersClient {
      */
     public ListUsersResponse list() {
         return list(ListUsersRequest.builder().build());
+    }
+
+    /**
+     * Gets a list of users
+     */
+    public ListUsersResponse list(ListUsersRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -62,10 +76,10 @@ public class UsersClient {
     }
 
     /**
-     * Gets a list of users
+     * Gets a user
      */
-    public ListUsersResponse list(ListUsersRequest request) {
-        return list(request, null);
+    public UserResponse get(UserId userId) {
+        return get(userId, null);
     }
 
     /**
@@ -98,9 +112,122 @@ public class UsersClient {
     }
 
     /**
-     * Gets a user
+     * Lists roles assigned to a user.
      */
-    public UserResponse get(UserId userId) {
-        return get(userId, null);
+    public ListActorRolesResponse listUserRoles(UserId userId) {
+        return listUserRoles(userId, null);
+    }
+
+    /**
+     * Lists roles assigned to a user.
+     */
+    public ListActorRolesResponse listUserRoles(UserId userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId.toString())
+                .addPathSegments("roles")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListActorRolesResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Assigns a role to a user.
+     */
+    public AssignRoleResponse assignUserRole(UserId userId, AssignActorRoleRequest request) {
+        return assignUserRole(userId, request, null);
+    }
+
+    /**
+     * Assigns a role to a user.
+     */
+    public AssignRoleResponse assignUserRole(
+            UserId userId, AssignActorRoleRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId.toString())
+                .addPathSegments("roles")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), AssignRoleResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Removes a role from a user.
+     */
+    public Success deleteUserRole(UserId userId, ActorRoleId actorRoleId) {
+        return deleteUserRole(userId, actorRoleId, null);
+    }
+
+    /**
+     * Removes a role from a user.
+     */
+    public Success deleteUserRole(UserId userId, ActorRoleId actorRoleId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId.toString())
+                .addPathSegments("roles")
+                .addPathSegment(actorRoleId.toString())
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -18,18 +18,18 @@ public final class SuccessQueryParameter {
         return this.value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return this == other
                 || (other instanceof SuccessQueryParameter && this.value == ((SuccessQueryParameter) other).value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Boolean.hashCode(value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return Boolean.toString(value);
     }

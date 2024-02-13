@@ -68,19 +68,19 @@ public final class User implements IUserConfig {
     }
 
     @JsonProperty("email")
-    @Override
+    @java.lang.Override
     public String getEmail() {
         return email;
     }
 
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public String getName() {
         return name;
     }
 
     @JsonProperty("accountId")
-    @Override
+    @java.lang.Override
     public AccountId getAccountId() {
         return accountId;
     }
@@ -115,7 +115,7 @@ public final class User implements IUserConfig {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof User && equalTo((User) other);
@@ -138,7 +138,7 @@ public final class User implements IUserConfig {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.email,
@@ -152,7 +152,7 @@ public final class User implements IUserConfig {
                 this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -238,7 +238,7 @@ public final class User implements IUserConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(User other) {
             email(other.getEmail());
             name(other.getName());
@@ -252,68 +252,68 @@ public final class User implements IUserConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("email")
         public NameStage email(String email) {
             this.email = email;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public AccountIdStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("accountId")
         public IdStage accountId(AccountId accountId) {
             this.accountId = accountId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public IdpStage id(UserId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("idp")
         public CreatedAtStage idp(String idp) {
             this.idp = idp;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(String key, Object value) {
             this.metadata.put(key, value);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage putAllMetadata(Map<String, Object> metadata) {
             this.metadata.putAll(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Map<String, Object> metadata) {
             this.metadata.clear();
@@ -321,20 +321,20 @@ public final class User implements IUserConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage idpRef(String idpRef) {
             this.idpRef = Optional.of(idpRef);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "idpRef", nulls = Nulls.SKIP)
         public _FinalStage idpRef(Optional<String> idpRef) {
             this.idpRef = idpRef;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public User build() {
             return new User(
                     email, name, accountId, id, idp, idpRef, metadata, createdAt, updatedAt, additionalProperties);

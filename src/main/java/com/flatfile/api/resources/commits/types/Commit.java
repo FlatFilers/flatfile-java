@@ -96,7 +96,7 @@ public final class Commit {
         return completedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Commit && equalTo((Commit) other);
@@ -116,12 +116,12 @@ public final class Commit {
                 && completedAt.equals(other.completedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.sheetId, this.createdBy, this.completedBy, this.createdAt, this.completedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -179,7 +179,7 @@ public final class Commit {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Commit other) {
             id(other.getId());
             sheetId(other.getSheetId());
@@ -190,14 +190,14 @@ public final class Commit {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SheetIdStage id(CommitId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("sheetId")
         public CreatedByStage sheetId(SheetId sheetId) {
             this.sheetId = sheetId;
@@ -208,7 +208,7 @@ public final class Commit {
          * <p>The actor (user or system) who created the commit</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdBy")
         public CreatedAtStage createdBy(String createdBy) {
             this.createdBy = createdBy;
@@ -219,7 +219,7 @@ public final class Commit {
          * <p>The time the commit was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public _FinalStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -230,13 +230,13 @@ public final class Commit {
          * <p>The time the commit was acknowledged</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage completedAt(OffsetDateTime completedAt) {
             this.completedAt = Optional.of(completedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "completedAt", nulls = Nulls.SKIP)
         public _FinalStage completedAt(Optional<OffsetDateTime> completedAt) {
             this.completedAt = completedAt;
@@ -247,20 +247,20 @@ public final class Commit {
          * <p>The actor (user or system) who completed the commit</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage completedBy(String completedBy) {
             this.completedBy = Optional.of(completedBy);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "completedBy", nulls = Nulls.SKIP)
         public _FinalStage completedBy(Optional<String> completedBy) {
             this.completedBy = completedBy;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Commit build() {
             return new Commit(id, sheetId, createdBy, completedBy, createdAt, completedAt, additionalProperties);
         }

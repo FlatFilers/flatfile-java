@@ -10,6 +10,7 @@ import com.flatfile.api.resources.apps.AppsClient;
 import com.flatfile.api.resources.commits.CommitsClient;
 import com.flatfile.api.resources.dataretentionpolicies.DataRetentionPoliciesClient;
 import com.flatfile.api.resources.documents.DocumentsClient;
+import com.flatfile.api.resources.entitlements.EntitlementsClient;
 import com.flatfile.api.resources.environments.EnvironmentsClient;
 import com.flatfile.api.resources.events.EventsClient;
 import com.flatfile.api.resources.files.FilesClient;
@@ -39,6 +40,8 @@ public class Flatfile {
     protected final Supplier<DataRetentionPoliciesClient> dataRetentionPoliciesClient;
 
     protected final Supplier<DocumentsClient> documentsClient;
+
+    protected final Supplier<EntitlementsClient> entitlementsClient;
 
     protected final Supplier<EnvironmentsClient> environmentsClient;
 
@@ -77,6 +80,7 @@ public class Flatfile {
         this.commitsClient = Suppliers.memoize(() -> new CommitsClient(clientOptions));
         this.dataRetentionPoliciesClient = Suppliers.memoize(() -> new DataRetentionPoliciesClient(clientOptions));
         this.documentsClient = Suppliers.memoize(() -> new DocumentsClient(clientOptions));
+        this.entitlementsClient = Suppliers.memoize(() -> new EntitlementsClient(clientOptions));
         this.environmentsClient = Suppliers.memoize(() -> new EnvironmentsClient(clientOptions));
         this.eventsClient = Suppliers.memoize(() -> new EventsClient(clientOptions));
         this.filesClient = Suppliers.memoize(() -> new FilesClient(clientOptions));
@@ -112,6 +116,10 @@ public class Flatfile {
 
     public DocumentsClient documents() {
         return this.documentsClient.get();
+    }
+
+    public EntitlementsClient entitlements() {
+        return this.entitlementsClient.get();
     }
 
     public EnvironmentsClient environments() {

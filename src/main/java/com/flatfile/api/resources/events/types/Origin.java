@@ -42,7 +42,7 @@ public final class Origin {
         return slug;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Origin && equalTo((Origin) other);
@@ -57,12 +57,12 @@ public final class Origin {
         return id.equals(other.id) && slug.equals(other.slug);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.slug);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

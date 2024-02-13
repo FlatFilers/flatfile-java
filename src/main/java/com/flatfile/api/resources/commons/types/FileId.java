@@ -18,17 +18,17 @@ public final class FileId {
         return this.value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return this == other || (other instanceof FileId && this.value.equals(((FileId) other).value));
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return value.hashCode();
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return value;
     }

@@ -154,19 +154,19 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     @JsonProperty("spaceConfigId")
-    @Override
+    @java.lang.Override
     public Optional<SpaceConfigId> getSpaceConfigId() {
         return spaceConfigId;
     }
 
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
     @JsonProperty("primaryWorkbookId")
-    @Override
+    @java.lang.Override
     public Optional<WorkbookId> getPrimaryWorkbookId() {
         return primaryWorkbookId;
     }
@@ -175,49 +175,49 @@ public final class Space implements IInternalSpaceConfigBase {
      * @return Metadata for the space
      */
     @JsonProperty("metadata")
-    @Override
+    @java.lang.Override
     public Optional<Object> getMetadata() {
         return metadata;
     }
 
     @JsonProperty("actions")
-    @Override
+    @java.lang.Override
     public Optional<List<Action>> getActions() {
         return actions;
     }
 
     @JsonProperty("access")
-    @Override
+    @java.lang.Override
     public Optional<List<SpaceAccess>> getAccess() {
         return access;
     }
 
     @JsonProperty("autoConfigure")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAutoConfigure() {
         return autoConfigure;
     }
 
     @JsonProperty("namespace")
-    @Override
+    @java.lang.Override
     public Optional<String> getNamespace() {
         return namespace;
     }
 
     @JsonProperty("labels")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getLabels() {
         return labels;
     }
 
     @JsonProperty("translationsPath")
-    @Override
+    @java.lang.Override
     public Optional<String> getTranslationsPath() {
         return translationsPath;
     }
 
     @JsonProperty("languageOverride")
-    @Override
+    @java.lang.Override
     public Optional<String> getLanguageOverride() {
         return languageOverride;
     }
@@ -226,7 +226,7 @@ public final class Space implements IInternalSpaceConfigBase {
      * @return Date when space was archived
      */
     @JsonProperty("archivedAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getArchivedAt() {
         return archivedAt;
     }
@@ -361,7 +361,7 @@ public final class Space implements IInternalSpaceConfigBase {
         return guestAuthentication;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Space && equalTo((Space) other);
@@ -404,7 +404,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 && guestAuthentication.equals(other.guestAuthentication);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.spaceConfigId,
@@ -438,7 +438,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 this.guestAuthentication);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -636,7 +636,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Space other) {
             spaceConfigId(other.getSpaceConfigId());
             environmentId(other.getEnvironmentId());
@@ -670,7 +670,7 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(SpaceId id) {
             this.id = id;
@@ -681,7 +681,7 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Date when space was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -692,7 +692,7 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Date when space was updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public NameStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
@@ -703,7 +703,7 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>The name of the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
@@ -714,7 +714,7 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Type of guest authentication</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllGuestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
             this.guestAuthentication.addAll(guestAuthentication);
             return this;
@@ -724,13 +724,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Type of guest authentication</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addGuestAuthentication(GuestAuthenticationEnum guestAuthentication) {
             this.guestAuthentication.add(guestAuthentication);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "guestAuthentication", nulls = Nulls.SKIP)
         public _FinalStage guestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
             this.guestAuthentication.clear();
@@ -742,13 +742,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Date when the space was upgraded</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage upgradedAt(OffsetDateTime upgradedAt) {
             this.upgradedAt = Optional.of(upgradedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "upgradedAt", nulls = Nulls.SKIP)
         public _FinalStage upgradedAt(Optional<OffsetDateTime> upgradedAt) {
             this.upgradedAt = upgradedAt;
@@ -759,13 +759,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Size information for the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage size(SpaceSize size) {
             this.size = Optional.of(size);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "size", nulls = Nulls.SKIP)
         public _FinalStage size(Optional<SpaceSize> size) {
             this.size = size;
@@ -776,13 +776,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Flag for collaborative (project) spaces</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage isCollaborative(Boolean isCollaborative) {
             this.isCollaborative = Optional.of(isCollaborative);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "isCollaborative", nulls = Nulls.SKIP)
         public _FinalStage isCollaborative(Optional<Boolean> isCollaborative) {
             this.isCollaborative = isCollaborative;
@@ -793,13 +793,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Access token for the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage accessToken(String accessToken) {
             this.accessToken = Optional.of(accessToken);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "accessToken", nulls = Nulls.SKIP)
         public _FinalStage accessToken(Optional<String> accessToken) {
             this.accessToken = accessToken;
@@ -810,13 +810,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>The display order</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage displayOrder(Integer displayOrder) {
             this.displayOrder = Optional.of(displayOrder);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "displayOrder", nulls = Nulls.SKIP)
         public _FinalStage displayOrder(Optional<Integer> displayOrder) {
             this.displayOrder = displayOrder;
@@ -827,13 +827,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Guest link to the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage guestLink(String guestLink) {
             this.guestLink = Optional.of(guestLink);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "guestLink", nulls = Nulls.SKIP)
         public _FinalStage guestLink(Optional<String> guestLink) {
             this.guestLink = guestLink;
@@ -844,13 +844,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage lastActivityAt(OffsetDateTime lastActivityAt) {
             this.lastActivityAt = Optional.of(lastActivityAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lastActivityAt", nulls = Nulls.SKIP)
         public _FinalStage lastActivityAt(Optional<OffsetDateTime> lastActivityAt) {
             this.lastActivityAt = lastActivityAt;
@@ -861,13 +861,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Date when space was expired</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage expiredAt(OffsetDateTime expiredAt) {
             this.expiredAt = Optional.of(expiredAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expiredAt", nulls = Nulls.SKIP)
         public _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt) {
             this.expiredAt = expiredAt;
@@ -878,26 +878,26 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>User name who created space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage createdByUserName(String createdByUserName) {
             this.createdByUserName = Optional.of(createdByUserName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "createdByUserName", nulls = Nulls.SKIP)
         public _FinalStage createdByUserName(Optional<String> createdByUserName) {
             this.createdByUserName = createdByUserName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage createdByUserId(UserId createdByUserId) {
             this.createdByUserId = Optional.of(createdByUserId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "createdByUserId", nulls = Nulls.SKIP)
         public _FinalStage createdByUserId(Optional<UserId> createdByUserId) {
             this.createdByUserId = createdByUserId;
@@ -908,13 +908,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Amount of files in the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage filesCount(Integer filesCount) {
             this.filesCount = Optional.of(filesCount);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "filesCount", nulls = Nulls.SKIP)
         public _FinalStage filesCount(Optional<Integer> filesCount) {
             this.filesCount = filesCount;
@@ -925,13 +925,13 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Amount of workbooks in the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage workbooksCount(Integer workbooksCount) {
             this.workbooksCount = Optional.of(workbooksCount);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "workbooksCount", nulls = Nulls.SKIP)
         public _FinalStage workbooksCount(Optional<Integer> workbooksCount) {
             this.workbooksCount = workbooksCount;
@@ -942,104 +942,104 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Date when space was archived</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage archivedAt(OffsetDateTime archivedAt) {
             this.archivedAt = Optional.of(archivedAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "archivedAt", nulls = Nulls.SKIP)
         public _FinalStage archivedAt(Optional<OffsetDateTime> archivedAt) {
             this.archivedAt = archivedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage languageOverride(String languageOverride) {
             this.languageOverride = Optional.of(languageOverride);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "languageOverride", nulls = Nulls.SKIP)
         public _FinalStage languageOverride(Optional<String> languageOverride) {
             this.languageOverride = languageOverride;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage translationsPath(String translationsPath) {
             this.translationsPath = Optional.of(translationsPath);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "translationsPath", nulls = Nulls.SKIP)
         public _FinalStage translationsPath(Optional<String> translationsPath) {
             this.translationsPath = translationsPath;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage labels(List<String> labels) {
             this.labels = Optional.of(labels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
         public _FinalStage labels(Optional<List<String>> labels) {
             this.labels = labels;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public _FinalStage namespace(Optional<String> namespace) {
             this.namespace = namespace;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage autoConfigure(Boolean autoConfigure) {
             this.autoConfigure = Optional.of(autoConfigure);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "autoConfigure", nulls = Nulls.SKIP)
         public _FinalStage autoConfigure(Optional<Boolean> autoConfigure) {
             this.autoConfigure = autoConfigure;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage access(List<SpaceAccess> access) {
             this.access = Optional.of(access);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "access", nulls = Nulls.SKIP)
         public _FinalStage access(Optional<List<SpaceAccess>> access) {
             this.access = access;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -1050,59 +1050,59 @@ public final class Space implements IInternalSpaceConfigBase {
          * <p>Metadata for the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Object metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage primaryWorkbookId(WorkbookId primaryWorkbookId) {
             this.primaryWorkbookId = Optional.of(primaryWorkbookId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "primaryWorkbookId", nulls = Nulls.SKIP)
         public _FinalStage primaryWorkbookId(Optional<WorkbookId> primaryWorkbookId) {
             this.primaryWorkbookId = primaryWorkbookId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
         public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage spaceConfigId(SpaceConfigId spaceConfigId) {
             this.spaceConfigId = Optional.of(spaceConfigId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaceConfigId", nulls = Nulls.SKIP)
         public _FinalStage spaceConfigId(Optional<SpaceConfigId> spaceConfigId) {
             this.spaceConfigId = spaceConfigId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Space build() {
             return new Space(
                     spaceConfigId,

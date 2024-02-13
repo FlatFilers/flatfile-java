@@ -14,7 +14,7 @@ public final class EmptyObject {
         this.additionalProperties = additionalProperties;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EmptyObject;
@@ -25,7 +25,7 @@ public final class EmptyObject {
         return this.additionalProperties;
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

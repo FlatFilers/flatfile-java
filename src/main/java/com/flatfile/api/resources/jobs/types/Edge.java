@@ -89,7 +89,7 @@ public final class Edge {
         return metadata;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Edge && equalTo((Edge) other);
@@ -108,12 +108,12 @@ public final class Edge {
                 && metadata.equals(other.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.sourceField, this.destinationField, this.preview, this.enumDetails, this.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -165,7 +165,7 @@ public final class Edge {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Edge other) {
             sourceField(other.getSourceField());
             destinationField(other.getDestinationField());
@@ -179,7 +179,7 @@ public final class Edge {
          * <p>The description of the source field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("sourceField")
         public DestinationFieldStage sourceField(Property sourceField) {
             this.sourceField = sourceField;
@@ -190,7 +190,7 @@ public final class Edge {
          * <p>The description of the destination field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("destinationField")
         public _FinalStage destinationField(Property destinationField) {
             this.destinationField = destinationField;
@@ -201,13 +201,13 @@ public final class Edge {
          * <p>Metadata about the edge</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Metadata metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Metadata> metadata) {
             this.metadata = metadata;
@@ -218,13 +218,13 @@ public final class Edge {
          * <p>Only available if one or more of the destination fields is of type enum. Provides category mapping.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage enumDetails(EnumDetails enumDetails) {
             this.enumDetails = Optional.of(enumDetails);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "enumDetails", nulls = Nulls.SKIP)
         public _FinalStage enumDetails(Optional<EnumDetails> enumDetails) {
             this.enumDetails = enumDetails;
@@ -235,20 +235,20 @@ public final class Edge {
          * <p>A list of preview values of the data in the destination field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage preview(List<String> preview) {
             this.preview = Optional.of(preview);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "preview", nulls = Nulls.SKIP)
         public _FinalStage preview(Optional<List<String>> preview) {
             this.preview = preview;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Edge build() {
             return new Edge(sourceField, destinationField, preview, enumDetails, metadata, additionalProperties);
         }

@@ -57,7 +57,7 @@ public final class GuestSpace {
         return lastAccessed;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GuestSpace && equalTo((GuestSpace) other);
@@ -72,12 +72,12 @@ public final class GuestSpace {
         return id.equals(other.id) && workbooks.equals(other.workbooks) && lastAccessed.equals(other.lastAccessed);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.workbooks, this.lastAccessed);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -117,7 +117,7 @@ public final class GuestSpace {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GuestSpace other) {
             id(other.getId());
             workbooks(other.getWorkbooks());
@@ -125,40 +125,40 @@ public final class GuestSpace {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(SpaceId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage lastAccessed(OffsetDateTime lastAccessed) {
             this.lastAccessed = Optional.of(lastAccessed);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "lastAccessed", nulls = Nulls.SKIP)
         public _FinalStage lastAccessed(Optional<OffsetDateTime> lastAccessed) {
             this.lastAccessed = lastAccessed;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage workbooks(List<GuestWorkbook> workbooks) {
             this.workbooks = Optional.of(workbooks);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "workbooks", nulls = Nulls.SKIP)
         public _FinalStage workbooks(Optional<List<GuestWorkbook>> workbooks) {
             this.workbooks = workbooks;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GuestSpace build() {
             return new GuestSpace(id, workbooks, lastAccessed, additionalProperties);
         }

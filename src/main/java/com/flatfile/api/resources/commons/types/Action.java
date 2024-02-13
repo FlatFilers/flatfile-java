@@ -217,7 +217,7 @@ public final class Action {
         return constraints;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Action && equalTo((Action) other);
@@ -247,7 +247,7 @@ public final class Action {
                 && constraints.equals(other.constraints);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.slug,
@@ -268,7 +268,7 @@ public final class Action {
                 this.constraints);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -386,7 +386,7 @@ public final class Action {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Action other) {
             slug(other.getSlug());
             operation(other.getOperation());
@@ -411,7 +411,7 @@ public final class Action {
          * <p>The text on the button itself.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("label")
         public _FinalStage label(String label) {
             this.label = label;
@@ -422,13 +422,13 @@ public final class Action {
          * <p>A limitation or restriction on the action.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage constraints(List<ActionConstraint> constraints) {
             this.constraints = Optional.of(constraints);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "constraints", nulls = Nulls.SKIP)
         public _FinalStage constraints(Optional<List<ActionConstraint>> constraints) {
             this.constraints = constraints;
@@ -439,13 +439,13 @@ public final class Action {
          * <p>Adds an input form for this action after it is clicked.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage inputForm(InputForm inputForm) {
             this.inputForm = Optional.of(inputForm);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "inputForm", nulls = Nulls.SKIP)
         public _FinalStage inputForm(Optional<InputForm> inputForm) {
             this.inputForm = inputForm;
@@ -456,13 +456,13 @@ public final class Action {
          * <p><strong>This is deprecated. Use <code>constraints</code> instead.</strong></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage requireSelection(Boolean requireSelection) {
             this.requireSelection = Optional.of(requireSelection);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "requireSelection", nulls = Nulls.SKIP)
         public _FinalStage requireSelection(Optional<Boolean> requireSelection) {
             this.requireSelection = requireSelection;
@@ -473,13 +473,13 @@ public final class Action {
          * <p><strong>This is deprecated. Use <code>constraints</code> instead.</strong></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage requireAllValid(Boolean requireAllValid) {
             this.requireAllValid = Optional.of(requireAllValid);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "requireAllValid", nulls = Nulls.SKIP)
         public _FinalStage requireAllValid(Optional<Boolean> requireAllValid) {
             this.requireAllValid = requireAllValid;
@@ -490,13 +490,13 @@ public final class Action {
          * <p>Icon will work on primary actions. It will only accept an already existing Flatfile design system icon.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage icon(String icon) {
             this.icon = Optional.of(icon);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "icon", nulls = Nulls.SKIP)
         public _FinalStage icon(Optional<String> icon) {
             this.icon = icon;
@@ -507,13 +507,13 @@ public final class Action {
          * <p>Whether to show a modal to confirm the action</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage confirm(Boolean confirm) {
             this.confirm = Optional.of(confirm);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "confirm", nulls = Nulls.SKIP)
         public _FinalStage confirm(Optional<Boolean> confirm) {
             this.confirm = confirm;
@@ -524,13 +524,13 @@ public final class Action {
          * <p>A primary action will be more visibly present, whether in Sheet or Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage primary(Boolean primary) {
             this.primary = Optional.of(primary);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "primary", nulls = Nulls.SKIP)
         public _FinalStage primary(Optional<Boolean> primary) {
             this.primary = primary;
@@ -541,13 +541,13 @@ public final class Action {
          * <p>Determines if the action should happen on a regular cadence.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage schedule(ActionSchedule schedule) {
             this.schedule = Optional.of(schedule);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "schedule", nulls = Nulls.SKIP)
         public _FinalStage schedule(Optional<ActionSchedule> schedule) {
             this.schedule = schedule;
@@ -558,13 +558,13 @@ public final class Action {
          * <p>The text that appears in the dialog after the action is clicked.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
@@ -575,26 +575,26 @@ public final class Action {
          * <p><strong>This is deprecated.</strong></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage type(String type) {
             this.type = Optional.of(type);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "type", nulls = Nulls.SKIP)
         public _FinalStage type(Optional<String> type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage messages(List<ActionMessage> messages) {
             this.messages = Optional.of(messages);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "messages", nulls = Nulls.SKIP)
         public _FinalStage messages(Optional<List<ActionMessage>> messages) {
             this.messages = messages;
@@ -605,13 +605,13 @@ public final class Action {
          * <p>A tooltip that appears when hovering the action button</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage tooltip(String tooltip) {
             this.tooltip = Optional.of(tooltip);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "tooltip", nulls = Nulls.SKIP)
         public _FinalStage tooltip(Optional<String> tooltip) {
             this.tooltip = tooltip;
@@ -622,13 +622,13 @@ public final class Action {
          * <p>Foreground and toolbarBlocking action mode will prevent interacting with the resource until complete</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage mode(ActionMode mode) {
             this.mode = Optional.of(mode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "mode", nulls = Nulls.SKIP)
         public _FinalStage mode(Optional<ActionMode> mode) {
             this.mode = mode;
@@ -639,13 +639,13 @@ public final class Action {
          * <p>This will become the job operation that is triggered</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage operation(String operation) {
             this.operation = Optional.of(operation);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "operation", nulls = Nulls.SKIP)
         public _FinalStage operation(Optional<String> operation) {
             this.operation = operation;
@@ -656,20 +656,20 @@ public final class Action {
          * <p><strong>This is deprecated. Use <code>operation</code> instead.</strong></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage slug(String slug) {
             this.slug = Optional.of(slug);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "slug", nulls = Nulls.SKIP)
         public _FinalStage slug(Optional<String> slug) {
             this.slug = slug;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Action build() {
             return new Action(
                     slug,

@@ -12,7 +12,7 @@ public interface IWriteSecret {
 
     SecretValue getValue();
 
-    EnvironmentId getEnvironmentId();
+    Optional<EnvironmentId> getEnvironmentId();
 
     Optional<SpaceId> getSpaceId();
 }

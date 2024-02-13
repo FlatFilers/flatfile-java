@@ -117,7 +117,7 @@ public final class DetailedAgentLog {
         return log;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DetailedAgentLog && equalTo((DetailedAgentLog) other);
@@ -139,7 +139,7 @@ public final class DetailedAgentLog {
                 && log.equals(other.log);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.eventId,
@@ -152,7 +152,7 @@ public final class DetailedAgentLog {
                 this.log);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -231,7 +231,7 @@ public final class DetailedAgentLog {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DetailedAgentLog other) {
             eventId(other.getEventId());
             success(other.getSuccess());
@@ -244,7 +244,7 @@ public final class DetailedAgentLog {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("eventId")
         public SuccessStage eventId(EventId eventId) {
             this.eventId = eventId;
@@ -255,21 +255,21 @@ public final class DetailedAgentLog {
          * <p>Whether the agent execution was successful</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public CreatedAtStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public CompletedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("completedAt")
         public DurationStage completedAt(OffsetDateTime completedAt) {
             this.completedAt = completedAt;
@@ -280,7 +280,7 @@ public final class DetailedAgentLog {
          * <p>The duration of the agent execution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("duration")
         public TopicStage duration(int duration) {
             this.duration = duration;
@@ -291,7 +291,7 @@ public final class DetailedAgentLog {
          * <p>The topics of the agent execution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("topic")
         public _FinalStage topic(String topic) {
             this.topic = topic;
@@ -302,13 +302,13 @@ public final class DetailedAgentLog {
          * <p>The log of the agent execution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage log(String log) {
             this.log = Optional.of(log);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "log", nulls = Nulls.SKIP)
         public _FinalStage log(Optional<String> log) {
             this.log = log;
@@ -319,7 +319,7 @@ public final class DetailedAgentLog {
          * <p>The context of the agent execution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage context(String key, Object value) {
             this.context.put(key, value);
             return this;
@@ -329,13 +329,13 @@ public final class DetailedAgentLog {
          * <p>The context of the agent execution</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage putAllContext(Map<String, Object> context) {
             this.context.putAll(context);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "context", nulls = Nulls.SKIP)
         public _FinalStage context(Map<String, Object> context) {
             this.context.clear();
@@ -343,7 +343,7 @@ public final class DetailedAgentLog {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DetailedAgentLog build() {
             return new DetailedAgentLog(
                     eventId, success, createdAt, completedAt, duration, topic, context, log, additionalProperties);

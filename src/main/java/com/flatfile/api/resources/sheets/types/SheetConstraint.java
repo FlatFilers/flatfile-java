@@ -30,8 +30,16 @@ public final class SheetConstraint {
         return new SheetConstraint(new UniqueValue(value));
     }
 
+    public static SheetConstraint external(ExternalSheetConstraint value) {
+        return new SheetConstraint(new ExternalValue(value));
+    }
+
     public boolean isUnique() {
         return value instanceof UniqueValue;
+    }
+
+    public boolean isExternal() {
+        return value instanceof ExternalValue;
     }
 
     public boolean _isUnknown() {
@@ -41,6 +49,13 @@ public final class SheetConstraint {
     public Optional<CompositeUniqueConstraint> getUnique() {
         if (isUnique()) {
             return Optional.of(((UniqueValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<ExternalSheetConstraint> getExternal() {
+        if (isExternal()) {
+            return Optional.of(((ExternalValue) value).value);
         }
         return Optional.empty();
     }
@@ -60,11 +75,13 @@ public final class SheetConstraint {
     public interface Visitor<T> {
         T visitUnique(CompositeUniqueConstraint unique);
 
+        T visitExternal(ExternalSheetConstraint external);
+
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes(@JsonSubTypes.Type(UniqueValue.class))
+    @JsonSubTypes({@JsonSubTypes.Type(UniqueValue.class), @JsonSubTypes.Type(ExternalValue.class)})
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -82,12 +99,12 @@ public final class SheetConstraint {
             this.value = value;
         }
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitUnique(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof UniqueValue && equalTo((UniqueValue) other);
@@ -97,12 +114,50 @@ public final class SheetConstraint {
             return value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.value);
         }
 
-        @Override
+        @java.lang.Override
+        public String toString() {
+            return "SheetConstraint{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("external")
+    private static final class ExternalValue implements Value {
+        @JsonUnwrapped
+        private ExternalSheetConstraint value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ExternalValue() {}
+
+        private ExternalValue(ExternalSheetConstraint value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitExternal(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ExternalValue && equalTo((ExternalValue) other);
+        }
+
+        private boolean equalTo(ExternalValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
         public String toString() {
             return "SheetConstraint{" + "value: " + value + "}";
         }
@@ -117,12 +172,12 @@ public final class SheetConstraint {
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
         private _UnknownValue(@JsonProperty("value") Object value) {}
 
-        @Override
+        @java.lang.Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor._visitUnknown(value);
         }
 
-        @Override
+        @java.lang.Override
         public boolean equals(Object other) {
             if (this == other) return true;
             return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
@@ -132,12 +187,12 @@ public final class SheetConstraint {
             return type.equals(other.type) && value.equals(other.value);
         }
 
-        @Override
+        @java.lang.Override
         public int hashCode() {
             return Objects.hash(this.type, this.value);
         }
 
-        @Override
+        @java.lang.Override
         public String toString() {
             return "SheetConstraint{" + "type: " + type + ", value: " + value + "}";
         }

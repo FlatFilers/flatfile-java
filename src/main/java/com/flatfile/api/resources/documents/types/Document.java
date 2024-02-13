@@ -70,13 +70,13 @@ public final class Document implements IDocumentConfig {
     }
 
     @JsonProperty("title")
-    @Override
+    @java.lang.Override
     public String getTitle() {
         return title;
     }
 
     @JsonProperty("body")
-    @Override
+    @java.lang.Override
     public String getBody() {
         return body;
     }
@@ -85,13 +85,13 @@ public final class Document implements IDocumentConfig {
      * @return Certain treatments will cause your Document to look or behave differently.
      */
     @JsonProperty("treatments")
-    @Override
+    @java.lang.Override
     public Optional<List<String>> getTreatments() {
         return treatments;
     }
 
     @JsonProperty("actions")
-    @Override
+    @java.lang.Override
     public Optional<List<Action>> getActions() {
         return actions;
     }
@@ -127,7 +127,7 @@ public final class Document implements IDocumentConfig {
         return updatedAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Document && equalTo((Document) other);
@@ -150,7 +150,7 @@ public final class Document implements IDocumentConfig {
                 && updatedAt.equals(other.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.title,
@@ -164,7 +164,7 @@ public final class Document implements IDocumentConfig {
                 this.updatedAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -241,7 +241,7 @@ public final class Document implements IDocumentConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Document other) {
             title(other.getTitle());
             body(other.getBody());
@@ -255,21 +255,21 @@ public final class Document implements IDocumentConfig {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("title")
         public BodyStage title(String title) {
             this.title = title;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("body")
         public IdStage body(String body) {
             this.body = body;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public CreatedAtStage id(DocumentId id) {
             this.id = id;
@@ -280,7 +280,7 @@ public final class Document implements IDocumentConfig {
          * <p>Date the document was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -291,46 +291,46 @@ public final class Document implements IDocumentConfig {
          * <p>Date the document was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
         public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
         public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -341,20 +341,20 @@ public final class Document implements IDocumentConfig {
          * <p>Certain treatments will cause your Document to look or behave differently.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage treatments(List<String> treatments) {
             this.treatments = Optional.of(treatments);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "treatments", nulls = Nulls.SKIP)
         public _FinalStage treatments(Optional<List<String>> treatments) {
             this.treatments = treatments;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Document build() {
             return new Document(
                     title,

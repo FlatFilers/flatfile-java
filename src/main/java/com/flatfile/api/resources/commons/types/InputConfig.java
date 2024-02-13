@@ -35,7 +35,7 @@ public final class InputConfig {
         return options;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InputConfig && equalTo((InputConfig) other);
@@ -50,12 +50,12 @@ public final class InputConfig {
         return options.equals(other.options);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.options);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

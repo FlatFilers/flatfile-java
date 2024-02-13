@@ -61,7 +61,7 @@ public final class ReferencePropertyConfig {
         return relationship;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ReferencePropertyConfig && equalTo((ReferencePropertyConfig) other);
@@ -76,12 +76,12 @@ public final class ReferencePropertyConfig {
         return ref.equals(other.ref) && key.equals(other.key) && relationship.equals(other.relationship);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.ref, this.key, this.relationship);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -121,7 +121,7 @@ public final class ReferencePropertyConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ReferencePropertyConfig other) {
             ref(other.getRef());
             key(other.getKey());
@@ -133,7 +133,7 @@ public final class ReferencePropertyConfig {
          * <p>Full path reference to a sheet configuration. Must be in the same workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("ref")
         public KeyStage ref(String ref) {
             this.ref = ref;
@@ -144,7 +144,7 @@ public final class ReferencePropertyConfig {
          * <p>Key of the property to use as the reference key. Defaults to <code>id</code></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("key")
         public RelationshipStage key(String key) {
             this.key = key;
@@ -155,14 +155,14 @@ public final class ReferencePropertyConfig {
          * <p>The type of relationship this defines</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("relationship")
         public _FinalStage relationship(ReferencePropertyRelationship relationship) {
             this.relationship = relationship;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ReferencePropertyConfig build() {
             return new ReferencePropertyConfig(ref, key, relationship, additionalProperties);
         }

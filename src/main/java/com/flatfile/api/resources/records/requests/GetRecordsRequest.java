@@ -244,7 +244,7 @@ public final class GetRecordsRequest {
         return q;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetRecordsRequest && equalTo((GetRecordsRequest) other);
@@ -277,7 +277,7 @@ public final class GetRecordsRequest {
                 && q.equals(other.q);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.versionId,
@@ -301,7 +301,7 @@ public final class GetRecordsRequest {
                 this.q);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

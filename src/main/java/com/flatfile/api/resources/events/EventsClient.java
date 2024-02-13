@@ -5,6 +5,7 @@ package com.flatfile.api.resources.events;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.EventId;
@@ -18,7 +19,6 @@ import com.flatfile.api.resources.spaces.types.EventTokenResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -35,6 +35,13 @@ public class EventsClient {
      */
     public ListAllEventsResponse list() {
         return list(ListEventsRequest.builder().build());
+    }
+
+    /**
+     * Event topics that the Flatfile Platform emits.
+     */
+    public ListAllEventsResponse list(ListEventsRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -92,11 +99,8 @@ public class EventsClient {
         }
     }
 
-    /**
-     * Event topics that the Flatfile Platform emits.
-     */
-    public ListAllEventsResponse list(ListEventsRequest request) {
-        return list(request, null);
+    public EventResponse create(CreateEventConfig request) {
+        return create(request, null);
     }
 
     public EventResponse create(CreateEventConfig request, RequestOptions requestOptions) {
@@ -107,7 +111,7 @@ public class EventsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -131,8 +135,8 @@ public class EventsClient {
         }
     }
 
-    public EventResponse create(CreateEventConfig request) {
-        return create(request, null);
+    public EventResponse get(EventId eventId) {
+        return get(eventId, null);
     }
 
     public EventResponse get(EventId eventId, RequestOptions requestOptions) {
@@ -161,8 +165,8 @@ public class EventsClient {
         }
     }
 
-    public EventResponse get(EventId eventId) {
-        return get(eventId, null);
+    public Success ack(EventId eventId) {
+        return ack(eventId, null);
     }
 
     public Success ack(EventId eventId, RequestOptions requestOptions) {
@@ -192,15 +196,18 @@ public class EventsClient {
         }
     }
 
-    public Success ack(EventId eventId) {
-        return ack(eventId, null);
-    }
-
     /**
      * Get a token which can be used to subscribe to events for this space
      */
     public EventTokenResponse getEventToken() {
         return getEventToken(GetEventTokenRequest.builder().build());
+    }
+
+    /**
+     * Get a token which can be used to subscribe to events for this space
+     */
+    public EventTokenResponse getEventToken(GetEventTokenRequest request) {
+        return getEventToken(request, null);
     }
 
     /**
@@ -234,12 +241,5 @@ public class EventsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Get a token which can be used to subscribe to events for this space
-     */
-    public EventTokenResponse getEventToken(GetEventTokenRequest request) {
-        return getEventToken(request, null);
     }
 }

@@ -32,7 +32,7 @@ public final class InputConstraint {
         return type;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InputConstraint && equalTo((InputConstraint) other);
@@ -47,12 +47,12 @@ public final class InputConstraint {
         return type.equals(other.type);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.type);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class InputConstraint {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(InputConstraint other) {
             type(other.getType());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(InputConstraintType type) {
             this.type = type;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public InputConstraint build() {
             return new InputConstraint(type, additionalProperties);
         }

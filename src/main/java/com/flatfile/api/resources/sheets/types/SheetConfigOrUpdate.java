@@ -102,7 +102,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return The name of your Sheet as it will appear to your end users.
      */
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public Optional<String> getName() {
         return name;
     }
@@ -111,7 +111,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return A sentence or two describing the purpose of your Sheet.
      */
     @JsonProperty("description")
-    @Override
+    @java.lang.Override
     public Optional<String> getDescription() {
         return description;
     }
@@ -120,7 +120,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return A unique identifier for your Sheet.
      */
     @JsonProperty("slug")
-    @Override
+    @java.lang.Override
     public Optional<String> getSlug() {
         return slug;
     }
@@ -129,7 +129,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return A boolean specifying whether or not this sheet is read only. Read only sheets are not editable by end users.
      */
     @JsonProperty("readonly")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getReadonly() {
         return readonly;
     }
@@ -138,7 +138,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return Allow end users to add fields during mapping.
      */
     @JsonProperty("allowAdditionalFields")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getAllowAdditionalFields() {
         return allowAdditionalFields;
     }
@@ -147,7 +147,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return The minimum confidence required to automatically map a field
      */
     @JsonProperty("mappingConfidenceThreshold")
-    @Override
+    @java.lang.Override
     public Optional<Double> getMappingConfidenceThreshold() {
         return mappingConfidenceThreshold;
     }
@@ -156,7 +156,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return Control Sheet-level access for all users.
      */
     @JsonProperty("access")
-    @Override
+    @java.lang.Override
     public Optional<List<SheetAccess>> getAccess() {
         return access;
     }
@@ -165,7 +165,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return Where you define your Sheet’s data schema.
      */
     @JsonProperty("fields")
-    @Override
+    @java.lang.Override
     public Optional<List<Property>> getFields() {
         return fields;
     }
@@ -174,7 +174,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return An array of actions that end users can perform on this Sheet.
      */
     @JsonProperty("actions")
-    @Override
+    @java.lang.Override
     public Optional<List<Action>> getActions() {
         return actions;
     }
@@ -183,7 +183,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return The ID of the Sheet.
      */
     @JsonProperty("id")
-    @Override
+    @java.lang.Override
     public Optional<SheetId> getId() {
         return id;
     }
@@ -192,7 +192,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return The ID of the Workbook.
      */
     @JsonProperty("workbookId")
-    @Override
+    @java.lang.Override
     public Optional<WorkbookId> getWorkbookId() {
         return workbookId;
     }
@@ -201,7 +201,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return Describes shape of data as well as behavior.
      */
     @JsonProperty("config")
-    @Override
+    @java.lang.Override
     public Optional<SheetConfig> getConfig() {
         return config;
     }
@@ -210,7 +210,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return The amount of records in the Sheet.
      */
     @JsonProperty("countRecords")
-    @Override
+    @java.lang.Override
     public Optional<RecordCounts> getCountRecords() {
         return countRecords;
     }
@@ -219,7 +219,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return The scoped namespace of the Sheet.
      */
     @JsonProperty("namespace")
-    @Override
+    @java.lang.Override
     public Optional<String> getNamespace() {
         return namespace;
     }
@@ -228,7 +228,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return Date the sheet was last updated
      */
     @JsonProperty("updatedAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getUpdatedAt() {
         return updatedAt;
     }
@@ -237,12 +237,12 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
      * @return Date the sheet was created
      */
     @JsonProperty("createdAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getCreatedAt() {
         return createdAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SheetConfigOrUpdate && equalTo((SheetConfigOrUpdate) other);
@@ -272,7 +272,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
                 && createdAt.equals(other.createdAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -293,7 +293,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
                 this.createdAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

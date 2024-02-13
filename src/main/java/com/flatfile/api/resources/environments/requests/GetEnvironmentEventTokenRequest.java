@@ -36,7 +36,7 @@ public final class GetEnvironmentEventTokenRequest {
         return environmentId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetEnvironmentEventTokenRequest && equalTo((GetEnvironmentEventTokenRequest) other);
@@ -51,12 +51,12 @@ public final class GetEnvironmentEventTokenRequest {
         return environmentId.equals(other.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -84,7 +84,7 @@ public final class GetEnvironmentEventTokenRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GetEnvironmentEventTokenRequest other) {
             environmentId(other.getEnvironmentId());
             return this;
@@ -94,14 +94,14 @@ public final class GetEnvironmentEventTokenRequest {
          * <p>ID of environment to return</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GetEnvironmentEventTokenRequest build() {
             return new GetEnvironmentEventTokenRequest(environmentId, additionalProperties);
         }

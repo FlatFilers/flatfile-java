@@ -74,7 +74,7 @@ public final class RecordWithLinks {
         return metadata;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordWithLinks && equalTo((RecordWithLinks) other);
@@ -93,12 +93,12 @@ public final class RecordWithLinks {
                 && metadata.equals(other.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id, this.values, this.valid, this.messages, this.metadata);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -150,7 +150,7 @@ public final class RecordWithLinks {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RecordWithLinks other) {
             id(other.getId());
             values(other.getValues());
@@ -160,60 +160,60 @@ public final class RecordWithLinks {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public ValuesStage id(RecordId id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("values")
         public _FinalStage values(RecordDataWithLinks values) {
             this.values = values;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Map<String, Object>> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage messages(List<ValidationMessage> messages) {
             this.messages = Optional.of(messages);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "messages", nulls = Nulls.SKIP)
         public _FinalStage messages(Optional<List<ValidationMessage>> messages) {
             this.messages = messages;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage valid(Boolean valid) {
             this.valid = Optional.of(valid);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "valid", nulls = Nulls.SKIP)
         public _FinalStage valid(Optional<Boolean> valid) {
             this.valid = valid;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RecordWithLinks build() {
             return new RecordWithLinks(id, values, valid, messages, metadata, additionalProperties);
         }

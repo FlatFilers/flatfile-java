@@ -39,7 +39,7 @@ public final class ListDataRetentionPoliciesRequest {
         return environmentId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListDataRetentionPoliciesRequest && equalTo((ListDataRetentionPoliciesRequest) other);
@@ -54,12 +54,12 @@ public final class ListDataRetentionPoliciesRequest {
         return environmentId.equals(other.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

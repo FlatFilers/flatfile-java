@@ -46,7 +46,7 @@ public final class ListEnvironmentsResponse {
         return pagination;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListEnvironmentsResponse && equalTo((ListEnvironmentsResponse) other);
@@ -61,12 +61,12 @@ public final class ListEnvironmentsResponse {
         return data.equals(other.data) && pagination.equals(other.pagination);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.data, this.pagination);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

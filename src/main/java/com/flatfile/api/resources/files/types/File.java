@@ -211,7 +211,7 @@ public final class File {
         return actions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof File && equalTo((File) other);
@@ -241,7 +241,7 @@ public final class File {
                 && actions.equals(other.actions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -262,7 +262,7 @@ public final class File {
                 this.actions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -392,7 +392,7 @@ public final class File {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(File other) {
             id(other.getId());
             name(other.getName());
@@ -413,7 +413,7 @@ public final class File {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public NameStage id(FileId id) {
             this.id = id;
@@ -424,7 +424,7 @@ public final class File {
          * <p>Original filename</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public ExtStage name(String name) {
             this.name = name;
@@ -435,7 +435,7 @@ public final class File {
          * <p>Extension of the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("ext")
         public MimetypeStage ext(String ext) {
             this.ext = ext;
@@ -446,7 +446,7 @@ public final class File {
          * <p>MIME Type of the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("mimetype")
         public EncodingStage mimetype(String mimetype) {
             this.mimetype = mimetype;
@@ -457,7 +457,7 @@ public final class File {
          * <p>Text encoding of the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("encoding")
         public StatusStage encoding(String encoding) {
             this.encoding = encoding;
@@ -468,7 +468,7 @@ public final class File {
          * <p>Status of the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("status")
         public SizeStage status(ModelFileStatusEnum status) {
             this.status = status;
@@ -479,7 +479,7 @@ public final class File {
          * <p>Size of file in bytes</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("size")
         public BytesReceivedStage size(int size) {
             this.size = size;
@@ -490,7 +490,7 @@ public final class File {
          * <p>Number of bytes that have been uploaded so far (useful for progress tracking)</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("bytesReceived")
         public CreatedAtStage bytesReceived(int bytesReceived) {
             this.bytesReceived = bytesReceived;
@@ -501,7 +501,7 @@ public final class File {
          * <p>Date the file was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -512,53 +512,53 @@ public final class File {
          * <p>Date the file was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public SpaceIdStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("spaceId")
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage sheetId(SheetId sheetId) {
             this.sheetId = Optional.of(sheetId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sheetId", nulls = Nulls.SKIP)
         public _FinalStage sheetId(Optional<SheetId> sheetId) {
             this.sheetId = sheetId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage workbookId(WorkbookId workbookId) {
             this.workbookId = Optional.of(workbookId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "workbookId", nulls = Nulls.SKIP)
         public _FinalStage workbookId(Optional<WorkbookId> workbookId) {
             this.workbookId = workbookId;
@@ -569,13 +569,13 @@ public final class File {
          * <p>Date the file was expired</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage expiredAt(OffsetDateTime expiredAt) {
             this.expiredAt = Optional.of(expiredAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expiredAt", nulls = Nulls.SKIP)
         public _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt) {
             this.expiredAt = expiredAt;
@@ -586,20 +586,20 @@ public final class File {
          * <p>The storage mode of file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage mode(Mode mode) {
             this.mode = Optional.of(mode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "mode", nulls = Nulls.SKIP)
         public _FinalStage mode(Optional<Mode> mode) {
             this.mode = mode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public File build() {
             return new File(
                     id,

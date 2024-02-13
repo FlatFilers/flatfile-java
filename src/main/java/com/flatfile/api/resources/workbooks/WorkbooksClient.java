@@ -5,6 +5,7 @@ package com.flatfile.api.resources.workbooks;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commits.types.ListCommitsResponse;
@@ -19,7 +20,6 @@ import com.flatfile.api.resources.workbooks.types.WorkbookUpdate;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,6 +36,13 @@ public class WorkbooksClient {
      */
     public ListWorkbooksResponse list() {
         return list(ListWorkbooksRequest.builder().build());
+    }
+
+    /**
+     * Returns all workbooks matching a filter for an account or space
+     */
+    public ListWorkbooksResponse list(ListWorkbooksRequest request) {
+        return list(request, null);
     }
 
     /**
@@ -73,10 +80,10 @@ public class WorkbooksClient {
     }
 
     /**
-     * Returns all workbooks matching a filter for an account or space
+     * Creates a workbook and adds it to a space
      */
-    public ListWorkbooksResponse list(ListWorkbooksRequest request) {
-        return list(request, null);
+    public WorkbookResponse create(CreateWorkbookConfig request) {
+        return create(request, null);
     }
 
     /**
@@ -90,7 +97,7 @@ public class WorkbooksClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -115,10 +122,10 @@ public class WorkbooksClient {
     }
 
     /**
-     * Creates a workbook and adds it to a space
+     * Returns a single workbook
      */
-    public WorkbookResponse create(CreateWorkbookConfig request) {
-        return create(request, null);
+    public WorkbookResponse get(WorkbookId workbookId) {
+        return get(workbookId, null);
     }
 
     /**
@@ -151,10 +158,10 @@ public class WorkbooksClient {
     }
 
     /**
-     * Returns a single workbook
+     * Deletes a workbook and all of its record data permanently
      */
-    public WorkbookResponse get(WorkbookId workbookId) {
-        return get(workbookId, null);
+    public Success delete(WorkbookId workbookId) {
+        return delete(workbookId, null);
     }
 
     /**
@@ -187,17 +194,17 @@ public class WorkbooksClient {
     }
 
     /**
-     * Deletes a workbook and all of its record data permanently
+     * Updates a workbook
      */
-    public Success delete(WorkbookId workbookId) {
-        return delete(workbookId, null);
+    public WorkbookResponse update(WorkbookId workbookId) {
+        return update(workbookId, WorkbookUpdate.builder().build());
     }
 
     /**
      * Updates a workbook
      */
-    public WorkbookResponse update(WorkbookId workbookId) {
-        return update(workbookId, WorkbookUpdate.builder().build());
+    public WorkbookResponse update(WorkbookId workbookId, WorkbookUpdate request) {
+        return update(workbookId, request, null);
     }
 
     /**
@@ -212,7 +219,7 @@ public class WorkbooksClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -237,18 +244,18 @@ public class WorkbooksClient {
     }
 
     /**
-     * Updates a workbook
-     */
-    public WorkbookResponse update(WorkbookId workbookId, WorkbookUpdate request) {
-        return update(workbookId, request, null);
-    }
-
-    /**
      * Returns the commits for a workbook
      */
     public ListCommitsResponse getWorkbookCommits(WorkbookId workbookId) {
         return getWorkbookCommits(
                 workbookId, ListWorkbookCommitsRequest.builder().build());
+    }
+
+    /**
+     * Returns the commits for a workbook
+     */
+    public ListCommitsResponse getWorkbookCommits(WorkbookId workbookId, ListWorkbookCommitsRequest request) {
+        return getWorkbookCommits(workbookId, request, null);
     }
 
     /**
@@ -282,12 +289,5 @@ public class WorkbooksClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Returns the commits for a workbook
-     */
-    public ListCommitsResponse getWorkbookCommits(WorkbookId workbookId, ListWorkbookCommitsRequest request) {
-        return getWorkbookCommits(workbookId, request, null);
     }
 }

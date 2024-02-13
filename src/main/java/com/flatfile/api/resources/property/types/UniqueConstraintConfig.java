@@ -49,7 +49,7 @@ public final class UniqueConstraintConfig {
         return ignoreEmpty;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UniqueConstraintConfig && equalTo((UniqueConstraintConfig) other);
@@ -64,12 +64,12 @@ public final class UniqueConstraintConfig {
         return caseSensitive.equals(other.caseSensitive) && ignoreEmpty.equals(other.ignoreEmpty);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.caseSensitive, this.ignoreEmpty);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

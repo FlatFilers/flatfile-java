@@ -187,7 +187,7 @@ public final class Workbook {
         return expiredAt;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Workbook && equalTo((Workbook) other);
@@ -214,7 +214,7 @@ public final class Workbook {
                 && expiredAt.equals(other.expiredAt);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.id,
@@ -232,7 +232,7 @@ public final class Workbook {
                 this.expiredAt);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -333,7 +333,7 @@ public final class Workbook {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Workbook other) {
             id(other.getId());
             name(other.getName());
@@ -355,7 +355,7 @@ public final class Workbook {
          * <p>ID of the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public SpaceIdStage id(WorkbookId id) {
             this.id = id;
@@ -366,7 +366,7 @@ public final class Workbook {
          * <p>Associated Space ID of the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("spaceId")
         public EnvironmentIdStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
@@ -377,7 +377,7 @@ public final class Workbook {
          * <p>Associated Environment ID of the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("environmentId")
         public UpdatedAtStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
@@ -388,7 +388,7 @@ public final class Workbook {
          * <p>Date the workbook was last updated</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("updatedAt")
         public CreatedAtStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
@@ -399,7 +399,7 @@ public final class Workbook {
          * <p>Date the workbook was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("createdAt")
         public _FinalStage createdAt(OffsetDateTime createdAt) {
             this.createdAt = createdAt;
@@ -410,26 +410,26 @@ public final class Workbook {
          * <p>Date the workbook was created</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage expiredAt(OffsetDateTime expiredAt) {
             this.expiredAt = Optional.of(expiredAt);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "expiredAt", nulls = Nulls.SKIP)
         public _FinalStage expiredAt(Optional<OffsetDateTime> expiredAt) {
             this.expiredAt = expiredAt;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage namespace(String namespace) {
             this.namespace = Optional.of(namespace);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public _FinalStage namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -440,13 +440,13 @@ public final class Workbook {
          * <p>Metadata for the workbook</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Object metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
@@ -457,13 +457,13 @@ public final class Workbook {
          * <p>The Workbook settings.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage settings(WorkbookConfigSettings settings) {
             this.settings = Optional.of(settings);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "settings", nulls = Nulls.SKIP)
         public _FinalStage settings(Optional<WorkbookConfigSettings> settings) {
             this.settings = settings;
@@ -474,13 +474,13 @@ public final class Workbook {
          * <p>A list of Actions associated with the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
             this.actions = Optional.of(actions);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "actions", nulls = Nulls.SKIP)
         public _FinalStage actions(Optional<List<Action>> actions) {
             this.actions = actions;
@@ -491,13 +491,13 @@ public final class Workbook {
          * <p>A list of labels for the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage labels(List<String> labels) {
             this.labels = Optional.of(labels);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "labels", nulls = Nulls.SKIP)
         public _FinalStage labels(Optional<List<String>> labels) {
             this.labels = labels;
@@ -508,13 +508,13 @@ public final class Workbook {
          * <p>A list of Sheets associated with the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage sheets(List<Sheet> sheets) {
             this.sheets = Optional.of(sheets);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "sheets", nulls = Nulls.SKIP)
         public _FinalStage sheets(Optional<List<Sheet>> sheets) {
             this.sheets = sheets;
@@ -525,20 +525,20 @@ public final class Workbook {
          * <p>Name of the Workbook.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage name(String name) {
             this.name = Optional.of(name);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public _FinalStage name(Optional<String> name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Workbook build() {
             return new Workbook(
                     id,

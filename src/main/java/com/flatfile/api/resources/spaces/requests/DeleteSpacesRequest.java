@@ -36,7 +36,7 @@ public final class DeleteSpacesRequest {
         return ids;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DeleteSpacesRequest && equalTo((DeleteSpacesRequest) other);
@@ -51,12 +51,12 @@ public final class DeleteSpacesRequest {
         return ids.equals(other.ids);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.ids);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -84,7 +84,7 @@ public final class DeleteSpacesRequest {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DeleteSpacesRequest other) {
             ids(other.getIds());
             return this;
@@ -94,14 +94,14 @@ public final class DeleteSpacesRequest {
          * <p>List of ids for the spaces to be deleted</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("ids")
         public _FinalStage ids(SpaceId ids) {
             this.ids = ids;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DeleteSpacesRequest build() {
             return new DeleteSpacesRequest(ids, additionalProperties);
         }

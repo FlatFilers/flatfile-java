@@ -5,6 +5,7 @@ package com.flatfile.api.resources.snapshots;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.SnapshotId;
@@ -21,7 +22,6 @@ import java.io.IOException;
 import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -36,6 +36,13 @@ public class SnapshotsClient {
     /**
      * Creates a snapshot of a sheet
      */
+    public SnapshotResponse createSnapshot(CreateSnapshotRequest request) {
+        return createSnapshot(request, null);
+    }
+
+    /**
+     * Creates a snapshot of a sheet
+     */
     public SnapshotResponse createSnapshot(CreateSnapshotRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -44,7 +51,7 @@ public class SnapshotsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -69,10 +76,10 @@ public class SnapshotsClient {
     }
 
     /**
-     * Creates a snapshot of a sheet
+     * List all snapshots of a sheet
      */
-    public SnapshotResponse createSnapshot(CreateSnapshotRequest request) {
-        return createSnapshot(request, null);
+    public SnapshotsResponse listSnapshots(ListSnapshotRequest request) {
+        return listSnapshots(request, null);
     }
 
     /**
@@ -104,10 +111,10 @@ public class SnapshotsClient {
     }
 
     /**
-     * List all snapshots of a sheet
+     * Gets a snapshot of a sheet
      */
-    public SnapshotsResponse listSnapshots(ListSnapshotRequest request) {
-        return listSnapshots(request, null);
+    public SnapshotResponse getSnapshot(SnapshotId snapshotId, GetSnapshotRequest request) {
+        return getSnapshot(snapshotId, request, null);
     }
 
     /**
@@ -141,10 +148,10 @@ public class SnapshotsClient {
     }
 
     /**
-     * Gets a snapshot of a sheet
+     * Deletes a snapshot of a sheet
      */
-    public SnapshotResponse getSnapshot(SnapshotId snapshotId, GetSnapshotRequest request) {
-        return getSnapshot(snapshotId, request, null);
+    public Success deleteSnapshot(SnapshotId snapshotId) {
+        return deleteSnapshot(snapshotId, null);
     }
 
     /**
@@ -177,17 +184,17 @@ public class SnapshotsClient {
     }
 
     /**
-     * Deletes a snapshot of a sheet
+     * Restores a snapshot of a sheet
      */
-    public Success deleteSnapshot(SnapshotId snapshotId) {
-        return deleteSnapshot(snapshotId, null);
+    public SnapshotResponse restoreSnapshot(SnapshotId snapshotId) {
+        return restoreSnapshot(snapshotId, Optional.empty());
     }
 
     /**
      * Restores a snapshot of a sheet
      */
-    public SnapshotResponse restoreSnapshot(SnapshotId snapshotId) {
-        return restoreSnapshot(snapshotId, Optional.empty());
+    public SnapshotResponse restoreSnapshot(SnapshotId snapshotId, Optional<RestoreOptions> request) {
+        return restoreSnapshot(snapshotId, request, null);
     }
 
     /**
@@ -203,8 +210,11 @@ public class SnapshotsClient {
                 .build();
         RequestBody body;
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+            body = RequestBody.create("", null);
+            if (request.isPresent()) {
+                body = RequestBody.create(
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -229,18 +239,18 @@ public class SnapshotsClient {
     }
 
     /**
-     * Restores a snapshot of a sheet
-     */
-    public SnapshotResponse restoreSnapshot(SnapshotId snapshotId, Optional<RestoreOptions> request) {
-        return restoreSnapshot(snapshotId, request, null);
-    }
-
-    /**
      * Gets records from a snapshot of a sheet
      */
     public DiffRecordsResponse getSnapshotRecords(SnapshotId snapshotId) {
         return getSnapshotRecords(
                 snapshotId, GetSnapshotRecordsRequest.builder().build());
+    }
+
+    /**
+     * Gets records from a snapshot of a sheet
+     */
+    public DiffRecordsResponse getSnapshotRecords(SnapshotId snapshotId, GetSnapshotRecordsRequest request) {
+        return getSnapshotRecords(snapshotId, request, null);
     }
 
     /**
@@ -282,12 +292,5 @@ public class SnapshotsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Gets records from a snapshot of a sheet
-     */
-    public DiffRecordsResponse getSnapshotRecords(SnapshotId snapshotId, GetSnapshotRecordsRequest request) {
-        return getSnapshotRecords(snapshotId, request, null);
     }
 }

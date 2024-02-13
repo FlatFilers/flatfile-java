@@ -97,7 +97,7 @@ public final class EnvironmentConfigUpdate {
         return languageOverride;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EnvironmentConfigUpdate && equalTo((EnvironmentConfigUpdate) other);
@@ -118,7 +118,7 @@ public final class EnvironmentConfigUpdate {
                 && languageOverride.equals(other.languageOverride);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -130,7 +130,7 @@ public final class EnvironmentConfigUpdate {
                 this.languageOverride);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

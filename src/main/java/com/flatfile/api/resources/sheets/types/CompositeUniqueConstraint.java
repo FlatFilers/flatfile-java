@@ -61,7 +61,7 @@ public final class CompositeUniqueConstraint {
         return strategy;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CompositeUniqueConstraint && equalTo((CompositeUniqueConstraint) other);
@@ -76,12 +76,12 @@ public final class CompositeUniqueConstraint {
         return name.equals(other.name) && fields.equals(other.fields) && strategy.equals(other.strategy);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.fields, this.strategy);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -123,7 +123,7 @@ public final class CompositeUniqueConstraint {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CompositeUniqueConstraint other) {
             name(other.getName());
             fields(other.getFields());
@@ -135,14 +135,14 @@ public final class CompositeUniqueConstraint {
          * <p>The name of the constraint</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public StrategyStage name(String name) {
             this.name = name;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("strategy")
         public _FinalStage strategy(CompositeUniqueConstraintStrategy strategy) {
             this.strategy = strategy;
@@ -153,7 +153,7 @@ public final class CompositeUniqueConstraint {
          * <p>The fields that must be unique together</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addAllFields(List<String> fields) {
             this.fields.addAll(fields);
             return this;
@@ -163,13 +163,13 @@ public final class CompositeUniqueConstraint {
          * <p>The fields that must be unique together</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage addFields(String fields) {
             this.fields.add(fields);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fields", nulls = Nulls.SKIP)
         public _FinalStage fields(List<String> fields) {
             this.fields.clear();
@@ -177,7 +177,7 @@ public final class CompositeUniqueConstraint {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CompositeUniqueConstraint build() {
             return new CompositeUniqueConstraint(name, fields, strategy, additionalProperties);
         }

@@ -26,6 +26,8 @@ public final class DiffValue implements ICellValue {
 
     private final Optional<List<ValidationMessage>> messages;
 
+    private final Optional<Map<String, Object>> metadata;
+
     private final Optional<CellValueUnion> value;
 
     private final Optional<String> layer;
@@ -39,6 +41,7 @@ public final class DiffValue implements ICellValue {
     private DiffValue(
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
+            Optional<Map<String, Object>> metadata,
             Optional<CellValueUnion> value,
             Optional<String> layer,
             Optional<OffsetDateTime> updatedAt,
@@ -46,6 +49,7 @@ public final class DiffValue implements ICellValue {
             Map<String, Object> additionalProperties) {
         this.valid = valid;
         this.messages = messages;
+        this.metadata = metadata;
         this.value = value;
         this.layer = layer;
         this.updatedAt = updatedAt;
@@ -54,31 +58,37 @@ public final class DiffValue implements ICellValue {
     }
 
     @JsonProperty("valid")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getValid() {
         return valid;
     }
 
     @JsonProperty("messages")
-    @Override
+    @java.lang.Override
     public Optional<List<ValidationMessage>> getMessages() {
         return messages;
     }
 
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Optional<Map<String, Object>> getMetadata() {
+        return metadata;
+    }
+
     @JsonProperty("value")
-    @Override
+    @java.lang.Override
     public Optional<CellValueUnion> getValue() {
         return value;
     }
 
     @JsonProperty("layer")
-    @Override
+    @java.lang.Override
     public Optional<String> getLayer() {
         return layer;
     }
 
     @JsonProperty("updatedAt")
-    @Override
+    @java.lang.Override
     public Optional<OffsetDateTime> getUpdatedAt() {
         return updatedAt;
     }
@@ -88,7 +98,7 @@ public final class DiffValue implements ICellValue {
         return snapshotValue;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DiffValue && equalTo((DiffValue) other);
@@ -102,18 +112,20 @@ public final class DiffValue implements ICellValue {
     private boolean equalTo(DiffValue other) {
         return valid.equals(other.valid)
                 && messages.equals(other.messages)
+                && metadata.equals(other.metadata)
                 && value.equals(other.value)
                 && layer.equals(other.layer)
                 && updatedAt.equals(other.updatedAt)
                 && snapshotValue.equals(other.snapshotValue);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.valid, this.messages, this.value, this.layer, this.updatedAt, this.snapshotValue);
+        return Objects.hash(
+                this.valid, this.messages, this.metadata, this.value, this.layer, this.updatedAt, this.snapshotValue);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -127,6 +139,8 @@ public final class DiffValue implements ICellValue {
         private Optional<Boolean> valid = Optional.empty();
 
         private Optional<List<ValidationMessage>> messages = Optional.empty();
+
+        private Optional<Map<String, Object>> metadata = Optional.empty();
 
         private Optional<CellValueUnion> value = Optional.empty();
 
@@ -144,6 +158,7 @@ public final class DiffValue implements ICellValue {
         public Builder from(DiffValue other) {
             valid(other.getValid());
             messages(other.getMessages());
+            metadata(other.getMetadata());
             value(other.getValue());
             layer(other.getLayer());
             updatedAt(other.getUpdatedAt());
@@ -170,6 +185,17 @@ public final class DiffValue implements ICellValue {
 
         public Builder messages(List<ValidationMessage> messages) {
             this.messages = Optional.of(messages);
+            return this;
+        }
+
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public Builder metadata(Optional<Map<String, Object>> metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        public Builder metadata(Map<String, Object> metadata) {
+            this.metadata = Optional.of(metadata);
             return this;
         }
 
@@ -218,7 +244,8 @@ public final class DiffValue implements ICellValue {
         }
 
         public DiffValue build() {
-            return new DiffValue(valid, messages, value, layer, updatedAt, snapshotValue, additionalProperties);
+            return new DiffValue(
+                    valid, messages, metadata, value, layer, updatedAt, snapshotValue, additionalProperties);
         }
     }
 }

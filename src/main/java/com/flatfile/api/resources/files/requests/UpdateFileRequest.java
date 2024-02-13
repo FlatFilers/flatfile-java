@@ -89,7 +89,7 @@ public final class UpdateFileRequest {
         return actions;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UpdateFileRequest && equalTo((UpdateFileRequest) other);
@@ -108,12 +108,12 @@ public final class UpdateFileRequest {
                 && actions.equals(other.actions);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.workbookId, this.name, this.mode, this.status, this.actions);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -112,7 +112,7 @@ public final class InputField {
         return constraints;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof InputField && equalTo((InputField) other);
@@ -133,13 +133,13 @@ public final class InputField {
                 && constraints.equals(other.constraints);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.key, this.label, this.description, this.type, this.defaultValue, this.config, this.constraints);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -203,7 +203,7 @@ public final class InputField {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(InputField other) {
             key(other.getKey());
             label(other.getLabel());
@@ -219,7 +219,7 @@ public final class InputField {
          * <p>Unique key for a Field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("key")
         public LabelStage key(String key) {
             this.key = key;
@@ -230,7 +230,7 @@ public final class InputField {
          * <p>Visible name of a Field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("label")
         public TypeStage label(String label) {
             this.label = label;
@@ -241,7 +241,7 @@ public final class InputField {
          * <p>Field Types inform the user interface how to sort and display data.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public _FinalStage type(String type) {
             this.type = type;
@@ -252,13 +252,13 @@ public final class InputField {
          * <p>Indicate additional validations that will be applied to the Field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage constraints(List<InputConstraint> constraints) {
             this.constraints = Optional.of(constraints);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "constraints", nulls = Nulls.SKIP)
         public _FinalStage constraints(Optional<List<InputConstraint>> constraints) {
             this.constraints = constraints;
@@ -269,13 +269,13 @@ public final class InputField {
          * <p>Additional configuration for enum Fields.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage config(InputConfig config) {
             this.config = Optional.of(config);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "config", nulls = Nulls.SKIP)
         public _FinalStage config(Optional<InputConfig> config) {
             this.config = config;
@@ -286,13 +286,13 @@ public final class InputField {
          * <p>Default value for a Field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage defaultValue(Object defaultValue) {
             this.defaultValue = Optional.of(defaultValue);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "defaultValue", nulls = Nulls.SKIP)
         public _FinalStage defaultValue(Optional<Object> defaultValue) {
             this.defaultValue = defaultValue;
@@ -303,20 +303,20 @@ public final class InputField {
          * <p>Brief description below the name of the Field.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage description(String description) {
             this.description = Optional.of(description);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "description", nulls = Nulls.SKIP)
         public _FinalStage description(Optional<String> description) {
             this.description = description;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public InputField build() {
             return new InputField(
                     key, label, description, type, defaultValue, config, constraints, additionalProperties);

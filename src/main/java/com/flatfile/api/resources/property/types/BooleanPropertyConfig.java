@@ -35,7 +35,7 @@ public final class BooleanPropertyConfig {
         return allowIndeterminate;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof BooleanPropertyConfig && equalTo((BooleanPropertyConfig) other);
@@ -50,12 +50,12 @@ public final class BooleanPropertyConfig {
         return allowIndeterminate == other.allowIndeterminate;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.allowIndeterminate);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -83,7 +83,7 @@ public final class BooleanPropertyConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(BooleanPropertyConfig other) {
             allowIndeterminate(other.getAllowIndeterminate());
             return this;
@@ -93,14 +93,14 @@ public final class BooleanPropertyConfig {
          * <p>Allow a neither true or false state to be stored as <code>null</code></p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("allowIndeterminate")
         public _FinalStage allowIndeterminate(boolean allowIndeterminate) {
             this.allowIndeterminate = allowIndeterminate;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public BooleanPropertyConfig build() {
             return new BooleanPropertyConfig(allowIndeterminate, additionalProperties);
         }

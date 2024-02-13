@@ -33,7 +33,7 @@ public final class Version {
         return versionId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Version && equalTo((Version) other);
@@ -48,12 +48,12 @@ public final class Version {
         return versionId.equals(other.versionId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.versionId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -81,20 +81,20 @@ public final class Version {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Version other) {
             versionId(other.getVersionId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("versionId")
         public _FinalStage versionId(VersionId versionId) {
             this.versionId = versionId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Version build() {
             return new Version(versionId, additionalProperties);
         }

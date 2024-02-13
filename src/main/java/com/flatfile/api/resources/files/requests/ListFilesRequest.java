@@ -73,7 +73,7 @@ public final class ListFilesRequest {
         return mode;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListFilesRequest && equalTo((ListFilesRequest) other);
@@ -91,12 +91,12 @@ public final class ListFilesRequest {
                 && mode.equals(other.mode);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.spaceId, this.pageSize, this.pageNumber, this.mode);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

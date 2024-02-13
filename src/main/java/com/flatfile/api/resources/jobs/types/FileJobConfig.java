@@ -49,7 +49,7 @@ public final class FileJobConfig {
         return options;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof FileJobConfig && equalTo((FileJobConfig) other);
@@ -64,12 +64,12 @@ public final class FileJobConfig {
         return driver.equals(other.driver) && options.equals(other.options);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.driver, this.options);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -103,7 +103,7 @@ public final class FileJobConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(FileJobConfig other) {
             driver(other.getDriver());
             options(other.getOptions());
@@ -114,7 +114,7 @@ public final class FileJobConfig {
          * <p>The driver to use for extracting data from the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("driver")
         public _FinalStage driver(Driver driver) {
             this.driver = driver;
@@ -125,20 +125,20 @@ public final class FileJobConfig {
          * <p>The options to use for extracting data from the file</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage options(Map<String, Object> options) {
             this.options = Optional.of(options);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "options", nulls = Nulls.SKIP)
         public _FinalStage options(Optional<Map<String, Object>> options) {
             this.options = options;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public FileJobConfig build() {
             return new FileJobConfig(driver, options, additionalProperties);
         }

@@ -4,6 +4,7 @@
 package com.flatfile.api.resources.mapping.types;
 
 import com.flatfile.api.resources.commons.types.UserId;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 public interface IMappingRuleConfig {
@@ -13,7 +14,7 @@ public interface IMappingRuleConfig {
 
     Optional<Object> getConfig();
 
-    Optional<Integer> getConfidence();
+    Optional<OffsetDateTime> getAcceptedAt();
 
-    Optional<UserId> getContributor();
+    Optional<UserId> getAcceptedBy();
 }

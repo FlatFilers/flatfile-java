@@ -65,7 +65,7 @@ public final class GuestConfigUpdate {
         return spaces;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GuestConfigUpdate && equalTo((GuestConfigUpdate) other);
@@ -83,12 +83,12 @@ public final class GuestConfigUpdate {
                 && spaces.equals(other.spaces);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.environmentId, this.email, this.name, this.spaces);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -50,7 +50,7 @@ public final class ListWorkbooksRequest {
         return includeCounts;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ListWorkbooksRequest && equalTo((ListWorkbooksRequest) other);
@@ -65,12 +65,12 @@ public final class ListWorkbooksRequest {
         return spaceId.equals(other.spaceId) && includeCounts.equals(other.includeCounts);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.spaceId, this.includeCounts);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

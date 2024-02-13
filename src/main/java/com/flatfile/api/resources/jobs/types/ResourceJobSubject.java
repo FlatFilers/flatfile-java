@@ -32,7 +32,7 @@ public final class ResourceJobSubject {
         return id;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof ResourceJobSubject && equalTo((ResourceJobSubject) other);
@@ -47,12 +47,12 @@ public final class ResourceJobSubject {
         return id.equals(other.id);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.id);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class ResourceJobSubject {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(ResourceJobSubject other) {
             id(other.getId());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("id")
         public _FinalStage id(String id) {
             this.id = id;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public ResourceJobSubject build() {
             return new ResourceJobSubject(id, additionalProperties);
         }

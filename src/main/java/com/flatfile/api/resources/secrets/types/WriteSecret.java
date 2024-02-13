@@ -26,7 +26,7 @@ public final class WriteSecret implements IWriteSecret {
 
     private final SecretValue value;
 
-    private final EnvironmentId environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final Optional<SpaceId> spaceId;
 
@@ -35,7 +35,7 @@ public final class WriteSecret implements IWriteSecret {
     private WriteSecret(
             SecretName name,
             SecretValue value,
-            EnvironmentId environmentId,
+            Optional<EnvironmentId> environmentId,
             Optional<SpaceId> spaceId,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -49,7 +49,7 @@ public final class WriteSecret implements IWriteSecret {
      * @return The reference name for a secret.
      */
     @JsonProperty("name")
-    @Override
+    @java.lang.Override
     public SecretName getName() {
         return name;
     }
@@ -58,7 +58,7 @@ public final class WriteSecret implements IWriteSecret {
      * @return The secret value. This is hidden in the UI.
      */
     @JsonProperty("value")
-    @Override
+    @java.lang.Override
     public SecretValue getValue() {
         return value;
     }
@@ -67,8 +67,8 @@ public final class WriteSecret implements IWriteSecret {
      * @return The Environment of the secret.
      */
     @JsonProperty("environmentId")
-    @Override
-    public EnvironmentId getEnvironmentId() {
+    @java.lang.Override
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -76,12 +76,12 @@ public final class WriteSecret implements IWriteSecret {
      * @return The Space of the secret.
      */
     @JsonProperty("spaceId")
-    @Override
+    @java.lang.Override
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof WriteSecret && equalTo((WriteSecret) other);
@@ -99,12 +99,12 @@ public final class WriteSecret implements IWriteSecret {
                 && spaceId.equals(other.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.name, this.value, this.environmentId, this.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -120,15 +120,15 @@ public final class WriteSecret implements IWriteSecret {
     }
 
     public interface ValueStage {
-        EnvironmentIdStage value(SecretValue value);
-    }
-
-    public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
+        _FinalStage value(SecretValue value);
     }
 
     public interface _FinalStage {
         WriteSecret build();
+
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
+
+        _FinalStage environmentId(EnvironmentId environmentId);
 
         _FinalStage spaceId(Optional<SpaceId> spaceId);
 
@@ -136,21 +136,21 @@ public final class WriteSecret implements IWriteSecret {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements NameStage, ValueStage, EnvironmentIdStage, _FinalStage {
+    public static final class Builder implements NameStage, ValueStage, _FinalStage {
         private SecretName name;
 
         private SecretValue value;
 
-        private EnvironmentId environmentId;
-
         private Optional<SpaceId> spaceId = Optional.empty();
+
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(WriteSecret other) {
             name(other.getName());
             value(other.getValue());
@@ -163,7 +163,7 @@ public final class WriteSecret implements IWriteSecret {
          * <p>The reference name for a secret.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public ValueStage name(SecretName name) {
             this.name = name;
@@ -174,21 +174,10 @@ public final class WriteSecret implements IWriteSecret {
          * <p>The secret value. This is hidden in the UI.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("value")
-        public EnvironmentIdStage value(SecretValue value) {
+        public _FinalStage value(SecretValue value) {
             this.value = value;
-            return this;
-        }
-
-        /**
-         * <p>The Environment of the secret.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @Override
-        @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
             return this;
         }
 
@@ -196,20 +185,37 @@ public final class WriteSecret implements IWriteSecret {
          * <p>The Space of the secret.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = Optional.of(spaceId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
         public _FinalStage spaceId(Optional<SpaceId> spaceId) {
             this.spaceId = spaceId;
             return this;
         }
 
-        @Override
+        /**
+         * <p>The Environment of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage environmentId(EnvironmentId environmentId) {
+            this.environmentId = Optional.of(environmentId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
+            this.environmentId = environmentId;
+            return this;
+        }
+
+        @java.lang.Override
         public WriteSecret build() {
             return new WriteSecret(name, value, environmentId, spaceId, additionalProperties);
         }

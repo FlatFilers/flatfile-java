@@ -42,7 +42,7 @@ public final class Error {
         return message;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Error && equalTo((Error) other);
@@ -57,12 +57,12 @@ public final class Error {
         return key.equals(other.key) && message.equals(other.message);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.key, this.message);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -96,34 +96,34 @@ public final class Error {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Error other) {
             key(other.getKey());
             message(other.getMessage());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("message")
         public _FinalStage message(String message) {
             this.message = message;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage key(String key) {
             this.key = Optional.of(key);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "key", nulls = Nulls.SKIP)
         public _FinalStage key(Optional<String> key) {
             this.key = key;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Error build() {
             return new Error(key, message, additionalProperties);
         }

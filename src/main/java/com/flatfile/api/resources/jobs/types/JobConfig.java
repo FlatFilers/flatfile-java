@@ -114,7 +114,7 @@ public final class JobConfig implements IJobConfig {
      * @return The type of job
      */
     @JsonProperty("type")
-    @Override
+    @java.lang.Override
     public JobType getType() {
         return type;
     }
@@ -123,25 +123,25 @@ public final class JobConfig implements IJobConfig {
      * @return the type of operation to perform on the data. For example, &quot;export&quot;.
      */
     @JsonProperty("operation")
-    @Override
+    @java.lang.Override
     public String getOperation() {
         return operation;
     }
 
     @JsonProperty("source")
-    @Override
+    @java.lang.Override
     public JobSource getSource() {
         return source;
     }
 
     @JsonProperty("destination")
-    @Override
+    @java.lang.Override
     public Optional<JobDestination> getDestination() {
         return destination;
     }
 
     @JsonProperty("config")
-    @Override
+    @java.lang.Override
     public Optional<JobUpdateConfig> getConfig() {
         return config;
     }
@@ -150,7 +150,7 @@ public final class JobConfig implements IJobConfig {
      * @return the type of trigger to use for this job
      */
     @JsonProperty("trigger")
-    @Override
+    @java.lang.Override
     public Optional<Trigger> getTrigger() {
         return trigger;
     }
@@ -159,7 +159,7 @@ public final class JobConfig implements IJobConfig {
      * @return the status of the job
      */
     @JsonProperty("status")
-    @Override
+    @java.lang.Override
     public Optional<JobStatus> getStatus() {
         return status;
     }
@@ -168,13 +168,13 @@ public final class JobConfig implements IJobConfig {
      * @return the progress of the job. Whole number between 0 and 100
      */
     @JsonProperty("progress")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getProgress() {
         return progress;
     }
 
     @JsonProperty("fileId")
-    @Override
+    @java.lang.Override
     public Optional<FileId> getFileId() {
         return fileId;
     }
@@ -183,7 +183,7 @@ public final class JobConfig implements IJobConfig {
      * @return the mode of the job
      */
     @JsonProperty("mode")
-    @Override
+    @java.lang.Override
     public Optional<JobMode> getMode() {
         return mode;
     }
@@ -192,7 +192,7 @@ public final class JobConfig implements IJobConfig {
      * @return Input parameters for this job type.
      */
     @JsonProperty("input")
-    @Override
+    @java.lang.Override
     public Optional<Map<String, Object>> getInput() {
         return input;
     }
@@ -201,7 +201,7 @@ public final class JobConfig implements IJobConfig {
      * @return Subject parameters for this job type.
      */
     @JsonProperty("subject")
-    @Override
+    @java.lang.Override
     public Optional<JobSubject> getSubject() {
         return subject;
     }
@@ -210,7 +210,7 @@ public final class JobConfig implements IJobConfig {
      * @return Outcome summary of job.
      */
     @JsonProperty("outcome")
-    @Override
+    @java.lang.Override
     public Optional<Map<String, Object>> getOutcome() {
         return outcome;
     }
@@ -219,7 +219,7 @@ public final class JobConfig implements IJobConfig {
      * @return Current status of job in text
      */
     @JsonProperty("info")
-    @Override
+    @java.lang.Override
     public Optional<String> getInfo() {
         return info;
     }
@@ -228,7 +228,7 @@ public final class JobConfig implements IJobConfig {
      * @return Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked.
      */
     @JsonProperty("managed")
-    @Override
+    @java.lang.Override
     public Optional<Boolean> getManaged() {
         return managed;
     }
@@ -237,7 +237,7 @@ public final class JobConfig implements IJobConfig {
      * @return The id of the environment this job belongs to
      */
     @JsonProperty("environmentId")
-    @Override
+    @java.lang.Override
     public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
@@ -246,7 +246,7 @@ public final class JobConfig implements IJobConfig {
      * @return The part number of this job
      */
     @JsonProperty("part")
-    @Override
+    @java.lang.Override
     public Optional<Integer> getPart() {
         return part;
     }
@@ -255,7 +255,7 @@ public final class JobConfig implements IJobConfig {
      * @return The data for this part of the job
      */
     @JsonProperty("partData")
-    @Override
+    @java.lang.Override
     public Optional<Map<String, Object>> getPartData() {
         return partData;
     }
@@ -264,7 +264,7 @@ public final class JobConfig implements IJobConfig {
      * @return The execution mode for this part of the job
      */
     @JsonProperty("partExecution")
-    @Override
+    @java.lang.Override
     public Optional<JobPartExecution> getPartExecution() {
         return partExecution;
     }
@@ -273,12 +273,12 @@ public final class JobConfig implements IJobConfig {
      * @return The id of the parent job
      */
     @JsonProperty("parentId")
-    @Override
+    @java.lang.Override
     public Optional<JobId> getParentId() {
         return parentId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof JobConfig && equalTo((JobConfig) other);
@@ -312,7 +312,7 @@ public final class JobConfig implements IJobConfig {
                 && parentId.equals(other.parentId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.type,
@@ -337,7 +337,7 @@ public final class JobConfig implements IJobConfig {
                 this.parentId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -479,7 +479,7 @@ public final class JobConfig implements IJobConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(JobConfig other) {
             type(other.getType());
             operation(other.getOperation());
@@ -508,7 +508,7 @@ public final class JobConfig implements IJobConfig {
          * <p>The type of job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("type")
         public OperationStage type(JobType type) {
             this.type = type;
@@ -519,14 +519,14 @@ public final class JobConfig implements IJobConfig {
          * <p>the type of operation to perform on the data. For example, &quot;export&quot;.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("operation")
         public SourceStage operation(String operation) {
             this.operation = operation;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("source")
         public _FinalStage source(JobSource source) {
             this.source = source;
@@ -537,13 +537,13 @@ public final class JobConfig implements IJobConfig {
          * <p>The id of the parent job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage parentId(JobId parentId) {
             this.parentId = Optional.of(parentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "parentId", nulls = Nulls.SKIP)
         public _FinalStage parentId(Optional<JobId> parentId) {
             this.parentId = parentId;
@@ -554,13 +554,13 @@ public final class JobConfig implements IJobConfig {
          * <p>The execution mode for this part of the job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage partExecution(JobPartExecution partExecution) {
             this.partExecution = Optional.of(partExecution);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "partExecution", nulls = Nulls.SKIP)
         public _FinalStage partExecution(Optional<JobPartExecution> partExecution) {
             this.partExecution = partExecution;
@@ -571,13 +571,13 @@ public final class JobConfig implements IJobConfig {
          * <p>The data for this part of the job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage partData(Map<String, Object> partData) {
             this.partData = Optional.of(partData);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "partData", nulls = Nulls.SKIP)
         public _FinalStage partData(Optional<Map<String, Object>> partData) {
             this.partData = partData;
@@ -588,13 +588,13 @@ public final class JobConfig implements IJobConfig {
          * <p>The part number of this job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage part(Integer part) {
             this.part = Optional.of(part);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "part", nulls = Nulls.SKIP)
         public _FinalStage part(Optional<Integer> part) {
             this.part = part;
@@ -605,13 +605,13 @@ public final class JobConfig implements IJobConfig {
          * <p>The id of the environment this job belongs to</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = Optional.of(environmentId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
         public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
@@ -622,13 +622,13 @@ public final class JobConfig implements IJobConfig {
          * <p>Indicates if Flatfile is managing the control flow of this job or if it is being manually tracked.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage managed(Boolean managed) {
             this.managed = Optional.of(managed);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "managed", nulls = Nulls.SKIP)
         public _FinalStage managed(Optional<Boolean> managed) {
             this.managed = managed;
@@ -639,13 +639,13 @@ public final class JobConfig implements IJobConfig {
          * <p>Current status of job in text</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage info(String info) {
             this.info = Optional.of(info);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "info", nulls = Nulls.SKIP)
         public _FinalStage info(Optional<String> info) {
             this.info = info;
@@ -656,13 +656,13 @@ public final class JobConfig implements IJobConfig {
          * <p>Outcome summary of job.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage outcome(Map<String, Object> outcome) {
             this.outcome = Optional.of(outcome);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "outcome", nulls = Nulls.SKIP)
         public _FinalStage outcome(Optional<Map<String, Object>> outcome) {
             this.outcome = outcome;
@@ -673,13 +673,13 @@ public final class JobConfig implements IJobConfig {
          * <p>Subject parameters for this job type.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage subject(JobSubject subject) {
             this.subject = Optional.of(subject);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "subject", nulls = Nulls.SKIP)
         public _FinalStage subject(Optional<JobSubject> subject) {
             this.subject = subject;
@@ -690,13 +690,13 @@ public final class JobConfig implements IJobConfig {
          * <p>Input parameters for this job type.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage input(Map<String, Object> input) {
             this.input = Optional.of(input);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "input", nulls = Nulls.SKIP)
         public _FinalStage input(Optional<Map<String, Object>> input) {
             this.input = input;
@@ -707,26 +707,26 @@ public final class JobConfig implements IJobConfig {
          * <p>the mode of the job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage mode(JobMode mode) {
             this.mode = Optional.of(mode);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "mode", nulls = Nulls.SKIP)
         public _FinalStage mode(Optional<JobMode> mode) {
             this.mode = mode;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage fileId(FileId fileId) {
             this.fileId = Optional.of(fileId);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fileId", nulls = Nulls.SKIP)
         public _FinalStage fileId(Optional<FileId> fileId) {
             this.fileId = fileId;
@@ -737,13 +737,13 @@ public final class JobConfig implements IJobConfig {
          * <p>the progress of the job. Whole number between 0 and 100</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage progress(Integer progress) {
             this.progress = Optional.of(progress);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "progress", nulls = Nulls.SKIP)
         public _FinalStage progress(Optional<Integer> progress) {
             this.progress = progress;
@@ -754,13 +754,13 @@ public final class JobConfig implements IJobConfig {
          * <p>the status of the job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage status(JobStatus status) {
             this.status = Optional.of(status);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "status", nulls = Nulls.SKIP)
         public _FinalStage status(Optional<JobStatus> status) {
             this.status = status;
@@ -771,46 +771,46 @@ public final class JobConfig implements IJobConfig {
          * <p>the type of trigger to use for this job</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage trigger(Trigger trigger) {
             this.trigger = Optional.of(trigger);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "trigger", nulls = Nulls.SKIP)
         public _FinalStage trigger(Optional<Trigger> trigger) {
             this.trigger = trigger;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage config(JobUpdateConfig config) {
             this.config = Optional.of(config);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "config", nulls = Nulls.SKIP)
         public _FinalStage config(Optional<JobUpdateConfig> config) {
             this.config = config;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage destination(JobDestination destination) {
             this.destination = Optional.of(destination);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "destination", nulls = Nulls.SKIP)
         public _FinalStage destination(Optional<JobDestination> destination) {
             this.destination = destination;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public JobConfig build() {
             return new JobConfig(
                     type,

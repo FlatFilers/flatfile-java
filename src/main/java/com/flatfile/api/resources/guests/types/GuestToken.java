@@ -43,7 +43,7 @@ public final class GuestToken {
         return valid;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GuestToken && equalTo((GuestToken) other);
@@ -58,12 +58,12 @@ public final class GuestToken {
         return token.equals(other.token) && valid == other.valid;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.token, this.valid);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -97,7 +97,7 @@ public final class GuestToken {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(GuestToken other) {
             token(other.getToken());
             valid(other.getValid());
@@ -108,21 +108,21 @@ public final class GuestToken {
          * <p>The token used to authenticate the guest</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("token")
         public ValidStage token(String token) {
             this.token = token;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("valid")
         public _FinalStage valid(boolean valid) {
             this.valid = valid;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public GuestToken build() {
             return new GuestToken(token, valid, additionalProperties);
         }

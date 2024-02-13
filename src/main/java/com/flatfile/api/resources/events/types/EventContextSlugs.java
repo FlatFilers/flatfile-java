@@ -63,7 +63,7 @@ public final class EventContextSlugs {
         return sheet;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EventContextSlugs && equalTo((EventContextSlugs) other);
@@ -78,12 +78,12 @@ public final class EventContextSlugs {
         return space.equals(other.space) && workbook.equals(other.workbook) && sheet.equals(other.sheet);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.space, this.workbook, this.sheet);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

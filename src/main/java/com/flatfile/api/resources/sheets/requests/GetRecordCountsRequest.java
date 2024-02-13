@@ -138,7 +138,7 @@ public final class GetRecordCountsRequest {
     }
 
     /**
-     * @return If true, the error counts for each field will also be returned
+     * @return If true, the counts for each field will also be returned
      */
     @JsonProperty("byField")
     public Optional<Boolean> getByField() {
@@ -153,7 +153,7 @@ public final class GetRecordCountsRequest {
         return q;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetRecordCountsRequest && equalTo((GetRecordCountsRequest) other);
@@ -177,7 +177,7 @@ public final class GetRecordCountsRequest {
                 && q.equals(other.q);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.versionId,
@@ -192,7 +192,7 @@ public final class GetRecordCountsRequest {
                 this.q);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

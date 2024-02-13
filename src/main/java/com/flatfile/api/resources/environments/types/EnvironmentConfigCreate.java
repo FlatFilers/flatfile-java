@@ -97,7 +97,7 @@ public final class EnvironmentConfigCreate {
         return languageOverride;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EnvironmentConfigCreate && equalTo((EnvironmentConfigCreate) other);
@@ -118,7 +118,7 @@ public final class EnvironmentConfigCreate {
                 && languageOverride.equals(other.languageOverride);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(
                 this.name,
@@ -130,7 +130,7 @@ public final class EnvironmentConfigCreate {
                 this.languageOverride);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -194,7 +194,7 @@ public final class EnvironmentConfigCreate {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(EnvironmentConfigCreate other) {
             name(other.getName());
             isProd(other.getIsProd());
@@ -210,7 +210,7 @@ public final class EnvironmentConfigCreate {
          * <p>The name of the environment</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("name")
         public IsProdStage name(String name) {
             this.name = name;
@@ -221,79 +221,79 @@ public final class EnvironmentConfigCreate {
          * <p>Whether or not the environment is a production environment</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("isProd")
         public _FinalStage isProd(boolean isProd) {
             this.isProd = isProd;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage languageOverride(String languageOverride) {
             this.languageOverride = Optional.of(languageOverride);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "languageOverride", nulls = Nulls.SKIP)
         public _FinalStage languageOverride(Optional<String> languageOverride) {
             this.languageOverride = languageOverride;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
             this.namespaces = Optional.of(namespaces);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "namespaces", nulls = Nulls.SKIP)
         public _FinalStage namespaces(Optional<List<String>> namespaces) {
             this.namespaces = namespaces;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage translationsPath(String translationsPath) {
             this.translationsPath = Optional.of(translationsPath);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "translationsPath", nulls = Nulls.SKIP)
         public _FinalStage translationsPath(Optional<String> translationsPath) {
             this.translationsPath = translationsPath;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
             this.metadata = Optional.of(metadata);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Map<String, Object>> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage guestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
             this.guestAuthentication = Optional.of(guestAuthentication);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "guestAuthentication", nulls = Nulls.SKIP)
         public _FinalStage guestAuthentication(Optional<List<GuestAuthenticationEnum>> guestAuthentication) {
             this.guestAuthentication = guestAuthentication;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public EnvironmentConfigCreate build() {
             return new EnvironmentConfigCreate(
                     name,

@@ -54,7 +54,7 @@ public final class CollectionJobSubject {
         return query;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof CollectionJobSubject && equalTo((CollectionJobSubject) other);
@@ -69,12 +69,12 @@ public final class CollectionJobSubject {
         return resource.equals(other.resource) && params.equals(other.params) && query.equals(other.query);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.resource, this.params, this.query);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -114,7 +114,7 @@ public final class CollectionJobSubject {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(CollectionJobSubject other) {
             resource(other.getResource());
             params(other.getParams());
@@ -122,40 +122,40 @@ public final class CollectionJobSubject {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("resource")
         public _FinalStage resource(String resource) {
             this.resource = resource;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage query(Map<String, Object> query) {
             this.query = Optional.of(query);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "query", nulls = Nulls.SKIP)
         public _FinalStage query(Optional<Map<String, Object>> query) {
             this.query = query;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public _FinalStage params(Map<String, Object> params) {
             this.params = Optional.of(params);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "params", nulls = Nulls.SKIP)
         public _FinalStage params(Optional<Map<String, Object>> params) {
             this.params = params;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public CollectionJobSubject build() {
             return new CollectionJobSubject(resource, params, query, additionalProperties);
         }

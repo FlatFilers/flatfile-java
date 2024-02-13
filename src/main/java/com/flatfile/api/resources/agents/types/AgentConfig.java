@@ -45,7 +45,7 @@ public final class AgentConfig implements IAgentConfig {
      * @return The topics the agent should listen for
      */
     @JsonProperty("topics")
-    @Override
+    @java.lang.Override
     public Optional<List<EventTopic>> getTopics() {
         return topics;
     }
@@ -54,7 +54,7 @@ public final class AgentConfig implements IAgentConfig {
      * @return The compiler of the agent
      */
     @JsonProperty("compiler")
-    @Override
+    @java.lang.Override
     public Optional<Compiler> getCompiler() {
         return compiler;
     }
@@ -63,12 +63,12 @@ public final class AgentConfig implements IAgentConfig {
      * @return The source of the agent
      */
     @JsonProperty("source")
-    @Override
+    @java.lang.Override
     public Optional<String> getSource() {
         return source;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof AgentConfig && equalTo((AgentConfig) other);
@@ -83,12 +83,12 @@ public final class AgentConfig implements IAgentConfig {
         return topics.equals(other.topics) && compiler.equals(other.compiler) && source.equals(other.source);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.topics, this.compiler, this.source);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

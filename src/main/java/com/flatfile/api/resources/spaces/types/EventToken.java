@@ -76,7 +76,7 @@ public final class EventToken {
         return token;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof EventToken && equalTo((EventToken) other);
@@ -94,12 +94,12 @@ public final class EventToken {
                 && token.equals(other.token);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.accountId, this.subscribeKey, this.ttl, this.token);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

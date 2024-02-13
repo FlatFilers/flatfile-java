@@ -32,7 +32,7 @@ public final class StringConfig {
         return size;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof StringConfig && equalTo((StringConfig) other);
@@ -47,12 +47,12 @@ public final class StringConfig {
         return size.equals(other.size);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.size);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -80,20 +80,20 @@ public final class StringConfig {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(StringConfig other) {
             size(other.getSize());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("size")
         public _FinalStage size(StringConfigOptions size) {
             this.size = size;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public StringConfig build() {
             return new StringConfig(size, additionalProperties);
         }

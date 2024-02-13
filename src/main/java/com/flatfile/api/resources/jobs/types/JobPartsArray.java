@@ -20,17 +20,17 @@ public final class JobPartsArray {
         return this.value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return this == other || (other instanceof JobPartsArray && this.value.equals(((JobPartsArray) other).value));
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return value.hashCode();
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return value.toString();
     }

@@ -51,7 +51,7 @@ public final class DestinationField {
         return preview;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof DestinationField && equalTo((DestinationField) other);
@@ -66,12 +66,12 @@ public final class DestinationField {
         return destinationField.equals(other.destinationField) && preview.equals(other.preview);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.destinationField, this.preview);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -105,7 +105,7 @@ public final class DestinationField {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(DestinationField other) {
             destinationField(other.getDestinationField());
             preview(other.getPreview());
@@ -116,7 +116,7 @@ public final class DestinationField {
          * <p>The description of the destination field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         @JsonSetter("destinationField")
         public _FinalStage destinationField(Property destinationField) {
             this.destinationField = destinationField;
@@ -127,20 +127,20 @@ public final class DestinationField {
          * <p>A list of preview values of the data in the destination field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage preview(List<String> preview) {
             this.preview = Optional.of(preview);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "preview", nulls = Nulls.SKIP)
         public _FinalStage preview(Optional<List<String>> preview) {
             this.preview = preview;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public DestinationField build() {
             return new DestinationField(destinationField, preview, additionalProperties);
         }

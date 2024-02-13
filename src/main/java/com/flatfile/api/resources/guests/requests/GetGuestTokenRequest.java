@@ -38,7 +38,7 @@ public final class GetGuestTokenRequest {
         return spaceId;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof GetGuestTokenRequest && equalTo((GetGuestTokenRequest) other);
@@ -53,12 +53,12 @@ public final class GetGuestTokenRequest {
         return spaceId.equals(other.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.spaceId);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }

@@ -71,7 +71,7 @@ public final class Invite {
         return message;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof Invite && equalTo((Invite) other);
@@ -89,12 +89,12 @@ public final class Invite {
                 && message.equals(other.message);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.guestId, this.spaceId, this.fromName, this.message);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -140,7 +140,7 @@ public final class Invite {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(Invite other) {
             guestId(other.getGuestId());
             spaceId(other.getSpaceId());
@@ -149,14 +149,14 @@ public final class Invite {
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("guestId")
         public SpaceIdStage guestId(GuestId guestId) {
             this.guestId = guestId;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("spaceId")
         public _FinalStage spaceId(SpaceId spaceId) {
             this.spaceId = spaceId;
@@ -167,13 +167,13 @@ public final class Invite {
          * <p>Message to send with the invite</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage message(String message) {
             this.message = Optional.of(message);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "message", nulls = Nulls.SKIP)
         public _FinalStage message(Optional<String> message) {
             this.message = message;
@@ -184,20 +184,20 @@ public final class Invite {
          * <p>The name of the person or company sending the invitation</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
-        @Override
+        @java.lang.Override
         public _FinalStage fromName(String fromName) {
             this.fromName = Optional.of(fromName);
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter(value = "fromName", nulls = Nulls.SKIP)
         public _FinalStage fromName(Optional<String> fromName) {
             this.fromName = fromName;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public Invite build() {
             return new Invite(guestId, spaceId, fromName, message, additionalProperties);
         }

@@ -18,17 +18,17 @@ public final class CommitId {
         return this.value;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         return this == other || (other instanceof CommitId && this.value.equals(((CommitId) other).value));
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return value.hashCode();
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return value;
     }

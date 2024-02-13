@@ -41,7 +41,7 @@ public final class RecordCountsResponseData {
         return success;
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof RecordCountsResponseData && equalTo((RecordCountsResponseData) other);
@@ -56,12 +56,12 @@ public final class RecordCountsResponseData {
         return counts.equals(other.counts) && success == other.success;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(this.counts, this.success);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
     }
@@ -95,28 +95,28 @@ public final class RecordCountsResponseData {
 
         private Builder() {}
 
-        @Override
+        @java.lang.Override
         public Builder from(RecordCountsResponseData other) {
             counts(other.getCounts());
             success(other.getSuccess());
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("counts")
         public SuccessStage counts(RecordCounts counts) {
             this.counts = counts;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         @JsonSetter("success")
         public _FinalStage success(boolean success) {
             this.success = success;
             return this;
         }
 
-        @Override
+        @java.lang.Override
         public RecordCountsResponseData build() {
             return new RecordCountsResponseData(counts, success, additionalProperties);
         }

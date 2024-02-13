@@ -37,6 +37,13 @@ public class SheetsClient {
     /**
      * Returns sheets in a workbook
      */
+    public ListSheetsResponse list(ListSheetsRequest request) {
+        return list(request, null);
+    }
+
+    /**
+     * Returns sheets in a workbook
+     */
     public ListSheetsResponse list(ListSheetsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -63,10 +70,10 @@ public class SheetsClient {
     }
 
     /**
-     * Returns sheets in a workbook
+     * Returns a sheet in a workbook
      */
-    public ListSheetsResponse list(ListSheetsRequest request) {
-        return list(request, null);
+    public SheetResponse get(SheetId sheetId) {
+        return get(sheetId, null);
     }
 
     /**
@@ -99,10 +106,10 @@ public class SheetsClient {
     }
 
     /**
-     * Returns a sheet in a workbook
+     * Deletes a specific sheet from a workbook
      */
-    public SheetResponse get(SheetId sheetId) {
-        return get(sheetId, null);
+    public Success delete(SheetId sheetId) {
+        return delete(sheetId, null);
     }
 
     /**
@@ -135,10 +142,10 @@ public class SheetsClient {
     }
 
     /**
-     * Deletes a specific sheet from a workbook
+     * Trigger data hooks and validation to run on a sheet
      */
-    public Success delete(SheetId sheetId) {
-        return delete(sheetId, null);
+    public Success validate(SheetId sheetId) {
+        return validate(sheetId, null);
     }
 
     /**
@@ -172,17 +179,17 @@ public class SheetsClient {
     }
 
     /**
-     * Trigger data hooks and validation to run on a sheet
+     * Returns records from a sheet in a workbook as a csv file
      */
-    public Success validate(SheetId sheetId) {
-        return validate(sheetId, null);
+    public InputStream getRecordsAsCsv(SheetId sheetId) {
+        return getRecordsAsCsv(sheetId, GetRecordsCsvRequest.builder().build());
     }
 
     /**
      * Returns records from a sheet in a workbook as a csv file
      */
-    public InputStream getRecordsAsCsv(SheetId sheetId) {
-        return getRecordsAsCsv(sheetId, GetRecordsCsvRequest.builder().build());
+    public InputStream getRecordsAsCsv(SheetId sheetId, GetRecordsCsvRequest request) {
+        return getRecordsAsCsv(sheetId, request, null);
     }
 
     /**
@@ -254,17 +261,17 @@ public class SheetsClient {
     }
 
     /**
-     * Returns records from a sheet in a workbook as a csv file
+     * Returns counts of records from a sheet
      */
-    public InputStream getRecordsAsCsv(SheetId sheetId, GetRecordsCsvRequest request) {
-        return getRecordsAsCsv(sheetId, request, null);
+    public RecordCountsResponse getRecordCounts(SheetId sheetId) {
+        return getRecordCounts(sheetId, GetRecordCountsRequest.builder().build());
     }
 
     /**
      * Returns counts of records from a sheet
      */
-    public RecordCountsResponse getRecordCounts(SheetId sheetId) {
-        return getRecordCounts(sheetId, GetRecordCountsRequest.builder().build());
+    public RecordCountsResponse getRecordCounts(SheetId sheetId, GetRecordCountsRequest request) {
+        return getRecordCounts(sheetId, request, null);
     }
 
     /**
@@ -333,17 +340,17 @@ public class SheetsClient {
     }
 
     /**
-     * Returns counts of records from a sheet
+     * Returns the commit versions for a sheet
      */
-    public RecordCountsResponse getRecordCounts(SheetId sheetId, GetRecordCountsRequest request) {
-        return getRecordCounts(sheetId, request, null);
+    public ListCommitsResponse getSheetCommits(SheetId sheetId) {
+        return getSheetCommits(sheetId, ListSheetCommitsRequest.builder().build());
     }
 
     /**
      * Returns the commit versions for a sheet
      */
-    public ListCommitsResponse getSheetCommits(SheetId sheetId) {
-        return getSheetCommits(sheetId, ListSheetCommitsRequest.builder().build());
+    public ListCommitsResponse getSheetCommits(SheetId sheetId, ListSheetCommitsRequest request) {
+        return getSheetCommits(sheetId, request, null);
     }
 
     /**
@@ -380,10 +387,10 @@ public class SheetsClient {
     }
 
     /**
-     * Returns the commit versions for a sheet
+     * Locks a sheet
      */
-    public ListCommitsResponse getSheetCommits(SheetId sheetId, ListSheetCommitsRequest request) {
-        return getSheetCommits(sheetId, request, null);
+    public Success lockSheet(SheetId sheetId) {
+        return lockSheet(sheetId, null);
     }
 
     /**
@@ -417,10 +424,10 @@ public class SheetsClient {
     }
 
     /**
-     * Locks a sheet
+     * Removes a lock from a sheet
      */
-    public Success lockSheet(SheetId sheetId) {
-        return lockSheet(sheetId, null);
+    public Success unlockSheet(SheetId sheetId) {
+        return unlockSheet(sheetId, null);
     }
 
     /**
@@ -454,17 +461,17 @@ public class SheetsClient {
     }
 
     /**
-     * Removes a lock from a sheet
+     * Returns record cell values grouped by all fields in the sheet
      */
-    public Success unlockSheet(SheetId sheetId) {
-        return unlockSheet(sheetId, null);
+    public CellsResponse getCellValues(SheetId sheetId) {
+        return getCellValues(sheetId, GetFieldValuesRequest.builder().build());
     }
 
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getCellValues(SheetId sheetId) {
-        return getCellValues(sheetId, GetFieldValuesRequest.builder().build());
+    public CellsResponse getCellValues(SheetId sheetId, GetFieldValuesRequest request) {
+        return getCellValues(sheetId, request, null);
     }
 
     /**
@@ -529,12 +536,5 @@ public class SheetsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Returns record cell values grouped by all fields in the sheet
-     */
-    public CellsResponse getCellValues(SheetId sheetId, GetFieldValuesRequest request) {
-        return getCellValues(sheetId, request, null);
     }
 }
