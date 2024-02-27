@@ -306,6 +306,9 @@ public class RecordsClient {
         if (request.getIds().isPresent()) {
             httpUrl.addQueryParameter("ids", request.getIds().get().toString());
         }
+        if (request.getQ().isPresent()) {
+            httpUrl.addQueryParameter("q", request.getQ().get());
+        }
         Map<String, Object> properties = new HashMap<>();
         if (request.getFind().isPresent()) {
             properties.put("find", request.getFind());

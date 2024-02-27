@@ -13,4 +13,6 @@ public interface IAgentConfig {
     Optional<Compiler> getCompiler();
 
     Optional<String> getSource();
+
+    Optional<String> getSlug();
 }

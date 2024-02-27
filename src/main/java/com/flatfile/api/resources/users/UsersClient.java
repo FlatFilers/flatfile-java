@@ -15,6 +15,7 @@ import com.flatfile.api.resources.roles.types.AssignActorRoleRequest;
 import com.flatfile.api.resources.roles.types.AssignRoleResponse;
 import com.flatfile.api.resources.roles.types.ListActorRolesResponse;
 import com.flatfile.api.resources.users.requests.ListUsersRequest;
+import com.flatfile.api.resources.users.requests.UpdateUserRequest;
 import com.flatfile.api.resources.users.types.ListUsersResponse;
 import com.flatfile.api.resources.users.types.UserResponse;
 import java.io.IOException;
@@ -66,6 +67,56 @@ public class UsersClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListUsersResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Updates a user
+     */
+    public UserResponse update(UserId userId) {
+        return update(userId, UpdateUserRequest.builder().build());
+    }
+
+    /**
+     * Updates a user
+     */
+    public UserResponse update(UserId userId, UpdateUserRequest request) {
+        return update(userId, request, null);
+    }
+
+    /**
+     * Updates a user
+     */
+    public UserResponse update(UserId userId, UpdateUserRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId.toString())
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserResponse.class);
             }
             throw new ApiError(
                     response.code(),

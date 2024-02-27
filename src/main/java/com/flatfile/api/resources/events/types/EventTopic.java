@@ -96,7 +96,15 @@ public enum EventTopic {
 
     SECRET_UPDATED("secret:updated"),
 
-    SECRET_DELETED("secret:deleted");
+    SECRET_DELETED("secret:deleted"),
+
+    CRON_5_MINUTES("cron:5-minutes"),
+
+    CRON_HOURLY("cron:hourly"),
+
+    CRON_DAILY("cron:daily"),
+
+    CRON_WEEKLY("cron:weekly");
 
     private final String value;
 

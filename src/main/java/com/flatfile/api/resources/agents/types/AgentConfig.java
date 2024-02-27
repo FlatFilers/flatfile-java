@@ -28,16 +28,20 @@ public final class AgentConfig implements IAgentConfig {
 
     private final Optional<String> source;
 
+    private final Optional<String> slug;
+
     private final Map<String, Object> additionalProperties;
 
     private AgentConfig(
             Optional<List<EventTopic>> topics,
             Optional<Compiler> compiler,
             Optional<String> source,
+            Optional<String> slug,
             Map<String, Object> additionalProperties) {
         this.topics = topics;
         this.compiler = compiler;
         this.source = source;
+        this.slug = slug;
         this.additionalProperties = additionalProperties;
     }
 
@@ -68,6 +72,15 @@ public final class AgentConfig implements IAgentConfig {
         return source;
     }
 
+    /**
+     * @return The slug of the agent
+     */
+    @JsonProperty("slug")
+    @java.lang.Override
+    public Optional<String> getSlug() {
+        return slug;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -80,12 +93,15 @@ public final class AgentConfig implements IAgentConfig {
     }
 
     private boolean equalTo(AgentConfig other) {
-        return topics.equals(other.topics) && compiler.equals(other.compiler) && source.equals(other.source);
+        return topics.equals(other.topics)
+                && compiler.equals(other.compiler)
+                && source.equals(other.source)
+                && slug.equals(other.slug);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.topics, this.compiler, this.source);
+        return Objects.hash(this.topics, this.compiler, this.source, this.slug);
     }
 
     @java.lang.Override
@@ -105,6 +121,8 @@ public final class AgentConfig implements IAgentConfig {
 
         private Optional<String> source = Optional.empty();
 
+        private Optional<String> slug = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -114,6 +132,7 @@ public final class AgentConfig implements IAgentConfig {
             topics(other.getTopics());
             compiler(other.getCompiler());
             source(other.getSource());
+            slug(other.getSlug());
             return this;
         }
 
@@ -150,8 +169,19 @@ public final class AgentConfig implements IAgentConfig {
             return this;
         }
 
+        @JsonSetter(value = "slug", nulls = Nulls.SKIP)
+        public Builder slug(Optional<String> slug) {
+            this.slug = slug;
+            return this;
+        }
+
+        public Builder slug(String slug) {
+            this.slug = Optional.of(slug);
+            return this;
+        }
+
         public AgentConfig build() {
-            return new AgentConfig(topics, compiler, source, additionalProperties);
+            return new AgentConfig(topics, compiler, source, slug, additionalProperties);
         }
     }
 }

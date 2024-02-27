@@ -29,6 +29,8 @@ public final class Agent implements IAgentConfig {
 
     private final Optional<String> source;
 
+    private final Optional<String> slug;
+
     private final AgentId id;
 
     private final Map<String, Object> additionalProperties;
@@ -37,11 +39,13 @@ public final class Agent implements IAgentConfig {
             Optional<List<EventTopic>> topics,
             Optional<Compiler> compiler,
             Optional<String> source,
+            Optional<String> slug,
             AgentId id,
             Map<String, Object> additionalProperties) {
         this.topics = topics;
         this.compiler = compiler;
         this.source = source;
+        this.slug = slug;
         this.id = id;
         this.additionalProperties = additionalProperties;
     }
@@ -73,6 +77,15 @@ public final class Agent implements IAgentConfig {
         return source;
     }
 
+    /**
+     * @return The slug of the agent
+     */
+    @JsonProperty("slug")
+    @java.lang.Override
+    public Optional<String> getSlug() {
+        return slug;
+    }
+
     @JsonProperty("id")
     public AgentId getId() {
         return id;
@@ -93,12 +106,13 @@ public final class Agent implements IAgentConfig {
         return topics.equals(other.topics)
                 && compiler.equals(other.compiler)
                 && source.equals(other.source)
+                && slug.equals(other.slug)
                 && id.equals(other.id);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.topics, this.compiler, this.source, this.id);
+        return Objects.hash(this.topics, this.compiler, this.source, this.slug, this.id);
     }
 
     @java.lang.Override
@@ -130,11 +144,17 @@ public final class Agent implements IAgentConfig {
         _FinalStage source(Optional<String> source);
 
         _FinalStage source(String source);
+
+        _FinalStage slug(Optional<String> slug);
+
+        _FinalStage slug(String slug);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
         private AgentId id;
+
+        private Optional<String> slug = Optional.empty();
 
         private Optional<String> source = Optional.empty();
 
@@ -152,6 +172,7 @@ public final class Agent implements IAgentConfig {
             topics(other.getTopics());
             compiler(other.getCompiler());
             source(other.getSource());
+            slug(other.getSlug());
             id(other.getId());
             return this;
         }
@@ -160,6 +181,23 @@ public final class Agent implements IAgentConfig {
         @JsonSetter("id")
         public _FinalStage id(AgentId id) {
             this.id = id;
+            return this;
+        }
+
+        /**
+         * <p>The slug of the agent</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage slug(String slug) {
+            this.slug = Optional.of(slug);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "slug", nulls = Nulls.SKIP)
+        public _FinalStage slug(Optional<String> slug) {
+            this.slug = slug;
             return this;
         }
 
@@ -216,7 +254,7 @@ public final class Agent implements IAgentConfig {
 
         @java.lang.Override
         public Agent build() {
-            return new Agent(topics, compiler, source, id, additionalProperties);
+            return new Agent(topics, compiler, source, slug, id, additionalProperties);
         }
     }
 }

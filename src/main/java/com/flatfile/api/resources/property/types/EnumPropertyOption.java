@@ -97,7 +97,7 @@ public final class EnumPropertyOption {
     }
 
     /**
-     * @return The value or ID of this option. This value will be sent in egress.  The type is a string | integer | boolean.
+     * @return The value or ID of this option. This value will be sent in egress. The type is a string | integer | boolean.
      */
     @JsonProperty("value")
     public Object getValue() {
@@ -216,7 +216,7 @@ public final class EnumPropertyOption {
         }
 
         /**
-         * <p>The value or ID of this option. This value will be sent in egress.  The type is a string | integer | boolean.</p>
+         * <p>The value or ID of this option. This value will be sent in egress. The type is a string | integer | boolean.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

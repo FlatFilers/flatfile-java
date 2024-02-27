@@ -6,11 +6,7 @@ package com.flatfile.api.resources.commons.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ActionMessageType {
-    SUCCESS("success"),
-
     ERROR("error"),
-
-    WARNING("warning"),
 
     INFO("info");
 

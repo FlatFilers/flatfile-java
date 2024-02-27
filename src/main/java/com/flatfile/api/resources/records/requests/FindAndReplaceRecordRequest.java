@@ -36,6 +36,8 @@ public final class FindAndReplaceRecordRequest {
 
     private final Optional<RecordId> ids;
 
+    private final Optional<String> q;
+
     private final Optional<CellValueUnion> find;
 
     private final Optional<CellValueUnion> replace;
@@ -50,6 +52,7 @@ public final class FindAndReplaceRecordRequest {
             Optional<SearchValue> searchValue,
             Optional<SearchField> searchField,
             Optional<RecordId> ids,
+            Optional<String> q,
             Optional<CellValueUnion> find,
             Optional<CellValueUnion> replace,
             String fieldKey,
@@ -59,6 +62,7 @@ public final class FindAndReplaceRecordRequest {
         this.searchValue = searchValue;
         this.searchField = searchField;
         this.ids = ids;
+        this.q = q;
         this.find = find;
         this.replace = replace;
         this.fieldKey = fieldKey;
@@ -94,6 +98,14 @@ public final class FindAndReplaceRecordRequest {
     @JsonProperty("ids")
     public Optional<RecordId> getIds() {
         return ids;
+    }
+
+    /**
+     * @return An FFQL query used to filter the result set
+     */
+    @JsonProperty("q")
+    public Optional<String> getQ() {
+        return q;
     }
 
     /**
@@ -137,6 +149,7 @@ public final class FindAndReplaceRecordRequest {
                 && searchValue.equals(other.searchValue)
                 && searchField.equals(other.searchField)
                 && ids.equals(other.ids)
+                && q.equals(other.q)
                 && find.equals(other.find)
                 && replace.equals(other.replace)
                 && fieldKey.equals(other.fieldKey);
@@ -150,6 +163,7 @@ public final class FindAndReplaceRecordRequest {
                 this.searchValue,
                 this.searchField,
                 this.ids,
+                this.q,
                 this.find,
                 this.replace,
                 this.fieldKey);
@@ -193,6 +207,10 @@ public final class FindAndReplaceRecordRequest {
 
         _FinalStage ids(RecordId ids);
 
+        _FinalStage q(Optional<String> q);
+
+        _FinalStage q(String q);
+
         _FinalStage find(Optional<CellValueUnion> find);
 
         _FinalStage find(CellValueUnion find);
@@ -209,6 +227,8 @@ public final class FindAndReplaceRecordRequest {
         private Optional<CellValueUnion> replace = Optional.empty();
 
         private Optional<CellValueUnion> find = Optional.empty();
+
+        private Optional<String> q = Optional.empty();
 
         private Optional<RecordId> ids = Optional.empty();
 
@@ -232,6 +252,7 @@ public final class FindAndReplaceRecordRequest {
             searchValue(other.getSearchValue());
             searchField(other.getSearchField());
             ids(other.getIds());
+            q(other.getQ());
             find(other.getFind());
             replace(other.getReplace());
             fieldKey(other.getFieldKey());
@@ -280,6 +301,23 @@ public final class FindAndReplaceRecordRequest {
         @JsonSetter(value = "find", nulls = Nulls.SKIP)
         public _FinalStage find(Optional<CellValueUnion> find) {
             this.find = find;
+            return this;
+        }
+
+        /**
+         * <p>An FFQL query used to filter the result set</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage q(String q) {
+            this.q = Optional.of(q);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "q", nulls = Nulls.SKIP)
+        public _FinalStage q(Optional<String> q) {
+            this.q = q;
             return this;
         }
 
@@ -359,7 +397,16 @@ public final class FindAndReplaceRecordRequest {
         @java.lang.Override
         public FindAndReplaceRecordRequest build() {
             return new FindAndReplaceRecordRequest(
-                    filter, filterField, searchValue, searchField, ids, find, replace, fieldKey, additionalProperties);
+                    filter,
+                    filterField,
+                    searchValue,
+                    searchField,
+                    ids,
+                    q,
+                    find,
+                    replace,
+                    fieldKey,
+                    additionalProperties);
         }
     }
 }

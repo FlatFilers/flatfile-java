@@ -20,7 +20,9 @@ public enum Domain {
 
     PROGRAM("program"),
 
-    SECRET("secret");
+    SECRET("secret"),
+
+    CRON("cron");
 
     private final String value;
 

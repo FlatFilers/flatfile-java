@@ -89,7 +89,7 @@ public final class GetRecordsCsvRequest {
     }
 
     /**
-     * @return <p>records that were changed in that version  in that version and only those records.</p>
+     * @return <p>records that were changed in that version in that version and only those records.</p>
      */
     @JsonProperty("commitId")
     public Optional<CommitId> getCommitId() {
