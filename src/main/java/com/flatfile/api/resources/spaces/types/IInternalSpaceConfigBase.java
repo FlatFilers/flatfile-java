@@ -4,6 +4,7 @@
 package com.flatfile.api.resources.spaces.types;
 
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.AppId;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceConfigId;
 import com.flatfile.api.resources.commons.types.WorkbookId;
@@ -35,4 +36,6 @@ public interface IInternalSpaceConfigBase {
     Optional<String> getLanguageOverride();
 
     Optional<OffsetDateTime> getArchivedAt();
+
+    Optional<AppId> getAppId();
 }

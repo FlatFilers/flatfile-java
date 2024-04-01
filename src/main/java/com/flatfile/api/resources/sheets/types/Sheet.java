@@ -34,8 +34,6 @@ public final class Sheet {
 
     private final SheetConfig config;
 
-    private final Optional<RecordCounts> countRecords;
-
     private final Optional<String> namespace;
 
     private final Optional<String> lockedBy;
@@ -46,6 +44,8 @@ public final class Sheet {
 
     private final Optional<OffsetDateTime> lockedAt;
 
+    private final Optional<RecordCounts> recordCounts;
+
     private final Map<String, Object> additionalProperties;
 
     private Sheet(
@@ -54,24 +54,24 @@ public final class Sheet {
             String name,
             String slug,
             SheetConfig config,
-            Optional<RecordCounts> countRecords,
             Optional<String> namespace,
             Optional<String> lockedBy,
             OffsetDateTime updatedAt,
             OffsetDateTime createdAt,
             Optional<OffsetDateTime> lockedAt,
+            Optional<RecordCounts> recordCounts,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.workbookId = workbookId;
         this.name = name;
         this.slug = slug;
         this.config = config;
-        this.countRecords = countRecords;
         this.namespace = namespace;
         this.lockedBy = lockedBy;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
         this.lockedAt = lockedAt;
+        this.recordCounts = recordCounts;
         this.additionalProperties = additionalProperties;
     }
 
@@ -116,14 +116,6 @@ public final class Sheet {
     }
 
     /**
-     * @return The amount of records in the Sheet.
-     */
-    @JsonProperty("countRecords")
-    public Optional<RecordCounts> getCountRecords() {
-        return countRecords;
-    }
-
-    /**
      * @return The scoped namespace of the Sheet.
      */
     @JsonProperty("namespace")
@@ -163,6 +155,14 @@ public final class Sheet {
         return lockedAt;
     }
 
+    /**
+     * @return The precomputed counts of records in the Sheet (may not exist).
+     */
+    @JsonProperty("recordCounts")
+    public Optional<RecordCounts> getRecordCounts() {
+        return recordCounts;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -180,12 +180,12 @@ public final class Sheet {
                 && name.equals(other.name)
                 && slug.equals(other.slug)
                 && config.equals(other.config)
-                && countRecords.equals(other.countRecords)
                 && namespace.equals(other.namespace)
                 && lockedBy.equals(other.lockedBy)
                 && updatedAt.equals(other.updatedAt)
                 && createdAt.equals(other.createdAt)
-                && lockedAt.equals(other.lockedAt);
+                && lockedAt.equals(other.lockedAt)
+                && recordCounts.equals(other.recordCounts);
     }
 
     @java.lang.Override
@@ -196,12 +196,12 @@ public final class Sheet {
                 this.name,
                 this.slug,
                 this.config,
-                this.countRecords,
                 this.namespace,
                 this.lockedBy,
                 this.updatedAt,
                 this.createdAt,
-                this.lockedAt);
+                this.lockedAt,
+                this.recordCounts);
     }
 
     @java.lang.Override
@@ -246,10 +246,6 @@ public final class Sheet {
     public interface _FinalStage {
         Sheet build();
 
-        _FinalStage countRecords(Optional<RecordCounts> countRecords);
-
-        _FinalStage countRecords(RecordCounts countRecords);
-
         _FinalStage namespace(Optional<String> namespace);
 
         _FinalStage namespace(String namespace);
@@ -261,6 +257,10 @@ public final class Sheet {
         _FinalStage lockedAt(Optional<OffsetDateTime> lockedAt);
 
         _FinalStage lockedAt(OffsetDateTime lockedAt);
+
+        _FinalStage recordCounts(Optional<RecordCounts> recordCounts);
+
+        _FinalStage recordCounts(RecordCounts recordCounts);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -287,13 +287,13 @@ public final class Sheet {
 
         private OffsetDateTime createdAt;
 
+        private Optional<RecordCounts> recordCounts = Optional.empty();
+
         private Optional<OffsetDateTime> lockedAt = Optional.empty();
 
         private Optional<String> lockedBy = Optional.empty();
 
         private Optional<String> namespace = Optional.empty();
-
-        private Optional<RecordCounts> countRecords = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -307,12 +307,12 @@ public final class Sheet {
             name(other.getName());
             slug(other.getSlug());
             config(other.getConfig());
-            countRecords(other.getCountRecords());
             namespace(other.getNamespace());
             lockedBy(other.getLockedBy());
             updatedAt(other.getUpdatedAt());
             createdAt(other.getCreatedAt());
             lockedAt(other.getLockedAt());
+            recordCounts(other.getRecordCounts());
             return this;
         }
 
@@ -394,6 +394,23 @@ public final class Sheet {
         }
 
         /**
+         * <p>The precomputed counts of records in the Sheet (may not exist).</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage recordCounts(RecordCounts recordCounts) {
+            this.recordCounts = Optional.of(recordCounts);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "recordCounts", nulls = Nulls.SKIP)
+        public _FinalStage recordCounts(Optional<RecordCounts> recordCounts) {
+            this.recordCounts = recordCounts;
+            return this;
+        }
+
+        /**
          * <p>The time the Sheet was locked.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -444,23 +461,6 @@ public final class Sheet {
             return this;
         }
 
-        /**
-         * <p>The amount of records in the Sheet.</p>
-         * @return Reference to {@code this} so that method calls can be chained together.
-         */
-        @java.lang.Override
-        public _FinalStage countRecords(RecordCounts countRecords) {
-            this.countRecords = Optional.of(countRecords);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "countRecords", nulls = Nulls.SKIP)
-        public _FinalStage countRecords(Optional<RecordCounts> countRecords) {
-            this.countRecords = countRecords;
-            return this;
-        }
-
         @java.lang.Override
         public Sheet build() {
             return new Sheet(
@@ -469,12 +469,12 @@ public final class Sheet {
                     name,
                     slug,
                     config,
-                    countRecords,
                     namespace,
                     lockedBy,
                     updatedAt,
                     createdAt,
                     lockedAt,
+                    recordCounts,
                     additionalProperties);
         }
     }

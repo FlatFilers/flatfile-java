@@ -33,6 +33,8 @@ public final class MutateJobConfig {
 
     private final Optional<String> mutationId;
 
+    private final Optional<String> snapshotLabel;
+
     private final Optional<Filter> filter;
 
     private final Optional<FilterField> filterField;
@@ -51,6 +53,7 @@ public final class MutateJobConfig {
             SheetId sheetId,
             String mutateRecord,
             Optional<String> mutationId,
+            Optional<String> snapshotLabel,
             Optional<Filter> filter,
             Optional<FilterField> filterField,
             Optional<SearchValue> searchValue,
@@ -61,6 +64,7 @@ public final class MutateJobConfig {
         this.sheetId = sheetId;
         this.mutateRecord = mutateRecord;
         this.mutationId = mutationId;
+        this.snapshotLabel = snapshotLabel;
         this.filter = filter;
         this.filterField = filterField;
         this.searchValue = searchValue;
@@ -89,6 +93,14 @@ public final class MutateJobConfig {
     @JsonProperty("mutationId")
     public Optional<String> getMutationId() {
         return mutationId;
+    }
+
+    /**
+     * @return If specified, a snapshot will be generated with this label
+     */
+    @JsonProperty("snapshotLabel")
+    public Optional<String> getSnapshotLabel() {
+        return snapshotLabel;
     }
 
     @JsonProperty("filter")
@@ -139,6 +151,7 @@ public final class MutateJobConfig {
         return sheetId.equals(other.sheetId)
                 && mutateRecord.equals(other.mutateRecord)
                 && mutationId.equals(other.mutationId)
+                && snapshotLabel.equals(other.snapshotLabel)
                 && filter.equals(other.filter)
                 && filterField.equals(other.filterField)
                 && searchValue.equals(other.searchValue)
@@ -153,6 +166,7 @@ public final class MutateJobConfig {
                 this.sheetId,
                 this.mutateRecord,
                 this.mutationId,
+                this.snapshotLabel,
                 this.filter,
                 this.filterField,
                 this.searchValue,
@@ -186,6 +200,10 @@ public final class MutateJobConfig {
         _FinalStage mutationId(Optional<String> mutationId);
 
         _FinalStage mutationId(String mutationId);
+
+        _FinalStage snapshotLabel(Optional<String> snapshotLabel);
+
+        _FinalStage snapshotLabel(String snapshotLabel);
 
         _FinalStage filter(Optional<Filter> filter);
 
@@ -230,6 +248,8 @@ public final class MutateJobConfig {
 
         private Optional<Filter> filter = Optional.empty();
 
+        private Optional<String> snapshotLabel = Optional.empty();
+
         private Optional<String> mutationId = Optional.empty();
 
         @JsonAnySetter
@@ -242,6 +262,7 @@ public final class MutateJobConfig {
             sheetId(other.getSheetId());
             mutateRecord(other.getMutateRecord());
             mutationId(other.getMutationId());
+            snapshotLabel(other.getSnapshotLabel());
             filter(other.getFilter());
             filterField(other.getFilterField());
             searchValue(other.getSearchValue());
@@ -352,6 +373,23 @@ public final class MutateJobConfig {
         }
 
         /**
+         * <p>If specified, a snapshot will be generated with this label</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage snapshotLabel(String snapshotLabel) {
+            this.snapshotLabel = Optional.of(snapshotLabel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "snapshotLabel", nulls = Nulls.SKIP)
+        public _FinalStage snapshotLabel(Optional<String> snapshotLabel) {
+            this.snapshotLabel = snapshotLabel;
+            return this;
+        }
+
+        /**
          * <p>If the mutation was generated through some sort of id-ed process, this links this job and that process.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -374,6 +412,7 @@ public final class MutateJobConfig {
                     sheetId,
                     mutateRecord,
                     mutationId,
+                    snapshotLabel,
                     filter,
                     filterField,
                     searchValue,

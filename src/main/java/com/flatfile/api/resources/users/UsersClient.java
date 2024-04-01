@@ -17,6 +17,7 @@ import com.flatfile.api.resources.roles.types.ListActorRolesResponse;
 import com.flatfile.api.resources.users.requests.ListUsersRequest;
 import com.flatfile.api.resources.users.requests.UpdateUserRequest;
 import com.flatfile.api.resources.users.types.ListUsersResponse;
+import com.flatfile.api.resources.users.types.UserCreateAndInviteRequest;
 import com.flatfile.api.resources.users.types.UserResponse;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -67,6 +68,48 @@ public class UsersClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListUsersResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Creates and invites a new user to your account.
+     */
+    public UserResponse createAndInvite(UserCreateAndInviteRequest request) {
+        return createAndInvite(request, null);
+    }
+
+    /**
+     * Creates and invites a new user to your account.
+     */
+    public UserResponse createAndInvite(UserCreateAndInviteRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users/invite")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserResponse.class);
             }
             throw new ApiError(
                     response.code(),

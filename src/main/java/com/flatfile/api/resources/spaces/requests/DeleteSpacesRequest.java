@@ -19,21 +19,21 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = DeleteSpacesRequest.Builder.class)
 public final class DeleteSpacesRequest {
-    private final SpaceId ids;
+    private final SpaceId spaceIds;
 
     private final Map<String, Object> additionalProperties;
 
-    private DeleteSpacesRequest(SpaceId ids, Map<String, Object> additionalProperties) {
-        this.ids = ids;
+    private DeleteSpacesRequest(SpaceId spaceIds, Map<String, Object> additionalProperties) {
+        this.spaceIds = spaceIds;
         this.additionalProperties = additionalProperties;
     }
 
     /**
      * @return List of ids for the spaces to be deleted
      */
-    @JsonProperty("ids")
-    public SpaceId getIds() {
-        return ids;
+    @JsonProperty("spaceIds")
+    public SpaceId getSpaceIds() {
+        return spaceIds;
     }
 
     @java.lang.Override
@@ -48,12 +48,12 @@ public final class DeleteSpacesRequest {
     }
 
     private boolean equalTo(DeleteSpacesRequest other) {
-        return ids.equals(other.ids);
+        return spaceIds.equals(other.spaceIds);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.ids);
+        return Objects.hash(this.spaceIds);
     }
 
     @java.lang.Override
@@ -61,12 +61,12 @@ public final class DeleteSpacesRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static IdsStage builder() {
+    public static SpaceIdsStage builder() {
         return new Builder();
     }
 
-    public interface IdsStage {
-        _FinalStage ids(SpaceId ids);
+    public interface SpaceIdsStage {
+        _FinalStage spaceIds(SpaceId spaceIds);
 
         Builder from(DeleteSpacesRequest other);
     }
@@ -76,8 +76,8 @@ public final class DeleteSpacesRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdsStage, _FinalStage {
-        private SpaceId ids;
+    public static final class Builder implements SpaceIdsStage, _FinalStage {
+        private SpaceId spaceIds;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -86,7 +86,7 @@ public final class DeleteSpacesRequest {
 
         @java.lang.Override
         public Builder from(DeleteSpacesRequest other) {
-            ids(other.getIds());
+            spaceIds(other.getSpaceIds());
             return this;
         }
 
@@ -95,15 +95,15 @@ public final class DeleteSpacesRequest {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("ids")
-        public _FinalStage ids(SpaceId ids) {
-            this.ids = ids;
+        @JsonSetter("spaceIds")
+        public _FinalStage spaceIds(SpaceId spaceIds) {
+            this.spaceIds = spaceIds;
             return this;
         }
 
         @java.lang.Override
         public DeleteSpacesRequest build() {
-            return new DeleteSpacesRequest(ids, additionalProperties);
+            return new DeleteSpacesRequest(spaceIds, additionalProperties);
         }
     }
 }

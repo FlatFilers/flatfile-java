@@ -43,7 +43,7 @@ public final class ListWorkbooksRequest {
     }
 
     /**
-     * @return Include counts for the workbook
+     * @return Include counts for the workbook. <strong>DEPRECATED</strong> Counts will return 0s. Use GET /sheets/:sheetId/counts
      */
     @JsonProperty("includeCounts")
     public Optional<Boolean> getIncludeCounts() {

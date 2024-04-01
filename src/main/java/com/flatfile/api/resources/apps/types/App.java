@@ -38,6 +38,8 @@ public final class App {
 
     private final Object metadata;
 
+    private final Object environmentFilters;
+
     private final OffsetDateTime createdAt;
 
     private final OffsetDateTime updatedAt;
@@ -57,6 +59,7 @@ public final class App {
             String entityPlural,
             Optional<String> icon,
             Object metadata,
+            Object environmentFilters,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<OffsetDateTime> deletedAt,
@@ -70,6 +73,7 @@ public final class App {
         this.entityPlural = entityPlural;
         this.icon = icon;
         this.metadata = metadata;
+        this.environmentFilters = environmentFilters;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -117,6 +121,11 @@ public final class App {
         return metadata;
     }
 
+    @JsonProperty("environmentFilters")
+    public Object getEnvironmentFilters() {
+        return environmentFilters;
+    }
+
     @JsonProperty("createdAt")
     public OffsetDateTime getCreatedAt() {
         return createdAt;
@@ -157,6 +166,7 @@ public final class App {
                 && entityPlural.equals(other.entityPlural)
                 && icon.equals(other.icon)
                 && metadata.equals(other.metadata)
+                && environmentFilters.equals(other.environmentFilters)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
                 && deletedAt.equals(other.deletedAt)
@@ -174,6 +184,7 @@ public final class App {
                 this.entityPlural,
                 this.icon,
                 this.metadata,
+                this.environmentFilters,
                 this.createdAt,
                 this.updatedAt,
                 this.deletedAt,
@@ -216,7 +227,11 @@ public final class App {
     }
 
     public interface MetadataStage {
-        CreatedAtStage metadata(Object metadata);
+        EnvironmentFiltersStage metadata(Object metadata);
+    }
+
+    public interface EnvironmentFiltersStage {
+        CreatedAtStage environmentFilters(Object environmentFilters);
     }
 
     public interface CreatedAtStage {
@@ -252,6 +267,7 @@ public final class App {
                     EntityStage,
                     EntityPluralStage,
                     MetadataStage,
+                    EnvironmentFiltersStage,
                     CreatedAtStage,
                     UpdatedAtStage,
                     _FinalStage {
@@ -268,6 +284,8 @@ public final class App {
         private String entityPlural;
 
         private Object metadata;
+
+        private Object environmentFilters;
 
         private OffsetDateTime createdAt;
 
@@ -294,6 +312,7 @@ public final class App {
             entityPlural(other.getEntityPlural());
             icon(other.getIcon());
             metadata(other.getMetadata());
+            environmentFilters(other.getEnvironmentFilters());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             deletedAt(other.getDeletedAt());
@@ -345,8 +364,15 @@ public final class App {
 
         @java.lang.Override
         @JsonSetter("metadata")
-        public CreatedAtStage metadata(Object metadata) {
+        public EnvironmentFiltersStage metadata(Object metadata) {
             this.metadata = metadata;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("environmentFilters")
+        public CreatedAtStage environmentFilters(Object environmentFilters) {
+            this.environmentFilters = environmentFilters;
             return this;
         }
 
@@ -414,6 +440,7 @@ public final class App {
                     entityPlural,
                     icon,
                     metadata,
+                    environmentFilters,
                     createdAt,
                     updatedAt,
                     deletedAt,

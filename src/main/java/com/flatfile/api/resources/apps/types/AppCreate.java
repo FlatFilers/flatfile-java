@@ -34,6 +34,8 @@ public final class AppCreate {
 
     private final Optional<Object> metadata;
 
+    private final Optional<Object> environmentFilters;
+
     private final Map<String, Object> additionalProperties;
 
     private AppCreate(
@@ -44,6 +46,7 @@ public final class AppCreate {
             Optional<String> entityPlural,
             Optional<String> icon,
             Optional<Object> metadata,
+            Optional<Object> environmentFilters,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.namespace = namespace;
@@ -52,6 +55,7 @@ public final class AppCreate {
         this.entityPlural = entityPlural;
         this.icon = icon;
         this.metadata = metadata;
+        this.environmentFilters = environmentFilters;
         this.additionalProperties = additionalProperties;
     }
 
@@ -90,6 +94,11 @@ public final class AppCreate {
         return metadata;
     }
 
+    @JsonProperty("environmentFilters")
+    public Optional<Object> getEnvironmentFilters() {
+        return environmentFilters;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -108,13 +117,21 @@ public final class AppCreate {
                 && entity.equals(other.entity)
                 && entityPlural.equals(other.entityPlural)
                 && icon.equals(other.icon)
-                && metadata.equals(other.metadata);
+                && metadata.equals(other.metadata)
+                && environmentFilters.equals(other.environmentFilters);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name, this.namespace, this.type, this.entity, this.entityPlural, this.icon, this.metadata);
+                this.name,
+                this.namespace,
+                this.type,
+                this.entity,
+                this.entityPlural,
+                this.icon,
+                this.metadata,
+                this.environmentFilters);
     }
 
     @java.lang.Override
@@ -158,6 +175,10 @@ public final class AppCreate {
         _FinalStage metadata(Optional<Object> metadata);
 
         _FinalStage metadata(Object metadata);
+
+        _FinalStage environmentFilters(Optional<Object> environmentFilters);
+
+        _FinalStage environmentFilters(Object environmentFilters);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -167,6 +188,8 @@ public final class AppCreate {
         private String namespace;
 
         private AppType type;
+
+        private Optional<Object> environmentFilters = Optional.empty();
 
         private Optional<Object> metadata = Optional.empty();
 
@@ -190,6 +213,7 @@ public final class AppCreate {
             entityPlural(other.getEntityPlural());
             icon(other.getIcon());
             metadata(other.getMetadata());
+            environmentFilters(other.getEnvironmentFilters());
             return this;
         }
 
@@ -211,6 +235,19 @@ public final class AppCreate {
         @JsonSetter("type")
         public _FinalStage type(AppType type) {
             this.type = type;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage environmentFilters(Object environmentFilters) {
+            this.environmentFilters = Optional.of(environmentFilters);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "environmentFilters", nulls = Nulls.SKIP)
+        public _FinalStage environmentFilters(Optional<Object> environmentFilters) {
+            this.environmentFilters = environmentFilters;
             return this;
         }
 
@@ -268,7 +305,16 @@ public final class AppCreate {
 
         @java.lang.Override
         public AppCreate build() {
-            return new AppCreate(name, namespace, type, entity, entityPlural, icon, metadata, additionalProperties);
+            return new AppCreate(
+                    name,
+                    namespace,
+                    type,
+                    entity,
+                    entityPlural,
+                    icon,
+                    metadata,
+                    environmentFilters,
+                    additionalProperties);
         }
     }
 }

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.AppId;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceConfigId;
 import com.flatfile.api.resources.commons.types.WorkbookId;
@@ -51,6 +52,8 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
 
     private final Optional<OffsetDateTime> archivedAt;
 
+    private final Optional<AppId> appId;
+
     private final Optional<String> name;
 
     private final Optional<Integer> displayOrder;
@@ -72,6 +75,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
             Optional<String> translationsPath,
             Optional<String> languageOverride,
             Optional<OffsetDateTime> archivedAt,
+            Optional<AppId> appId,
             Optional<String> name,
             Optional<Integer> displayOrder,
             Optional<List<GuestAuthenticationEnum>> guestAuthentication,
@@ -88,6 +92,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
         this.translationsPath = translationsPath;
         this.languageOverride = languageOverride;
         this.archivedAt = archivedAt;
+        this.appId = appId;
         this.name = name;
         this.displayOrder = displayOrder;
         this.guestAuthentication = guestAuthentication;
@@ -173,6 +178,15 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
     }
 
     /**
+     * @return The ID of the App that space is associated with
+     */
+    @JsonProperty("appId")
+    @java.lang.Override
+    public Optional<AppId> getAppId() {
+        return appId;
+    }
+
+    /**
      * @return The name of the space
      */
     @JsonProperty("name")
@@ -217,6 +231,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                 && translationsPath.equals(other.translationsPath)
                 && languageOverride.equals(other.languageOverride)
                 && archivedAt.equals(other.archivedAt)
+                && appId.equals(other.appId)
                 && name.equals(other.name)
                 && displayOrder.equals(other.displayOrder)
                 && guestAuthentication.equals(other.guestAuthentication);
@@ -237,6 +252,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                 this.translationsPath,
                 this.languageOverride,
                 this.archivedAt,
+                this.appId,
                 this.name,
                 this.displayOrder,
                 this.guestAuthentication);
@@ -277,6 +293,8 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
 
         private Optional<OffsetDateTime> archivedAt = Optional.empty();
 
+        private Optional<AppId> appId = Optional.empty();
+
         private Optional<String> name = Optional.empty();
 
         private Optional<Integer> displayOrder = Optional.empty();
@@ -301,6 +319,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
             translationsPath(other.getTranslationsPath());
             languageOverride(other.getLanguageOverride());
             archivedAt(other.getArchivedAt());
+            appId(other.getAppId());
             name(other.getName());
             displayOrder(other.getDisplayOrder());
             guestAuthentication(other.getGuestAuthentication());
@@ -439,6 +458,17 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
             return this;
         }
 
+        @JsonSetter(value = "appId", nulls = Nulls.SKIP)
+        public Builder appId(Optional<AppId> appId) {
+            this.appId = appId;
+            return this;
+        }
+
+        public Builder appId(AppId appId) {
+            this.appId = Optional.of(appId);
+            return this;
+        }
+
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public Builder name(Optional<String> name) {
             this.name = name;
@@ -486,6 +516,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                     translationsPath,
                     languageOverride,
                     archivedAt,
+                    appId,
                     name,
                     displayOrder,
                     guestAuthentication,

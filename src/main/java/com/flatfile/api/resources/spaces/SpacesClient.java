@@ -236,7 +236,7 @@ public class SpacesClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("spaces");
-        httpUrl.addQueryParameter("ids", request.getIds().toString());
+        httpUrl.addQueryParameter("spaceIds", request.getSpaceIds().toString());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("DELETE", null)

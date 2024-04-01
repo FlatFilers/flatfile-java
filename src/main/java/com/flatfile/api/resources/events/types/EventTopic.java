@@ -46,6 +46,8 @@ public enum EventTopic {
 
     SHEET_DELETED("sheet:deleted"),
 
+    SHEET_COUNTS_UPDATED("sheet:counts-updated"),
+
     SNAPSHOT_CREATED("snapshot:created"),
 
     RECORDS_CREATED("records:created"),

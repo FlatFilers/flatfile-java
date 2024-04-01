@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
+import com.flatfile.api.resources.commons.types.AppId;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceConfigId;
 import com.flatfile.api.resources.commons.types.SpaceId;
@@ -53,6 +54,8 @@ public final class Space implements IInternalSpaceConfigBase {
     private final Optional<String> languageOverride;
 
     private final Optional<OffsetDateTime> archivedAt;
+
+    private final Optional<AppId> appId;
 
     private final SpaceId id;
 
@@ -103,6 +106,7 @@ public final class Space implements IInternalSpaceConfigBase {
             Optional<String> translationsPath,
             Optional<String> languageOverride,
             Optional<OffsetDateTime> archivedAt,
+            Optional<AppId> appId,
             SpaceId id,
             Optional<Integer> workbooksCount,
             Optional<Integer> filesCount,
@@ -133,6 +137,7 @@ public final class Space implements IInternalSpaceConfigBase {
         this.translationsPath = translationsPath;
         this.languageOverride = languageOverride;
         this.archivedAt = archivedAt;
+        this.appId = appId;
         this.id = id;
         this.workbooksCount = workbooksCount;
         this.filesCount = filesCount;
@@ -231,6 +236,15 @@ public final class Space implements IInternalSpaceConfigBase {
         return archivedAt;
     }
 
+    /**
+     * @return The ID of the App that space is associated with
+     */
+    @JsonProperty("appId")
+    @java.lang.Override
+    public Optional<AppId> getAppId() {
+        return appId;
+    }
+
     @JsonProperty("id")
     public SpaceId getId() {
         return id;
@@ -290,7 +304,7 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     /**
-     * @return Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day.
+     * @return This date marks the most recent activity within the space, tracking actions to the second. Activities include creating or updating records in a sheet, uploading files, or modifying a workbook's configuration.
      */
     @JsonProperty("lastActivityAt")
     public Optional<OffsetDateTime> getLastActivityAt() {
@@ -385,6 +399,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 && translationsPath.equals(other.translationsPath)
                 && languageOverride.equals(other.languageOverride)
                 && archivedAt.equals(other.archivedAt)
+                && appId.equals(other.appId)
                 && id.equals(other.id)
                 && workbooksCount.equals(other.workbooksCount)
                 && filesCount.equals(other.filesCount)
@@ -419,6 +434,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 this.translationsPath,
                 this.languageOverride,
                 this.archivedAt,
+                this.appId,
                 this.id,
                 this.workbooksCount,
                 this.filesCount,
@@ -516,6 +532,10 @@ public final class Space implements IInternalSpaceConfigBase {
 
         _FinalStage archivedAt(OffsetDateTime archivedAt);
 
+        _FinalStage appId(Optional<AppId> appId);
+
+        _FinalStage appId(AppId appId);
+
         _FinalStage workbooksCount(Optional<Integer> workbooksCount);
 
         _FinalStage workbooksCount(Integer workbooksCount);
@@ -607,6 +627,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
         private Optional<Integer> workbooksCount = Optional.empty();
 
+        private Optional<AppId> appId = Optional.empty();
+
         private Optional<OffsetDateTime> archivedAt = Optional.empty();
 
         private Optional<String> languageOverride = Optional.empty();
@@ -650,6 +672,7 @@ public final class Space implements IInternalSpaceConfigBase {
             translationsPath(other.getTranslationsPath());
             languageOverride(other.getLanguageOverride());
             archivedAt(other.getArchivedAt());
+            appId(other.getAppId());
             id(other.getId());
             workbooksCount(other.getWorkbooksCount());
             filesCount(other.getFilesCount());
@@ -841,7 +864,7 @@ public final class Space implements IInternalSpaceConfigBase {
         }
 
         /**
-         * <p>Date that the last activity in the space occurred. This could include any create or update activity in the space like adding a record to a sheet, uploading a new file, or updating the configuration of a workbook. This date is only tracked to the precision of a day.</p>
+         * <p>This date marks the most recent activity within the space, tracking actions to the second. Activities include creating or updating records in a sheet, uploading files, or modifying a workbook's configuration.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -935,6 +958,23 @@ public final class Space implements IInternalSpaceConfigBase {
         @JsonSetter(value = "workbooksCount", nulls = Nulls.SKIP)
         public _FinalStage workbooksCount(Optional<Integer> workbooksCount) {
             this.workbooksCount = workbooksCount;
+            return this;
+        }
+
+        /**
+         * <p>The ID of the App that space is associated with</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage appId(AppId appId) {
+            this.appId = Optional.of(appId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appId", nulls = Nulls.SKIP)
+        public _FinalStage appId(Optional<AppId> appId) {
+            this.appId = appId;
             return this;
         }
 
@@ -1117,6 +1157,7 @@ public final class Space implements IInternalSpaceConfigBase {
                     translationsPath,
                     languageOverride,
                     archivedAt,
+                    appId,
                     id,
                     workbooksCount,
                     filesCount,

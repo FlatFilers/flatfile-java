@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.AppId;
 import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.DocumentId;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
@@ -70,6 +71,8 @@ public final class Context {
 
     private final Optional<String> actorId;
 
+    private final Optional<AppId> appId;
+
     private final Map<String, Object> additionalProperties;
 
     private Context(
@@ -91,6 +94,7 @@ public final class Context {
             Optional<DocumentId> documentId,
             Optional<EventId> precedingEventId,
             Optional<String> actorId,
+            Optional<AppId> appId,
             Map<String, Object> additionalProperties) {
         this.namespaces = namespaces;
         this.slugs = slugs;
@@ -110,6 +114,7 @@ public final class Context {
         this.documentId = documentId;
         this.precedingEventId = precedingEventId;
         this.actorId = actorId;
+        this.appId = appId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -215,6 +220,11 @@ public final class Context {
         return actorId;
     }
 
+    @JsonProperty("appId")
+    public Optional<AppId> getAppId() {
+        return appId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -244,7 +254,8 @@ public final class Context {
                 && fileId.equals(other.fileId)
                 && documentId.equals(other.documentId)
                 && precedingEventId.equals(other.precedingEventId)
-                && actorId.equals(other.actorId);
+                && actorId.equals(other.actorId)
+                && appId.equals(other.appId);
     }
 
     @java.lang.Override
@@ -267,7 +278,8 @@ public final class Context {
                 this.fileId,
                 this.documentId,
                 this.precedingEventId,
-                this.actorId);
+                this.actorId,
+                this.appId);
     }
 
     @java.lang.Override
@@ -355,6 +367,10 @@ public final class Context {
         _FinalStage actorId(Optional<String> actorId);
 
         _FinalStage actorId(String actorId);
+
+        _FinalStage appId(Optional<AppId> appId);
+
+        _FinalStage appId(AppId appId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -362,6 +378,8 @@ public final class Context {
         private AccountId accountId;
 
         private EnvironmentId environmentId;
+
+        private Optional<AppId> appId = Optional.empty();
 
         private Optional<String> actorId = Optional.empty();
 
@@ -420,6 +438,7 @@ public final class Context {
             documentId(other.getDocumentId());
             precedingEventId(other.getPrecedingEventId());
             actorId(other.getActorId());
+            appId(other.getAppId());
             return this;
         }
 
@@ -434,6 +453,19 @@ public final class Context {
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage appId(AppId appId) {
+            this.appId = Optional.of(appId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appId", nulls = Nulls.SKIP)
+        public _FinalStage appId(Optional<AppId> appId) {
+            this.appId = appId;
             return this;
         }
 
@@ -682,6 +714,7 @@ public final class Context {
                     documentId,
                     precedingEventId,
                     actorId,
+                    appId,
                     additionalProperties);
         }
     }

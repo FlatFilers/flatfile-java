@@ -106,6 +106,10 @@ public final class Event {
         return new Event(new SheetDeletedValue(value));
     }
 
+    public static Event sheetCountsUpdated(GenericEvent value) {
+        return new Event(new SheetCountsUpdatedValue(value));
+    }
+
     public static Event snapshotCreated(GenericEvent value) {
         return new Event(new SnapshotCreatedValue(value));
     }
@@ -288,6 +292,10 @@ public final class Event {
 
     public boolean isSheetDeleted() {
         return value instanceof SheetDeletedValue;
+    }
+
+    public boolean isSheetCountsUpdated() {
+        return value instanceof SheetCountsUpdatedValue;
     }
 
     public boolean isSnapshotCreated() {
@@ -538,6 +546,13 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getSheetCountsUpdated() {
+        if (isSheetCountsUpdated()) {
+            return Optional.of(((SheetCountsUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<GenericEvent> getSnapshotCreated() {
         if (isSnapshotCreated()) {
             return Optional.of(((SnapshotCreatedValue) value).value);
@@ -773,6 +788,8 @@ public final class Event {
 
         T visitSheetDeleted(GenericEvent sheetDeleted);
 
+        T visitSheetCountsUpdated(GenericEvent sheetCountsUpdated);
+
         T visitSnapshotCreated(GenericEvent snapshotCreated);
 
         T visitRecordsCreated(GenericEvent recordsCreated);
@@ -850,6 +867,7 @@ public final class Event {
         @JsonSubTypes.Type(SheetCreatedValue.class),
         @JsonSubTypes.Type(SheetUpdatedValue.class),
         @JsonSubTypes.Type(SheetDeletedValue.class),
+        @JsonSubTypes.Type(SheetCountsUpdatedValue.class),
         @JsonSubTypes.Type(SnapshotCreatedValue.class),
         @JsonSubTypes.Type(RecordsCreatedValue.class),
         @JsonSubTypes.Type(RecordsUpdatedValue.class),
@@ -1628,6 +1646,44 @@ public final class Event {
         }
 
         private boolean equalTo(SheetDeletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("sheet:counts-updated")
+    private static final class SheetCountsUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private SheetCountsUpdatedValue() {}
+
+        private SheetCountsUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitSheetCountsUpdated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof SheetCountsUpdatedValue && equalTo((SheetCountsUpdatedValue) other);
+        }
+
+        private boolean equalTo(SheetCountsUpdatedValue other) {
             return value.equals(other.value);
         }
 

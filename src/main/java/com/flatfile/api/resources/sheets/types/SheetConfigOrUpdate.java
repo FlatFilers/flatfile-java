@@ -16,7 +16,6 @@ import com.flatfile.api.resources.commons.types.Action;
 import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.WorkbookId;
 import com.flatfile.api.resources.property.types.Property;
-import com.flatfile.api.resources.records.types.RecordCounts;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -51,8 +50,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
 
     private final Optional<SheetConfig> config;
 
-    private final Optional<RecordCounts> countRecords;
-
     private final Optional<String> namespace;
 
     private final Optional<OffsetDateTime> updatedAt;
@@ -74,7 +71,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
             Optional<SheetId> id,
             Optional<WorkbookId> workbookId,
             Optional<SheetConfig> config,
-            Optional<RecordCounts> countRecords,
             Optional<String> namespace,
             Optional<OffsetDateTime> updatedAt,
             Optional<OffsetDateTime> createdAt,
@@ -91,7 +87,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         this.id = id;
         this.workbookId = workbookId;
         this.config = config;
-        this.countRecords = countRecords;
         this.namespace = namespace;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
@@ -117,7 +112,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
     }
 
     /**
-     * @return A unique identifier for your Sheet.
+     * @return A unique identifier for your Sheet. <strong>Required when updating a Workbook.</strong>
      */
     @JsonProperty("slug")
     @java.lang.Override
@@ -207,15 +202,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
     }
 
     /**
-     * @return The amount of records in the Sheet.
-     */
-    @JsonProperty("countRecords")
-    @java.lang.Override
-    public Optional<RecordCounts> getCountRecords() {
-        return countRecords;
-    }
-
-    /**
      * @return The scoped namespace of the Sheet.
      */
     @JsonProperty("namespace")
@@ -266,7 +252,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
                 && id.equals(other.id)
                 && workbookId.equals(other.workbookId)
                 && config.equals(other.config)
-                && countRecords.equals(other.countRecords)
                 && namespace.equals(other.namespace)
                 && updatedAt.equals(other.updatedAt)
                 && createdAt.equals(other.createdAt);
@@ -287,7 +272,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
                 this.id,
                 this.workbookId,
                 this.config,
-                this.countRecords,
                 this.namespace,
                 this.updatedAt,
                 this.createdAt);
@@ -328,8 +312,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
 
         private Optional<SheetConfig> config = Optional.empty();
 
-        private Optional<RecordCounts> countRecords = Optional.empty();
-
         private Optional<String> namespace = Optional.empty();
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
@@ -354,7 +336,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
             id(other.getId());
             workbookId(other.getWorkbookId());
             config(other.getConfig());
-            countRecords(other.getCountRecords());
             namespace(other.getNamespace());
             updatedAt(other.getUpdatedAt());
             createdAt(other.getCreatedAt());
@@ -493,17 +474,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
             return this;
         }
 
-        @JsonSetter(value = "countRecords", nulls = Nulls.SKIP)
-        public Builder countRecords(Optional<RecordCounts> countRecords) {
-            this.countRecords = countRecords;
-            return this;
-        }
-
-        public Builder countRecords(RecordCounts countRecords) {
-            this.countRecords = Optional.of(countRecords);
-            return this;
-        }
-
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public Builder namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -551,7 +521,6 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
                     id,
                     workbookId,
                     config,
-                    countRecords,
                     namespace,
                     updatedAt,
                     createdAt,

@@ -22,16 +22,25 @@ import java.util.Optional;
 public final class UpdateUserRequest {
     private final Optional<String> name;
 
+    private final Optional<Integer> dashboard;
+
     private final Map<String, Object> additionalProperties;
 
-    private UpdateUserRequest(Optional<String> name, Map<String, Object> additionalProperties) {
+    private UpdateUserRequest(
+            Optional<String> name, Optional<Integer> dashboard, Map<String, Object> additionalProperties) {
         this.name = name;
+        this.dashboard = dashboard;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("name")
     public Optional<String> getName() {
         return name;
+    }
+
+    @JsonProperty("dashboard")
+    public Optional<Integer> getDashboard() {
+        return dashboard;
     }
 
     @java.lang.Override
@@ -46,12 +55,12 @@ public final class UpdateUserRequest {
     }
 
     private boolean equalTo(UpdateUserRequest other) {
-        return name.equals(other.name);
+        return name.equals(other.name) && dashboard.equals(other.dashboard);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(this.name, this.dashboard);
     }
 
     @java.lang.Override
@@ -67,6 +76,8 @@ public final class UpdateUserRequest {
     public static final class Builder {
         private Optional<String> name = Optional.empty();
 
+        private Optional<Integer> dashboard = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -74,6 +85,7 @@ public final class UpdateUserRequest {
 
         public Builder from(UpdateUserRequest other) {
             name(other.getName());
+            dashboard(other.getDashboard());
             return this;
         }
 
@@ -88,8 +100,19 @@ public final class UpdateUserRequest {
             return this;
         }
 
+        @JsonSetter(value = "dashboard", nulls = Nulls.SKIP)
+        public Builder dashboard(Optional<Integer> dashboard) {
+            this.dashboard = dashboard;
+            return this;
+        }
+
+        public Builder dashboard(Integer dashboard) {
+            this.dashboard = Optional.of(dashboard);
+            return this;
+        }
+
         public UpdateUserRequest build() {
-            return new UpdateUserRequest(name, additionalProperties);
+            return new UpdateUserRequest(name, dashboard, additionalProperties);
         }
     }
 }

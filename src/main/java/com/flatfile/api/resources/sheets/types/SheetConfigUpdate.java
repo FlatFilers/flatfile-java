@@ -85,7 +85,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
     }
 
     /**
-     * @return A unique identifier for your Sheet.
+     * @return A unique identifier for your Sheet. <strong>Required when updating a Workbook.</strong>
      */
     @JsonProperty("slug")
     @java.lang.Override

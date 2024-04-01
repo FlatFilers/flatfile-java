@@ -76,12 +76,18 @@ public final class RecordBase implements IRecordBase {
         return commitId;
     }
 
+    /**
+     * @return Auto-generated value based on whether the record contains a field with an error message. Cannot be set via the API.
+     */
     @JsonProperty("valid")
     @java.lang.Override
     public Optional<Boolean> getValid() {
         return valid;
     }
 
+    /**
+     * @return This record level <code>messages</code> property is deprecated and no longer stored or used. Use the <code>messages</code> property on the individual cell values instead. This property will be removed in a future release.
+     */
     @JsonProperty("messages")
     @java.lang.Override
     public Optional<List<ValidationMessage>> getMessages() {
@@ -208,6 +214,10 @@ public final class RecordBase implements IRecordBase {
             return this;
         }
 
+        /**
+         * <p>This record level <code>messages</code> property is deprecated and no longer stored or used. Use the <code>messages</code> property on the individual cell values instead. This property will be removed in a future release.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage messages(List<ValidationMessage> messages) {
             this.messages = Optional.of(messages);
@@ -221,6 +231,10 @@ public final class RecordBase implements IRecordBase {
             return this;
         }
 
+        /**
+         * <p>Auto-generated value based on whether the record contains a field with an error message. Cannot be set via the API.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage valid(Boolean valid) {
             this.valid = Optional.of(valid);

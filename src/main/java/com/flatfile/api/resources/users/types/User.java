@@ -42,6 +42,10 @@ public final class User implements IUserConfig {
 
     private final OffsetDateTime updatedAt;
 
+    private final Optional<OffsetDateTime> lastSeenAt;
+
+    private final Optional<Integer> dashboard;
+
     private final Map<String, Object> additionalProperties;
 
     private User(
@@ -54,6 +58,8 @@ public final class User implements IUserConfig {
             Map<String, Object> metadata,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
+            Optional<OffsetDateTime> lastSeenAt,
+            Optional<Integer> dashboard,
             Map<String, Object> additionalProperties) {
         this.email = email;
         this.name = name;
@@ -64,6 +70,8 @@ public final class User implements IUserConfig {
         this.metadata = metadata;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.lastSeenAt = lastSeenAt;
+        this.dashboard = dashboard;
         this.additionalProperties = additionalProperties;
     }
 
@@ -115,6 +123,16 @@ public final class User implements IUserConfig {
         return updatedAt;
     }
 
+    @JsonProperty("lastSeenAt")
+    public Optional<OffsetDateTime> getLastSeenAt() {
+        return lastSeenAt;
+    }
+
+    @JsonProperty("dashboard")
+    public Optional<Integer> getDashboard() {
+        return dashboard;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -135,7 +153,9 @@ public final class User implements IUserConfig {
                 && idpRef.equals(other.idpRef)
                 && metadata.equals(other.metadata)
                 && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt);
+                && updatedAt.equals(other.updatedAt)
+                && lastSeenAt.equals(other.lastSeenAt)
+                && dashboard.equals(other.dashboard);
     }
 
     @java.lang.Override
@@ -149,7 +169,9 @@ public final class User implements IUserConfig {
                 this.idpRef,
                 this.metadata,
                 this.createdAt,
-                this.updatedAt);
+                this.updatedAt,
+                this.lastSeenAt,
+                this.dashboard);
     }
 
     @java.lang.Override
@@ -203,6 +225,14 @@ public final class User implements IUserConfig {
         _FinalStage putAllMetadata(Map<String, Object> metadata);
 
         _FinalStage metadata(String key, Object value);
+
+        _FinalStage lastSeenAt(Optional<OffsetDateTime> lastSeenAt);
+
+        _FinalStage lastSeenAt(OffsetDateTime lastSeenAt);
+
+        _FinalStage dashboard(Optional<Integer> dashboard);
+
+        _FinalStage dashboard(Integer dashboard);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -229,6 +259,10 @@ public final class User implements IUserConfig {
 
         private OffsetDateTime updatedAt;
 
+        private Optional<Integer> dashboard = Optional.empty();
+
+        private Optional<OffsetDateTime> lastSeenAt = Optional.empty();
+
         private Map<String, Object> metadata = new LinkedHashMap<>();
 
         private Optional<String> idpRef = Optional.empty();
@@ -249,6 +283,8 @@ public final class User implements IUserConfig {
             metadata(other.getMetadata());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
+            lastSeenAt(other.getLastSeenAt());
+            dashboard(other.getDashboard());
             return this;
         }
 
@@ -302,6 +338,32 @@ public final class User implements IUserConfig {
         }
 
         @java.lang.Override
+        public _FinalStage dashboard(Integer dashboard) {
+            this.dashboard = Optional.of(dashboard);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "dashboard", nulls = Nulls.SKIP)
+        public _FinalStage dashboard(Optional<Integer> dashboard) {
+            this.dashboard = dashboard;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage lastSeenAt(OffsetDateTime lastSeenAt) {
+            this.lastSeenAt = Optional.of(lastSeenAt);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "lastSeenAt", nulls = Nulls.SKIP)
+        public _FinalStage lastSeenAt(Optional<OffsetDateTime> lastSeenAt) {
+            this.lastSeenAt = lastSeenAt;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage metadata(String key, Object value) {
             this.metadata.put(key, value);
             return this;
@@ -337,7 +399,18 @@ public final class User implements IUserConfig {
         @java.lang.Override
         public User build() {
             return new User(
-                    email, name, accountId, id, idp, idpRef, metadata, createdAt, updatedAt, additionalProperties);
+                    email,
+                    name,
+                    accountId,
+                    id,
+                    idp,
+                    idpRef,
+                    metadata,
+                    createdAt,
+                    updatedAt,
+                    lastSeenAt,
+                    dashboard,
+                    additionalProperties);
         }
     }
 }

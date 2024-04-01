@@ -181,7 +181,7 @@ public final class GetRecordsRequest {
     }
 
     /**
-     * @return Number of records to return in a page (default 1000 if pageNumber included)
+     * @return Number of records to return in a page (default 10,000)
      */
     @JsonProperty("pageSize")
     public Optional<Integer> getPageSize() {
@@ -189,7 +189,7 @@ public final class GetRecordsRequest {
     }
 
     /**
-     * @return Based on pageSize, which page of records to return
+     * @return Based on pageSize, which page of records to return (Note - numbers start at 1)
      */
     @JsonProperty("pageNumber")
     public Optional<Integer> getPageNumber() {

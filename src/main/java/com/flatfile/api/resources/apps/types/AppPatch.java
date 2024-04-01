@@ -33,6 +33,8 @@ public final class AppPatch {
 
     private final Optional<Object> metadata;
 
+    private final Optional<Object> environmentFilters;
+
     private final Optional<OffsetDateTime> activatedAt;
 
     private final Map<String, Object> additionalProperties;
@@ -44,6 +46,7 @@ public final class AppPatch {
             Optional<String> entityPlural,
             Optional<String> icon,
             Optional<Object> metadata,
+            Optional<Object> environmentFilters,
             Optional<OffsetDateTime> activatedAt,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -52,6 +55,7 @@ public final class AppPatch {
         this.entityPlural = entityPlural;
         this.icon = icon;
         this.metadata = metadata;
+        this.environmentFilters = environmentFilters;
         this.activatedAt = activatedAt;
         this.additionalProperties = additionalProperties;
     }
@@ -86,6 +90,11 @@ public final class AppPatch {
         return metadata;
     }
 
+    @JsonProperty("environmentFilters")
+    public Optional<Object> getEnvironmentFilters() {
+        return environmentFilters;
+    }
+
     @JsonProperty("activatedAt")
     public Optional<OffsetDateTime> getActivatedAt() {
         return activatedAt;
@@ -109,13 +118,21 @@ public final class AppPatch {
                 && entityPlural.equals(other.entityPlural)
                 && icon.equals(other.icon)
                 && metadata.equals(other.metadata)
+                && environmentFilters.equals(other.environmentFilters)
                 && activatedAt.equals(other.activatedAt);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.name, this.namespace, this.entity, this.entityPlural, this.icon, this.metadata, this.activatedAt);
+                this.name,
+                this.namespace,
+                this.entity,
+                this.entityPlural,
+                this.icon,
+                this.metadata,
+                this.environmentFilters,
+                this.activatedAt);
     }
 
     @java.lang.Override
@@ -141,6 +158,8 @@ public final class AppPatch {
 
         private Optional<Object> metadata = Optional.empty();
 
+        private Optional<Object> environmentFilters = Optional.empty();
+
         private Optional<OffsetDateTime> activatedAt = Optional.empty();
 
         @JsonAnySetter
@@ -155,6 +174,7 @@ public final class AppPatch {
             entityPlural(other.getEntityPlural());
             icon(other.getIcon());
             metadata(other.getMetadata());
+            environmentFilters(other.getEnvironmentFilters());
             activatedAt(other.getActivatedAt());
             return this;
         }
@@ -225,6 +245,17 @@ public final class AppPatch {
             return this;
         }
 
+        @JsonSetter(value = "environmentFilters", nulls = Nulls.SKIP)
+        public Builder environmentFilters(Optional<Object> environmentFilters) {
+            this.environmentFilters = environmentFilters;
+            return this;
+        }
+
+        public Builder environmentFilters(Object environmentFilters) {
+            this.environmentFilters = Optional.of(environmentFilters);
+            return this;
+        }
+
         @JsonSetter(value = "activatedAt", nulls = Nulls.SKIP)
         public Builder activatedAt(Optional<OffsetDateTime> activatedAt) {
             this.activatedAt = activatedAt;
@@ -238,7 +269,15 @@ public final class AppPatch {
 
         public AppPatch build() {
             return new AppPatch(
-                    name, namespace, entity, entityPlural, icon, metadata, activatedAt, additionalProperties);
+                    name,
+                    namespace,
+                    entity,
+                    entityPlural,
+                    icon,
+                    metadata,
+                    environmentFilters,
+                    activatedAt,
+                    additionalProperties);
         }
     }
 }

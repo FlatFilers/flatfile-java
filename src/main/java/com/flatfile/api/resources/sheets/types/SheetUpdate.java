@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.WorkbookId;
-import com.flatfile.api.resources.records.types.RecordCounts;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +29,6 @@ public final class SheetUpdate implements ISheetUpdate {
 
     private final Optional<SheetConfig> config;
 
-    private final Optional<RecordCounts> countRecords;
-
     private final Optional<String> namespace;
 
     private final Optional<OffsetDateTime> updatedAt;
@@ -44,7 +41,6 @@ public final class SheetUpdate implements ISheetUpdate {
             Optional<SheetId> id,
             Optional<WorkbookId> workbookId,
             Optional<SheetConfig> config,
-            Optional<RecordCounts> countRecords,
             Optional<String> namespace,
             Optional<OffsetDateTime> updatedAt,
             Optional<OffsetDateTime> createdAt,
@@ -52,7 +48,6 @@ public final class SheetUpdate implements ISheetUpdate {
         this.id = id;
         this.workbookId = workbookId;
         this.config = config;
-        this.countRecords = countRecords;
         this.namespace = namespace;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
@@ -84,15 +79,6 @@ public final class SheetUpdate implements ISheetUpdate {
     @java.lang.Override
     public Optional<SheetConfig> getConfig() {
         return config;
-    }
-
-    /**
-     * @return The amount of records in the Sheet.
-     */
-    @JsonProperty("countRecords")
-    @java.lang.Override
-    public Optional<RecordCounts> getCountRecords() {
-        return countRecords;
     }
 
     /**
@@ -137,7 +123,6 @@ public final class SheetUpdate implements ISheetUpdate {
         return id.equals(other.id)
                 && workbookId.equals(other.workbookId)
                 && config.equals(other.config)
-                && countRecords.equals(other.countRecords)
                 && namespace.equals(other.namespace)
                 && updatedAt.equals(other.updatedAt)
                 && createdAt.equals(other.createdAt);
@@ -145,14 +130,7 @@ public final class SheetUpdate implements ISheetUpdate {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.id,
-                this.workbookId,
-                this.config,
-                this.countRecords,
-                this.namespace,
-                this.updatedAt,
-                this.createdAt);
+        return Objects.hash(this.id, this.workbookId, this.config, this.namespace, this.updatedAt, this.createdAt);
     }
 
     @java.lang.Override
@@ -172,8 +150,6 @@ public final class SheetUpdate implements ISheetUpdate {
 
         private Optional<SheetConfig> config = Optional.empty();
 
-        private Optional<RecordCounts> countRecords = Optional.empty();
-
         private Optional<String> namespace = Optional.empty();
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
@@ -189,7 +165,6 @@ public final class SheetUpdate implements ISheetUpdate {
             id(other.getId());
             workbookId(other.getWorkbookId());
             config(other.getConfig());
-            countRecords(other.getCountRecords());
             namespace(other.getNamespace());
             updatedAt(other.getUpdatedAt());
             createdAt(other.getCreatedAt());
@@ -229,17 +204,6 @@ public final class SheetUpdate implements ISheetUpdate {
             return this;
         }
 
-        @JsonSetter(value = "countRecords", nulls = Nulls.SKIP)
-        public Builder countRecords(Optional<RecordCounts> countRecords) {
-            this.countRecords = countRecords;
-            return this;
-        }
-
-        public Builder countRecords(RecordCounts countRecords) {
-            this.countRecords = Optional.of(countRecords);
-            return this;
-        }
-
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public Builder namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -274,8 +238,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public SheetUpdate build() {
-            return new SheetUpdate(
-                    id, workbookId, config, countRecords, namespace, updatedAt, createdAt, additionalProperties);
+            return new SheetUpdate(id, workbookId, config, namespace, updatedAt, createdAt, additionalProperties);
         }
     }
 }

@@ -5,8 +5,10 @@ package com.flatfile.api;
 
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.Suppliers;
+import com.flatfile.api.resources.accounts.AccountsClient;
 import com.flatfile.api.resources.agents.AgentsClient;
 import com.flatfile.api.resources.apps.AppsClient;
+import com.flatfile.api.resources.assistant.AssistantClient;
 import com.flatfile.api.resources.commits.CommitsClient;
 import com.flatfile.api.resources.dataretentionpolicies.DataRetentionPoliciesClient;
 import com.flatfile.api.resources.documents.DocumentsClient;
@@ -31,9 +33,13 @@ import java.util.function.Supplier;
 public class Flatfile {
     protected final ClientOptions clientOptions;
 
+    protected final Supplier<AccountsClient> accountsClient;
+
     protected final Supplier<AgentsClient> agentsClient;
 
     protected final Supplier<AppsClient> appsClient;
+
+    protected final Supplier<AssistantClient> assistantClient;
 
     protected final Supplier<CommitsClient> commitsClient;
 
@@ -75,8 +81,10 @@ public class Flatfile {
 
     public Flatfile(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.accountsClient = Suppliers.memoize(() -> new AccountsClient(clientOptions));
         this.agentsClient = Suppliers.memoize(() -> new AgentsClient(clientOptions));
         this.appsClient = Suppliers.memoize(() -> new AppsClient(clientOptions));
+        this.assistantClient = Suppliers.memoize(() -> new AssistantClient(clientOptions));
         this.commitsClient = Suppliers.memoize(() -> new CommitsClient(clientOptions));
         this.dataRetentionPoliciesClient = Suppliers.memoize(() -> new DataRetentionPoliciesClient(clientOptions));
         this.documentsClient = Suppliers.memoize(() -> new DocumentsClient(clientOptions));
@@ -98,12 +106,20 @@ public class Flatfile {
         this.workbooksClient = Suppliers.memoize(() -> new WorkbooksClient(clientOptions));
     }
 
+    public AccountsClient accounts() {
+        return this.accountsClient.get();
+    }
+
     public AgentsClient agents() {
         return this.agentsClient.get();
     }
 
     public AppsClient apps() {
         return this.appsClient.get();
+    }
+
+    public AssistantClient assistant() {
+        return this.assistantClient.get();
     }
 
     public CommitsClient commits() {
