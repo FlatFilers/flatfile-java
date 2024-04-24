@@ -27,6 +27,7 @@ import com.flatfile.api.resources.snapshots.SnapshotsClient;
 import com.flatfile.api.resources.spaces.SpacesClient;
 import com.flatfile.api.resources.users.UsersClient;
 import com.flatfile.api.resources.versions.VersionsClient;
+import com.flatfile.api.resources.views.ViewsClient;
 import com.flatfile.api.resources.workbooks.WorkbooksClient;
 import java.util.function.Supplier;
 
@@ -77,6 +78,8 @@ public class Flatfile {
 
     protected final Supplier<VersionsClient> versionsClient;
 
+    protected final Supplier<ViewsClient> viewsClient;
+
     protected final Supplier<WorkbooksClient> workbooksClient;
 
     public Flatfile(ClientOptions clientOptions) {
@@ -103,6 +106,7 @@ public class Flatfile {
         this.spacesClient = Suppliers.memoize(() -> new SpacesClient(clientOptions));
         this.usersClient = Suppliers.memoize(() -> new UsersClient(clientOptions));
         this.versionsClient = Suppliers.memoize(() -> new VersionsClient(clientOptions));
+        this.viewsClient = Suppliers.memoize(() -> new ViewsClient(clientOptions));
         this.workbooksClient = Suppliers.memoize(() -> new WorkbooksClient(clientOptions));
     }
 
@@ -192,6 +196,10 @@ public class Flatfile {
 
     public VersionsClient versions() {
         return this.versionsClient.get();
+    }
+
+    public ViewsClient views() {
+        return this.viewsClient.get();
     }
 
     public WorkbooksClient workbooks() {
