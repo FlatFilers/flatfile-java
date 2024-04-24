@@ -36,6 +36,8 @@ public final class Record implements IRecordBase {
 
     private final Optional<Map<String, Object>> metadata;
 
+    private final Optional<RecordConfig> config;
+
     private final RecordData values;
 
     private final Map<String, Object> additionalProperties;
@@ -47,6 +49,7 @@ public final class Record implements IRecordBase {
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
+            Optional<RecordConfig> config,
             RecordData values,
             Map<String, Object> additionalProperties) {
         this.id = id;
@@ -55,6 +58,7 @@ public final class Record implements IRecordBase {
         this.valid = valid;
         this.messages = messages;
         this.metadata = metadata;
+        this.config = config;
         this.values = values;
         this.additionalProperties = additionalProperties;
     }
@@ -104,6 +108,12 @@ public final class Record implements IRecordBase {
         return metadata;
     }
 
+    @JsonProperty("config")
+    @java.lang.Override
+    public Optional<RecordConfig> getConfig() {
+        return config;
+    }
+
     @JsonProperty("values")
     public RecordData getValues() {
         return values;
@@ -127,13 +137,21 @@ public final class Record implements IRecordBase {
                 && valid.equals(other.valid)
                 && messages.equals(other.messages)
                 && metadata.equals(other.metadata)
+                && config.equals(other.config)
                 && values.equals(other.values);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.versionId, this.commitId, this.valid, this.messages, this.metadata, this.values);
+                this.id,
+                this.versionId,
+                this.commitId,
+                this.valid,
+                this.messages,
+                this.metadata,
+                this.config,
+                this.values);
     }
 
     @java.lang.Override
@@ -177,6 +195,10 @@ public final class Record implements IRecordBase {
         _FinalStage metadata(Optional<Map<String, Object>> metadata);
 
         _FinalStage metadata(Map<String, Object> metadata);
+
+        _FinalStage config(Optional<RecordConfig> config);
+
+        _FinalStage config(RecordConfig config);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -184,6 +206,8 @@ public final class Record implements IRecordBase {
         private RecordId id;
 
         private RecordData values;
+
+        private Optional<RecordConfig> config = Optional.empty();
 
         private Optional<Map<String, Object>> metadata = Optional.empty();
 
@@ -208,6 +232,7 @@ public final class Record implements IRecordBase {
             valid(other.getValid());
             messages(other.getMessages());
             metadata(other.getMetadata());
+            config(other.getConfig());
             values(other.getValues());
             return this;
         }
@@ -223,6 +248,19 @@ public final class Record implements IRecordBase {
         @JsonSetter("values")
         public _FinalStage values(RecordData values) {
             this.values = values;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage config(RecordConfig config) {
+            this.config = Optional.of(config);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "config", nulls = Nulls.SKIP)
+        public _FinalStage config(Optional<RecordConfig> config) {
+            this.config = config;
             return this;
         }
 
@@ -305,7 +343,7 @@ public final class Record implements IRecordBase {
 
         @java.lang.Override
         public Record build() {
-            return new Record(id, versionId, commitId, valid, messages, metadata, values, additionalProperties);
+            return new Record(id, versionId, commitId, valid, messages, metadata, config, values, additionalProperties);
         }
     }
 }

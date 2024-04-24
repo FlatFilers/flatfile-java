@@ -21,6 +21,8 @@ public interface IInternalSpaceConfigBase {
 
     Optional<Object> getMetadata();
 
+    Optional<SpaceSettings> getSettings();
+
     Optional<List<Action>> getActions();
 
     Optional<List<SpaceAccess>> getAccess();

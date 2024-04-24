@@ -49,6 +49,8 @@ public final class Account {
 
     private final Optional<AppId> defaultAppId;
 
+    private final Optional<Integer> dashboard;
+
     private final Map<String, Object> additionalProperties;
 
     private Account(
@@ -64,6 +66,7 @@ public final class Account {
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<AppId> defaultAppId,
+            Optional<Integer> dashboard,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.name = name;
@@ -77,6 +80,7 @@ public final class Account {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.defaultAppId = defaultAppId;
+        this.dashboard = dashboard;
         this.additionalProperties = additionalProperties;
     }
 
@@ -140,6 +144,11 @@ public final class Account {
         return defaultAppId;
     }
 
+    @JsonProperty("dashboard")
+    public Optional<Integer> getDashboard() {
+        return dashboard;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -163,7 +172,8 @@ public final class Account {
                 && metadata.equals(other.metadata)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
-                && defaultAppId.equals(other.defaultAppId);
+                && defaultAppId.equals(other.defaultAppId)
+                && dashboard.equals(other.dashboard);
     }
 
     @java.lang.Override
@@ -180,7 +190,8 @@ public final class Account {
                 this.metadata,
                 this.createdAt,
                 this.updatedAt,
-                this.defaultAppId);
+                this.defaultAppId,
+                this.dashboard);
     }
 
     @java.lang.Override
@@ -246,6 +257,10 @@ public final class Account {
         _FinalStage defaultAppId(Optional<AppId> defaultAppId);
 
         _FinalStage defaultAppId(AppId defaultAppId);
+
+        _FinalStage dashboard(Optional<Integer> dashboard);
+
+        _FinalStage dashboard(Integer dashboard);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -257,6 +272,8 @@ public final class Account {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
+
+        private Optional<Integer> dashboard = Optional.empty();
 
         private Optional<AppId> defaultAppId = Optional.empty();
 
@@ -293,6 +310,7 @@ public final class Account {
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             defaultAppId(other.getDefaultAppId());
+            dashboard(other.getDashboard());
             return this;
         }
 
@@ -321,6 +339,19 @@ public final class Account {
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(OffsetDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage dashboard(Integer dashboard) {
+            this.dashboard = Optional.of(dashboard);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "dashboard", nulls = Nulls.SKIP)
+        public _FinalStage dashboard(Optional<Integer> dashboard) {
+            this.dashboard = dashboard;
             return this;
         }
 
@@ -450,6 +481,7 @@ public final class Account {
                     createdAt,
                     updatedAt,
                     defaultAppId,
+                    dashboard,
                     additionalProperties);
         }
     }

@@ -102,6 +102,9 @@ public class FilesClient {
             if (request.getActions().isPresent()) {
                 body.addFormDataPart("actions", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getActions()));
             }
+            if (request.getOrigin().isPresent()) {
+                body.addFormDataPart("origin", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOrigin()));
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -22,4 +22,6 @@ public interface IRecordBase {
     Optional<List<ValidationMessage>> getMessages();
 
     Optional<Map<String, Object>> getMetadata();
+
+    Optional<RecordConfig> getConfig();
 }

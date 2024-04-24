@@ -31,6 +31,8 @@ public final class DateProperty implements IBaseProperty {
 
     private final Optional<Boolean> readonly;
 
+    private final Optional<FieldAppearance> appearance;
+
     private final Optional<Object> metadata;
 
     private final Optional<List<String>> treatments;
@@ -45,6 +47,7 @@ public final class DateProperty implements IBaseProperty {
             Optional<String> description,
             Optional<List<Constraint>> constraints,
             Optional<Boolean> readonly,
+            Optional<FieldAppearance> appearance,
             Optional<Object> metadata,
             Optional<List<String>> treatments,
             Optional<List<String>> alternativeNames,
@@ -54,6 +57,7 @@ public final class DateProperty implements IBaseProperty {
         this.description = description;
         this.constraints = constraints;
         this.readonly = readonly;
+        this.appearance = appearance;
         this.metadata = metadata;
         this.treatments = treatments;
         this.alternativeNames = alternativeNames;
@@ -94,6 +98,12 @@ public final class DateProperty implements IBaseProperty {
     @java.lang.Override
     public Optional<Boolean> getReadonly() {
         return readonly;
+    }
+
+    @JsonProperty("appearance")
+    @java.lang.Override
+    public Optional<FieldAppearance> getAppearance() {
+        return appearance;
     }
 
     /**
@@ -137,6 +147,7 @@ public final class DateProperty implements IBaseProperty {
                 && description.equals(other.description)
                 && constraints.equals(other.constraints)
                 && readonly.equals(other.readonly)
+                && appearance.equals(other.appearance)
                 && metadata.equals(other.metadata)
                 && treatments.equals(other.treatments)
                 && alternativeNames.equals(other.alternativeNames);
@@ -150,6 +161,7 @@ public final class DateProperty implements IBaseProperty {
                 this.description,
                 this.constraints,
                 this.readonly,
+                this.appearance,
                 this.metadata,
                 this.treatments,
                 this.alternativeNames);
@@ -189,6 +201,10 @@ public final class DateProperty implements IBaseProperty {
 
         _FinalStage readonly(Boolean readonly);
 
+        _FinalStage appearance(Optional<FieldAppearance> appearance);
+
+        _FinalStage appearance(FieldAppearance appearance);
+
         _FinalStage metadata(Optional<Object> metadata);
 
         _FinalStage metadata(Object metadata);
@@ -212,6 +228,8 @@ public final class DateProperty implements IBaseProperty {
 
         private Optional<Object> metadata = Optional.empty();
 
+        private Optional<FieldAppearance> appearance = Optional.empty();
+
         private Optional<Boolean> readonly = Optional.empty();
 
         private Optional<List<Constraint>> constraints = Optional.empty();
@@ -232,6 +250,7 @@ public final class DateProperty implements IBaseProperty {
             description(other.getDescription());
             constraints(other.getConstraints());
             readonly(other.getReadonly());
+            appearance(other.getAppearance());
             metadata(other.getMetadata());
             treatments(other.getTreatments());
             alternativeNames(other.getAlternativeNames());
@@ -289,6 +308,19 @@ public final class DateProperty implements IBaseProperty {
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage appearance(FieldAppearance appearance) {
+            this.appearance = Optional.of(appearance);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "appearance", nulls = Nulls.SKIP)
+        public _FinalStage appearance(Optional<FieldAppearance> appearance) {
+            this.appearance = appearance;
             return this;
         }
 
@@ -360,6 +392,7 @@ public final class DateProperty implements IBaseProperty {
                     description,
                     constraints,
                     readonly,
+                    appearance,
                     metadata,
                     treatments,
                     alternativeNames,

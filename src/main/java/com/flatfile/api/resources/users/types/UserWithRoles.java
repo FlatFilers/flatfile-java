@@ -14,16 +14,19 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.AccountId;
 import com.flatfile.api.resources.commons.types.UserId;
+import com.flatfile.api.resources.roles.types.ActorRoleResponse;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = User.Builder.class)
-public final class User implements IUser, IUserConfig {
+@JsonDeserialize(builder = UserWithRoles.Builder.class)
+public final class UserWithRoles implements IUser {
     private final UserId id;
 
     private final String idp;
@@ -46,9 +49,11 @@ public final class User implements IUser, IUserConfig {
 
     private final AccountId accountId;
 
+    private final List<ActorRoleResponse> actorRoles;
+
     private final Map<String, Object> additionalProperties;
 
-    private User(
+    private UserWithRoles(
             UserId id,
             String idp,
             Optional<String> idpRef,
@@ -60,6 +65,7 @@ public final class User implements IUser, IUserConfig {
             String email,
             String name,
             AccountId accountId,
+            List<ActorRoleResponse> actorRoles,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.idp = idp;
@@ -72,6 +78,7 @@ public final class User implements IUser, IUserConfig {
         this.email = email;
         this.name = name;
         this.accountId = accountId;
+        this.actorRoles = actorRoles;
         this.additionalProperties = additionalProperties;
     }
 
@@ -141,10 +148,15 @@ public final class User implements IUser, IUserConfig {
         return accountId;
     }
 
+    @JsonProperty("actorRoles")
+    public List<ActorRoleResponse> getActorRoles() {
+        return actorRoles;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof User && equalTo((User) other);
+        return other instanceof UserWithRoles && equalTo((UserWithRoles) other);
     }
 
     @JsonAnyGetter
@@ -152,7 +164,7 @@ public final class User implements IUser, IUserConfig {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(User other) {
+    private boolean equalTo(UserWithRoles other) {
         return id.equals(other.id)
                 && idp.equals(other.idp)
                 && idpRef.equals(other.idpRef)
@@ -163,7 +175,8 @@ public final class User implements IUser, IUserConfig {
                 && dashboard.equals(other.dashboard)
                 && email.equals(other.email)
                 && name.equals(other.name)
-                && accountId.equals(other.accountId);
+                && accountId.equals(other.accountId)
+                && actorRoles.equals(other.actorRoles);
     }
 
     @java.lang.Override
@@ -179,7 +192,8 @@ public final class User implements IUser, IUserConfig {
                 this.dashboard,
                 this.email,
                 this.name,
-                this.accountId);
+                this.accountId,
+                this.actorRoles);
     }
 
     @java.lang.Override
@@ -194,7 +208,7 @@ public final class User implements IUser, IUserConfig {
     public interface IdStage {
         IdpStage id(UserId id);
 
-        Builder from(User other);
+        Builder from(UserWithRoles other);
     }
 
     public interface IdpStage {
@@ -222,7 +236,7 @@ public final class User implements IUser, IUserConfig {
     }
 
     public interface _FinalStage {
-        User build();
+        UserWithRoles build();
 
         _FinalStage idpRef(Optional<String> idpRef);
 
@@ -241,6 +255,12 @@ public final class User implements IUser, IUserConfig {
         _FinalStage dashboard(Optional<Integer> dashboard);
 
         _FinalStage dashboard(Integer dashboard);
+
+        _FinalStage actorRoles(List<ActorRoleResponse> actorRoles);
+
+        _FinalStage addActorRoles(ActorRoleResponse actorRoles);
+
+        _FinalStage addAllActorRoles(List<ActorRoleResponse> actorRoles);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -267,6 +287,8 @@ public final class User implements IUser, IUserConfig {
 
         private AccountId accountId;
 
+        private List<ActorRoleResponse> actorRoles = new ArrayList<>();
+
         private Optional<Integer> dashboard = Optional.empty();
 
         private Optional<OffsetDateTime> lastSeenAt = Optional.empty();
@@ -281,7 +303,7 @@ public final class User implements IUser, IUserConfig {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(User other) {
+        public Builder from(UserWithRoles other) {
             id(other.getId());
             idp(other.getIdp());
             idpRef(other.getIdpRef());
@@ -293,6 +315,7 @@ public final class User implements IUser, IUserConfig {
             email(other.getEmail());
             name(other.getName());
             accountId(other.getAccountId());
+            actorRoles(other.getActorRoles());
             return this;
         }
 
@@ -342,6 +365,26 @@ public final class User implements IUser, IUserConfig {
         @JsonSetter("accountId")
         public _FinalStage accountId(AccountId accountId) {
             this.accountId = accountId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addAllActorRoles(List<ActorRoleResponse> actorRoles) {
+            this.actorRoles.addAll(actorRoles);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addActorRoles(ActorRoleResponse actorRoles) {
+            this.actorRoles.add(actorRoles);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "actorRoles", nulls = Nulls.SKIP)
+        public _FinalStage actorRoles(List<ActorRoleResponse> actorRoles) {
+            this.actorRoles.clear();
+            this.actorRoles.addAll(actorRoles);
             return this;
         }
 
@@ -405,8 +448,8 @@ public final class User implements IUser, IUserConfig {
         }
 
         @java.lang.Override
-        public User build() {
-            return new User(
+        public UserWithRoles build() {
+            return new UserWithRoles(
                     id,
                     idp,
                     idpRef,
@@ -418,6 +461,7 @@ public final class User implements IUser, IUserConfig {
                     email,
                     name,
                     accountId,
+                    actorRoles,
                     additionalProperties);
         }
     }

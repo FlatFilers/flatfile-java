@@ -11,6 +11,7 @@ import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commons.types.MappingId;
 import com.flatfile.api.resources.commons.types.ProgramId;
 import com.flatfile.api.resources.commons.types.Success;
+import com.flatfile.api.resources.mapping.requests.DeleteAllHistoryForUserRequest;
 import com.flatfile.api.resources.mapping.requests.ListProgramsRequest;
 import com.flatfile.api.resources.mapping.types.CreateMappingRulesRequest;
 import com.flatfile.api.resources.mapping.types.MappingRuleConfig;
@@ -80,20 +81,34 @@ public class MappingClient {
      * Deletes all history for the authenticated user
      */
     public Success deleteAllHistoryForUser() {
-        return deleteAllHistoryForUser(null);
+        return deleteAllHistoryForUser(DeleteAllHistoryForUserRequest.builder().build());
     }
 
     /**
      * Deletes all history for the authenticated user
      */
-    public Success deleteAllHistoryForUser(RequestOptions requestOptions) {
+    public Success deleteAllHistoryForUser(DeleteAllHistoryForUserRequest request) {
+        return deleteAllHistoryForUser(request, null);
+    }
+
+    /**
+     * Deletes all history for the authenticated user
+     */
+    public Success deleteAllHistoryForUser(DeleteAllHistoryForUserRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("mapping")
                 .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("DELETE", null)
+                .method("DELETE", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

@@ -463,13 +463,6 @@ public class SheetsClient {
     /**
      * Returns record cell values grouped by all fields in the sheet
      */
-    public CellsResponse getCellValues(SheetId sheetId) {
-        return getCellValues(sheetId, GetFieldValuesRequest.builder().build());
-    }
-
-    /**
-     * Returns record cell values grouped by all fields in the sheet
-     */
     public CellsResponse getCellValues(SheetId sheetId, GetFieldValuesRequest request) {
         return getCellValues(sheetId, request, null);
     }
@@ -507,9 +500,7 @@ public class SheetsClient {
             httpUrl.addQueryParameter(
                     "pageNumber", request.getPageNumber().get().toString());
         }
-        if (request.getDistinct().isPresent()) {
-            httpUrl.addQueryParameter("distinct", request.getDistinct().get().toString());
-        }
+        httpUrl.addQueryParameter("distinct", request.getDistinct().toString());
         if (request.getIncludeCounts().isPresent()) {
             httpUrl.addQueryParameter(
                     "includeCounts", request.getIncludeCounts().get().toString());

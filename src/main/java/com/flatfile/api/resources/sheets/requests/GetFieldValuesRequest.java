@@ -44,7 +44,7 @@ public final class GetFieldValuesRequest {
 
     private final Optional<PageNumber> pageNumber;
 
-    private final Optional<Distinct> distinct;
+    private final Distinct distinct;
 
     private final Optional<IncludeCounts> includeCounts;
 
@@ -60,7 +60,7 @@ public final class GetFieldValuesRequest {
             Optional<FilterField> filterField,
             Optional<PageSize> pageSize,
             Optional<PageNumber> pageNumber,
-            Optional<Distinct> distinct,
+            Distinct distinct,
             Optional<IncludeCounts> includeCounts,
             Optional<SearchValue> searchValue,
             Map<String, Object> additionalProperties) {
@@ -121,8 +121,11 @@ public final class GetFieldValuesRequest {
         return pageNumber;
     }
 
+    /**
+     * @return Must be set to true
+     */
     @JsonProperty("distinct")
-    public Optional<Distinct> getDistinct() {
+    public Distinct getDistinct() {
         return distinct;
     }
 
@@ -183,37 +186,84 @@ public final class GetFieldValuesRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static DistinctStage builder() {
         return new Builder();
     }
 
+    public interface DistinctStage {
+        _FinalStage distinct(Distinct distinct);
+
+        Builder from(GetFieldValuesRequest other);
+    }
+
+    public interface _FinalStage {
+        GetFieldValuesRequest build();
+
+        _FinalStage fieldKey(Optional<FieldKey> fieldKey);
+
+        _FinalStage fieldKey(FieldKey fieldKey);
+
+        _FinalStage sortField(Optional<SortField> sortField);
+
+        _FinalStage sortField(SortField sortField);
+
+        _FinalStage sortDirection(Optional<SortDirection> sortDirection);
+
+        _FinalStage sortDirection(SortDirection sortDirection);
+
+        _FinalStage filter(Optional<Filter> filter);
+
+        _FinalStage filter(Filter filter);
+
+        _FinalStage filterField(Optional<FilterField> filterField);
+
+        _FinalStage filterField(FilterField filterField);
+
+        _FinalStage pageSize(Optional<PageSize> pageSize);
+
+        _FinalStage pageSize(PageSize pageSize);
+
+        _FinalStage pageNumber(Optional<PageNumber> pageNumber);
+
+        _FinalStage pageNumber(PageNumber pageNumber);
+
+        _FinalStage includeCounts(Optional<IncludeCounts> includeCounts);
+
+        _FinalStage includeCounts(IncludeCounts includeCounts);
+
+        _FinalStage searchValue(Optional<SearchValue> searchValue);
+
+        _FinalStage searchValue(SearchValue searchValue);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<FieldKey> fieldKey = Optional.empty();
+    public static final class Builder implements DistinctStage, _FinalStage {
+        private Distinct distinct;
 
-        private Optional<SortField> sortField = Optional.empty();
-
-        private Optional<SortDirection> sortDirection = Optional.empty();
-
-        private Optional<Filter> filter = Optional.empty();
-
-        private Optional<FilterField> filterField = Optional.empty();
-
-        private Optional<PageSize> pageSize = Optional.empty();
-
-        private Optional<PageNumber> pageNumber = Optional.empty();
-
-        private Optional<Distinct> distinct = Optional.empty();
+        private Optional<SearchValue> searchValue = Optional.empty();
 
         private Optional<IncludeCounts> includeCounts = Optional.empty();
 
-        private Optional<SearchValue> searchValue = Optional.empty();
+        private Optional<PageNumber> pageNumber = Optional.empty();
+
+        private Optional<PageSize> pageSize = Optional.empty();
+
+        private Optional<FilterField> filterField = Optional.empty();
+
+        private Optional<Filter> filter = Optional.empty();
+
+        private Optional<SortDirection> sortDirection = Optional.empty();
+
+        private Optional<SortField> sortField = Optional.empty();
+
+        private Optional<FieldKey> fieldKey = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(GetFieldValuesRequest other) {
             fieldKey(other.getFieldKey());
             sortField(other.getSortField());
@@ -228,116 +278,151 @@ public final class GetFieldValuesRequest {
             return this;
         }
 
-        @JsonSetter(value = "fieldKey", nulls = Nulls.SKIP)
-        public Builder fieldKey(Optional<FieldKey> fieldKey) {
-            this.fieldKey = fieldKey;
-            return this;
-        }
-
-        public Builder fieldKey(FieldKey fieldKey) {
-            this.fieldKey = Optional.of(fieldKey);
-            return this;
-        }
-
-        @JsonSetter(value = "sortField", nulls = Nulls.SKIP)
-        public Builder sortField(Optional<SortField> sortField) {
-            this.sortField = sortField;
-            return this;
-        }
-
-        public Builder sortField(SortField sortField) {
-            this.sortField = Optional.of(sortField);
-            return this;
-        }
-
-        @JsonSetter(value = "sortDirection", nulls = Nulls.SKIP)
-        public Builder sortDirection(Optional<SortDirection> sortDirection) {
-            this.sortDirection = sortDirection;
-            return this;
-        }
-
-        public Builder sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
-            return this;
-        }
-
-        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
-        public Builder filter(Optional<Filter> filter) {
-            this.filter = filter;
-            return this;
-        }
-
-        public Builder filter(Filter filter) {
-            this.filter = Optional.of(filter);
-            return this;
-        }
-
-        @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
-        public Builder filterField(Optional<FilterField> filterField) {
-            this.filterField = filterField;
-            return this;
-        }
-
-        public Builder filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
-            return this;
-        }
-
-        @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
-        public Builder pageSize(Optional<PageSize> pageSize) {
-            this.pageSize = pageSize;
-            return this;
-        }
-
-        public Builder pageSize(PageSize pageSize) {
-            this.pageSize = Optional.of(pageSize);
-            return this;
-        }
-
-        @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
-        public Builder pageNumber(Optional<PageNumber> pageNumber) {
-            this.pageNumber = pageNumber;
-            return this;
-        }
-
-        public Builder pageNumber(PageNumber pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
-            return this;
-        }
-
-        @JsonSetter(value = "distinct", nulls = Nulls.SKIP)
-        public Builder distinct(Optional<Distinct> distinct) {
+        /**
+         * <p>Must be set to true</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("distinct")
+        public _FinalStage distinct(Distinct distinct) {
             this.distinct = distinct;
             return this;
         }
 
-        public Builder distinct(Distinct distinct) {
-            this.distinct = Optional.of(distinct);
-            return this;
-        }
-
-        @JsonSetter(value = "includeCounts", nulls = Nulls.SKIP)
-        public Builder includeCounts(Optional<IncludeCounts> includeCounts) {
-            this.includeCounts = includeCounts;
-            return this;
-        }
-
-        public Builder includeCounts(IncludeCounts includeCounts) {
-            this.includeCounts = Optional.of(includeCounts);
-            return this;
-        }
-
-        @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
-        public Builder searchValue(Optional<SearchValue> searchValue) {
-            this.searchValue = searchValue;
-            return this;
-        }
-
-        public Builder searchValue(SearchValue searchValue) {
+        /**
+         * <p>A value to find for a given field in a sheet. Wrap the value in &quot;&quot; for exact match</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage searchValue(SearchValue searchValue) {
             this.searchValue = Optional.of(searchValue);
             return this;
         }
 
+        @java.lang.Override
+        @JsonSetter(value = "searchValue", nulls = Nulls.SKIP)
+        public _FinalStage searchValue(Optional<SearchValue> searchValue) {
+            this.searchValue = searchValue;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage includeCounts(IncludeCounts includeCounts) {
+            this.includeCounts = Optional.of(includeCounts);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "includeCounts", nulls = Nulls.SKIP)
+        public _FinalStage includeCounts(Optional<IncludeCounts> includeCounts) {
+            this.includeCounts = includeCounts;
+            return this;
+        }
+
+        /**
+         * <p>Based on pageSize, which page of records to return</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage pageNumber(PageNumber pageNumber) {
+            this.pageNumber = Optional.of(pageNumber);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
+        public _FinalStage pageNumber(Optional<PageNumber> pageNumber) {
+            this.pageNumber = pageNumber;
+            return this;
+        }
+
+        /**
+         * <p>Number of records to return in a page (default 1000 if pageNumber included)</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage pageSize(PageSize pageSize) {
+            this.pageSize = Optional.of(pageSize);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
+        public _FinalStage pageSize(Optional<PageSize> pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
+        /**
+         * <p>Name of field by which to filter records</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage filterField(FilterField filterField) {
+            this.filterField = Optional.of(filterField);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "filterField", nulls = Nulls.SKIP)
+        public _FinalStage filterField(Optional<FilterField> filterField) {
+            this.filterField = filterField;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage filter(Filter filter) {
+            this.filter = Optional.of(filter);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "filter", nulls = Nulls.SKIP)
+        public _FinalStage filter(Optional<Filter> filter) {
+            this.filter = filter;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sortDirection(SortDirection sortDirection) {
+            this.sortDirection = Optional.of(sortDirection);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sortDirection", nulls = Nulls.SKIP)
+        public _FinalStage sortDirection(Optional<SortDirection> sortDirection) {
+            this.sortDirection = sortDirection;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage sortField(SortField sortField) {
+            this.sortField = Optional.of(sortField);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sortField", nulls = Nulls.SKIP)
+        public _FinalStage sortField(Optional<SortField> sortField) {
+            this.sortField = sortField;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage fieldKey(FieldKey fieldKey) {
+            this.fieldKey = Optional.of(fieldKey);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "fieldKey", nulls = Nulls.SKIP)
+        public _FinalStage fieldKey(Optional<FieldKey> fieldKey) {
+            this.fieldKey = fieldKey;
+            return this;
+        }
+
+        @java.lang.Override
         public GetFieldValuesRequest build() {
             return new GetFieldValuesRequest(
                     fieldKey,

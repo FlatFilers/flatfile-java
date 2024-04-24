@@ -36,6 +36,8 @@ public final class RecordBase implements IRecordBase {
 
     private final Optional<Map<String, Object>> metadata;
 
+    private final Optional<RecordConfig> config;
+
     private final Map<String, Object> additionalProperties;
 
     private RecordBase(
@@ -45,6 +47,7 @@ public final class RecordBase implements IRecordBase {
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
+            Optional<RecordConfig> config,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.versionId = versionId;
@@ -52,6 +55,7 @@ public final class RecordBase implements IRecordBase {
         this.valid = valid;
         this.messages = messages;
         this.metadata = metadata;
+        this.config = config;
         this.additionalProperties = additionalProperties;
     }
 
@@ -100,6 +104,12 @@ public final class RecordBase implements IRecordBase {
         return metadata;
     }
 
+    @JsonProperty("config")
+    @java.lang.Override
+    public Optional<RecordConfig> getConfig() {
+        return config;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -117,12 +127,14 @@ public final class RecordBase implements IRecordBase {
                 && commitId.equals(other.commitId)
                 && valid.equals(other.valid)
                 && messages.equals(other.messages)
-                && metadata.equals(other.metadata);
+                && metadata.equals(other.metadata)
+                && config.equals(other.config);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.versionId, this.commitId, this.valid, this.messages, this.metadata);
+        return Objects.hash(
+                this.id, this.versionId, this.commitId, this.valid, this.messages, this.metadata, this.config);
     }
 
     @java.lang.Override
@@ -162,11 +174,17 @@ public final class RecordBase implements IRecordBase {
         _FinalStage metadata(Optional<Map<String, Object>> metadata);
 
         _FinalStage metadata(Map<String, Object> metadata);
+
+        _FinalStage config(Optional<RecordConfig> config);
+
+        _FinalStage config(RecordConfig config);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements IdStage, _FinalStage {
         private RecordId id;
+
+        private Optional<RecordConfig> config = Optional.empty();
 
         private Optional<Map<String, Object>> metadata = Optional.empty();
 
@@ -191,6 +209,7 @@ public final class RecordBase implements IRecordBase {
             valid(other.getValid());
             messages(other.getMessages());
             metadata(other.getMetadata());
+            config(other.getConfig());
             return this;
         }
 
@@ -198,6 +217,19 @@ public final class RecordBase implements IRecordBase {
         @JsonSetter("id")
         public _FinalStage id(RecordId id) {
             this.id = id;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage config(RecordConfig config) {
+            this.config = Optional.of(config);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "config", nulls = Nulls.SKIP)
+        public _FinalStage config(Optional<RecordConfig> config) {
+            this.config = config;
             return this;
         }
 
@@ -280,7 +312,7 @@ public final class RecordBase implements IRecordBase {
 
         @java.lang.Override
         public RecordBase build() {
-            return new RecordBase(id, versionId, commitId, valid, messages, metadata, additionalProperties);
+            return new RecordBase(id, versionId, commitId, valid, messages, metadata, config, additionalProperties);
         }
     }
 }

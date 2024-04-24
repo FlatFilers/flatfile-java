@@ -32,6 +32,8 @@ public final class RecordWithLinks {
 
     private final Optional<Map<String, Object>> metadata;
 
+    private final Optional<RecordConfig> config;
+
     private final Map<String, Object> additionalProperties;
 
     private RecordWithLinks(
@@ -40,12 +42,14 @@ public final class RecordWithLinks {
             Optional<Boolean> valid,
             Optional<List<ValidationMessage>> messages,
             Optional<Map<String, Object>> metadata,
+            Optional<RecordConfig> config,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.values = values;
         this.valid = valid;
         this.messages = messages;
         this.metadata = metadata;
+        this.config = config;
         this.additionalProperties = additionalProperties;
     }
 
@@ -74,6 +78,11 @@ public final class RecordWithLinks {
         return metadata;
     }
 
+    @JsonProperty("config")
+    public Optional<RecordConfig> getConfig() {
+        return config;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -90,12 +99,13 @@ public final class RecordWithLinks {
                 && values.equals(other.values)
                 && valid.equals(other.valid)
                 && messages.equals(other.messages)
-                && metadata.equals(other.metadata);
+                && metadata.equals(other.metadata)
+                && config.equals(other.config);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.values, this.valid, this.messages, this.metadata);
+        return Objects.hash(this.id, this.values, this.valid, this.messages, this.metadata, this.config);
     }
 
     @java.lang.Override
@@ -131,6 +141,10 @@ public final class RecordWithLinks {
         _FinalStage metadata(Optional<Map<String, Object>> metadata);
 
         _FinalStage metadata(Map<String, Object> metadata);
+
+        _FinalStage config(Optional<RecordConfig> config);
+
+        _FinalStage config(RecordConfig config);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -138,6 +152,8 @@ public final class RecordWithLinks {
         private RecordId id;
 
         private RecordDataWithLinks values;
+
+        private Optional<RecordConfig> config = Optional.empty();
 
         private Optional<Map<String, Object>> metadata = Optional.empty();
 
@@ -157,6 +173,7 @@ public final class RecordWithLinks {
             valid(other.getValid());
             messages(other.getMessages());
             metadata(other.getMetadata());
+            config(other.getConfig());
             return this;
         }
 
@@ -171,6 +188,19 @@ public final class RecordWithLinks {
         @JsonSetter("values")
         public _FinalStage values(RecordDataWithLinks values) {
             this.values = values;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage config(RecordConfig config) {
+            this.config = Optional.of(config);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "config", nulls = Nulls.SKIP)
+        public _FinalStage config(Optional<RecordConfig> config) {
+            this.config = config;
             return this;
         }
 
@@ -215,7 +245,7 @@ public final class RecordWithLinks {
 
         @java.lang.Override
         public RecordWithLinks build() {
-            return new RecordWithLinks(id, values, valid, messages, metadata, additionalProperties);
+            return new RecordWithLinks(id, values, valid, messages, metadata, config, additionalProperties);
         }
     }
 }

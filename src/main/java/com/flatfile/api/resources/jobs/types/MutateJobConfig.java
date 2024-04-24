@@ -35,6 +35,8 @@ public final class MutateJobConfig {
 
     private final Optional<String> snapshotLabel;
 
+    private final Optional<String> snapshotId;
+
     private final Optional<Filter> filter;
 
     private final Optional<FilterField> filterField;
@@ -54,6 +56,7 @@ public final class MutateJobConfig {
             String mutateRecord,
             Optional<String> mutationId,
             Optional<String> snapshotLabel,
+            Optional<String> snapshotId,
             Optional<Filter> filter,
             Optional<FilterField> filterField,
             Optional<SearchValue> searchValue,
@@ -65,6 +68,7 @@ public final class MutateJobConfig {
         this.mutateRecord = mutateRecord;
         this.mutationId = mutationId;
         this.snapshotLabel = snapshotLabel;
+        this.snapshotId = snapshotId;
         this.filter = filter;
         this.filterField = filterField;
         this.searchValue = searchValue;
@@ -101,6 +105,14 @@ public final class MutateJobConfig {
     @JsonProperty("snapshotLabel")
     public Optional<String> getSnapshotLabel() {
         return snapshotLabel;
+    }
+
+    /**
+     * @return The generated snapshotId will be stored here
+     */
+    @JsonProperty("snapshotId")
+    public Optional<String> getSnapshotId() {
+        return snapshotId;
     }
 
     @JsonProperty("filter")
@@ -152,6 +164,7 @@ public final class MutateJobConfig {
                 && mutateRecord.equals(other.mutateRecord)
                 && mutationId.equals(other.mutationId)
                 && snapshotLabel.equals(other.snapshotLabel)
+                && snapshotId.equals(other.snapshotId)
                 && filter.equals(other.filter)
                 && filterField.equals(other.filterField)
                 && searchValue.equals(other.searchValue)
@@ -167,6 +180,7 @@ public final class MutateJobConfig {
                 this.mutateRecord,
                 this.mutationId,
                 this.snapshotLabel,
+                this.snapshotId,
                 this.filter,
                 this.filterField,
                 this.searchValue,
@@ -204,6 +218,10 @@ public final class MutateJobConfig {
         _FinalStage snapshotLabel(Optional<String> snapshotLabel);
 
         _FinalStage snapshotLabel(String snapshotLabel);
+
+        _FinalStage snapshotId(Optional<String> snapshotId);
+
+        _FinalStage snapshotId(String snapshotId);
 
         _FinalStage filter(Optional<Filter> filter);
 
@@ -248,6 +266,8 @@ public final class MutateJobConfig {
 
         private Optional<Filter> filter = Optional.empty();
 
+        private Optional<String> snapshotId = Optional.empty();
+
         private Optional<String> snapshotLabel = Optional.empty();
 
         private Optional<String> mutationId = Optional.empty();
@@ -263,6 +283,7 @@ public final class MutateJobConfig {
             mutateRecord(other.getMutateRecord());
             mutationId(other.getMutationId());
             snapshotLabel(other.getSnapshotLabel());
+            snapshotId(other.getSnapshotId());
             filter(other.getFilter());
             filterField(other.getFilterField());
             searchValue(other.getSearchValue());
@@ -373,6 +394,23 @@ public final class MutateJobConfig {
         }
 
         /**
+         * <p>The generated snapshotId will be stored here</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage snapshotId(String snapshotId) {
+            this.snapshotId = Optional.of(snapshotId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "snapshotId", nulls = Nulls.SKIP)
+        public _FinalStage snapshotId(Optional<String> snapshotId) {
+            this.snapshotId = snapshotId;
+            return this;
+        }
+
+        /**
          * <p>If specified, a snapshot will be generated with this label</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -413,6 +451,7 @@ public final class MutateJobConfig {
                     mutateRecord,
                     mutationId,
                     snapshotLabel,
+                    snapshotId,
                     filter,
                     filterField,
                     searchValue,

@@ -15,6 +15,7 @@ import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.Action;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceId;
+import com.flatfile.api.resources.files.types.FileOrigin;
 import com.flatfile.api.resources.files.types.Mode;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,8 @@ public final class CreateFileRequest {
 
     private final Optional<List<Action>> actions;
 
+    private final Optional<FileOrigin> origin;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateFileRequest(
@@ -40,11 +43,13 @@ public final class CreateFileRequest {
             EnvironmentId environmentId,
             Optional<Mode> mode,
             Optional<List<Action>> actions,
+            Optional<FileOrigin> origin,
             Map<String, Object> additionalProperties) {
         this.spaceId = spaceId;
         this.environmentId = environmentId;
         this.mode = mode;
         this.actions = actions;
+        this.origin = origin;
         this.additionalProperties = additionalProperties;
     }
 
@@ -74,6 +79,14 @@ public final class CreateFileRequest {
         return actions;
     }
 
+    /**
+     * @return The origin of the file, ie filesystem
+     */
+    @JsonProperty("origin")
+    public Optional<FileOrigin> getOrigin() {
+        return origin;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -89,12 +102,13 @@ public final class CreateFileRequest {
         return spaceId.equals(other.spaceId)
                 && environmentId.equals(other.environmentId)
                 && mode.equals(other.mode)
-                && actions.equals(other.actions);
+                && actions.equals(other.actions)
+                && origin.equals(other.origin);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.spaceId, this.environmentId, this.mode, this.actions);
+        return Objects.hash(this.spaceId, this.environmentId, this.mode, this.actions, this.origin);
     }
 
     @java.lang.Override
@@ -126,6 +140,10 @@ public final class CreateFileRequest {
         _FinalStage actions(Optional<List<Action>> actions);
 
         _FinalStage actions(List<Action> actions);
+
+        _FinalStage origin(Optional<FileOrigin> origin);
+
+        _FinalStage origin(FileOrigin origin);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -133,6 +151,8 @@ public final class CreateFileRequest {
         private SpaceId spaceId;
 
         private EnvironmentId environmentId;
+
+        private Optional<FileOrigin> origin = Optional.empty();
 
         private Optional<List<Action>> actions = Optional.empty();
 
@@ -149,6 +169,7 @@ public final class CreateFileRequest {
             environmentId(other.getEnvironmentId());
             mode(other.getMode());
             actions(other.getActions());
+            origin(other.getOrigin());
             return this;
         }
 
@@ -163,6 +184,23 @@ public final class CreateFileRequest {
         @JsonSetter("environmentId")
         public _FinalStage environmentId(EnvironmentId environmentId) {
             this.environmentId = environmentId;
+            return this;
+        }
+
+        /**
+         * <p>The origin of the file, ie filesystem</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage origin(FileOrigin origin) {
+            this.origin = Optional.of(origin);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "origin", nulls = Nulls.SKIP)
+        public _FinalStage origin(Optional<FileOrigin> origin) {
+            this.origin = origin;
             return this;
         }
 
@@ -202,7 +240,7 @@ public final class CreateFileRequest {
 
         @java.lang.Override
         public CreateFileRequest build() {
-            return new CreateFileRequest(spaceId, environmentId, mode, actions, additionalProperties);
+            return new CreateFileRequest(spaceId, environmentId, mode, actions, origin, additionalProperties);
         }
     }
 }

@@ -39,6 +39,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
     private final Optional<Object> metadata;
 
+    private final Optional<SpaceSettings> settings;
+
     private final Optional<List<Action>> actions;
 
     private final Optional<List<SpaceAccess>> access;
@@ -98,6 +100,7 @@ public final class Space implements IInternalSpaceConfigBase {
             Optional<EnvironmentId> environmentId,
             Optional<WorkbookId> primaryWorkbookId,
             Optional<Object> metadata,
+            Optional<SpaceSettings> settings,
             Optional<List<Action>> actions,
             Optional<List<SpaceAccess>> access,
             Optional<Boolean> autoConfigure,
@@ -129,6 +132,7 @@ public final class Space implements IInternalSpaceConfigBase {
         this.environmentId = environmentId;
         this.primaryWorkbookId = primaryWorkbookId;
         this.metadata = metadata;
+        this.settings = settings;
         this.actions = actions;
         this.access = access;
         this.autoConfigure = autoConfigure;
@@ -183,6 +187,15 @@ public final class Space implements IInternalSpaceConfigBase {
     @java.lang.Override
     public Optional<Object> getMetadata() {
         return metadata;
+    }
+
+    /**
+     * @return The Space settings.
+     */
+    @JsonProperty("settings")
+    @java.lang.Override
+    public Optional<SpaceSettings> getSettings() {
+        return settings;
     }
 
     @JsonProperty("actions")
@@ -391,6 +404,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 && environmentId.equals(other.environmentId)
                 && primaryWorkbookId.equals(other.primaryWorkbookId)
                 && metadata.equals(other.metadata)
+                && settings.equals(other.settings)
                 && actions.equals(other.actions)
                 && access.equals(other.access)
                 && autoConfigure.equals(other.autoConfigure)
@@ -426,6 +440,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 this.environmentId,
                 this.primaryWorkbookId,
                 this.metadata,
+                this.settings,
                 this.actions,
                 this.access,
                 this.autoConfigure,
@@ -499,6 +514,10 @@ public final class Space implements IInternalSpaceConfigBase {
         _FinalStage metadata(Optional<Object> metadata);
 
         _FinalStage metadata(Object metadata);
+
+        _FinalStage settings(Optional<SpaceSettings> settings);
+
+        _FinalStage settings(SpaceSettings settings);
 
         _FinalStage actions(Optional<List<Action>> actions);
 
@@ -645,6 +664,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
         private Optional<List<Action>> actions = Optional.empty();
 
+        private Optional<SpaceSettings> settings = Optional.empty();
+
         private Optional<Object> metadata = Optional.empty();
 
         private Optional<WorkbookId> primaryWorkbookId = Optional.empty();
@@ -664,6 +685,7 @@ public final class Space implements IInternalSpaceConfigBase {
             environmentId(other.getEnvironmentId());
             primaryWorkbookId(other.getPrimaryWorkbookId());
             metadata(other.getMetadata());
+            settings(other.getSettings());
             actions(other.getActions());
             access(other.getAccess());
             autoConfigure(other.getAutoConfigure());
@@ -1087,6 +1109,23 @@ public final class Space implements IInternalSpaceConfigBase {
         }
 
         /**
+         * <p>The Space settings.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage settings(SpaceSettings settings) {
+            this.settings = Optional.of(settings);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "settings", nulls = Nulls.SKIP)
+        public _FinalStage settings(Optional<SpaceSettings> settings) {
+            this.settings = settings;
+            return this;
+        }
+
+        /**
          * <p>Metadata for the space</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1149,6 +1188,7 @@ public final class Space implements IInternalSpaceConfigBase {
                     environmentId,
                     primaryWorkbookId,
                     metadata,
+                    settings,
                     actions,
                     access,
                     autoConfigure,

@@ -17,6 +17,8 @@ public interface IBaseProperty {
 
     Optional<Boolean> getReadonly();
 
+    Optional<FieldAppearance> getAppearance();
+
     Optional<Object> getMetadata();
 
     Optional<List<String>> getTreatments();

@@ -19,6 +19,7 @@ import com.flatfile.api.resources.users.requests.UpdateUserRequest;
 import com.flatfile.api.resources.users.types.ListUsersResponse;
 import com.flatfile.api.resources.users.types.UserCreateAndInviteRequest;
 import com.flatfile.api.resources.users.types.UserResponse;
+import com.flatfile.api.resources.users.types.UserWithRolesResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -80,14 +81,14 @@ public class UsersClient {
     /**
      * Creates and invites a new user to your account.
      */
-    public UserResponse createAndInvite(UserCreateAndInviteRequest request) {
+    public UserWithRolesResponse createAndInvite(UserCreateAndInviteRequest request) {
         return createAndInvite(request, null);
     }
 
     /**
      * Creates and invites a new user to your account.
      */
-    public UserResponse createAndInvite(UserCreateAndInviteRequest request, RequestOptions requestOptions) {
+    public UserWithRolesResponse createAndInvite(UserCreateAndInviteRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users/invite")
@@ -109,7 +110,7 @@ public class UsersClient {
             Response response =
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserWithRolesResponse.class);
             }
             throw new ApiError(
                     response.code(),
@@ -196,6 +197,42 @@ public class UsersClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Deletes a user
+     */
+    public Success delete(UserId userId) {
+        return delete(userId, null);
+    }
+
+    /**
+     * Deletes a user
+     */
+    public Success delete(UserId userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId.toString())
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
             }
             throw new ApiError(
                     response.code(),
