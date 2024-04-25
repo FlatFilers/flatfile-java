@@ -50,6 +50,14 @@ public final class Property {
         return new Property(new ReferenceValue(value));
     }
 
+    public static Property stringList(StringListProperty value) {
+        return new Property(new StringListValue(value));
+    }
+
+    public static Property enumList(EnumListProperty value) {
+        return new Property(new EnumListValue(value));
+    }
+
     public boolean isString() {
         return value instanceof StringValue;
     }
@@ -72,6 +80,14 @@ public final class Property {
 
     public boolean isReference() {
         return value instanceof ReferenceValue;
+    }
+
+    public boolean isStringList() {
+        return value instanceof StringListValue;
+    }
+
+    public boolean isEnumList() {
+        return value instanceof EnumListValue;
     }
 
     public boolean _isUnknown() {
@@ -120,6 +136,20 @@ public final class Property {
         return Optional.empty();
     }
 
+    public Optional<StringListProperty> getStringList() {
+        if (isStringList()) {
+            return Optional.of(((StringListValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<EnumListProperty> getEnumList() {
+        if (isEnumList()) {
+            return Optional.of(((EnumListValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -145,6 +175,10 @@ public final class Property {
 
         T visitReference(ReferenceProperty reference);
 
+        T visitStringList(StringListProperty stringList);
+
+        T visitEnumList(EnumListProperty enumList);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -155,7 +189,9 @@ public final class Property {
         @JsonSubTypes.Type(BooleanValue.class),
         @JsonSubTypes.Type(DateValue.class),
         @JsonSubTypes.Type(EnumValue.class),
-        @JsonSubTypes.Type(ReferenceValue.class)
+        @JsonSubTypes.Type(ReferenceValue.class),
+        @JsonSubTypes.Type(StringListValue.class),
+        @JsonSubTypes.Type(EnumListValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -376,6 +412,82 @@ public final class Property {
         }
 
         private boolean equalTo(ReferenceValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Property{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("string-list")
+    private static final class StringListValue implements Value {
+        @JsonUnwrapped
+        private StringListProperty value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private StringListValue() {}
+
+        private StringListValue(StringListProperty value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitStringList(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof StringListValue && equalTo((StringListValue) other);
+        }
+
+        private boolean equalTo(StringListValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Property{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("enum-list")
+    private static final class EnumListValue implements Value {
+        @JsonUnwrapped
+        private EnumListProperty value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EnumListValue() {}
+
+        private EnumListValue(EnumListProperty value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEnumList(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EnumListValue && equalTo((EnumListValue) other);
+        }
+
+        private boolean equalTo(EnumListValue other) {
             return value.equals(other.value);
         }
 
