@@ -38,6 +38,10 @@ public final class JobOutcomeNext {
         return new JobOutcomeNext(new DownloadValue(value));
     }
 
+    public static JobOutcomeNext files(JobOutcomeNextFiles value) {
+        return new JobOutcomeNext(new FilesValue(value));
+    }
+
     public static JobOutcomeNext wait(JobOutcomeNextWait value) {
         return new JobOutcomeNext(new WaitValue(value));
     }
@@ -48,6 +52,10 @@ public final class JobOutcomeNext {
 
     public static JobOutcomeNext retry(JobOutcomeNextRetry value) {
         return new JobOutcomeNext(new RetryValue(value));
+    }
+
+    public static JobOutcomeNext view(JobOutcomeNextView value) {
+        return new JobOutcomeNext(new ViewValue(value));
     }
 
     public boolean isId() {
@@ -62,6 +70,10 @@ public final class JobOutcomeNext {
         return value instanceof DownloadValue;
     }
 
+    public boolean isFiles() {
+        return value instanceof FilesValue;
+    }
+
     public boolean isWait() {
         return value instanceof WaitValue;
     }
@@ -72,6 +84,10 @@ public final class JobOutcomeNext {
 
     public boolean isRetry() {
         return value instanceof RetryValue;
+    }
+
+    public boolean isView() {
+        return value instanceof ViewValue;
     }
 
     public boolean _isUnknown() {
@@ -99,6 +115,13 @@ public final class JobOutcomeNext {
         return Optional.empty();
     }
 
+    public Optional<JobOutcomeNextFiles> getFiles() {
+        if (isFiles()) {
+            return Optional.of(((FilesValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<JobOutcomeNextWait> getWait() {
         if (isWait()) {
             return Optional.of(((WaitValue) value).value);
@@ -116,6 +139,13 @@ public final class JobOutcomeNext {
     public Optional<JobOutcomeNextRetry> getRetry() {
         if (isRetry()) {
             return Optional.of(((RetryValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<JobOutcomeNextView> getView() {
+        if (isView()) {
+            return Optional.of(((ViewValue) value).value);
         }
         return Optional.empty();
     }
@@ -139,11 +169,15 @@ public final class JobOutcomeNext {
 
         T visitDownload(JobOutcomeNextDownload download);
 
+        T visitFiles(JobOutcomeNextFiles files);
+
         T visitWait(JobOutcomeNextWait wait);
 
         T visitSnapshot(JobOutcomeNextSnapshot snapshot);
 
         T visitRetry(JobOutcomeNextRetry retry);
+
+        T visitView(JobOutcomeNextView view);
 
         T _visitUnknown(Object unknownType);
     }
@@ -153,9 +187,11 @@ public final class JobOutcomeNext {
         @JsonSubTypes.Type(IdValue.class),
         @JsonSubTypes.Type(UrlValue.class),
         @JsonSubTypes.Type(DownloadValue.class),
+        @JsonSubTypes.Type(FilesValue.class),
         @JsonSubTypes.Type(WaitValue.class),
         @JsonSubTypes.Type(SnapshotValue.class),
-        @JsonSubTypes.Type(RetryValue.class)
+        @JsonSubTypes.Type(RetryValue.class),
+        @JsonSubTypes.Type(ViewValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -276,6 +312,44 @@ public final class JobOutcomeNext {
         }
     }
 
+    @JsonTypeName("files")
+    private static final class FilesValue implements Value {
+        @JsonUnwrapped
+        private JobOutcomeNextFiles value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private FilesValue() {}
+
+        private FilesValue(JobOutcomeNextFiles value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFiles(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FilesValue && equalTo((FilesValue) other);
+        }
+
+        private boolean equalTo(FilesValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "JobOutcomeNext{" + "value: " + value + "}";
+        }
+    }
+
     @JsonTypeName("wait")
     private static final class WaitValue implements Value {
         @JsonUnwrapped
@@ -376,6 +450,44 @@ public final class JobOutcomeNext {
         }
 
         private boolean equalTo(RetryValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "JobOutcomeNext{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("view")
+    private static final class ViewValue implements Value {
+        @JsonUnwrapped
+        private JobOutcomeNextView value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ViewValue() {}
+
+        private ViewValue(JobOutcomeNextView value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitView(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ViewValue && equalTo((ViewValue) other);
+        }
+
+        private boolean equalTo(ViewValue other) {
             return value.equals(other.value);
         }
 

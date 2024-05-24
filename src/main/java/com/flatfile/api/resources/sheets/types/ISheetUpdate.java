@@ -15,6 +15,8 @@ public interface ISheetUpdate {
 
     Optional<SheetConfig> getConfig();
 
+    Optional<Object> getMetadata();
+
     Optional<String> getNamespace();
 
     Optional<OffsetDateTime> getUpdatedAt();

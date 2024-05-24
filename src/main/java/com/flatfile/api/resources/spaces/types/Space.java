@@ -174,6 +174,9 @@ public final class Space implements IInternalSpaceConfigBase {
         return environmentId;
     }
 
+    /**
+     * @return The ID of the primary workbook for the space. This should not be included in create space requests.
+     */
     @JsonProperty("primaryWorkbookId")
     @java.lang.Override
     public Optional<WorkbookId> getPrimaryWorkbookId() {
@@ -1142,6 +1145,10 @@ public final class Space implements IInternalSpaceConfigBase {
             return this;
         }
 
+        /**
+         * <p>The ID of the primary workbook for the space. This should not be included in create space requests.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage primaryWorkbookId(WorkbookId primaryWorkbookId) {
             this.primaryWorkbookId = Optional.of(primaryWorkbookId);

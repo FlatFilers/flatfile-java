@@ -106,7 +106,13 @@ public enum EventTopic {
 
     CRON_DAILY("cron:daily"),
 
-    CRON_WEEKLY("cron:weekly");
+    CRON_WEEKLY("cron:weekly"),
+
+    ENVIRONMENT_CREATED("environment:created"),
+
+    ENVIRONMENT_UPDATED("environment:updated"),
+
+    ENVIRONMENT_DELETED("environment:deleted");
 
     private final String value;
 

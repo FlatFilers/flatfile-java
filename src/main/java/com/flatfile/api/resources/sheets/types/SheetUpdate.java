@@ -29,6 +29,8 @@ public final class SheetUpdate implements ISheetUpdate {
 
     private final Optional<SheetConfig> config;
 
+    private final Optional<Object> metadata;
+
     private final Optional<String> namespace;
 
     private final Optional<OffsetDateTime> updatedAt;
@@ -41,6 +43,7 @@ public final class SheetUpdate implements ISheetUpdate {
             Optional<SheetId> id,
             Optional<WorkbookId> workbookId,
             Optional<SheetConfig> config,
+            Optional<Object> metadata,
             Optional<String> namespace,
             Optional<OffsetDateTime> updatedAt,
             Optional<OffsetDateTime> createdAt,
@@ -48,6 +51,7 @@ public final class SheetUpdate implements ISheetUpdate {
         this.id = id;
         this.workbookId = workbookId;
         this.config = config;
+        this.metadata = metadata;
         this.namespace = namespace;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
@@ -79,6 +83,15 @@ public final class SheetUpdate implements ISheetUpdate {
     @java.lang.Override
     public Optional<SheetConfig> getConfig() {
         return config;
+    }
+
+    /**
+     * @return Useful for any contextual metadata regarding the sheet. Store any valid json
+     */
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Optional<Object> getMetadata() {
+        return metadata;
     }
 
     /**
@@ -123,6 +136,7 @@ public final class SheetUpdate implements ISheetUpdate {
         return id.equals(other.id)
                 && workbookId.equals(other.workbookId)
                 && config.equals(other.config)
+                && metadata.equals(other.metadata)
                 && namespace.equals(other.namespace)
                 && updatedAt.equals(other.updatedAt)
                 && createdAt.equals(other.createdAt);
@@ -130,7 +144,8 @@ public final class SheetUpdate implements ISheetUpdate {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.workbookId, this.config, this.namespace, this.updatedAt, this.createdAt);
+        return Objects.hash(
+                this.id, this.workbookId, this.config, this.metadata, this.namespace, this.updatedAt, this.createdAt);
     }
 
     @java.lang.Override
@@ -150,6 +165,8 @@ public final class SheetUpdate implements ISheetUpdate {
 
         private Optional<SheetConfig> config = Optional.empty();
 
+        private Optional<Object> metadata = Optional.empty();
+
         private Optional<String> namespace = Optional.empty();
 
         private Optional<OffsetDateTime> updatedAt = Optional.empty();
@@ -165,6 +182,7 @@ public final class SheetUpdate implements ISheetUpdate {
             id(other.getId());
             workbookId(other.getWorkbookId());
             config(other.getConfig());
+            metadata(other.getMetadata());
             namespace(other.getNamespace());
             updatedAt(other.getUpdatedAt());
             createdAt(other.getCreatedAt());
@@ -204,6 +222,17 @@ public final class SheetUpdate implements ISheetUpdate {
             return this;
         }
 
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public Builder metadata(Optional<Object> metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        public Builder metadata(Object metadata) {
+            this.metadata = Optional.of(metadata);
+            return this;
+        }
+
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public Builder namespace(Optional<String> namespace) {
             this.namespace = namespace;
@@ -238,7 +267,8 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public SheetUpdate build() {
-            return new SheetUpdate(id, workbookId, config, namespace, updatedAt, createdAt, additionalProperties);
+            return new SheetUpdate(
+                    id, workbookId, config, metadata, namespace, updatedAt, createdAt, additionalProperties);
         }
     }
 }

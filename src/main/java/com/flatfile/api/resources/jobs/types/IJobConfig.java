@@ -6,6 +6,7 @@ package com.flatfile.api.resources.jobs.types;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.FileId;
 import com.flatfile.api.resources.commons.types.JobId;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -49,4 +50,6 @@ public interface IJobConfig {
     Optional<JobPartExecution> getPartExecution();
 
     Optional<JobId> getParentId();
+
+    Optional<List<JobId>> getPredecessorIds();
 }

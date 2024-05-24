@@ -12,6 +12,7 @@ import com.flatfile.api.resources.apps.types.AppCreate;
 import com.flatfile.api.resources.apps.types.AppPatch;
 import com.flatfile.api.resources.apps.types.AppResponse;
 import com.flatfile.api.resources.apps.types.AppsResponse;
+import com.flatfile.api.resources.apps.types.SuccessResponse;
 import com.flatfile.api.resources.commons.types.AppId;
 import java.io.IOException;
 import okhttp3.Headers;
@@ -181,6 +182,42 @@ public class AppsClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), AppResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Deletes an app
+     */
+    public SuccessResponse delete(AppId appId) {
+        return delete(appId, null);
+    }
+
+    /**
+     * Deletes an app
+     */
+    public SuccessResponse delete(AppId appId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("apps")
+                .addPathSegment(appId.toString())
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SuccessResponse.class);
             }
             throw new ApiError(
                     response.code(),

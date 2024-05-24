@@ -28,13 +28,22 @@ public final class View {
 
     private final ViewConfig config;
 
+    private final String createdBy;
+
     private final Map<String, Object> additionalProperties;
 
-    private View(ViewId id, SheetId sheetId, String name, ViewConfig config, Map<String, Object> additionalProperties) {
+    private View(
+            ViewId id,
+            SheetId sheetId,
+            String name,
+            ViewConfig config,
+            String createdBy,
+            Map<String, Object> additionalProperties) {
         this.id = id;
         this.sheetId = sheetId;
         this.name = name;
         this.config = config;
+        this.createdBy = createdBy;
         this.additionalProperties = additionalProperties;
     }
 
@@ -70,6 +79,14 @@ public final class View {
         return config;
     }
 
+    /**
+     * @return ID of the actor who created the view
+     */
+    @JsonProperty("createdBy")
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -85,12 +102,13 @@ public final class View {
         return id.equals(other.id)
                 && sheetId.equals(other.sheetId)
                 && name.equals(other.name)
-                && config.equals(other.config);
+                && config.equals(other.config)
+                && createdBy.equals(other.createdBy);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.id, this.sheetId, this.name, this.config);
+        return Objects.hash(this.id, this.sheetId, this.name, this.config, this.createdBy);
     }
 
     @java.lang.Override
@@ -117,7 +135,11 @@ public final class View {
     }
 
     public interface ConfigStage {
-        _FinalStage config(ViewConfig config);
+        CreatedByStage config(ViewConfig config);
+    }
+
+    public interface CreatedByStage {
+        _FinalStage createdBy(String createdBy);
     }
 
     public interface _FinalStage {
@@ -125,7 +147,8 @@ public final class View {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, SheetIdStage, NameStage, ConfigStage, _FinalStage {
+    public static final class Builder
+            implements IdStage, SheetIdStage, NameStage, ConfigStage, CreatedByStage, _FinalStage {
         private ViewId id;
 
         private SheetId sheetId;
@@ -133,6 +156,8 @@ public final class View {
         private String name;
 
         private ViewConfig config;
+
+        private String createdBy;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -145,6 +170,7 @@ public final class View {
             sheetId(other.getSheetId());
             name(other.getName());
             config(other.getConfig());
+            createdBy(other.getCreatedBy());
             return this;
         }
 
@@ -187,14 +213,25 @@ public final class View {
          */
         @java.lang.Override
         @JsonSetter("config")
-        public _FinalStage config(ViewConfig config) {
+        public CreatedByStage config(ViewConfig config) {
             this.config = config;
+            return this;
+        }
+
+        /**
+         * <p>ID of the actor who created the view</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("createdBy")
+        public _FinalStage createdBy(String createdBy) {
+            this.createdBy = createdBy;
             return this;
         }
 
         @java.lang.Override
         public View build() {
-            return new View(id, sheetId, name, config, additionalProperties);
+            return new View(id, sheetId, name, config, createdBy, additionalProperties);
         }
     }
 }

@@ -34,6 +34,8 @@ public final class Sheet {
 
     private final SheetConfig config;
 
+    private final Optional<Object> metadata;
+
     private final Optional<String> namespace;
 
     private final Optional<String> lockedBy;
@@ -54,6 +56,7 @@ public final class Sheet {
             String name,
             String slug,
             SheetConfig config,
+            Optional<Object> metadata,
             Optional<String> namespace,
             Optional<String> lockedBy,
             OffsetDateTime updatedAt,
@@ -66,6 +69,7 @@ public final class Sheet {
         this.name = name;
         this.slug = slug;
         this.config = config;
+        this.metadata = metadata;
         this.namespace = namespace;
         this.lockedBy = lockedBy;
         this.updatedAt = updatedAt;
@@ -113,6 +117,14 @@ public final class Sheet {
     @JsonProperty("config")
     public SheetConfig getConfig() {
         return config;
+    }
+
+    /**
+     * @return Useful for any contextual metadata regarding the sheet. Store any valid json
+     */
+    @JsonProperty("metadata")
+    public Optional<Object> getMetadata() {
+        return metadata;
     }
 
     /**
@@ -180,6 +192,7 @@ public final class Sheet {
                 && name.equals(other.name)
                 && slug.equals(other.slug)
                 && config.equals(other.config)
+                && metadata.equals(other.metadata)
                 && namespace.equals(other.namespace)
                 && lockedBy.equals(other.lockedBy)
                 && updatedAt.equals(other.updatedAt)
@@ -196,6 +209,7 @@ public final class Sheet {
                 this.name,
                 this.slug,
                 this.config,
+                this.metadata,
                 this.namespace,
                 this.lockedBy,
                 this.updatedAt,
@@ -246,6 +260,10 @@ public final class Sheet {
     public interface _FinalStage {
         Sheet build();
 
+        _FinalStage metadata(Optional<Object> metadata);
+
+        _FinalStage metadata(Object metadata);
+
         _FinalStage namespace(Optional<String> namespace);
 
         _FinalStage namespace(String namespace);
@@ -295,6 +313,8 @@ public final class Sheet {
 
         private Optional<String> namespace = Optional.empty();
 
+        private Optional<Object> metadata = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -307,6 +327,7 @@ public final class Sheet {
             name(other.getName());
             slug(other.getSlug());
             config(other.getConfig());
+            metadata(other.getMetadata());
             namespace(other.getNamespace());
             lockedBy(other.getLockedBy());
             updatedAt(other.getUpdatedAt());
@@ -461,6 +482,23 @@ public final class Sheet {
             return this;
         }
 
+        /**
+         * <p>Useful for any contextual metadata regarding the sheet. Store any valid json</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage metadata(Object metadata) {
+            this.metadata = Optional.of(metadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Optional<Object> metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
         @java.lang.Override
         public Sheet build() {
             return new Sheet(
@@ -469,6 +507,7 @@ public final class Sheet {
                     name,
                     slug,
                     config,
+                    metadata,
                     namespace,
                     lockedBy,
                     updatedAt,

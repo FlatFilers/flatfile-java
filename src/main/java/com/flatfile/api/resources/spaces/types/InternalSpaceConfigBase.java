@@ -102,6 +102,9 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         return environmentId;
     }
 
+    /**
+     * @return The ID of the primary workbook for the space. This should not be included in create space requests.
+     */
     @JsonProperty("primaryWorkbookId")
     @java.lang.Override
     public Optional<WorkbookId> getPrimaryWorkbookId() {

@@ -5,6 +5,7 @@ package com.flatfile.api.resources.sheets;
 
 import com.flatfile.api.core.ApiError;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
 import com.flatfile.api.resources.commits.types.ListCommitsResponse;
@@ -19,6 +20,7 @@ import com.flatfile.api.resources.sheets.types.CellsResponse;
 import com.flatfile.api.resources.sheets.types.ListSheetsResponse;
 import com.flatfile.api.resources.sheets.types.RecordCountsResponse;
 import com.flatfile.api.resources.sheets.types.SheetResponse;
+import com.flatfile.api.resources.sheets.types.SheetUpdateRequest;
 import java.io.IOException;
 import java.io.InputStream;
 import okhttp3.Headers;
@@ -520,6 +522,56 @@ public class SheetsClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), CellsResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Updates Sheet
+     */
+    public SheetResponse updateSheet(SheetId sheetId) {
+        return updateSheet(sheetId, SheetUpdateRequest.builder().build());
+    }
+
+    /**
+     * Updates Sheet
+     */
+    public SheetResponse updateSheet(SheetId sheetId, SheetUpdateRequest request) {
+        return updateSheet(sheetId, request, null);
+    }
+
+    /**
+     * Updates Sheet
+     */
+    public SheetResponse updateSheet(SheetId sheetId, SheetUpdateRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("sheets")
+                .addPathSegment(sheetId.toString())
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SheetResponse.class);
             }
             throw new ApiError(
                     response.code(),

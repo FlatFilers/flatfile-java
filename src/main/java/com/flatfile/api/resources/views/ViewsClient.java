@@ -30,20 +30,27 @@ public class ViewsClient {
     }
 
     /**
-     * Returns all views for user and sheet
+     * Returns all views for the sheet
      */
     public ListViewsResponse list(ListViewsRequest request) {
         return list(request, null);
     }
 
     /**
-     * Returns all views for user and sheet
+     * Returns all views for the sheet
      */
     public ListViewsResponse list(ListViewsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("views");
         httpUrl.addQueryParameter("sheetId", request.getSheetId().toString());
+        if (request.getPageSize().isPresent()) {
+            httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
+        }
+        if (request.getPageNumber().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "pageNumber", request.getPageNumber().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

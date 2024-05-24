@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.JsonPathString;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,23 +21,36 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ValidationMessage.Builder.class)
 public final class ValidationMessage {
+    private final Optional<String> field;
+
     private final Optional<ValidationType> type;
 
     private final Optional<ValidationSource> source;
 
     private final Optional<String> message;
 
+    private final Optional<JsonPathString> path;
+
     private final Map<String, Object> additionalProperties;
 
     private ValidationMessage(
+            Optional<String> field,
             Optional<ValidationType> type,
             Optional<ValidationSource> source,
             Optional<String> message,
+            Optional<JsonPathString> path,
             Map<String, Object> additionalProperties) {
+        this.field = field;
         this.type = type;
         this.source = source;
         this.message = message;
+        this.path = path;
         this.additionalProperties = additionalProperties;
+    }
+
+    @JsonProperty("field")
+    public Optional<String> getField() {
+        return field;
     }
 
     @JsonProperty("type")
@@ -54,6 +68,14 @@ public final class ValidationMessage {
         return message;
     }
 
+    /**
+     * @return This JSONPath is based on the root of mapped cell object.
+     */
+    @JsonProperty("path")
+    public Optional<JsonPathString> getPath() {
+        return path;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -66,12 +88,16 @@ public final class ValidationMessage {
     }
 
     private boolean equalTo(ValidationMessage other) {
-        return type.equals(other.type) && source.equals(other.source) && message.equals(other.message);
+        return field.equals(other.field)
+                && type.equals(other.type)
+                && source.equals(other.source)
+                && message.equals(other.message)
+                && path.equals(other.path);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.type, this.source, this.message);
+        return Objects.hash(this.field, this.type, this.source, this.message, this.path);
     }
 
     @java.lang.Override
@@ -85,11 +111,15 @@ public final class ValidationMessage {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<String> field = Optional.empty();
+
         private Optional<ValidationType> type = Optional.empty();
 
         private Optional<ValidationSource> source = Optional.empty();
 
         private Optional<String> message = Optional.empty();
+
+        private Optional<JsonPathString> path = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -97,9 +127,22 @@ public final class ValidationMessage {
         private Builder() {}
 
         public Builder from(ValidationMessage other) {
+            field(other.getField());
             type(other.getType());
             source(other.getSource());
             message(other.getMessage());
+            path(other.getPath());
+            return this;
+        }
+
+        @JsonSetter(value = "field", nulls = Nulls.SKIP)
+        public Builder field(Optional<String> field) {
+            this.field = field;
+            return this;
+        }
+
+        public Builder field(String field) {
+            this.field = Optional.of(field);
             return this;
         }
 
@@ -136,8 +179,19 @@ public final class ValidationMessage {
             return this;
         }
 
+        @JsonSetter(value = "path", nulls = Nulls.SKIP)
+        public Builder path(Optional<JsonPathString> path) {
+            this.path = path;
+            return this;
+        }
+
+        public Builder path(JsonPathString path) {
+            this.path = Optional.of(path);
+            return this;
+        }
+
         public ValidationMessage build() {
-            return new ValidationMessage(type, source, message, additionalProperties);
+            return new ValidationMessage(field, type, source, message, path, additionalProperties);
         }
     }
 }

@@ -9,22 +9,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListViewsRequest.Builder.class)
 public final class ListViewsRequest {
     private final SheetId sheetId;
 
+    private final Optional<Integer> pageSize;
+
+    private final Optional<Integer> pageNumber;
+
     private final Map<String, Object> additionalProperties;
 
-    private ListViewsRequest(SheetId sheetId, Map<String, Object> additionalProperties) {
+    private ListViewsRequest(
+            SheetId sheetId,
+            Optional<Integer> pageSize,
+            Optional<Integer> pageNumber,
+            Map<String, Object> additionalProperties) {
         this.sheetId = sheetId;
+        this.pageSize = pageSize;
+        this.pageNumber = pageNumber;
         this.additionalProperties = additionalProperties;
     }
 
@@ -34,6 +46,22 @@ public final class ListViewsRequest {
     @JsonProperty("sheetId")
     public SheetId getSheetId() {
         return sheetId;
+    }
+
+    /**
+     * @return Number of prompts to return in a page (default 10)
+     */
+    @JsonProperty("pageSize")
+    public Optional<Integer> getPageSize() {
+        return pageSize;
+    }
+
+    /**
+     * @return Based on pageSize, which page of prompts to return
+     */
+    @JsonProperty("pageNumber")
+    public Optional<Integer> getPageNumber() {
+        return pageNumber;
     }
 
     @java.lang.Override
@@ -48,12 +76,12 @@ public final class ListViewsRequest {
     }
 
     private boolean equalTo(ListViewsRequest other) {
-        return sheetId.equals(other.sheetId);
+        return sheetId.equals(other.sheetId) && pageSize.equals(other.pageSize) && pageNumber.equals(other.pageNumber);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.sheetId);
+        return Objects.hash(this.sheetId, this.pageSize, this.pageNumber);
     }
 
     @java.lang.Override
@@ -73,11 +101,23 @@ public final class ListViewsRequest {
 
     public interface _FinalStage {
         ListViewsRequest build();
+
+        _FinalStage pageSize(Optional<Integer> pageSize);
+
+        _FinalStage pageSize(Integer pageSize);
+
+        _FinalStage pageNumber(Optional<Integer> pageNumber);
+
+        _FinalStage pageNumber(Integer pageNumber);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SheetIdStage, _FinalStage {
         private SheetId sheetId;
+
+        private Optional<Integer> pageNumber = Optional.empty();
+
+        private Optional<Integer> pageSize = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -87,6 +127,8 @@ public final class ListViewsRequest {
         @java.lang.Override
         public Builder from(ListViewsRequest other) {
             sheetId(other.getSheetId());
+            pageSize(other.getPageSize());
+            pageNumber(other.getPageNumber());
             return this;
         }
 
@@ -101,9 +143,43 @@ public final class ListViewsRequest {
             return this;
         }
 
+        /**
+         * <p>Based on pageSize, which page of prompts to return</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage pageNumber(Integer pageNumber) {
+            this.pageNumber = Optional.of(pageNumber);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
+        public _FinalStage pageNumber(Optional<Integer> pageNumber) {
+            this.pageNumber = pageNumber;
+            return this;
+        }
+
+        /**
+         * <p>Number of prompts to return in a page (default 10)</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage pageSize(Integer pageSize) {
+            this.pageSize = Optional.of(pageSize);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
+        public _FinalStage pageSize(Optional<Integer> pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
         @java.lang.Override
         public ListViewsRequest build() {
-            return new ListViewsRequest(sheetId, additionalProperties);
+            return new ListViewsRequest(sheetId, pageSize, pageNumber, additionalProperties);
         }
     }
 }

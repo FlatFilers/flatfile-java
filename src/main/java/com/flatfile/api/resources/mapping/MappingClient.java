@@ -12,6 +12,7 @@ import com.flatfile.api.resources.commons.types.MappingId;
 import com.flatfile.api.resources.commons.types.ProgramId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.mapping.requests.DeleteAllHistoryForUserRequest;
+import com.flatfile.api.resources.mapping.requests.DeleteMultipleRulesRequest;
 import com.flatfile.api.resources.mapping.requests.ListProgramsRequest;
 import com.flatfile.api.resources.mapping.types.CreateMappingRulesRequest;
 import com.flatfile.api.resources.mapping.types.MappingRuleConfig;
@@ -354,6 +355,51 @@ public class MappingClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), MappingRulesResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Deletes multiple mapping rules from a program
+     */
+    public Success deleteMultipleRules(ProgramId programId, DeleteMultipleRulesRequest request) {
+        return deleteMultipleRules(programId, request, null);
+    }
+
+    /**
+     * Deletes multiple mapping rules from a program
+     */
+    public Success deleteMultipleRules(
+            ProgramId programId, DeleteMultipleRulesRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("mapping")
+                .addPathSegment(programId.toString())
+                .addPathSegments("rules")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
             }
             throw new ApiError(
                     response.code(),

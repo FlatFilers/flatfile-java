@@ -20,7 +20,9 @@ public enum JobStatus {
 
     FAILED("failed"),
 
-    CANCELED("canceled");
+    CANCELED("canceled"),
+
+    WAITING("waiting");
 
     private final String value;
 

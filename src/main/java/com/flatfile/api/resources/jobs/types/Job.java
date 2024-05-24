@@ -17,6 +17,7 @@ import com.flatfile.api.resources.commons.types.FileId;
 import com.flatfile.api.resources.commons.types.JobId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -64,6 +65,8 @@ public final class Job implements IJobConfig {
 
     private final Optional<JobId> parentId;
 
+    private final Optional<List<JobId>> predecessorIds;
+
     private final JobId id;
 
     private final OffsetDateTime createdAt;
@@ -99,6 +102,7 @@ public final class Job implements IJobConfig {
             Optional<Map<String, Object>> partData,
             Optional<JobPartExecution> partExecution,
             Optional<JobId> parentId,
+            Optional<List<JobId>> predecessorIds,
             JobId id,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -126,6 +130,7 @@ public final class Job implements IJobConfig {
         this.partData = partData;
         this.partExecution = partExecution;
         this.parentId = parentId;
+        this.predecessorIds = predecessorIds;
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -303,6 +308,15 @@ public final class Job implements IJobConfig {
         return parentId;
     }
 
+    /**
+     * @return The ids of the jobs that must complete before this job can start
+     */
+    @JsonProperty("predecessorIds")
+    @java.lang.Override
+    public Optional<List<JobId>> getPredecessorIds() {
+        return predecessorIds;
+    }
+
     @JsonProperty("id")
     public JobId getId() {
         return id;
@@ -380,6 +394,7 @@ public final class Job implements IJobConfig {
                 && partData.equals(other.partData)
                 && partExecution.equals(other.partExecution)
                 && parentId.equals(other.parentId)
+                && predecessorIds.equals(other.predecessorIds)
                 && id.equals(other.id)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
@@ -411,6 +426,7 @@ public final class Job implements IJobConfig {
                 this.partData,
                 this.partExecution,
                 this.parentId,
+                this.predecessorIds,
                 this.id,
                 this.createdAt,
                 this.updatedAt,
@@ -525,6 +541,10 @@ public final class Job implements IJobConfig {
 
         _FinalStage parentId(JobId parentId);
 
+        _FinalStage predecessorIds(Optional<List<JobId>> predecessorIds);
+
+        _FinalStage predecessorIds(List<JobId> predecessorIds);
+
         _FinalStage startedAt(Optional<OffsetDateTime> startedAt);
 
         _FinalStage startedAt(OffsetDateTime startedAt);
@@ -558,6 +578,8 @@ public final class Job implements IJobConfig {
         private Optional<OffsetDateTime> finishedAt = Optional.empty();
 
         private Optional<OffsetDateTime> startedAt = Optional.empty();
+
+        private Optional<List<JobId>> predecessorIds = Optional.empty();
 
         private Optional<JobId> parentId = Optional.empty();
 
@@ -620,6 +642,7 @@ public final class Job implements IJobConfig {
             partData(other.getPartData());
             partExecution(other.getPartExecution());
             parentId(other.getParentId());
+            predecessorIds(other.getPredecessorIds());
             id(other.getId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
@@ -735,6 +758,23 @@ public final class Job implements IJobConfig {
         @JsonSetter(value = "startedAt", nulls = Nulls.SKIP)
         public _FinalStage startedAt(Optional<OffsetDateTime> startedAt) {
             this.startedAt = startedAt;
+            return this;
+        }
+
+        /**
+         * <p>The ids of the jobs that must complete before this job can start</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage predecessorIds(List<JobId> predecessorIds) {
+            this.predecessorIds = Optional.of(predecessorIds);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "predecessorIds", nulls = Nulls.SKIP)
+        public _FinalStage predecessorIds(Optional<List<JobId>> predecessorIds) {
+            this.predecessorIds = predecessorIds;
             return this;
         }
 
@@ -1038,6 +1078,7 @@ public final class Job implements IJobConfig {
                     partData,
                     partExecution,
                     parentId,
+                    predecessorIds,
                     id,
                     createdAt,
                     updatedAt,

@@ -62,11 +62,17 @@ public final class DeleteRecordsJobConfig {
         this.additionalProperties = additionalProperties;
     }
 
+    /**
+     * @return Options to filter records (default=none)
+     */
     @JsonProperty("filter")
     public Optional<Filter> getFilter() {
         return filter;
     }
 
+    /**
+     * @return Use this to narrow the valid/error filter results to a specific field (Requires filter to be set)
+     */
     @JsonProperty("filterField")
     public Optional<FilterField> getFilterField() {
         return filterField;
@@ -273,6 +279,10 @@ public final class DeleteRecordsJobConfig {
             return this;
         }
 
+        /**
+         * <p>Use this to narrow the valid/error filter results to a specific field (Requires filter to be set)</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
             this.filterField = Optional.of(filterField);
@@ -286,6 +296,10 @@ public final class DeleteRecordsJobConfig {
             return this;
         }
 
+        /**
+         * <p>Options to filter records (default=none)</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage filter(Filter filter) {
             this.filter = Optional.of(filter);

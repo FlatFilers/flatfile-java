@@ -214,6 +214,18 @@ public final class Event {
         return new Event(new LayerCreatedValue(value));
     }
 
+    public static Event environmentCreated(GenericEvent value) {
+        return new Event(new EnvironmentCreatedValue(value));
+    }
+
+    public static Event environmentUpdated(GenericEvent value) {
+        return new Event(new EnvironmentUpdatedValue(value));
+    }
+
+    public static Event environmentDeleted(GenericEvent value) {
+        return new Event(new EnvironmentDeletedValue(value));
+    }
+
     public boolean isAgentCreated() {
         return value instanceof AgentCreatedValue;
     }
@@ -400,6 +412,18 @@ public final class Event {
 
     public boolean isLayerCreated() {
         return value instanceof LayerCreatedValue;
+    }
+
+    public boolean isEnvironmentCreated() {
+        return value instanceof EnvironmentCreatedValue;
+    }
+
+    public boolean isEnvironmentUpdated() {
+        return value instanceof EnvironmentUpdatedValue;
+    }
+
+    public boolean isEnvironmentDeleted() {
+        return value instanceof EnvironmentDeletedValue;
     }
 
     public boolean _isUnknown() {
@@ -735,6 +759,27 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getEnvironmentCreated() {
+        if (isEnvironmentCreated()) {
+            return Optional.of(((EnvironmentCreatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getEnvironmentUpdated() {
+        if (isEnvironmentUpdated()) {
+            return Optional.of(((EnvironmentUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getEnvironmentDeleted() {
+        if (isEnvironmentDeleted()) {
+            return Optional.of(((EnvironmentDeletedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -842,6 +887,12 @@ public final class Event {
 
         T visitLayerCreated(GenericEvent layerCreated);
 
+        T visitEnvironmentCreated(GenericEvent environmentCreated);
+
+        T visitEnvironmentUpdated(GenericEvent environmentUpdated);
+
+        T visitEnvironmentDeleted(GenericEvent environmentDeleted);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -893,7 +944,10 @@ public final class Event {
         @JsonSubTypes.Type(SecretCreatedValue.class),
         @JsonSubTypes.Type(SecretUpdatedValue.class),
         @JsonSubTypes.Type(SecretDeletedValue.class),
-        @JsonSubTypes.Type(LayerCreatedValue.class)
+        @JsonSubTypes.Type(LayerCreatedValue.class),
+        @JsonSubTypes.Type(EnvironmentCreatedValue.class),
+        @JsonSubTypes.Type(EnvironmentUpdatedValue.class),
+        @JsonSubTypes.Type(EnvironmentDeletedValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -2672,6 +2726,120 @@ public final class Event {
         }
 
         private boolean equalTo(LayerCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("environment:created")
+    private static final class EnvironmentCreatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EnvironmentCreatedValue() {}
+
+        private EnvironmentCreatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEnvironmentCreated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EnvironmentCreatedValue && equalTo((EnvironmentCreatedValue) other);
+        }
+
+        private boolean equalTo(EnvironmentCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("environment:updated")
+    private static final class EnvironmentUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EnvironmentUpdatedValue() {}
+
+        private EnvironmentUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEnvironmentUpdated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EnvironmentUpdatedValue && equalTo((EnvironmentUpdatedValue) other);
+        }
+
+        private boolean equalTo(EnvironmentUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("environment:deleted")
+    private static final class EnvironmentDeletedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private EnvironmentDeletedValue() {}
+
+        private EnvironmentDeletedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitEnvironmentDeleted(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof EnvironmentDeletedValue && equalTo((EnvironmentDeletedValue) other);
+        }
+
+        private boolean equalTo(EnvironmentDeletedValue other) {
             return value.equals(other.value);
         }
 

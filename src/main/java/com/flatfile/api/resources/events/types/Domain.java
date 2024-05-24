@@ -22,7 +22,9 @@ public enum Domain {
 
     SECRET("secret"),
 
-    CRON("cron");
+    CRON("cron"),
+
+    ENVIRONMENT("environment");
 
     private final String value;
 
