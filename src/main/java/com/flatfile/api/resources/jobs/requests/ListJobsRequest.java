@@ -42,6 +42,8 @@ public final class ListJobsRequest {
 
     private final Optional<SortDirection> sortDirection;
 
+    private final Optional<Boolean> excludeChildJobs;
+
     private final Map<String, Object> additionalProperties;
 
     private ListJobsRequest(
@@ -53,6 +55,7 @@ public final class ListJobsRequest {
             Optional<Integer> pageSize,
             Optional<Integer> pageNumber,
             Optional<SortDirection> sortDirection,
+            Optional<Boolean> excludeChildJobs,
             Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.spaceId = spaceId;
@@ -62,6 +65,7 @@ public final class ListJobsRequest {
         this.pageSize = pageSize;
         this.pageNumber = pageNumber;
         this.sortDirection = sortDirection;
+        this.excludeChildJobs = excludeChildJobs;
         this.additionalProperties = additionalProperties;
     }
 
@@ -129,6 +133,14 @@ public final class ListJobsRequest {
         return sortDirection;
     }
 
+    /**
+     * @return When true, only top-level jobs will be returned unless a parentId is specified
+     */
+    @JsonProperty("excludeChildJobs")
+    public Optional<Boolean> getExcludeChildJobs() {
+        return excludeChildJobs;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -148,7 +160,8 @@ public final class ListJobsRequest {
                 && parentId.equals(other.parentId)
                 && pageSize.equals(other.pageSize)
                 && pageNumber.equals(other.pageNumber)
-                && sortDirection.equals(other.sortDirection);
+                && sortDirection.equals(other.sortDirection)
+                && excludeChildJobs.equals(other.excludeChildJobs);
     }
 
     @java.lang.Override
@@ -161,7 +174,8 @@ public final class ListJobsRequest {
                 this.parentId,
                 this.pageSize,
                 this.pageNumber,
-                this.sortDirection);
+                this.sortDirection,
+                this.excludeChildJobs);
     }
 
     @java.lang.Override
@@ -191,6 +205,8 @@ public final class ListJobsRequest {
 
         private Optional<SortDirection> sortDirection = Optional.empty();
 
+        private Optional<Boolean> excludeChildJobs = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -205,6 +221,7 @@ public final class ListJobsRequest {
             pageSize(other.getPageSize());
             pageNumber(other.getPageNumber());
             sortDirection(other.getSortDirection());
+            excludeChildJobs(other.getExcludeChildJobs());
             return this;
         }
 
@@ -296,6 +313,17 @@ public final class ListJobsRequest {
             return this;
         }
 
+        @JsonSetter(value = "excludeChildJobs", nulls = Nulls.SKIP)
+        public Builder excludeChildJobs(Optional<Boolean> excludeChildJobs) {
+            this.excludeChildJobs = excludeChildJobs;
+            return this;
+        }
+
+        public Builder excludeChildJobs(Boolean excludeChildJobs) {
+            this.excludeChildJobs = Optional.of(excludeChildJobs);
+            return this;
+        }
+
         public ListJobsRequest build() {
             return new ListJobsRequest(
                     environmentId,
@@ -306,6 +334,7 @@ public final class ListJobsRequest {
                     pageSize,
                     pageNumber,
                     sortDirection,
+                    excludeChildJobs,
                     additionalProperties);
         }
     }

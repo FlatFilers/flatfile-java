@@ -12,27 +12,38 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.Pagination;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ListUsersResponse.Builder.class)
 public final class ListUsersResponse {
     private final List<User> data;
 
+    private final Optional<Pagination> pagination;
+
     private final Map<String, Object> additionalProperties;
 
-    private ListUsersResponse(List<User> data, Map<String, Object> additionalProperties) {
+    private ListUsersResponse(
+            List<User> data, Optional<Pagination> pagination, Map<String, Object> additionalProperties) {
         this.data = data;
+        this.pagination = pagination;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("data")
     public List<User> getData() {
         return data;
+    }
+
+    @JsonProperty("pagination")
+    public Optional<Pagination> getPagination() {
+        return pagination;
     }
 
     @java.lang.Override
@@ -47,12 +58,12 @@ public final class ListUsersResponse {
     }
 
     private boolean equalTo(ListUsersResponse other) {
-        return data.equals(other.data);
+        return data.equals(other.data) && pagination.equals(other.pagination);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.data);
+        return Objects.hash(this.data, this.pagination);
     }
 
     @java.lang.Override
@@ -68,6 +79,8 @@ public final class ListUsersResponse {
     public static final class Builder {
         private List<User> data = new ArrayList<>();
 
+        private Optional<Pagination> pagination = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -75,6 +88,7 @@ public final class ListUsersResponse {
 
         public Builder from(ListUsersResponse other) {
             data(other.getData());
+            pagination(other.getPagination());
             return this;
         }
 
@@ -95,8 +109,19 @@ public final class ListUsersResponse {
             return this;
         }
 
+        @JsonSetter(value = "pagination", nulls = Nulls.SKIP)
+        public Builder pagination(Optional<Pagination> pagination) {
+            this.pagination = pagination;
+            return this;
+        }
+
+        public Builder pagination(Pagination pagination) {
+            this.pagination = Optional.of(pagination);
+            return this;
+        }
+
         public ListUsersResponse build() {
-            return new ListUsersResponse(data, additionalProperties);
+            return new ListUsersResponse(data, pagination, additionalProperties);
         }
     }
 }

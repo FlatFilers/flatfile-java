@@ -3,6 +3,7 @@
  */
 package com.flatfile.api.resources.property.types;
 
+import com.flatfile.api.resources.commons.types.Action;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ public interface IBaseProperty {
     Optional<Boolean> getReadonly();
 
     Optional<FieldAppearance> getAppearance();
+
+    Optional<List<Action>> getActions();
 
     Optional<Object> getMetadata();
 

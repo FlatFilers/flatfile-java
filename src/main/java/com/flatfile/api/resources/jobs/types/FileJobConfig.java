@@ -24,12 +24,18 @@ public final class FileJobConfig {
 
     private final Optional<Map<String, Object>> options;
 
+    private final Optional<Integer> detectedHeaderRow;
+
     private final Map<String, Object> additionalProperties;
 
     private FileJobConfig(
-            Driver driver, Optional<Map<String, Object>> options, Map<String, Object> additionalProperties) {
+            Driver driver,
+            Optional<Map<String, Object>> options,
+            Optional<Integer> detectedHeaderRow,
+            Map<String, Object> additionalProperties) {
         this.driver = driver;
         this.options = options;
+        this.detectedHeaderRow = detectedHeaderRow;
         this.additionalProperties = additionalProperties;
     }
 
@@ -49,6 +55,14 @@ public final class FileJobConfig {
         return options;
     }
 
+    /**
+     * @return The row number of the header row detected at extraction time
+     */
+    @JsonProperty("detectedHeaderRow")
+    public Optional<Integer> getDetectedHeaderRow() {
+        return detectedHeaderRow;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -61,12 +75,14 @@ public final class FileJobConfig {
     }
 
     private boolean equalTo(FileJobConfig other) {
-        return driver.equals(other.driver) && options.equals(other.options);
+        return driver.equals(other.driver)
+                && options.equals(other.options)
+                && detectedHeaderRow.equals(other.detectedHeaderRow);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.driver, this.options);
+        return Objects.hash(this.driver, this.options, this.detectedHeaderRow);
     }
 
     @java.lang.Override
@@ -90,11 +106,17 @@ public final class FileJobConfig {
         _FinalStage options(Optional<Map<String, Object>> options);
 
         _FinalStage options(Map<String, Object> options);
+
+        _FinalStage detectedHeaderRow(Optional<Integer> detectedHeaderRow);
+
+        _FinalStage detectedHeaderRow(Integer detectedHeaderRow);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements DriverStage, _FinalStage {
         private Driver driver;
+
+        private Optional<Integer> detectedHeaderRow = Optional.empty();
 
         private Optional<Map<String, Object>> options = Optional.empty();
 
@@ -107,6 +129,7 @@ public final class FileJobConfig {
         public Builder from(FileJobConfig other) {
             driver(other.getDriver());
             options(other.getOptions());
+            detectedHeaderRow(other.getDetectedHeaderRow());
             return this;
         }
 
@@ -118,6 +141,23 @@ public final class FileJobConfig {
         @JsonSetter("driver")
         public _FinalStage driver(Driver driver) {
             this.driver = driver;
+            return this;
+        }
+
+        /**
+         * <p>The row number of the header row detected at extraction time</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage detectedHeaderRow(Integer detectedHeaderRow) {
+            this.detectedHeaderRow = Optional.of(detectedHeaderRow);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "detectedHeaderRow", nulls = Nulls.SKIP)
+        public _FinalStage detectedHeaderRow(Optional<Integer> detectedHeaderRow) {
+            this.detectedHeaderRow = detectedHeaderRow;
             return this;
         }
 
@@ -140,7 +180,7 @@ public final class FileJobConfig {
 
         @java.lang.Override
         public FileJobConfig build() {
-            return new FileJobConfig(driver, options, additionalProperties);
+            return new FileJobConfig(driver, options, detectedHeaderRow, additionalProperties);
         }
     }
 }

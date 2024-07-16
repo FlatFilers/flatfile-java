@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SortDirection;
+import com.flatfile.api.resources.users.types.ListUsersSortField;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,10 +24,32 @@ import java.util.Optional;
 public final class ListUsersRequest {
     private final Optional<String> email;
 
+    private final Optional<String> search;
+
+    private final Optional<ListUsersSortField> sortField;
+
+    private final Optional<SortDirection> sortDirection;
+
+    private final Optional<Integer> pageSize;
+
+    private final Optional<Integer> pageNumber;
+
     private final Map<String, Object> additionalProperties;
 
-    private ListUsersRequest(Optional<String> email, Map<String, Object> additionalProperties) {
+    private ListUsersRequest(
+            Optional<String> email,
+            Optional<String> search,
+            Optional<ListUsersSortField> sortField,
+            Optional<SortDirection> sortDirection,
+            Optional<Integer> pageSize,
+            Optional<Integer> pageNumber,
+            Map<String, Object> additionalProperties) {
         this.email = email;
+        this.search = search;
+        this.sortField = sortField;
+        this.sortDirection = sortDirection;
+        this.pageSize = pageSize;
+        this.pageNumber = pageNumber;
         this.additionalProperties = additionalProperties;
     }
 
@@ -35,6 +59,46 @@ public final class ListUsersRequest {
     @JsonProperty("email")
     public Optional<String> getEmail() {
         return email;
+    }
+
+    /**
+     * @return String to search for users by name and email
+     */
+    @JsonProperty("search")
+    public Optional<String> getSearch() {
+        return search;
+    }
+
+    /**
+     * @return Field to sort users by
+     */
+    @JsonProperty("sortField")
+    public Optional<ListUsersSortField> getSortField() {
+        return sortField;
+    }
+
+    /**
+     * @return Direction of sorting
+     */
+    @JsonProperty("sortDirection")
+    public Optional<SortDirection> getSortDirection() {
+        return sortDirection;
+    }
+
+    /**
+     * @return Number of users to return in a page (default 20)
+     */
+    @JsonProperty("pageSize")
+    public Optional<Integer> getPageSize() {
+        return pageSize;
+    }
+
+    /**
+     * @return Based on pageSize, which page of users to return
+     */
+    @JsonProperty("pageNumber")
+    public Optional<Integer> getPageNumber() {
+        return pageNumber;
     }
 
     @java.lang.Override
@@ -49,12 +113,18 @@ public final class ListUsersRequest {
     }
 
     private boolean equalTo(ListUsersRequest other) {
-        return email.equals(other.email);
+        return email.equals(other.email)
+                && search.equals(other.search)
+                && sortField.equals(other.sortField)
+                && sortDirection.equals(other.sortDirection)
+                && pageSize.equals(other.pageSize)
+                && pageNumber.equals(other.pageNumber);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.email);
+        return Objects.hash(
+                this.email, this.search, this.sortField, this.sortDirection, this.pageSize, this.pageNumber);
     }
 
     @java.lang.Override
@@ -70,6 +140,16 @@ public final class ListUsersRequest {
     public static final class Builder {
         private Optional<String> email = Optional.empty();
 
+        private Optional<String> search = Optional.empty();
+
+        private Optional<ListUsersSortField> sortField = Optional.empty();
+
+        private Optional<SortDirection> sortDirection = Optional.empty();
+
+        private Optional<Integer> pageSize = Optional.empty();
+
+        private Optional<Integer> pageNumber = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -77,6 +157,11 @@ public final class ListUsersRequest {
 
         public Builder from(ListUsersRequest other) {
             email(other.getEmail());
+            search(other.getSearch());
+            sortField(other.getSortField());
+            sortDirection(other.getSortDirection());
+            pageSize(other.getPageSize());
+            pageNumber(other.getPageNumber());
             return this;
         }
 
@@ -91,8 +176,64 @@ public final class ListUsersRequest {
             return this;
         }
 
+        @JsonSetter(value = "search", nulls = Nulls.SKIP)
+        public Builder search(Optional<String> search) {
+            this.search = search;
+            return this;
+        }
+
+        public Builder search(String search) {
+            this.search = Optional.of(search);
+            return this;
+        }
+
+        @JsonSetter(value = "sortField", nulls = Nulls.SKIP)
+        public Builder sortField(Optional<ListUsersSortField> sortField) {
+            this.sortField = sortField;
+            return this;
+        }
+
+        public Builder sortField(ListUsersSortField sortField) {
+            this.sortField = Optional.of(sortField);
+            return this;
+        }
+
+        @JsonSetter(value = "sortDirection", nulls = Nulls.SKIP)
+        public Builder sortDirection(Optional<SortDirection> sortDirection) {
+            this.sortDirection = sortDirection;
+            return this;
+        }
+
+        public Builder sortDirection(SortDirection sortDirection) {
+            this.sortDirection = Optional.of(sortDirection);
+            return this;
+        }
+
+        @JsonSetter(value = "pageSize", nulls = Nulls.SKIP)
+        public Builder pageSize(Optional<Integer> pageSize) {
+            this.pageSize = pageSize;
+            return this;
+        }
+
+        public Builder pageSize(Integer pageSize) {
+            this.pageSize = Optional.of(pageSize);
+            return this;
+        }
+
+        @JsonSetter(value = "pageNumber", nulls = Nulls.SKIP)
+        public Builder pageNumber(Optional<Integer> pageNumber) {
+            this.pageNumber = pageNumber;
+            return this;
+        }
+
+        public Builder pageNumber(Integer pageNumber) {
+            this.pageNumber = Optional.of(pageNumber);
+            return this;
+        }
+
         public ListUsersRequest build() {
-            return new ListUsersRequest(email, additionalProperties);
+            return new ListUsersRequest(
+                    email, search, sortField, sortDirection, pageSize, pageNumber, additionalProperties);
         }
     }
 }

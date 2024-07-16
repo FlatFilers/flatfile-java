@@ -45,6 +45,8 @@ public final class Workbook {
 
     private final Optional<Object> metadata;
 
+    private final Optional<List<WorkbookTreatments>> treatments;
+
     private final Optional<String> namespace;
 
     private final OffsetDateTime updatedAt;
@@ -65,6 +67,7 @@ public final class Workbook {
             Optional<List<Action>> actions,
             Optional<WorkbookConfigSettings> settings,
             Optional<Object> metadata,
+            Optional<List<WorkbookTreatments>> treatments,
             Optional<String> namespace,
             OffsetDateTime updatedAt,
             OffsetDateTime createdAt,
@@ -79,6 +82,7 @@ public final class Workbook {
         this.actions = actions;
         this.settings = settings;
         this.metadata = metadata;
+        this.treatments = treatments;
         this.namespace = namespace;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
@@ -158,6 +162,14 @@ public final class Workbook {
         return metadata;
     }
 
+    /**
+     * @return Treatments for the workbook
+     */
+    @JsonProperty("treatments")
+    public Optional<List<WorkbookTreatments>> getTreatments() {
+        return treatments;
+    }
+
     @JsonProperty("namespace")
     public Optional<String> getNamespace() {
         return namespace;
@@ -208,6 +220,7 @@ public final class Workbook {
                 && actions.equals(other.actions)
                 && settings.equals(other.settings)
                 && metadata.equals(other.metadata)
+                && treatments.equals(other.treatments)
                 && namespace.equals(other.namespace)
                 && updatedAt.equals(other.updatedAt)
                 && createdAt.equals(other.createdAt)
@@ -226,6 +239,7 @@ public final class Workbook {
                 this.actions,
                 this.settings,
                 this.metadata,
+                this.treatments,
                 this.namespace,
                 this.updatedAt,
                 this.createdAt,
@@ -290,6 +304,10 @@ public final class Workbook {
 
         _FinalStage metadata(Object metadata);
 
+        _FinalStage treatments(Optional<List<WorkbookTreatments>> treatments);
+
+        _FinalStage treatments(List<WorkbookTreatments> treatments);
+
         _FinalStage namespace(Optional<String> namespace);
 
         _FinalStage namespace(String namespace);
@@ -315,6 +333,8 @@ public final class Workbook {
         private Optional<OffsetDateTime> expiredAt = Optional.empty();
 
         private Optional<String> namespace = Optional.empty();
+
+        private Optional<List<WorkbookTreatments>> treatments = Optional.empty();
 
         private Optional<Object> metadata = Optional.empty();
 
@@ -344,6 +364,7 @@ public final class Workbook {
             actions(other.getActions());
             settings(other.getSettings());
             metadata(other.getMetadata());
+            treatments(other.getTreatments());
             namespace(other.getNamespace());
             updatedAt(other.getUpdatedAt());
             createdAt(other.getCreatedAt());
@@ -433,6 +454,23 @@ public final class Workbook {
         @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
         public _FinalStage namespace(Optional<String> namespace) {
             this.namespace = namespace;
+            return this;
+        }
+
+        /**
+         * <p>Treatments for the workbook</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage treatments(List<WorkbookTreatments> treatments) {
+            this.treatments = Optional.of(treatments);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "treatments", nulls = Nulls.SKIP)
+        public _FinalStage treatments(Optional<List<WorkbookTreatments>> treatments) {
+            this.treatments = treatments;
             return this;
         }
 
@@ -550,6 +588,7 @@ public final class Workbook {
                     actions,
                     settings,
                     metadata,
+                    treatments,
                     namespace,
                     updatedAt,
                     createdAt,

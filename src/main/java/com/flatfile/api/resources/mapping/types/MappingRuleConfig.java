@@ -32,6 +32,8 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
     private final Optional<UserId> acceptedBy;
 
+    private final Optional<Object> metadata;
+
     private final Map<String, Object> additionalProperties;
 
     private MappingRuleConfig(
@@ -40,12 +42,14 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
             Optional<Object> config,
             Optional<OffsetDateTime> acceptedAt,
             Optional<UserId> acceptedBy,
+            Optional<Object> metadata,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.type = type;
         this.config = config;
         this.acceptedAt = acceptedAt;
         this.acceptedBy = acceptedBy;
+        this.metadata = metadata;
         this.additionalProperties = additionalProperties;
     }
 
@@ -88,6 +92,15 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
         return acceptedBy;
     }
 
+    /**
+     * @return Metadata of the mapping rule
+     */
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Optional<Object> getMetadata() {
+        return metadata;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -104,12 +117,13 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
                 && type.equals(other.type)
                 && config.equals(other.config)
                 && acceptedAt.equals(other.acceptedAt)
-                && acceptedBy.equals(other.acceptedBy);
+                && acceptedBy.equals(other.acceptedBy)
+                && metadata.equals(other.metadata);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.type, this.config, this.acceptedAt, this.acceptedBy);
+        return Objects.hash(this.name, this.type, this.config, this.acceptedAt, this.acceptedBy, this.metadata);
     }
 
     @java.lang.Override
@@ -145,6 +159,10 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
         _FinalStage acceptedBy(Optional<UserId> acceptedBy);
 
         _FinalStage acceptedBy(UserId acceptedBy);
+
+        _FinalStage metadata(Optional<Object> metadata);
+
+        _FinalStage metadata(Object metadata);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -152,6 +170,8 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
         private String name;
 
         private String type;
+
+        private Optional<Object> metadata = Optional.empty();
 
         private Optional<UserId> acceptedBy = Optional.empty();
 
@@ -171,6 +191,7 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
             config(other.getConfig());
             acceptedAt(other.getAcceptedAt());
             acceptedBy(other.getAcceptedBy());
+            metadata(other.getMetadata());
             return this;
         }
 
@@ -189,6 +210,23 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
         @JsonSetter("type")
         public _FinalStage type(String type) {
             this.type = type;
+            return this;
+        }
+
+        /**
+         * <p>Metadata of the mapping rule</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage metadata(Object metadata) {
+            this.metadata = Optional.of(metadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Optional<Object> metadata) {
+            this.metadata = metadata;
             return this;
         }
 
@@ -241,7 +279,7 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
         @java.lang.Override
         public MappingRuleConfig build() {
-            return new MappingRuleConfig(name, type, config, acceptedAt, acceptedBy, additionalProperties);
+            return new MappingRuleConfig(name, type, config, acceptedAt, acceptedBy, metadata, additionalProperties);
         }
     }
 }

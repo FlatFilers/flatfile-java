@@ -17,4 +17,6 @@ public interface IMappingRuleConfig {
     Optional<OffsetDateTime> getAcceptedAt();
 
     Optional<UserId> getAcceptedBy();
+
+    Optional<Object> getMetadata();
 }

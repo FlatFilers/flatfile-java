@@ -12,8 +12,11 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.AccountId;
 import com.flatfile.api.resources.commons.types.AgentId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.events.types.EventTopic;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +36,14 @@ public final class Agent implements IAgentConfig {
 
     private final AgentId id;
 
+    private final OffsetDateTime createdAt;
+
+    private final OffsetDateTime updatedAt;
+
+    private final AccountId accountId;
+
+    private final EnvironmentId environmentId;
+
     private final Map<String, Object> additionalProperties;
 
     private Agent(
@@ -41,12 +52,20 @@ public final class Agent implements IAgentConfig {
             Optional<String> source,
             Optional<String> slug,
             AgentId id,
+            OffsetDateTime createdAt,
+            OffsetDateTime updatedAt,
+            AccountId accountId,
+            EnvironmentId environmentId,
             Map<String, Object> additionalProperties) {
         this.topics = topics;
         this.compiler = compiler;
         this.source = source;
         this.slug = slug;
         this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.accountId = accountId;
+        this.environmentId = environmentId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -91,6 +110,26 @@ public final class Agent implements IAgentConfig {
         return id;
     }
 
+    @JsonProperty("createdAt")
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @JsonProperty("updatedAt")
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @JsonProperty("accountId")
+    public AccountId getAccountId() {
+        return accountId;
+    }
+
+    @JsonProperty("environmentId")
+    public EnvironmentId getEnvironmentId() {
+        return environmentId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -107,12 +146,25 @@ public final class Agent implements IAgentConfig {
                 && compiler.equals(other.compiler)
                 && source.equals(other.source)
                 && slug.equals(other.slug)
-                && id.equals(other.id);
+                && id.equals(other.id)
+                && createdAt.equals(other.createdAt)
+                && updatedAt.equals(other.updatedAt)
+                && accountId.equals(other.accountId)
+                && environmentId.equals(other.environmentId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.topics, this.compiler, this.source, this.slug, this.id);
+        return Objects.hash(
+                this.topics,
+                this.compiler,
+                this.source,
+                this.slug,
+                this.id,
+                this.createdAt,
+                this.updatedAt,
+                this.accountId,
+                this.environmentId);
     }
 
     @java.lang.Override
@@ -125,9 +177,25 @@ public final class Agent implements IAgentConfig {
     }
 
     public interface IdStage {
-        _FinalStage id(AgentId id);
+        CreatedAtStage id(AgentId id);
 
         Builder from(Agent other);
+    }
+
+    public interface CreatedAtStage {
+        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+    }
+
+    public interface UpdatedAtStage {
+        AccountIdStage updatedAt(OffsetDateTime updatedAt);
+    }
+
+    public interface AccountIdStage {
+        EnvironmentIdStage accountId(AccountId accountId);
+    }
+
+    public interface EnvironmentIdStage {
+        _FinalStage environmentId(EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -151,8 +219,17 @@ public final class Agent implements IAgentConfig {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements IdStage, _FinalStage {
+    public static final class Builder
+            implements IdStage, CreatedAtStage, UpdatedAtStage, AccountIdStage, EnvironmentIdStage, _FinalStage {
         private AgentId id;
+
+        private OffsetDateTime createdAt;
+
+        private OffsetDateTime updatedAt;
+
+        private AccountId accountId;
+
+        private EnvironmentId environmentId;
 
         private Optional<String> slug = Optional.empty();
 
@@ -174,13 +251,45 @@ public final class Agent implements IAgentConfig {
             source(other.getSource());
             slug(other.getSlug());
             id(other.getId());
+            createdAt(other.getCreatedAt());
+            updatedAt(other.getUpdatedAt());
+            accountId(other.getAccountId());
+            environmentId(other.getEnvironmentId());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(AgentId id) {
+        public CreatedAtStage id(AgentId id) {
             this.id = id;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("createdAt")
+        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("updatedAt")
+        public AccountIdStage updatedAt(OffsetDateTime updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("accountId")
+        public EnvironmentIdStage accountId(AccountId accountId) {
+            this.accountId = accountId;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("environmentId")
+        public _FinalStage environmentId(EnvironmentId environmentId) {
+            this.environmentId = environmentId;
             return this;
         }
 
@@ -254,7 +363,17 @@ public final class Agent implements IAgentConfig {
 
         @java.lang.Override
         public Agent build() {
-            return new Agent(topics, compiler, source, slug, id, additionalProperties);
+            return new Agent(
+                    topics,
+                    compiler,
+                    source,
+                    slug,
+                    id,
+                    createdAt,
+                    updatedAt,
+                    accountId,
+                    environmentId,
+                    additionalProperties);
         }
     }
 }

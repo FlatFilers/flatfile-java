@@ -22,6 +22,8 @@ import java.util.Optional;
 public final class JobOutcome {
     private final Optional<Boolean> acknowledge;
 
+    private final Optional<JobOutcomeTrigger> trigger;
+
     private final Optional<String> buttonText;
 
     private final Optional<JobOutcomeNext> next;
@@ -36,6 +38,7 @@ public final class JobOutcome {
 
     private JobOutcome(
             Optional<Boolean> acknowledge,
+            Optional<JobOutcomeTrigger> trigger,
             Optional<String> buttonText,
             Optional<JobOutcomeNext> next,
             Optional<String> heading,
@@ -43,6 +46,7 @@ public final class JobOutcome {
             Optional<Boolean> hideDefaultButton,
             Map<String, Object> additionalProperties) {
         this.acknowledge = acknowledge;
+        this.trigger = trigger;
         this.buttonText = buttonText;
         this.next = next;
         this.heading = heading;
@@ -54,6 +58,11 @@ public final class JobOutcome {
     @JsonProperty("acknowledge")
     public Optional<Boolean> getAcknowledge() {
         return acknowledge;
+    }
+
+    @JsonProperty("trigger")
+    public Optional<JobOutcomeTrigger> getTrigger() {
+        return trigger;
     }
 
     @JsonProperty("buttonText")
@@ -94,6 +103,7 @@ public final class JobOutcome {
 
     private boolean equalTo(JobOutcome other) {
         return acknowledge.equals(other.acknowledge)
+                && trigger.equals(other.trigger)
                 && buttonText.equals(other.buttonText)
                 && next.equals(other.next)
                 && heading.equals(other.heading)
@@ -104,7 +114,13 @@ public final class JobOutcome {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.acknowledge, this.buttonText, this.next, this.heading, this.message, this.hideDefaultButton);
+                this.acknowledge,
+                this.trigger,
+                this.buttonText,
+                this.next,
+                this.heading,
+                this.message,
+                this.hideDefaultButton);
     }
 
     @java.lang.Override
@@ -119,6 +135,8 @@ public final class JobOutcome {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
         private Optional<Boolean> acknowledge = Optional.empty();
+
+        private Optional<JobOutcomeTrigger> trigger = Optional.empty();
 
         private Optional<String> buttonText = Optional.empty();
 
@@ -137,6 +155,7 @@ public final class JobOutcome {
 
         public Builder from(JobOutcome other) {
             acknowledge(other.getAcknowledge());
+            trigger(other.getTrigger());
             buttonText(other.getButtonText());
             next(other.getNext());
             heading(other.getHeading());
@@ -153,6 +172,17 @@ public final class JobOutcome {
 
         public Builder acknowledge(Boolean acknowledge) {
             this.acknowledge = Optional.of(acknowledge);
+            return this;
+        }
+
+        @JsonSetter(value = "trigger", nulls = Nulls.SKIP)
+        public Builder trigger(Optional<JobOutcomeTrigger> trigger) {
+            this.trigger = trigger;
+            return this;
+        }
+
+        public Builder trigger(JobOutcomeTrigger trigger) {
+            this.trigger = Optional.of(trigger);
             return this;
         }
 
@@ -213,7 +243,7 @@ public final class JobOutcome {
 
         public JobOutcome build() {
             return new JobOutcome(
-                    acknowledge, buttonText, next, heading, message, hideDefaultButton, additionalProperties);
+                    acknowledge, trigger, buttonText, next, heading, message, hideDefaultButton, additionalProperties);
         }
     }
 }

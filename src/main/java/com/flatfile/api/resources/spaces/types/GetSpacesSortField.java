@@ -16,7 +16,9 @@ public enum GetSpacesSortField {
 
     CREATED_BY_USER_NAME("createdByUserName"),
 
-    CREATED_AT("createdAt");
+    CREATED_AT("createdAt"),
+
+    LAST_ACTIVITY_AT("lastActivityAt");
 
     private final String value;
 

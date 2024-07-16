@@ -33,6 +33,8 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
 
     private final Optional<UserId> acceptedBy;
 
+    private final Optional<Object> metadata;
+
     private final Optional<MappingId> id;
 
     private final Optional<Integer> confidence;
@@ -53,6 +55,7 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
             Optional<Object> config,
             Optional<OffsetDateTime> acceptedAt,
             Optional<UserId> acceptedBy,
+            Optional<Object> metadata,
             Optional<MappingId> id,
             Optional<Integer> confidence,
             Optional<UserId> createdBy,
@@ -65,6 +68,7 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
         this.config = config;
         this.acceptedAt = acceptedAt;
         this.acceptedBy = acceptedBy;
+        this.metadata = metadata;
         this.id = id;
         this.confidence = confidence;
         this.createdBy = createdBy;
@@ -111,6 +115,15 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
     @java.lang.Override
     public Optional<UserId> getAcceptedBy() {
         return acceptedBy;
+    }
+
+    /**
+     * @return Metadata of the mapping rule
+     */
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Optional<Object> getMetadata() {
+        return metadata;
     }
 
     /**
@@ -178,6 +191,7 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
                 && config.equals(other.config)
                 && acceptedAt.equals(other.acceptedAt)
                 && acceptedBy.equals(other.acceptedBy)
+                && metadata.equals(other.metadata)
                 && id.equals(other.id)
                 && confidence.equals(other.confidence)
                 && createdBy.equals(other.createdBy)
@@ -194,6 +208,7 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
                 this.config,
                 this.acceptedAt,
                 this.acceptedBy,
+                this.metadata,
                 this.id,
                 this.confidence,
                 this.createdBy,
@@ -235,6 +250,10 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
         _FinalStage acceptedBy(Optional<UserId> acceptedBy);
 
         _FinalStage acceptedBy(UserId acceptedBy);
+
+        _FinalStage metadata(Optional<Object> metadata);
+
+        _FinalStage metadata(Object metadata);
 
         _FinalStage id(Optional<MappingId> id);
 
@@ -279,6 +298,8 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
 
         private Optional<MappingId> id = Optional.empty();
 
+        private Optional<Object> metadata = Optional.empty();
+
         private Optional<UserId> acceptedBy = Optional.empty();
 
         private Optional<OffsetDateTime> acceptedAt = Optional.empty();
@@ -297,6 +318,7 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
             config(other.getConfig());
             acceptedAt(other.getAcceptedAt());
             acceptedBy(other.getAcceptedBy());
+            metadata(other.getMetadata());
             id(other.getId());
             confidence(other.getConfidence());
             createdBy(other.getCreatedBy());
@@ -427,6 +449,23 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
         }
 
         /**
+         * <p>Metadata of the mapping rule</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage metadata(Object metadata) {
+            this.metadata = Optional.of(metadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Optional<Object> metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        /**
          * <p>User ID of the contributor of the mapping rule</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -481,6 +520,7 @@ public final class MappingRuleOrConfig implements IMappingRuleConfig {
                     config,
                     acceptedAt,
                     acceptedBy,
+                    metadata,
                     id,
                     confidence,
                     createdBy,

@@ -58,6 +58,23 @@ public class UsersClient {
         if (request.getEmail().isPresent()) {
             httpUrl.addQueryParameter("email", request.getEmail().get());
         }
+        if (request.getSearch().isPresent()) {
+            httpUrl.addQueryParameter("search", request.getSearch().get());
+        }
+        if (request.getSortField().isPresent()) {
+            httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
+        }
+        if (request.getSortDirection().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sortDirection", request.getSortDirection().get().toString());
+        }
+        if (request.getPageSize().isPresent()) {
+            httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
+        }
+        if (request.getPageNumber().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "pageNumber", request.getPageNumber().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -111,6 +128,43 @@ public class UsersClient {
                     clientOptions.httpClient().newCall(okhttpRequest).execute();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UserWithRolesResponse.class);
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Resends an invite to a user for your account.
+     */
+    public Success resendInvite(UserId userId) {
+        return resendInvite(userId, null);
+    }
+
+    /**
+     * Resends an invite to a user for your account.
+     */
+    public Success resendInvite(UserId userId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegment(userId.toString())
+                .addPathSegments("resend-invite")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
             }
             throw new ApiError(
                     response.code(),

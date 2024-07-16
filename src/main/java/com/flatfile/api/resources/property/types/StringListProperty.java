@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.Action;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,8 @@ public final class StringListProperty implements IBaseProperty {
 
     private final Optional<FieldAppearance> appearance;
 
+    private final Optional<List<Action>> actions;
+
     private final Optional<Object> metadata;
 
     private final Optional<List<String>> treatments;
@@ -48,6 +51,7 @@ public final class StringListProperty implements IBaseProperty {
             Optional<List<Constraint>> constraints,
             Optional<Boolean> readonly,
             Optional<FieldAppearance> appearance,
+            Optional<List<Action>> actions,
             Optional<Object> metadata,
             Optional<List<String>> treatments,
             Optional<List<String>> alternativeNames,
@@ -58,6 +62,7 @@ public final class StringListProperty implements IBaseProperty {
         this.constraints = constraints;
         this.readonly = readonly;
         this.appearance = appearance;
+        this.actions = actions;
         this.metadata = metadata;
         this.treatments = treatments;
         this.alternativeNames = alternativeNames;
@@ -107,6 +112,15 @@ public final class StringListProperty implements IBaseProperty {
     }
 
     /**
+     * @return An array of actions that end users can perform on this Column.
+     */
+    @JsonProperty("actions")
+    @java.lang.Override
+    public Optional<List<Action>> getActions() {
+        return actions;
+    }
+
+    /**
      * @return Useful for any contextual metadata regarding the schema. Store any valid json here.
      */
     @JsonProperty("metadata")
@@ -148,6 +162,7 @@ public final class StringListProperty implements IBaseProperty {
                 && constraints.equals(other.constraints)
                 && readonly.equals(other.readonly)
                 && appearance.equals(other.appearance)
+                && actions.equals(other.actions)
                 && metadata.equals(other.metadata)
                 && treatments.equals(other.treatments)
                 && alternativeNames.equals(other.alternativeNames);
@@ -162,6 +177,7 @@ public final class StringListProperty implements IBaseProperty {
                 this.constraints,
                 this.readonly,
                 this.appearance,
+                this.actions,
                 this.metadata,
                 this.treatments,
                 this.alternativeNames);
@@ -205,6 +221,10 @@ public final class StringListProperty implements IBaseProperty {
 
         _FinalStage appearance(FieldAppearance appearance);
 
+        _FinalStage actions(Optional<List<Action>> actions);
+
+        _FinalStage actions(List<Action> actions);
+
         _FinalStage metadata(Optional<Object> metadata);
 
         _FinalStage metadata(Object metadata);
@@ -227,6 +247,8 @@ public final class StringListProperty implements IBaseProperty {
         private Optional<List<String>> treatments = Optional.empty();
 
         private Optional<Object> metadata = Optional.empty();
+
+        private Optional<List<Action>> actions = Optional.empty();
 
         private Optional<FieldAppearance> appearance = Optional.empty();
 
@@ -251,6 +273,7 @@ public final class StringListProperty implements IBaseProperty {
             constraints(other.getConstraints());
             readonly(other.getReadonly());
             appearance(other.getAppearance());
+            actions(other.getActions());
             metadata(other.getMetadata());
             treatments(other.getTreatments());
             alternativeNames(other.getAlternativeNames());
@@ -308,6 +331,23 @@ public final class StringListProperty implements IBaseProperty {
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
         public _FinalStage metadata(Optional<Object> metadata) {
             this.metadata = metadata;
+            return this;
+        }
+
+        /**
+         * <p>An array of actions that end users can perform on this Column.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage actions(List<Action> actions) {
+            this.actions = Optional.of(actions);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "actions", nulls = Nulls.SKIP)
+        public _FinalStage actions(Optional<List<Action>> actions) {
+            this.actions = actions;
             return this;
         }
 
@@ -393,6 +433,7 @@ public final class StringListProperty implements IBaseProperty {
                     constraints,
                     readonly,
                     appearance,
+                    actions,
                     metadata,
                     treatments,
                     alternativeNames,

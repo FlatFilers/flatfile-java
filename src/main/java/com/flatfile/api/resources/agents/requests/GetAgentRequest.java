@@ -9,27 +9,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetAgentRequest.Builder.class)
 public final class GetAgentRequest {
-    private final EnvironmentId environmentId;
+    private final Optional<EnvironmentId> environmentId;
 
     private final Map<String, Object> additionalProperties;
 
-    private GetAgentRequest(EnvironmentId environmentId, Map<String, Object> additionalProperties) {
+    private GetAgentRequest(Optional<EnvironmentId> environmentId, Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("environmentId")
-    public EnvironmentId getEnvironmentId() {
+    public Optional<EnvironmentId> getEnvironmentId() {
         return environmentId;
     }
 
@@ -58,43 +60,35 @@ public final class GetAgentRequest {
         return ObjectMappers.stringify(this);
     }
 
-    public static EnvironmentIdStage builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
-    public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
-
-        Builder from(GetAgentRequest other);
-    }
-
-    public interface _FinalStage {
-        GetAgentRequest build();
-    }
-
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements EnvironmentIdStage, _FinalStage {
-        private EnvironmentId environmentId;
+    public static final class Builder {
+        private Optional<EnvironmentId> environmentId = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
-        @java.lang.Override
         public Builder from(GetAgentRequest other) {
             environmentId(other.getEnvironmentId());
             return this;
         }
 
-        @java.lang.Override
-        @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
+        @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
+        public Builder environmentId(Optional<EnvironmentId> environmentId) {
             this.environmentId = environmentId;
             return this;
         }
 
-        @java.lang.Override
+        public Builder environmentId(EnvironmentId environmentId) {
+            this.environmentId = Optional.of(environmentId);
+            return this;
+        }
+
         public GetAgentRequest build() {
             return new GetAgentRequest(environmentId, additionalProperties);
         }

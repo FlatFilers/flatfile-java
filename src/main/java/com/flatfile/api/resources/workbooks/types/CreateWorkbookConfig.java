@@ -43,6 +43,8 @@ public final class CreateWorkbookConfig {
 
     private final Optional<Object> metadata;
 
+    private final Optional<List<WorkbookTreatments>> treatments;
+
     private final Map<String, Object> additionalProperties;
 
     private CreateWorkbookConfig(
@@ -55,6 +57,7 @@ public final class CreateWorkbookConfig {
             Optional<List<Action>> actions,
             Optional<WorkbookConfigSettings> settings,
             Optional<Object> metadata,
+            Optional<List<WorkbookTreatments>> treatments,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.labels = labels;
@@ -65,6 +68,7 @@ public final class CreateWorkbookConfig {
         this.actions = actions;
         this.settings = settings;
         this.metadata = metadata;
+        this.treatments = treatments;
         this.additionalProperties = additionalProperties;
     }
 
@@ -140,6 +144,14 @@ public final class CreateWorkbookConfig {
         return metadata;
     }
 
+    /**
+     * @return Treatments for the workbook
+     */
+    @JsonProperty("treatments")
+    public Optional<List<WorkbookTreatments>> getTreatments() {
+        return treatments;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -160,7 +172,8 @@ public final class CreateWorkbookConfig {
                 && sheets.equals(other.sheets)
                 && actions.equals(other.actions)
                 && settings.equals(other.settings)
-                && metadata.equals(other.metadata);
+                && metadata.equals(other.metadata)
+                && treatments.equals(other.treatments);
     }
 
     @java.lang.Override
@@ -174,7 +187,8 @@ public final class CreateWorkbookConfig {
                 this.sheets,
                 this.actions,
                 this.settings,
-                this.metadata);
+                this.metadata,
+                this.treatments);
     }
 
     @java.lang.Override
@@ -226,11 +240,17 @@ public final class CreateWorkbookConfig {
         _FinalStage metadata(Optional<Object> metadata);
 
         _FinalStage metadata(Object metadata);
+
+        _FinalStage treatments(Optional<List<WorkbookTreatments>> treatments);
+
+        _FinalStage treatments(List<WorkbookTreatments> treatments);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements NameStage, _FinalStage {
         private String name;
+
+        private Optional<List<WorkbookTreatments>> treatments = Optional.empty();
 
         private Optional<Object> metadata = Optional.empty();
 
@@ -264,6 +284,7 @@ public final class CreateWorkbookConfig {
             actions(other.getActions());
             settings(other.getSettings());
             metadata(other.getMetadata());
+            treatments(other.getTreatments());
             return this;
         }
 
@@ -275,6 +296,23 @@ public final class CreateWorkbookConfig {
         @JsonSetter("name")
         public _FinalStage name(String name) {
             this.name = name;
+            return this;
+        }
+
+        /**
+         * <p>Treatments for the workbook</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage treatments(List<WorkbookTreatments> treatments) {
+            this.treatments = Optional.of(treatments);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "treatments", nulls = Nulls.SKIP)
+        public _FinalStage treatments(Optional<List<WorkbookTreatments>> treatments) {
+            this.treatments = treatments;
             return this;
         }
 
@@ -426,6 +464,7 @@ public final class CreateWorkbookConfig {
                     actions,
                     settings,
                     metadata,
+                    treatments,
                     additionalProperties);
         }
     }

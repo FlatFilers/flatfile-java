@@ -13,7 +13,9 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.PromptId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,10 @@ public final class Prompt {
 
     private final AccountId accountId;
 
+    private final Optional<EnvironmentId> environmentId;
+
+    private final Optional<SpaceId> spaceId;
+
     private final String prompt;
 
     private final OffsetDateTime createdAt;
@@ -43,6 +49,8 @@ public final class Prompt {
             PromptId id,
             String createdById,
             AccountId accountId,
+            Optional<EnvironmentId> environmentId,
+            Optional<SpaceId> spaceId,
             String prompt,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -51,6 +59,8 @@ public final class Prompt {
         this.id = id;
         this.createdById = createdById;
         this.accountId = accountId;
+        this.environmentId = environmentId;
+        this.spaceId = spaceId;
         this.prompt = prompt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -74,6 +84,16 @@ public final class Prompt {
     @JsonProperty("accountId")
     public AccountId getAccountId() {
         return accountId;
+    }
+
+    @JsonProperty("environmentId")
+    public Optional<EnvironmentId> getEnvironmentId() {
+        return environmentId;
+    }
+
+    @JsonProperty("spaceId")
+    public Optional<SpaceId> getSpaceId() {
+        return spaceId;
     }
 
     /**
@@ -114,6 +134,8 @@ public final class Prompt {
         return id.equals(other.id)
                 && createdById.equals(other.createdById)
                 && accountId.equals(other.accountId)
+                && environmentId.equals(other.environmentId)
+                && spaceId.equals(other.spaceId)
                 && prompt.equals(other.prompt)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
@@ -123,7 +145,15 @@ public final class Prompt {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.id, this.createdById, this.accountId, this.prompt, this.createdAt, this.updatedAt, this.deletedAt);
+                this.id,
+                this.createdById,
+                this.accountId,
+                this.environmentId,
+                this.spaceId,
+                this.prompt,
+                this.createdAt,
+                this.updatedAt,
+                this.deletedAt);
     }
 
     @java.lang.Override
@@ -164,6 +194,14 @@ public final class Prompt {
     public interface _FinalStage {
         Prompt build();
 
+        _FinalStage environmentId(Optional<EnvironmentId> environmentId);
+
+        _FinalStage environmentId(EnvironmentId environmentId);
+
+        _FinalStage spaceId(Optional<SpaceId> spaceId);
+
+        _FinalStage spaceId(SpaceId spaceId);
+
         _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt);
 
         _FinalStage deletedAt(OffsetDateTime deletedAt);
@@ -192,6 +230,10 @@ public final class Prompt {
 
         private Optional<OffsetDateTime> deletedAt = Optional.empty();
 
+        private Optional<SpaceId> spaceId = Optional.empty();
+
+        private Optional<EnvironmentId> environmentId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -202,6 +244,8 @@ public final class Prompt {
             id(other.getId());
             createdById(other.getCreatedById());
             accountId(other.getAccountId());
+            environmentId(other.getEnvironmentId());
+            spaceId(other.getSpaceId());
             prompt(other.getPrompt());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
@@ -273,9 +317,44 @@ public final class Prompt {
         }
 
         @java.lang.Override
+        public _FinalStage spaceId(SpaceId spaceId) {
+            this.spaceId = Optional.of(spaceId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "spaceId", nulls = Nulls.SKIP)
+        public _FinalStage spaceId(Optional<SpaceId> spaceId) {
+            this.spaceId = spaceId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage environmentId(EnvironmentId environmentId) {
+            this.environmentId = Optional.of(environmentId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "environmentId", nulls = Nulls.SKIP)
+        public _FinalStage environmentId(Optional<EnvironmentId> environmentId) {
+            this.environmentId = environmentId;
+            return this;
+        }
+
+        @java.lang.Override
         public Prompt build() {
             return new Prompt(
-                    id, createdById, accountId, prompt, createdAt, updatedAt, deletedAt, additionalProperties);
+                    id,
+                    createdById,
+                    accountId,
+                    environmentId,
+                    spaceId,
+                    prompt,
+                    createdAt,
+                    updatedAt,
+                    deletedAt,
+                    additionalProperties);
         }
     }
 }

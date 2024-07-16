@@ -64,6 +64,8 @@ public final class GetRecordsRequest {
 
     private final Optional<Boolean> includeMessages;
 
+    private final Optional<String> fields;
+
     private final Optional<EventId> for_;
 
     private final Optional<String> q;
@@ -88,6 +90,7 @@ public final class GetRecordsRequest {
             Optional<Boolean> includeLength,
             Optional<Boolean> includeLinks,
             Optional<Boolean> includeMessages,
+            Optional<String> fields,
             Optional<EventId> for_,
             Optional<String> q,
             Map<String, Object> additionalProperties) {
@@ -108,6 +111,7 @@ public final class GetRecordsRequest {
         this.includeLength = includeLength;
         this.includeLinks = includeLinks;
         this.includeMessages = includeMessages;
+        this.fields = fields;
         this.for_ = for_;
         this.q = q;
         this.additionalProperties = additionalProperties;
@@ -229,6 +233,14 @@ public final class GetRecordsRequest {
     }
 
     /**
+     * @return A list of field keys to include in the response. If not provided, all fields will be included.
+     */
+    @JsonProperty("fields")
+    public Optional<String> getFields() {
+        return fields;
+    }
+
+    /**
      * @return if &quot;for&quot; is provided, the query parameters will be pulled from the event payload
      */
     @JsonProperty("for")
@@ -273,6 +285,7 @@ public final class GetRecordsRequest {
                 && includeLength.equals(other.includeLength)
                 && includeLinks.equals(other.includeLinks)
                 && includeMessages.equals(other.includeMessages)
+                && fields.equals(other.fields)
                 && for_.equals(other.for_)
                 && q.equals(other.q);
     }
@@ -297,6 +310,7 @@ public final class GetRecordsRequest {
                 this.includeLength,
                 this.includeLinks,
                 this.includeMessages,
+                this.fields,
                 this.for_,
                 this.q);
     }
@@ -346,6 +360,8 @@ public final class GetRecordsRequest {
 
         private Optional<Boolean> includeMessages = Optional.empty();
 
+        private Optional<String> fields = Optional.empty();
+
         private Optional<EventId> for_ = Optional.empty();
 
         private Optional<String> q = Optional.empty();
@@ -373,6 +389,7 @@ public final class GetRecordsRequest {
             includeLength(other.getIncludeLength());
             includeLinks(other.getIncludeLinks());
             includeMessages(other.getIncludeMessages());
+            fields(other.getFields());
             for_(other.getFor());
             q(other.getQ());
             return this;
@@ -565,6 +582,17 @@ public final class GetRecordsRequest {
             return this;
         }
 
+        @JsonSetter(value = "fields", nulls = Nulls.SKIP)
+        public Builder fields(Optional<String> fields) {
+            this.fields = fields;
+            return this;
+        }
+
+        public Builder fields(String fields) {
+            this.fields = Optional.of(fields);
+            return this;
+        }
+
         @JsonSetter(value = "for", nulls = Nulls.SKIP)
         public Builder for_(Optional<EventId> for_) {
             this.for_ = for_;
@@ -606,6 +634,7 @@ public final class GetRecordsRequest {
                     includeLength,
                     includeLinks,
                     includeMessages,
+                    fields,
                     for_,
                     q,
                     additionalProperties);

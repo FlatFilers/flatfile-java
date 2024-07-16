@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CompositeUniqueConstraint.Builder.class)
@@ -25,6 +26,8 @@ public final class CompositeUniqueConstraint {
 
     private final List<String> fields;
 
+    private final Optional<List<String>> requiredFields;
+
     private final CompositeUniqueConstraintStrategy strategy;
 
     private final Map<String, Object> additionalProperties;
@@ -32,10 +35,12 @@ public final class CompositeUniqueConstraint {
     private CompositeUniqueConstraint(
             String name,
             List<String> fields,
+            Optional<List<String>> requiredFields,
             CompositeUniqueConstraintStrategy strategy,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.fields = fields;
+        this.requiredFields = requiredFields;
         this.strategy = strategy;
         this.additionalProperties = additionalProperties;
     }
@@ -56,6 +61,14 @@ public final class CompositeUniqueConstraint {
         return fields;
     }
 
+    /**
+     * @return Fields that, when empty, will cause this unique constraint to be ignored
+     */
+    @JsonProperty("requiredFields")
+    public Optional<List<String>> getRequiredFields() {
+        return requiredFields;
+    }
+
     @JsonProperty("strategy")
     public CompositeUniqueConstraintStrategy getStrategy() {
         return strategy;
@@ -73,12 +86,15 @@ public final class CompositeUniqueConstraint {
     }
 
     private boolean equalTo(CompositeUniqueConstraint other) {
-        return name.equals(other.name) && fields.equals(other.fields) && strategy.equals(other.strategy);
+        return name.equals(other.name)
+                && fields.equals(other.fields)
+                && requiredFields.equals(other.requiredFields)
+                && strategy.equals(other.strategy);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.fields, this.strategy);
+        return Objects.hash(this.name, this.fields, this.requiredFields, this.strategy);
     }
 
     @java.lang.Override
@@ -108,6 +124,10 @@ public final class CompositeUniqueConstraint {
         _FinalStage addFields(String fields);
 
         _FinalStage addAllFields(List<String> fields);
+
+        _FinalStage requiredFields(Optional<List<String>> requiredFields);
+
+        _FinalStage requiredFields(List<String> requiredFields);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -115,6 +135,8 @@ public final class CompositeUniqueConstraint {
         private String name;
 
         private CompositeUniqueConstraintStrategy strategy;
+
+        private Optional<List<String>> requiredFields = Optional.empty();
 
         private List<String> fields = new ArrayList<>();
 
@@ -127,6 +149,7 @@ public final class CompositeUniqueConstraint {
         public Builder from(CompositeUniqueConstraint other) {
             name(other.getName());
             fields(other.getFields());
+            requiredFields(other.getRequiredFields());
             strategy(other.getStrategy());
             return this;
         }
@@ -146,6 +169,23 @@ public final class CompositeUniqueConstraint {
         @JsonSetter("strategy")
         public _FinalStage strategy(CompositeUniqueConstraintStrategy strategy) {
             this.strategy = strategy;
+            return this;
+        }
+
+        /**
+         * <p>Fields that, when empty, will cause this unique constraint to be ignored</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage requiredFields(List<String> requiredFields) {
+            this.requiredFields = Optional.of(requiredFields);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "requiredFields", nulls = Nulls.SKIP)
+        public _FinalStage requiredFields(Optional<List<String>> requiredFields) {
+            this.requiredFields = requiredFields;
             return this;
         }
 
@@ -179,7 +219,7 @@ public final class CompositeUniqueConstraint {
 
         @java.lang.Override
         public CompositeUniqueConstraint build() {
-            return new CompositeUniqueConstraint(name, fields, strategy, additionalProperties);
+            return new CompositeUniqueConstraint(name, fields, requiredFields, strategy, additionalProperties);
         }
     }
 }

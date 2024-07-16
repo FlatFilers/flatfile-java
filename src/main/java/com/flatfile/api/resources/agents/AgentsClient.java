@@ -108,6 +108,10 @@ public class AgentsClient {
         }
     }
 
+    public AgentResponse get(AgentId agentId) {
+        return get(agentId, GetAgentRequest.builder().build());
+    }
+
     public AgentResponse get(AgentId agentId, GetAgentRequest request) {
         return get(agentId, request, null);
     }
@@ -117,7 +121,10 @@ public class AgentsClient {
                 .newBuilder()
                 .addPathSegments("agents")
                 .addPathSegment(agentId.toString());
-        httpUrl.addQueryParameter("environmentId", request.getEnvironmentId().toString());
+        if (request.getEnvironmentId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "environmentId", request.getEnvironmentId().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

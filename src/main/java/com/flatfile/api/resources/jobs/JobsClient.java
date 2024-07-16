@@ -79,6 +79,10 @@ public class JobsClient {
             httpUrl.addQueryParameter(
                     "sortDirection", request.getSortDirection().get().toString());
         }
+        if (request.getExcludeChildJobs().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "excludeChildJobs", request.getExcludeChildJobs().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

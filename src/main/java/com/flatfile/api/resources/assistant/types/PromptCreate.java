@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.EnvironmentId;
+import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -20,16 +22,33 @@ import java.util.Objects;
 public final class PromptCreate {
     private final String prompt;
 
+    private final EnvironmentId environmentId;
+
+    private final SpaceId spaceId;
+
     private final Map<String, Object> additionalProperties;
 
-    private PromptCreate(String prompt, Map<String, Object> additionalProperties) {
+    private PromptCreate(
+            String prompt, EnvironmentId environmentId, SpaceId spaceId, Map<String, Object> additionalProperties) {
         this.prompt = prompt;
+        this.environmentId = environmentId;
+        this.spaceId = spaceId;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("prompt")
     public String getPrompt() {
         return prompt;
+    }
+
+    @JsonProperty("environmentId")
+    public EnvironmentId getEnvironmentId() {
+        return environmentId;
+    }
+
+    @JsonProperty("spaceId")
+    public SpaceId getSpaceId() {
+        return spaceId;
     }
 
     @java.lang.Override
@@ -44,12 +63,14 @@ public final class PromptCreate {
     }
 
     private boolean equalTo(PromptCreate other) {
-        return prompt.equals(other.prompt);
+        return prompt.equals(other.prompt)
+                && environmentId.equals(other.environmentId)
+                && spaceId.equals(other.spaceId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.prompt);
+        return Objects.hash(this.prompt, this.environmentId, this.spaceId);
     }
 
     @java.lang.Override
@@ -62,9 +83,17 @@ public final class PromptCreate {
     }
 
     public interface PromptStage {
-        _FinalStage prompt(String prompt);
+        EnvironmentIdStage prompt(String prompt);
 
         Builder from(PromptCreate other);
+    }
+
+    public interface EnvironmentIdStage {
+        SpaceIdStage environmentId(EnvironmentId environmentId);
+    }
+
+    public interface SpaceIdStage {
+        _FinalStage spaceId(SpaceId spaceId);
     }
 
     public interface _FinalStage {
@@ -72,8 +101,12 @@ public final class PromptCreate {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements PromptStage, _FinalStage {
+    public static final class Builder implements PromptStage, EnvironmentIdStage, SpaceIdStage, _FinalStage {
         private String prompt;
+
+        private EnvironmentId environmentId;
+
+        private SpaceId spaceId;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -83,19 +116,35 @@ public final class PromptCreate {
         @java.lang.Override
         public Builder from(PromptCreate other) {
             prompt(other.getPrompt());
+            environmentId(other.getEnvironmentId());
+            spaceId(other.getSpaceId());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("prompt")
-        public _FinalStage prompt(String prompt) {
+        public EnvironmentIdStage prompt(String prompt) {
             this.prompt = prompt;
             return this;
         }
 
         @java.lang.Override
+        @JsonSetter("environmentId")
+        public SpaceIdStage environmentId(EnvironmentId environmentId) {
+            this.environmentId = environmentId;
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter("spaceId")
+        public _FinalStage spaceId(SpaceId spaceId) {
+            this.spaceId = spaceId;
+            return this;
+        }
+
+        @java.lang.Override
         public PromptCreate build() {
-            return new PromptCreate(prompt, additionalProperties);
+            return new PromptCreate(prompt, environmentId, spaceId, additionalProperties);
         }
     }
 }

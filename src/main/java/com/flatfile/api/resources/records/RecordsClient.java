@@ -120,6 +120,9 @@ public class RecordsClient {
             httpUrl.addQueryParameter(
                     "includeMessages", request.getIncludeMessages().get().toString());
         }
+        if (request.getFields().isPresent()) {
+            httpUrl.addQueryParameter("fields", request.getFields().get());
+        }
         if (request.getFor().isPresent()) {
             httpUrl.addQueryParameter("for", request.getFor().get().toString());
         }

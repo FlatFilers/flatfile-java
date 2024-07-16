@@ -80,7 +80,7 @@ public final class Snapshot {
     }
 
     /**
-     * @return A summary of the Snapshot.
+     * @return A summary of the Snapshot. This field is only available on the single get snapshot endpoint. It is not available for the list snapshots endpoint.
      */
     @JsonProperty("summary")
     public Optional<SnapshotSummary> getSummary() {
@@ -242,7 +242,7 @@ public final class Snapshot {
         }
 
         /**
-         * <p>A summary of the Snapshot.</p>
+         * <p>A summary of the Snapshot. This field is only available on the single get snapshot endpoint. It is not available for the list snapshots endpoint.</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
