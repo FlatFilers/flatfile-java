@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Edge.Builder.class)
 public final class Edge {
     private final Property sourceField;
@@ -123,13 +124,13 @@ public final class Edge {
     }
 
     public interface SourceFieldStage {
-        DestinationFieldStage sourceField(Property sourceField);
+        DestinationFieldStage sourceField(@NotNull Property sourceField);
 
         Builder from(Edge other);
     }
 
     public interface DestinationFieldStage {
-        _FinalStage destinationField(Property destinationField);
+        _FinalStage destinationField(@NotNull Property destinationField);
     }
 
     public interface _FinalStage {
@@ -181,8 +182,8 @@ public final class Edge {
          */
         @java.lang.Override
         @JsonSetter("sourceField")
-        public DestinationFieldStage sourceField(Property sourceField) {
-            this.sourceField = sourceField;
+        public DestinationFieldStage sourceField(@NotNull Property sourceField) {
+            this.sourceField = Objects.requireNonNull(sourceField, "sourceField must not be null");
             return this;
         }
 
@@ -192,8 +193,8 @@ public final class Edge {
          */
         @java.lang.Override
         @JsonSetter("destinationField")
-        public _FinalStage destinationField(Property destinationField) {
-            this.destinationField = destinationField;
+        public _FinalStage destinationField(@NotNull Property destinationField) {
+            this.destinationField = Objects.requireNonNull(destinationField, "destinationField must not be null");
             return this;
         }
 
@@ -203,7 +204,7 @@ public final class Edge {
          */
         @java.lang.Override
         public _FinalStage metadata(Metadata metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -220,7 +221,7 @@ public final class Edge {
          */
         @java.lang.Override
         public _FinalStage enumDetails(EnumDetails enumDetails) {
-            this.enumDetails = Optional.of(enumDetails);
+            this.enumDetails = Optional.ofNullable(enumDetails);
             return this;
         }
 
@@ -237,7 +238,7 @@ public final class Edge {
          */
         @java.lang.Override
         public _FinalStage preview(List<String> preview) {
-            this.preview = Optional.of(preview);
+            this.preview = Optional.ofNullable(preview);
             return this;
         }
 

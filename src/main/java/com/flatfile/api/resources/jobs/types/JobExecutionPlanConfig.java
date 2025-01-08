@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobExecutionPlanConfig.Builder.class)
 public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
     private final Optional<List<Edge>> fieldMapping;
@@ -131,7 +131,7 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
         }
 
         public Builder fieldMapping(List<Edge> fieldMapping) {
-            this.fieldMapping = Optional.of(fieldMapping);
+            this.fieldMapping = Optional.ofNullable(fieldMapping);
             return this;
         }
 
@@ -142,7 +142,7 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
         }
 
         public Builder unmappedSourceFields(List<SourceField> unmappedSourceFields) {
-            this.unmappedSourceFields = Optional.of(unmappedSourceFields);
+            this.unmappedSourceFields = Optional.ofNullable(unmappedSourceFields);
             return this;
         }
 
@@ -153,7 +153,7 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
         }
 
         public Builder unmappedDestinationFields(List<DestinationField> unmappedDestinationFields) {
-            this.unmappedDestinationFields = Optional.of(unmappedDestinationFields);
+            this.unmappedDestinationFields = Optional.ofNullable(unmappedDestinationFields);
             return this;
         }
 
@@ -164,7 +164,7 @@ public final class JobExecutionPlanConfig implements IJobExecutionPlanConfig {
         }
 
         public Builder programId(String programId) {
-            this.programId = Optional.of(programId);
+            this.programId = Optional.ofNullable(programId);
             return this;
         }
 

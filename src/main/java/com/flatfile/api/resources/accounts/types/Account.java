@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Account.Builder.class)
 public final class Account {
     private final AccountId id;
@@ -204,21 +205,21 @@ public final class Account {
     }
 
     public interface IdStage {
-        NameStage id(AccountId id);
+        NameStage id(@NotNull AccountId id);
 
         Builder from(Account other);
     }
 
     public interface NameStage {
-        CreatedAtStage name(String name);
+        CreatedAtStage name(@NotNull String name);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -316,35 +317,35 @@ public final class Account {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(AccountId id) {
-            this.id = id;
+        public NameStage id(@NotNull AccountId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public CreatedAtStage name(String name) {
-            this.name = name;
+        public CreatedAtStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage dashboard(Integer dashboard) {
-            this.dashboard = Optional.of(dashboard);
+            this.dashboard = Optional.ofNullable(dashboard);
             return this;
         }
 
@@ -357,7 +358,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage defaultAppId(AppId defaultAppId) {
-            this.defaultAppId = Optional.of(defaultAppId);
+            this.defaultAppId = Optional.ofNullable(defaultAppId);
             return this;
         }
 
@@ -390,7 +391,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage stripeCustomerId(String stripeCustomerId) {
-            this.stripeCustomerId = Optional.of(stripeCustomerId);
+            this.stripeCustomerId = Optional.ofNullable(stripeCustomerId);
             return this;
         }
 
@@ -403,7 +404,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage customFromEmail(String customFromEmail) {
-            this.customFromEmail = Optional.of(customFromEmail);
+            this.customFromEmail = Optional.ofNullable(customFromEmail);
             return this;
         }
 
@@ -416,7 +417,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage embeddedDomainWhitelist(List<String> embeddedDomainWhitelist) {
-            this.embeddedDomainWhitelist = Optional.of(embeddedDomainWhitelist);
+            this.embeddedDomainWhitelist = Optional.ofNullable(embeddedDomainWhitelist);
             return this;
         }
 
@@ -429,7 +430,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage vanityDomainSpaces(String vanityDomainSpaces) {
-            this.vanityDomainSpaces = Optional.of(vanityDomainSpaces);
+            this.vanityDomainSpaces = Optional.ofNullable(vanityDomainSpaces);
             return this;
         }
 
@@ -442,7 +443,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage vanityDomainDashboard(String vanityDomainDashboard) {
-            this.vanityDomainDashboard = Optional.of(vanityDomainDashboard);
+            this.vanityDomainDashboard = Optional.ofNullable(vanityDomainDashboard);
             return this;
         }
 
@@ -455,7 +456,7 @@ public final class Account {
 
         @java.lang.Override
         public _FinalStage subdomain(String subdomain) {
-            this.subdomain = Optional.of(subdomain);
+            this.subdomain = Optional.ofNullable(subdomain);
             return this;
         }
 

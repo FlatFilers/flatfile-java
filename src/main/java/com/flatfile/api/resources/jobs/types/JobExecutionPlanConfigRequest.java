@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobExecutionPlanConfigRequest.Builder.class)
 public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanConfig {
     private final Optional<List<Edge>> fieldMapping;
@@ -129,13 +130,13 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
     }
 
     public interface FileIdStage {
-        JobIdStage fileId(FileId fileId);
+        JobIdStage fileId(@NotNull FileId fileId);
 
         Builder from(JobExecutionPlanConfigRequest other);
     }
 
     public interface JobIdStage {
-        _FinalStage jobId(JobId jobId);
+        _FinalStage jobId(@NotNull JobId jobId);
     }
 
     public interface _FinalStage {
@@ -190,21 +191,21 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
         @java.lang.Override
         @JsonSetter("fileId")
-        public JobIdStage fileId(FileId fileId) {
-            this.fileId = fileId;
+        public JobIdStage fileId(@NotNull FileId fileId) {
+            this.fileId = Objects.requireNonNull(fileId, "fileId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("jobId")
-        public _FinalStage jobId(JobId jobId) {
-            this.jobId = jobId;
+        public _FinalStage jobId(@NotNull JobId jobId) {
+            this.jobId = Objects.requireNonNull(jobId, "jobId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage programId(String programId) {
-            this.programId = Optional.of(programId);
+            this.programId = Optional.ofNullable(programId);
             return this;
         }
 
@@ -217,7 +218,7 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
         @java.lang.Override
         public _FinalStage unmappedDestinationFields(List<DestinationField> unmappedDestinationFields) {
-            this.unmappedDestinationFields = Optional.of(unmappedDestinationFields);
+            this.unmappedDestinationFields = Optional.ofNullable(unmappedDestinationFields);
             return this;
         }
 
@@ -230,7 +231,7 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
         @java.lang.Override
         public _FinalStage unmappedSourceFields(List<SourceField> unmappedSourceFields) {
-            this.unmappedSourceFields = Optional.of(unmappedSourceFields);
+            this.unmappedSourceFields = Optional.ofNullable(unmappedSourceFields);
             return this;
         }
 
@@ -243,7 +244,7 @@ public final class JobExecutionPlanConfigRequest implements IJobExecutionPlanCon
 
         @java.lang.Override
         public _FinalStage fieldMapping(List<Edge> fieldMapping) {
-            this.fieldMapping = Optional.of(fieldMapping);
+            this.fieldMapping = Optional.ofNullable(fieldMapping);
             return this;
         }
 

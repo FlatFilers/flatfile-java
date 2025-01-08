@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.RecordId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DeleteRecordsRequest.Builder.class)
 public final class DeleteRecordsRequest {
     private final RecordId ids;
@@ -66,7 +67,7 @@ public final class DeleteRecordsRequest {
     }
 
     public interface IdsStage {
-        _FinalStage ids(RecordId ids);
+        _FinalStage ids(@NotNull RecordId ids);
 
         Builder from(DeleteRecordsRequest other);
     }
@@ -96,8 +97,8 @@ public final class DeleteRecordsRequest {
          */
         @java.lang.Override
         @JsonSetter("ids")
-        public _FinalStage ids(RecordId ids) {
-            this.ids = ids;
+        public _FinalStage ids(@NotNull RecordId ids) {
+            this.ids = Objects.requireNonNull(ids, "ids must not be null");
             return this;
         }
 

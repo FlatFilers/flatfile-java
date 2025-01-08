@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.AccountId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserConfig.Builder.class)
 public final class UserConfig implements IUserConfig {
     private final String email;
@@ -82,17 +83,17 @@ public final class UserConfig implements IUserConfig {
     }
 
     public interface EmailStage {
-        NameStage email(String email);
+        NameStage email(@NotNull String email);
 
         Builder from(UserConfig other);
     }
 
     public interface NameStage {
-        AccountIdStage name(String name);
+        AccountIdStage name(@NotNull String name);
     }
 
     public interface AccountIdStage {
-        _FinalStage accountId(AccountId accountId);
+        _FinalStage accountId(@NotNull AccountId accountId);
     }
 
     public interface _FinalStage {
@@ -122,22 +123,22 @@ public final class UserConfig implements IUserConfig {
 
         @java.lang.Override
         @JsonSetter("email")
-        public NameStage email(String email) {
-            this.email = email;
+        public NameStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public AccountIdStage name(String name) {
-            this.name = name;
+        public AccountIdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public _FinalStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public _FinalStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
             return this;
         }
 

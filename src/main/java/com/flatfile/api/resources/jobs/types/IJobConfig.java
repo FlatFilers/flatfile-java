@@ -52,4 +52,6 @@ public interface IJobConfig {
     Optional<JobId> getParentId();
 
     Optional<List<JobId>> getPredecessorIds();
+
+    Optional<Map<String, Object>> getMetadata();
 }

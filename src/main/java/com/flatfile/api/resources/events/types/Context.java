@@ -13,8 +13,10 @@ import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.AccountId;
+import com.flatfile.api.resources.commons.types.ActionId;
 import com.flatfile.api.resources.commons.types.AppId;
 import com.flatfile.api.resources.commons.types.CommitId;
+import com.flatfile.api.resources.commons.types.DataClipId;
 import com.flatfile.api.resources.commons.types.DocumentId;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.EventId;
@@ -31,8 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Context.Builder.class)
 public final class Context {
     private final Optional<List<String>> namespaces;
@@ -73,6 +76,10 @@ public final class Context {
 
     private final Optional<AppId> appId;
 
+    private final Optional<ActionId> actionId;
+
+    private final Optional<DataClipId> dataClipId;
+
     private final Map<String, Object> additionalProperties;
 
     private Context(
@@ -95,6 +102,8 @@ public final class Context {
             Optional<EventId> precedingEventId,
             Optional<String> actorId,
             Optional<AppId> appId,
+            Optional<ActionId> actionId,
+            Optional<DataClipId> dataClipId,
             Map<String, Object> additionalProperties) {
         this.namespaces = namespaces;
         this.slugs = slugs;
@@ -115,6 +124,8 @@ public final class Context {
         this.precedingEventId = precedingEventId;
         this.actorId = actorId;
         this.appId = appId;
+        this.actionId = actionId;
+        this.dataClipId = dataClipId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -225,6 +236,16 @@ public final class Context {
         return appId;
     }
 
+    @JsonProperty("actionId")
+    public Optional<ActionId> getActionId() {
+        return actionId;
+    }
+
+    @JsonProperty("dataClipId")
+    public Optional<DataClipId> getDataClipId() {
+        return dataClipId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -255,7 +276,9 @@ public final class Context {
                 && documentId.equals(other.documentId)
                 && precedingEventId.equals(other.precedingEventId)
                 && actorId.equals(other.actorId)
-                && appId.equals(other.appId);
+                && appId.equals(other.appId)
+                && actionId.equals(other.actionId)
+                && dataClipId.equals(other.dataClipId);
     }
 
     @java.lang.Override
@@ -279,7 +302,9 @@ public final class Context {
                 this.documentId,
                 this.precedingEventId,
                 this.actorId,
-                this.appId);
+                this.appId,
+                this.actionId,
+                this.dataClipId);
     }
 
     @java.lang.Override
@@ -292,13 +317,13 @@ public final class Context {
     }
 
     public interface AccountIdStage {
-        EnvironmentIdStage accountId(AccountId accountId);
+        EnvironmentIdStage accountId(@NotNull AccountId accountId);
 
         Builder from(Context other);
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
+        _FinalStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -371,6 +396,14 @@ public final class Context {
         _FinalStage appId(Optional<AppId> appId);
 
         _FinalStage appId(AppId appId);
+
+        _FinalStage actionId(Optional<ActionId> actionId);
+
+        _FinalStage actionId(ActionId actionId);
+
+        _FinalStage dataClipId(Optional<DataClipId> dataClipId);
+
+        _FinalStage dataClipId(DataClipId dataClipId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -378,6 +411,10 @@ public final class Context {
         private AccountId accountId;
 
         private EnvironmentId environmentId;
+
+        private Optional<DataClipId> dataClipId = Optional.empty();
+
+        private Optional<ActionId> actionId = Optional.empty();
 
         private Optional<AppId> appId = Optional.empty();
 
@@ -439,26 +476,54 @@ public final class Context {
             precedingEventId(other.getPrecedingEventId());
             actorId(other.getActorId());
             appId(other.getAppId());
+            actionId(other.getActionId());
+            dataClipId(other.getDataClipId());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public EnvironmentIdStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public EnvironmentIdStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public _FinalStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage dataClipId(DataClipId dataClipId) {
+            this.dataClipId = Optional.ofNullable(dataClipId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "dataClipId", nulls = Nulls.SKIP)
+        public _FinalStage dataClipId(Optional<DataClipId> dataClipId) {
+            this.dataClipId = dataClipId;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage actionId(ActionId actionId) {
+            this.actionId = Optional.ofNullable(actionId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "actionId", nulls = Nulls.SKIP)
+        public _FinalStage actionId(Optional<ActionId> actionId) {
+            this.actionId = actionId;
             return this;
         }
 
         @java.lang.Override
         public _FinalStage appId(AppId appId) {
-            this.appId = Optional.of(appId);
+            this.appId = Optional.ofNullable(appId);
             return this;
         }
 
@@ -475,7 +540,7 @@ public final class Context {
          */
         @java.lang.Override
         public _FinalStage actorId(String actorId) {
-            this.actorId = Optional.of(actorId);
+            this.actorId = Optional.ofNullable(actorId);
             return this;
         }
 
@@ -488,7 +553,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage precedingEventId(EventId precedingEventId) {
-            this.precedingEventId = Optional.of(precedingEventId);
+            this.precedingEventId = Optional.ofNullable(precedingEventId);
             return this;
         }
 
@@ -501,7 +566,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage documentId(DocumentId documentId) {
-            this.documentId = Optional.of(documentId);
+            this.documentId = Optional.ofNullable(documentId);
             return this;
         }
 
@@ -514,7 +579,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage fileId(FileId fileId) {
-            this.fileId = Optional.of(fileId);
+            this.fileId = Optional.ofNullable(fileId);
             return this;
         }
 
@@ -527,7 +592,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage programId(ProgramId programId) {
-            this.programId = Optional.of(programId);
+            this.programId = Optional.ofNullable(programId);
             return this;
         }
 
@@ -540,7 +605,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage jobId(JobId jobId) {
-            this.jobId = Optional.of(jobId);
+            this.jobId = Optional.ofNullable(jobId);
             return this;
         }
 
@@ -553,7 +618,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -570,7 +635,7 @@ public final class Context {
          */
         @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -583,7 +648,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage snapshotId(SnapshotId snapshotId) {
-            this.snapshotId = Optional.of(snapshotId);
+            this.snapshotId = Optional.ofNullable(snapshotId);
             return this;
         }
 
@@ -596,7 +661,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage sheetSlug(SheetSlug sheetSlug) {
-            this.sheetSlug = Optional.of(sheetSlug);
+            this.sheetSlug = Optional.ofNullable(sheetSlug);
             return this;
         }
 
@@ -609,7 +674,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage sheetId(SheetId sheetId) {
-            this.sheetId = Optional.of(sheetId);
+            this.sheetId = Optional.ofNullable(sheetId);
             return this;
         }
 
@@ -622,7 +687,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage workbookId(WorkbookId workbookId) {
-            this.workbookId = Optional.of(workbookId);
+            this.workbookId = Optional.ofNullable(workbookId);
             return this;
         }
 
@@ -635,7 +700,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -648,7 +713,7 @@ public final class Context {
 
         @java.lang.Override
         public _FinalStage actionName(ActionName actionName) {
-            this.actionName = Optional.of(actionName);
+            this.actionName = Optional.ofNullable(actionName);
             return this;
         }
 
@@ -665,7 +730,7 @@ public final class Context {
          */
         @java.lang.Override
         public _FinalStage slugs(EventContextSlugs slugs) {
-            this.slugs = Optional.of(slugs);
+            this.slugs = Optional.ofNullable(slugs);
             return this;
         }
 
@@ -682,7 +747,7 @@ public final class Context {
          */
         @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
-            this.namespaces = Optional.of(namespaces);
+            this.namespaces = Optional.ofNullable(namespaces);
             return this;
         }
 
@@ -715,6 +780,8 @@ public final class Context {
                     precedingEventId,
                     actorId,
                     appId,
+                    actionId,
+                    dataClipId,
                     additionalProperties);
         }
     }

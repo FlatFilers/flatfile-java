@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EventContextSlugs.Builder.class)
 public final class EventContextSlugs {
     private final Optional<String> space;
@@ -119,7 +119,7 @@ public final class EventContextSlugs {
         }
 
         public Builder space(String space) {
-            this.space = Optional.of(space);
+            this.space = Optional.ofNullable(space);
             return this;
         }
 
@@ -130,7 +130,7 @@ public final class EventContextSlugs {
         }
 
         public Builder workbook(String workbook) {
-            this.workbook = Optional.of(workbook);
+            this.workbook = Optional.ofNullable(workbook);
             return this;
         }
 
@@ -141,7 +141,7 @@ public final class EventContextSlugs {
         }
 
         public Builder sheet(String sheet) {
-            this.sheet = Optional.of(sheet);
+            this.sheet = Optional.ofNullable(sheet);
             return this;
         }
 

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobCompleteDetails.Builder.class)
 public final class JobCompleteDetails {
     private final Optional<JobOutcome> outcome;
@@ -96,7 +96,7 @@ public final class JobCompleteDetails {
         }
 
         public Builder outcome(JobOutcome outcome) {
-            this.outcome = Optional.of(outcome);
+            this.outcome = Optional.ofNullable(outcome);
             return this;
         }
 
@@ -107,7 +107,7 @@ public final class JobCompleteDetails {
         }
 
         public Builder info(String info) {
-            this.info = Optional.of(info);
+            this.info = Optional.ofNullable(info);
             return this;
         }
 

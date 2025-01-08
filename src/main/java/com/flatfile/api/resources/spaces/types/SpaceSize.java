@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SpaceSize.Builder.class)
 public final class SpaceSize {
     private final String name;
@@ -99,13 +100,13 @@ public final class SpaceSize {
     }
 
     public interface NameStage {
-        IdStage name(String name);
+        IdStage name(@NotNull String name);
 
         Builder from(SpaceSize other);
     }
 
     public interface IdStage {
-        NumUsersStage id(String id);
+        NumUsersStage id(@NotNull String id);
     }
 
     public interface NumUsersStage {
@@ -154,15 +155,15 @@ public final class SpaceSize {
 
         @java.lang.Override
         @JsonSetter("name")
-        public IdStage name(String name) {
-            this.name = name;
+        public IdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public NumUsersStage id(String id) {
-            this.id = id;
+        public NumUsersStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 

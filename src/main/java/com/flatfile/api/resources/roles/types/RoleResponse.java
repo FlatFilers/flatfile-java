@@ -17,8 +17,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RoleResponse.Builder.class)
 public final class RoleResponse {
     private final RoleId id;
@@ -107,25 +108,25 @@ public final class RoleResponse {
     }
 
     public interface IdStage {
-        NameStage id(RoleId id);
+        NameStage id(@NotNull RoleId id);
 
         Builder from(RoleResponse other);
     }
 
     public interface NameStage {
-        AccountIdStage name(String name);
+        AccountIdStage name(@NotNull String name);
     }
 
     public interface AccountIdStage {
-        CreatedAtStage accountId(AccountId accountId);
+        CreatedAtStage accountId(@NotNull AccountId accountId);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -162,36 +163,36 @@ public final class RoleResponse {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(RoleId id) {
-            this.id = id;
+        public NameStage id(@NotNull RoleId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public AccountIdStage name(String name) {
-            this.name = name;
+        public AccountIdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public CreatedAtStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public CreatedAtStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

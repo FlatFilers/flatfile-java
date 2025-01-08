@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SummarySection.Builder.class)
 public final class SummarySection {
     private final int total;
@@ -113,7 +113,7 @@ public final class SummarySection {
 
         @java.lang.Override
         public _FinalStage byField(Map<String, Integer> byField) {
-            this.byField = Optional.of(byField);
+            this.byField = Optional.ofNullable(byField);
             return this;
         }
 

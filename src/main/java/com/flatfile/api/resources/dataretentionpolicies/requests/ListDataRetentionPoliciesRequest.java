@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListDataRetentionPoliciesRequest.Builder.class)
 public final class ListDataRetentionPoliciesRequest {
     private final Optional<EnvironmentId> environmentId;
@@ -89,7 +89,7 @@ public final class ListDataRetentionPoliciesRequest {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 

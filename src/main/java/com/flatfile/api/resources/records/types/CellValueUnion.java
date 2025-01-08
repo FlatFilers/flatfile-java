@@ -3,103 +3,23 @@
  */
 package com.flatfile.api.resources.records.types;
 
+import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.flatfile.api.core.ObjectMappers;
-import java.io.IOException;
-import java.time.OffsetDateTime;
-import java.util.Objects;
 
 @JsonDeserialize(using = CellValueUnion.Deserializer.class)
 public final class CellValueUnion {
-    private final Object value;
-
-    private final int type;
-
-    private CellValueUnion(Object value, int type) {
-        this.value = value;
-        this.type = type;
-    }
-
-    @JsonValue
-    public Object get() {
-        return this.value;
-    }
-
-    public <T> T visit(Visitor<T> visitor) {
-        if (this.type == 0) {
-            return visitor.visit((String) this.value);
-        } else if (this.type == 1) {
-            return visitor.visit((int) this.value);
-        } else if (this.type == 2) {
-            return visitor.visit((long) this.value);
-        } else if (this.type == 3) {
-            return visitor.visit((double) this.value);
-        } else if (this.type == 4) {
-            return visitor.visit((boolean) this.value);
-        } else if (this.type == 5) {
-            return visitor.visit((String) this.value);
-        } else if (this.type == 6) {
-            return visitor.visit((OffsetDateTime) this.value);
-        }
-        throw new IllegalStateException("Failed to visit value. This should never happen.");
-    }
-
-    @java.lang.Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        return other instanceof CellValueUnion && equalTo((CellValueUnion) other);
-    }
-
-    private boolean equalTo(CellValueUnion other) {
-        return value.equals(other.value);
-    }
-
-    @java.lang.Override
-    public int hashCode() {
-        return Objects.hash(this.value);
-    }
-
-    @java.lang.Override
-    public String toString() {
-        return this.value.toString();
-    }
-
-    public static CellValueUnion of(String value) {
-        return new CellValueUnion(value, 0);
-    }
-
-    public static CellValueUnion of(int value) {
-        return new CellValueUnion(value, 1);
-    }
-
-    public static CellValueUnion of(long value) {
-        return new CellValueUnion(value, 2);
-    }
-
-    public static CellValueUnion of(double value) {
-        return new CellValueUnion(value, 3);
-    }
-
-    public static CellValueUnion of(boolean value) {
-        return new CellValueUnion(value, 4);
-    }
-
-    public static CellValueUnion of(String value) {
-        return new CellValueUnion(value, 5);
-    }
-
-    public static CellValueUnion of(OffsetDateTime value) {
-        return new CellValueUnion(value, 6);
-    }
-
     public interface Visitor<T> {
-        T visit(String value);
-
         T visit(int value);
 
         T visit(long value);
@@ -111,6 +31,8 @@ public final class CellValueUnion {
         T visit(String value);
 
         T visit(OffsetDateTime value);
+
+        T visit(List<String> value);
     }
 
     static final class Deserializer extends StdDeserializer<CellValueUnion> {
@@ -145,7 +67,96 @@ public final class CellValueUnion {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, OffsetDateTime.class));
             } catch (IllegalArgumentException e) {
             }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {
+                }));
+            } catch (IllegalArgumentException e) {
+            }
             throw new JsonParseException(p, "Failed to deserialize");
         }
+    }
+
+    public static CellValueUnion of(String value) {
+        return new CellValueUnion(value, 0);
+    }
+
+    public static CellValueUnion of(int value) {
+        return new CellValueUnion(value, 1);
+    }
+
+    public static CellValueUnion of(long value) {
+        return new CellValueUnion(value, 2);
+    }
+
+    public static CellValueUnion of(double value) {
+        return new CellValueUnion(value, 3);
+    }
+
+    public static CellValueUnion of(boolean value) {
+        return new CellValueUnion(value, 4);
+    }
+
+    public static CellValueUnion of(OffsetDateTime value) {
+        return new CellValueUnion(value, 6);
+    }
+
+    public static CellValueUnion of(List<String> value) {
+        return new CellValueUnion(value, 7);
+    }
+
+    private final Object value;
+
+    private final int type;
+
+    private CellValueUnion(Object value, int type) {
+        this.value = value;
+        this.type = type;
+    }
+
+    @JsonValue
+    public Object get() {
+        return this.value;
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        if (this.type == 0) {
+            return visitor.visit((String) this.value);
+        } else if (this.type == 1) {
+            return visitor.visit((int) this.value);
+        } else if (this.type == 2) {
+            return visitor.visit((long) this.value);
+        } else if (this.type == 3) {
+            return visitor.visit((double) this.value);
+        } else if (this.type == 4) {
+            return visitor.visit((boolean) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((String) this.value);
+        } else if (this.type == 6) {
+            return visitor.visit((OffsetDateTime) this.value);
+        } else if (this.type == 7) {
+            return visitor.visit((List<String>) this.value);
+        }
+        throw new IllegalStateException("Failed to visit value. This should never happen.");
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        return other instanceof CellValueUnion && equalTo((CellValueUnion) other);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return Objects.hash(this.value);
+    }
+
+    @java.lang.Override
+    public String toString() {
+        return this.value.toString();
+    }
+
+    private boolean equalTo(CellValueUnion other) {
+        return value.equals(other.value);
     }
 }

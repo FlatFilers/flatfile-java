@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersRequest.Builder.class)
 public final class ListUsersRequest {
     private final Optional<String> email;
@@ -172,7 +172,7 @@ public final class ListUsersRequest {
         }
 
         public Builder email(String email) {
-            this.email = Optional.of(email);
+            this.email = Optional.ofNullable(email);
             return this;
         }
 
@@ -183,7 +183,7 @@ public final class ListUsersRequest {
         }
 
         public Builder search(String search) {
-            this.search = Optional.of(search);
+            this.search = Optional.ofNullable(search);
             return this;
         }
 
@@ -194,7 +194,7 @@ public final class ListUsersRequest {
         }
 
         public Builder sortField(ListUsersSortField sortField) {
-            this.sortField = Optional.of(sortField);
+            this.sortField = Optional.ofNullable(sortField);
             return this;
         }
 
@@ -205,7 +205,7 @@ public final class ListUsersRequest {
         }
 
         public Builder sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
+            this.sortDirection = Optional.ofNullable(sortDirection);
             return this;
         }
 
@@ -216,7 +216,7 @@ public final class ListUsersRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -227,7 +227,7 @@ public final class ListUsersRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 

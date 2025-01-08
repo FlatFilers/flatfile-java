@@ -4,23 +4,91 @@
 package com.flatfile.api.resources.jobs.types;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.flatfile.api.core.ObjectMappers;
+import java.io.IOException;
+import java.util.Objects;
 
-public enum JobOutcomeTrigger {
-    MANUAL("manual"),
+@JsonDeserialize(using = JobOutcomeTrigger.Deserializer.class)
+public final class JobOutcomeTrigger {
+    private final Object value;
 
-    AUTOMATIC("automatic"),
+    private final int type;
 
-    AUTOMATIC_SILENT("automatic_silent");
-
-    private final String value;
-
-    JobOutcomeTrigger(String value) {
+    private JobOutcomeTrigger(Object value, int type) {
         this.value = value;
+        this.type = type;
     }
 
     @JsonValue
+    public Object get() {
+        return this.value;
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        if (this.type == 0) {
+            return visitor.visit((JobOutcomeTriggerType) this.value);
+        } else if (this.type == 1) {
+            return visitor.visit((JobOutcomeTriggerDetails) this.value);
+        }
+        throw new IllegalStateException("Failed to visit value. This should never happen.");
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof JobOutcomeTrigger && equalTo((JobOutcomeTrigger) other);
+    }
+
+    private boolean equalTo(JobOutcomeTrigger other) {
+        return value.equals(other.value);
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return Objects.hash(this.value);
+    }
+
     @java.lang.Override
     public String toString() {
-        return this.value;
+        return this.value.toString();
+    }
+
+    public static JobOutcomeTrigger of(JobOutcomeTriggerType value) {
+        return new JobOutcomeTrigger(value, 0);
+    }
+
+    public static JobOutcomeTrigger of(JobOutcomeTriggerDetails value) {
+        return new JobOutcomeTrigger(value, 1);
+    }
+
+    public interface Visitor<T> {
+        T visit(JobOutcomeTriggerType value);
+
+        T visit(JobOutcomeTriggerDetails value);
+    }
+
+    static final class Deserializer extends StdDeserializer<JobOutcomeTrigger> {
+        Deserializer() {
+            super(JobOutcomeTrigger.class);
+        }
+
+        @java.lang.Override
+        public JobOutcomeTrigger deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            Object value = p.readValueAs(Object.class);
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, JobOutcomeTriggerType.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, JobOutcomeTriggerDetails.class));
+            } catch (IllegalArgumentException e) {
+            }
+            throw new JsonParseException(p, "Failed to deserialize");
+        }
     }
 }

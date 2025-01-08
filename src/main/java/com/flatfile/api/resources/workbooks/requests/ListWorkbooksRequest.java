@@ -18,18 +18,40 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListWorkbooksRequest.Builder.class)
 public final class ListWorkbooksRequest {
     private final Optional<SpaceId> spaceId;
+
+    private final Optional<String> name;
+
+    private final Optional<String> namespace;
+
+    private final Optional<String> label;
+
+    private final Optional<String> treatment;
+
+    private final Optional<Boolean> includeSheets;
 
     private final Optional<Boolean> includeCounts;
 
     private final Map<String, Object> additionalProperties;
 
     private ListWorkbooksRequest(
-            Optional<SpaceId> spaceId, Optional<Boolean> includeCounts, Map<String, Object> additionalProperties) {
+            Optional<SpaceId> spaceId,
+            Optional<String> name,
+            Optional<String> namespace,
+            Optional<String> label,
+            Optional<String> treatment,
+            Optional<Boolean> includeSheets,
+            Optional<Boolean> includeCounts,
+            Map<String, Object> additionalProperties) {
         this.spaceId = spaceId;
+        this.name = name;
+        this.namespace = namespace;
+        this.label = label;
+        this.treatment = treatment;
+        this.includeSheets = includeSheets;
         this.includeCounts = includeCounts;
         this.additionalProperties = additionalProperties;
     }
@@ -40,6 +62,46 @@ public final class ListWorkbooksRequest {
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
+    }
+
+    /**
+     * @return Filter by name. Precede with - to negate the filter
+     */
+    @JsonProperty("name")
+    public Optional<String> getName() {
+        return name;
+    }
+
+    /**
+     * @return Filter by namespace. Precede with - to negate the filter
+     */
+    @JsonProperty("namespace")
+    public Optional<String> getNamespace() {
+        return namespace;
+    }
+
+    /**
+     * @return Filter by label. Precede with - to negate the filter
+     */
+    @JsonProperty("label")
+    public Optional<String> getLabel() {
+        return label;
+    }
+
+    /**
+     * @return Filter by treatment.
+     */
+    @JsonProperty("treatment")
+    public Optional<String> getTreatment() {
+        return treatment;
+    }
+
+    /**
+     * @return Include sheets for the workbook (default true)
+     */
+    @JsonProperty("includeSheets")
+    public Optional<Boolean> getIncludeSheets() {
+        return includeSheets;
     }
 
     /**
@@ -62,12 +124,25 @@ public final class ListWorkbooksRequest {
     }
 
     private boolean equalTo(ListWorkbooksRequest other) {
-        return spaceId.equals(other.spaceId) && includeCounts.equals(other.includeCounts);
+        return spaceId.equals(other.spaceId)
+                && name.equals(other.name)
+                && namespace.equals(other.namespace)
+                && label.equals(other.label)
+                && treatment.equals(other.treatment)
+                && includeSheets.equals(other.includeSheets)
+                && includeCounts.equals(other.includeCounts);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.spaceId, this.includeCounts);
+        return Objects.hash(
+                this.spaceId,
+                this.name,
+                this.namespace,
+                this.label,
+                this.treatment,
+                this.includeSheets,
+                this.includeCounts);
     }
 
     @java.lang.Override
@@ -83,6 +158,16 @@ public final class ListWorkbooksRequest {
     public static final class Builder {
         private Optional<SpaceId> spaceId = Optional.empty();
 
+        private Optional<String> name = Optional.empty();
+
+        private Optional<String> namespace = Optional.empty();
+
+        private Optional<String> label = Optional.empty();
+
+        private Optional<String> treatment = Optional.empty();
+
+        private Optional<Boolean> includeSheets = Optional.empty();
+
         private Optional<Boolean> includeCounts = Optional.empty();
 
         @JsonAnySetter
@@ -92,6 +177,11 @@ public final class ListWorkbooksRequest {
 
         public Builder from(ListWorkbooksRequest other) {
             spaceId(other.getSpaceId());
+            name(other.getName());
+            namespace(other.getNamespace());
+            label(other.getLabel());
+            treatment(other.getTreatment());
+            includeSheets(other.getIncludeSheets());
             includeCounts(other.getIncludeCounts());
             return this;
         }
@@ -103,7 +193,62 @@ public final class ListWorkbooksRequest {
         }
 
         public Builder spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
+            return this;
+        }
+
+        @JsonSetter(value = "name", nulls = Nulls.SKIP)
+        public Builder name(Optional<String> name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = Optional.ofNullable(name);
+            return this;
+        }
+
+        @JsonSetter(value = "namespace", nulls = Nulls.SKIP)
+        public Builder namespace(Optional<String> namespace) {
+            this.namespace = namespace;
+            return this;
+        }
+
+        public Builder namespace(String namespace) {
+            this.namespace = Optional.ofNullable(namespace);
+            return this;
+        }
+
+        @JsonSetter(value = "label", nulls = Nulls.SKIP)
+        public Builder label(Optional<String> label) {
+            this.label = label;
+            return this;
+        }
+
+        public Builder label(String label) {
+            this.label = Optional.ofNullable(label);
+            return this;
+        }
+
+        @JsonSetter(value = "treatment", nulls = Nulls.SKIP)
+        public Builder treatment(Optional<String> treatment) {
+            this.treatment = treatment;
+            return this;
+        }
+
+        public Builder treatment(String treatment) {
+            this.treatment = Optional.ofNullable(treatment);
+            return this;
+        }
+
+        @JsonSetter(value = "includeSheets", nulls = Nulls.SKIP)
+        public Builder includeSheets(Optional<Boolean> includeSheets) {
+            this.includeSheets = includeSheets;
+            return this;
+        }
+
+        public Builder includeSheets(Boolean includeSheets) {
+            this.includeSheets = Optional.ofNullable(includeSheets);
             return this;
         }
 
@@ -114,12 +259,13 @@ public final class ListWorkbooksRequest {
         }
 
         public Builder includeCounts(Boolean includeCounts) {
-            this.includeCounts = Optional.of(includeCounts);
+            this.includeCounts = Optional.ofNullable(includeCounts);
             return this;
         }
 
         public ListWorkbooksRequest build() {
-            return new ListWorkbooksRequest(spaceId, includeCounts, additionalProperties);
+            return new ListWorkbooksRequest(
+                    spaceId, name, namespace, label, treatment, includeSheets, includeCounts, additionalProperties);
         }
     }
 }

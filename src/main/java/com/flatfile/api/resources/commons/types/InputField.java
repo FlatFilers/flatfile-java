@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InputField.Builder.class)
 public final class InputField {
     private final String key;
@@ -149,17 +150,17 @@ public final class InputField {
     }
 
     public interface KeyStage {
-        LabelStage key(String key);
+        LabelStage key(@NotNull String key);
 
         Builder from(InputField other);
     }
 
     public interface LabelStage {
-        TypeStage label(String label);
+        TypeStage label(@NotNull String label);
     }
 
     public interface TypeStage {
-        _FinalStage type(String type);
+        _FinalStage type(@NotNull String type);
     }
 
     public interface _FinalStage {
@@ -221,8 +222,8 @@ public final class InputField {
          */
         @java.lang.Override
         @JsonSetter("key")
-        public LabelStage key(String key) {
-            this.key = key;
+        public LabelStage key(@NotNull String key) {
+            this.key = Objects.requireNonNull(key, "key must not be null");
             return this;
         }
 
@@ -232,8 +233,8 @@ public final class InputField {
          */
         @java.lang.Override
         @JsonSetter("label")
-        public TypeStage label(String label) {
-            this.label = label;
+        public TypeStage label(@NotNull String label) {
+            this.label = Objects.requireNonNull(label, "label must not be null");
             return this;
         }
 
@@ -243,8 +244,8 @@ public final class InputField {
          */
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(String type) {
-            this.type = type;
+        public _FinalStage type(@NotNull String type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -254,7 +255,7 @@ public final class InputField {
          */
         @java.lang.Override
         public _FinalStage constraints(List<InputConstraint> constraints) {
-            this.constraints = Optional.of(constraints);
+            this.constraints = Optional.ofNullable(constraints);
             return this;
         }
 
@@ -271,7 +272,7 @@ public final class InputField {
          */
         @java.lang.Override
         public _FinalStage config(InputConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -288,7 +289,7 @@ public final class InputField {
          */
         @java.lang.Override
         public _FinalStage defaultValue(Object defaultValue) {
-            this.defaultValue = Optional.of(defaultValue);
+            this.defaultValue = Optional.ofNullable(defaultValue);
             return this;
         }
 
@@ -305,7 +306,7 @@ public final class InputField {
          */
         @java.lang.Override
         public _FinalStage description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 

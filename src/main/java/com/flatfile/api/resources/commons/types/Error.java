@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Error.Builder.class)
 public final class Error {
     private final Optional<String> key;
@@ -72,7 +73,7 @@ public final class Error {
     }
 
     public interface MessageStage {
-        _FinalStage message(String message);
+        _FinalStage message(@NotNull String message);
 
         Builder from(Error other);
     }
@@ -105,14 +106,14 @@ public final class Error {
 
         @java.lang.Override
         @JsonSetter("message")
-        public _FinalStage message(String message) {
-            this.message = message;
+        public _FinalStage message(@NotNull String message) {
+            this.message = Objects.requireNonNull(message, "message must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage key(String key) {
-            this.key = Optional.of(key);
+            this.key = Optional.ofNullable(key);
             return this;
         }
 

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobSplitDetails.Builder.class)
 public final class JobSplitDetails {
     private final JobParts parts;
@@ -72,7 +73,7 @@ public final class JobSplitDetails {
     }
 
     public interface PartsStage {
-        _FinalStage parts(JobParts parts);
+        _FinalStage parts(@NotNull JobParts parts);
 
         Builder from(JobSplitDetails other);
     }
@@ -105,14 +106,14 @@ public final class JobSplitDetails {
 
         @java.lang.Override
         @JsonSetter("parts")
-        public _FinalStage parts(JobParts parts) {
-            this.parts = parts;
+        public _FinalStage parts(@NotNull JobParts parts) {
+            this.parts = Objects.requireNonNull(parts, "parts must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage runInParallel(Boolean runInParallel) {
-            this.runInParallel = Optional.of(runInParallel);
+            this.runInParallel = Optional.ofNullable(runInParallel);
             return this;
         }
 

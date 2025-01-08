@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SheetUpdate.Builder.class)
 public final class SheetUpdate implements ISheetUpdate {
     private final Optional<SheetId> id;
@@ -196,7 +196,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder id(SheetId id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
@@ -207,7 +207,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder workbookId(WorkbookId workbookId) {
-            this.workbookId = Optional.of(workbookId);
+            this.workbookId = Optional.ofNullable(workbookId);
             return this;
         }
 
@@ -218,7 +218,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder config(SheetConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -229,7 +229,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -240,7 +240,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -251,7 +251,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
+            this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 
@@ -262,7 +262,7 @@ public final class SheetUpdate implements ISheetUpdate {
         }
 
         public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.of(createdAt);
+            this.createdAt = Optional.ofNullable(createdAt);
             return this;
         }
 

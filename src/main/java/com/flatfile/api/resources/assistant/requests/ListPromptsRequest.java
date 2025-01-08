@@ -12,14 +12,17 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.assistant.types.PromptTypeQueryEnum;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListPromptsRequest.Builder.class)
 public final class ListPromptsRequest {
+    private final Optional<PromptTypeQueryEnum> promptType;
+
     private final Optional<Integer> pageSize;
 
     private final Optional<Integer> pageNumber;
@@ -27,10 +30,22 @@ public final class ListPromptsRequest {
     private final Map<String, Object> additionalProperties;
 
     private ListPromptsRequest(
-            Optional<Integer> pageSize, Optional<Integer> pageNumber, Map<String, Object> additionalProperties) {
+            Optional<PromptTypeQueryEnum> promptType,
+            Optional<Integer> pageSize,
+            Optional<Integer> pageNumber,
+            Map<String, Object> additionalProperties) {
+        this.promptType = promptType;
         this.pageSize = pageSize;
         this.pageNumber = pageNumber;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Type of prompt (default AI_ASSIST)
+     */
+    @JsonProperty("promptType")
+    public Optional<PromptTypeQueryEnum> getPromptType() {
+        return promptType;
     }
 
     /**
@@ -61,12 +76,14 @@ public final class ListPromptsRequest {
     }
 
     private boolean equalTo(ListPromptsRequest other) {
-        return pageSize.equals(other.pageSize) && pageNumber.equals(other.pageNumber);
+        return promptType.equals(other.promptType)
+                && pageSize.equals(other.pageSize)
+                && pageNumber.equals(other.pageNumber);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.pageSize, this.pageNumber);
+        return Objects.hash(this.promptType, this.pageSize, this.pageNumber);
     }
 
     @java.lang.Override
@@ -80,6 +97,8 @@ public final class ListPromptsRequest {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
+        private Optional<PromptTypeQueryEnum> promptType = Optional.empty();
+
         private Optional<Integer> pageSize = Optional.empty();
 
         private Optional<Integer> pageNumber = Optional.empty();
@@ -90,8 +109,20 @@ public final class ListPromptsRequest {
         private Builder() {}
 
         public Builder from(ListPromptsRequest other) {
+            promptType(other.getPromptType());
             pageSize(other.getPageSize());
             pageNumber(other.getPageNumber());
+            return this;
+        }
+
+        @JsonSetter(value = "promptType", nulls = Nulls.SKIP)
+        public Builder promptType(Optional<PromptTypeQueryEnum> promptType) {
+            this.promptType = promptType;
+            return this;
+        }
+
+        public Builder promptType(PromptTypeQueryEnum promptType) {
+            this.promptType = Optional.ofNullable(promptType);
             return this;
         }
 
@@ -102,7 +133,7 @@ public final class ListPromptsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -113,12 +144,12 @@ public final class ListPromptsRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
         public ListPromptsRequest build() {
-            return new ListPromptsRequest(pageSize, pageNumber, additionalProperties);
+            return new ListPromptsRequest(promptType, pageSize, pageNumber, additionalProperties);
         }
     }
 }

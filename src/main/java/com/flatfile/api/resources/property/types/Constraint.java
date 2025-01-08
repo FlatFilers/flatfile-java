@@ -42,6 +42,10 @@ public final class Constraint {
         return new Constraint(new ExternalValue(value));
     }
 
+    public static Constraint stored(StoredConstraint value) {
+        return new Constraint(new StoredValue(value));
+    }
+
     public boolean isRequired() {
         return value instanceof RequiredValue;
     }
@@ -58,6 +62,10 @@ public final class Constraint {
         return value instanceof ExternalValue;
     }
 
+    public boolean isStored() {
+        return value instanceof StoredValue;
+    }
+
     public boolean _isUnknown() {
         return value instanceof _UnknownValue;
     }
@@ -72,6 +80,13 @@ public final class Constraint {
     public Optional<ExternalConstraint> getExternal() {
         if (isExternal()) {
             return Optional.of(((ExternalValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<StoredConstraint> getStored() {
+        if (isStored()) {
+            return Optional.of(((StoredValue) value).value);
         }
         return Optional.empty();
     }
@@ -97,6 +112,8 @@ public final class Constraint {
 
         T visitExternal(ExternalConstraint external);
 
+        T visitStored(StoredConstraint stored);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -105,7 +122,8 @@ public final class Constraint {
         @JsonSubTypes.Type(RequiredValue.class),
         @JsonSubTypes.Type(UniqueValue.class),
         @JsonSubTypes.Type(ComputedValue.class),
-        @JsonSubTypes.Type(ExternalValue.class)
+        @JsonSubTypes.Type(ExternalValue.class),
+        @JsonSubTypes.Type(StoredValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -218,6 +236,44 @@ public final class Constraint {
         }
 
         private boolean equalTo(ExternalValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Constraint{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("stored")
+    private static final class StoredValue implements Value {
+        @JsonUnwrapped
+        private StoredConstraint value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private StoredValue() {}
+
+        private StoredValue(StoredConstraint value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitStored(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof StoredValue && equalTo((StoredValue) other);
+        }
+
+        private boolean equalTo(StoredValue other) {
             return value.equals(other.value);
         }
 

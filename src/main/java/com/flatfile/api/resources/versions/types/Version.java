@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.VersionId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Version.Builder.class)
 public final class Version {
     private final VersionId versionId;
@@ -63,7 +64,7 @@ public final class Version {
     }
 
     public interface VersionIdStage {
-        _FinalStage versionId(VersionId versionId);
+        _FinalStage versionId(@NotNull VersionId versionId);
 
         Builder from(Version other);
     }
@@ -89,8 +90,8 @@ public final class Version {
 
         @java.lang.Override
         @JsonSetter("versionId")
-        public _FinalStage versionId(VersionId versionId) {
-            this.versionId = versionId;
+        public _FinalStage versionId(@NotNull VersionId versionId) {
+            this.versionId = Objects.requireNonNull(versionId, "versionId must not be null");
             return this;
         }
 

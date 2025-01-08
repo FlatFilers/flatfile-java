@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.AppId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AccountPatch.Builder.class)
 public final class AccountPatch {
     private final AppId defaultAppId;
@@ -63,7 +64,7 @@ public final class AccountPatch {
     }
 
     public interface DefaultAppIdStage {
-        _FinalStage defaultAppId(AppId defaultAppId);
+        _FinalStage defaultAppId(@NotNull AppId defaultAppId);
 
         Builder from(AccountPatch other);
     }
@@ -89,8 +90,8 @@ public final class AccountPatch {
 
         @java.lang.Override
         @JsonSetter("defaultAppId")
-        public _FinalStage defaultAppId(AppId defaultAppId) {
-            this.defaultAppId = defaultAppId;
+        public _FinalStage defaultAppId(@NotNull AppId defaultAppId) {
+            this.defaultAppId = Objects.requireNonNull(defaultAppId, "defaultAppId must not be null");
             return this;
         }
 

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListSpacesRequest.Builder.class)
 public final class ListSpacesRequest {
     private final Optional<EnvironmentId> environmentId;
@@ -229,7 +229,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -240,7 +240,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -251,7 +251,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -262,7 +262,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder search(String search) {
-            this.search = Optional.of(search);
+            this.search = Optional.ofNullable(search);
             return this;
         }
 
@@ -273,7 +273,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -284,7 +284,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder archived(Boolean archived) {
-            this.archived = Optional.of(archived);
+            this.archived = Optional.ofNullable(archived);
             return this;
         }
 
@@ -295,7 +295,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder sortField(GetSpacesSortField sortField) {
-            this.sortField = Optional.of(sortField);
+            this.sortField = Optional.ofNullable(sortField);
             return this;
         }
 
@@ -306,7 +306,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
+            this.sortDirection = Optional.ofNullable(sortDirection);
             return this;
         }
 
@@ -317,7 +317,7 @@ public final class ListSpacesRequest {
         }
 
         public Builder isCollaborative(Boolean isCollaborative) {
-            this.isCollaborative = Optional.of(isCollaborative);
+            this.isCollaborative = Optional.ofNullable(isCollaborative);
             return this;
         }
 

@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListSnapshotRequest.Builder.class)
 public final class ListSnapshotRequest {
     private final SheetId sheetId;
@@ -66,7 +67,7 @@ public final class ListSnapshotRequest {
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(SheetId sheetId);
+        _FinalStage sheetId(@NotNull SheetId sheetId);
 
         Builder from(ListSnapshotRequest other);
     }
@@ -96,8 +97,8 @@ public final class ListSnapshotRequest {
          */
         @java.lang.Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public _FinalStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 

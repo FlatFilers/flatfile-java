@@ -16,8 +16,9 @@ import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateAgentsRequest.Builder.class)
 public final class CreateAgentsRequest {
     private final EnvironmentId environmentId;
@@ -73,13 +74,13 @@ public final class CreateAgentsRequest {
     }
 
     public interface EnvironmentIdStage {
-        BodyStage environmentId(EnvironmentId environmentId);
+        BodyStage environmentId(@NotNull EnvironmentId environmentId);
 
         Builder from(CreateAgentsRequest other);
     }
 
     public interface BodyStage {
-        _FinalStage body(AgentConfig body);
+        _FinalStage body(@NotNull AgentConfig body);
     }
 
     public interface _FinalStage {
@@ -106,15 +107,15 @@ public final class CreateAgentsRequest {
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public BodyStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public BodyStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(AgentConfig body) {
-            this.body = body;
+        public _FinalStage body(@NotNull AgentConfig body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 

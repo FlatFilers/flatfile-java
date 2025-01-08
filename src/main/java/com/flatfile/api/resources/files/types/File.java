@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = File.Builder.class)
 public final class File {
     private final FileId id;
@@ -283,29 +284,29 @@ public final class File {
     }
 
     public interface IdStage {
-        NameStage id(FileId id);
+        NameStage id(@NotNull FileId id);
 
         Builder from(File other);
     }
 
     public interface NameStage {
-        ExtStage name(String name);
+        ExtStage name(@NotNull String name);
     }
 
     public interface ExtStage {
-        MimetypeStage ext(String ext);
+        MimetypeStage ext(@NotNull String ext);
     }
 
     public interface MimetypeStage {
-        EncodingStage mimetype(String mimetype);
+        EncodingStage mimetype(@NotNull String mimetype);
     }
 
     public interface EncodingStage {
-        StatusStage encoding(String encoding);
+        StatusStage encoding(@NotNull String encoding);
     }
 
     public interface StatusStage {
-        SizeStage status(ModelFileStatusEnum status);
+        SizeStage status(@NotNull ModelFileStatusEnum status);
     }
 
     public interface SizeStage {
@@ -317,15 +318,15 @@ public final class File {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        SpaceIdStage updatedAt(OffsetDateTime updatedAt);
+        SpaceIdStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface SpaceIdStage {
-        _FinalStage spaceId(SpaceId spaceId);
+        _FinalStage spaceId(@NotNull SpaceId spaceId);
     }
 
     public interface _FinalStage {
@@ -433,8 +434,8 @@ public final class File {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(FileId id) {
-            this.id = id;
+        public NameStage id(@NotNull FileId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -444,8 +445,8 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public ExtStage name(String name) {
-            this.name = name;
+        public ExtStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -455,8 +456,8 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("ext")
-        public MimetypeStage ext(String ext) {
-            this.ext = ext;
+        public MimetypeStage ext(@NotNull String ext) {
+            this.ext = Objects.requireNonNull(ext, "ext must not be null");
             return this;
         }
 
@@ -466,8 +467,8 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("mimetype")
-        public EncodingStage mimetype(String mimetype) {
-            this.mimetype = mimetype;
+        public EncodingStage mimetype(@NotNull String mimetype) {
+            this.mimetype = Objects.requireNonNull(mimetype, "mimetype must not be null");
             return this;
         }
 
@@ -477,8 +478,8 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("encoding")
-        public StatusStage encoding(String encoding) {
-            this.encoding = encoding;
+        public StatusStage encoding(@NotNull String encoding) {
+            this.encoding = Objects.requireNonNull(encoding, "encoding must not be null");
             return this;
         }
 
@@ -488,8 +489,8 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("status")
-        public SizeStage status(ModelFileStatusEnum status) {
-            this.status = status;
+        public SizeStage status(@NotNull ModelFileStatusEnum status) {
+            this.status = Objects.requireNonNull(status, "status must not be null");
             return this;
         }
 
@@ -521,8 +522,8 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -532,21 +533,21 @@ public final class File {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public SpaceIdStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public SpaceIdStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("spaceId")
-        public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = spaceId;
+        public _FinalStage spaceId(@NotNull SpaceId spaceId) {
+            this.spaceId = Objects.requireNonNull(spaceId, "spaceId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage origin(FileOrigin origin) {
-            this.origin = Optional.of(origin);
+            this.origin = Optional.ofNullable(origin);
             return this;
         }
 
@@ -559,7 +560,7 @@ public final class File {
 
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -572,7 +573,7 @@ public final class File {
 
         @java.lang.Override
         public _FinalStage sheetId(SheetId sheetId) {
-            this.sheetId = Optional.of(sheetId);
+            this.sheetId = Optional.ofNullable(sheetId);
             return this;
         }
 
@@ -585,7 +586,7 @@ public final class File {
 
         @java.lang.Override
         public _FinalStage workbookId(WorkbookId workbookId) {
-            this.workbookId = Optional.of(workbookId);
+            this.workbookId = Optional.ofNullable(workbookId);
             return this;
         }
 
@@ -602,7 +603,7 @@ public final class File {
          */
         @java.lang.Override
         public _FinalStage expiredAt(OffsetDateTime expiredAt) {
-            this.expiredAt = Optional.of(expiredAt);
+            this.expiredAt = Optional.ofNullable(expiredAt);
             return this;
         }
 
@@ -619,7 +620,7 @@ public final class File {
          */
         @java.lang.Override
         public _FinalStage mode(Mode mode) {
-            this.mode = Optional.of(mode);
+            this.mode = Optional.ofNullable(mode);
             return this;
         }
 

@@ -20,6 +20,8 @@ public enum EventTopic {
 
     SPACE_ARCHIVED("space:archived"),
 
+    SPACE_UNARCHIVED("space:unarchived"),
+
     SPACE_EXPIRED("space:expired"),
 
     SPACE_GUEST_ADDED("space:guestAdded"),
@@ -112,7 +114,25 @@ public enum EventTopic {
 
     ENVIRONMENT_UPDATED("environment:updated"),
 
-    ENVIRONMENT_DELETED("environment:deleted");
+    ENVIRONMENT_DELETED("environment:deleted"),
+
+    ACTION_CREATED("action:created"),
+
+    ACTION_UPDATED("action:updated"),
+
+    ACTION_DELETED("action:deleted"),
+
+    DATA_CLIP_CREATED("data-clip:created"),
+
+    DATA_CLIP_UPDATED("data-clip:updated"),
+
+    DATA_CLIP_DELETED("data-clip:deleted"),
+
+    DATA_CLIP_COLLABORATOR_UPDATED("data-clip:collaborator-updated"),
+
+    DATA_CLIP_RESOLUTIONS_CREATED("data-clip:resolutions-created"),
+
+    DATA_CLIP_RESOLUTIONS_UPDATED("data-clip:resolutions-updated");
 
     private final String value;
 

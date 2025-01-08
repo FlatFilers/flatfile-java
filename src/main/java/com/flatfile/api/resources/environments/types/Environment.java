@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Environment.Builder.class)
 public final class Environment {
     private final EnvironmentId id;
@@ -177,17 +178,17 @@ public final class Environment {
     }
 
     public interface IdStage {
-        AccountIdStage id(EnvironmentId id);
+        AccountIdStage id(@NotNull EnvironmentId id);
 
         Builder from(Environment other);
     }
 
     public interface AccountIdStage {
-        NameStage accountId(AccountId accountId);
+        NameStage accountId(@NotNull AccountId accountId);
     }
 
     public interface NameStage {
-        IsProdStage name(String name);
+        IsProdStage name(@NotNull String name);
     }
 
     public interface IsProdStage {
@@ -272,15 +273,15 @@ public final class Environment {
 
         @java.lang.Override
         @JsonSetter("id")
-        public AccountIdStage id(EnvironmentId id) {
-            this.id = id;
+        public AccountIdStage id(@NotNull EnvironmentId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public NameStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public NameStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
             return this;
         }
 
@@ -290,8 +291,8 @@ public final class Environment {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public IsProdStage name(String name) {
-            this.name = name;
+        public IsProdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -308,7 +309,7 @@ public final class Environment {
 
         @java.lang.Override
         public _FinalStage languageOverride(String languageOverride) {
-            this.languageOverride = Optional.of(languageOverride);
+            this.languageOverride = Optional.ofNullable(languageOverride);
             return this;
         }
 
@@ -321,7 +322,7 @@ public final class Environment {
 
         @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
-            this.namespaces = Optional.of(namespaces);
+            this.namespaces = Optional.ofNullable(namespaces);
             return this;
         }
 
@@ -334,7 +335,7 @@ public final class Environment {
 
         @java.lang.Override
         public _FinalStage translationsPath(String translationsPath) {
-            this.translationsPath = Optional.of(translationsPath);
+            this.translationsPath = Optional.ofNullable(translationsPath);
             return this;
         }
 

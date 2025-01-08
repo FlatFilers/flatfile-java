@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DiffValue.Builder.class)
 public final class DiffValue implements ICellValue {
     private final Optional<Boolean> valid;
@@ -36,6 +36,8 @@ public final class DiffValue implements ICellValue {
 
     private final Optional<CellValueUnion> snapshotValue;
 
+    private final Optional<CellValueUnion> clipValue;
+
     private final Map<String, Object> additionalProperties;
 
     private DiffValue(
@@ -46,6 +48,7 @@ public final class DiffValue implements ICellValue {
             Optional<String> layer,
             Optional<OffsetDateTime> updatedAt,
             Optional<CellValueUnion> snapshotValue,
+            Optional<CellValueUnion> clipValue,
             Map<String, Object> additionalProperties) {
         this.valid = valid;
         this.messages = messages;
@@ -54,6 +57,7 @@ public final class DiffValue implements ICellValue {
         this.layer = layer;
         this.updatedAt = updatedAt;
         this.snapshotValue = snapshotValue;
+        this.clipValue = clipValue;
         this.additionalProperties = additionalProperties;
     }
 
@@ -69,6 +73,9 @@ public final class DiffValue implements ICellValue {
         return messages;
     }
 
+    /**
+     * @return Deprecated, use record level metadata instead.
+     */
     @JsonProperty("metadata")
     @java.lang.Override
     public Optional<Map<String, Object>> getMetadata() {
@@ -98,6 +105,11 @@ public final class DiffValue implements ICellValue {
         return snapshotValue;
     }
 
+    @JsonProperty("clipValue")
+    public Optional<CellValueUnion> getClipValue() {
+        return clipValue;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -116,13 +128,21 @@ public final class DiffValue implements ICellValue {
                 && value.equals(other.value)
                 && layer.equals(other.layer)
                 && updatedAt.equals(other.updatedAt)
-                && snapshotValue.equals(other.snapshotValue);
+                && snapshotValue.equals(other.snapshotValue)
+                && clipValue.equals(other.clipValue);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.valid, this.messages, this.metadata, this.value, this.layer, this.updatedAt, this.snapshotValue);
+                this.valid,
+                this.messages,
+                this.metadata,
+                this.value,
+                this.layer,
+                this.updatedAt,
+                this.snapshotValue,
+                this.clipValue);
     }
 
     @java.lang.Override
@@ -150,6 +170,8 @@ public final class DiffValue implements ICellValue {
 
         private Optional<CellValueUnion> snapshotValue = Optional.empty();
 
+        private Optional<CellValueUnion> clipValue = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -163,6 +185,7 @@ public final class DiffValue implements ICellValue {
             layer(other.getLayer());
             updatedAt(other.getUpdatedAt());
             snapshotValue(other.getSnapshotValue());
+            clipValue(other.getClipValue());
             return this;
         }
 
@@ -173,7 +196,7 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder valid(Boolean valid) {
-            this.valid = Optional.of(valid);
+            this.valid = Optional.ofNullable(valid);
             return this;
         }
 
@@ -184,7 +207,7 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder messages(List<ValidationMessage> messages) {
-            this.messages = Optional.of(messages);
+            this.messages = Optional.ofNullable(messages);
             return this;
         }
 
@@ -195,7 +218,7 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -206,7 +229,7 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder value(CellValueUnion value) {
-            this.value = Optional.of(value);
+            this.value = Optional.ofNullable(value);
             return this;
         }
 
@@ -217,7 +240,7 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder layer(String layer) {
-            this.layer = Optional.of(layer);
+            this.layer = Optional.ofNullable(layer);
             return this;
         }
 
@@ -228,7 +251,7 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
+            this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 
@@ -239,13 +262,24 @@ public final class DiffValue implements ICellValue {
         }
 
         public Builder snapshotValue(CellValueUnion snapshotValue) {
-            this.snapshotValue = Optional.of(snapshotValue);
+            this.snapshotValue = Optional.ofNullable(snapshotValue);
+            return this;
+        }
+
+        @JsonSetter(value = "clipValue", nulls = Nulls.SKIP)
+        public Builder clipValue(Optional<CellValueUnion> clipValue) {
+            this.clipValue = clipValue;
+            return this;
+        }
+
+        public Builder clipValue(CellValueUnion clipValue) {
+            this.clipValue = Optional.ofNullable(clipValue);
             return this;
         }
 
         public DiffValue build() {
             return new DiffValue(
-                    valid, messages, metadata, value, layer, updatedAt, snapshotValue, additionalProperties);
+                    valid, messages, metadata, value, layer, updatedAt, snapshotValue, clipValue, additionalProperties);
         }
     }
 }

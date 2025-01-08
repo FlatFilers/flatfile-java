@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StringConfig.Builder.class)
 public final class StringConfig {
     private final StringConfigOptions size;
@@ -62,7 +63,7 @@ public final class StringConfig {
     }
 
     public interface SizeStage {
-        _FinalStage size(StringConfigOptions size);
+        _FinalStage size(@NotNull StringConfigOptions size);
 
         Builder from(StringConfig other);
     }
@@ -88,8 +89,8 @@ public final class StringConfig {
 
         @java.lang.Override
         @JsonSetter("size")
-        public _FinalStage size(StringConfigOptions size) {
-            this.size = size;
+        public _FinalStage size(@NotNull StringConfigOptions size) {
+            this.size = Objects.requireNonNull(size, "size must not be null");
             return this;
         }
 

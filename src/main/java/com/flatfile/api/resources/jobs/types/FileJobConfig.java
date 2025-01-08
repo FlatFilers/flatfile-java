@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FileJobConfig.Builder.class)
 public final class FileJobConfig {
     private final Driver driver;
@@ -95,7 +96,7 @@ public final class FileJobConfig {
     }
 
     public interface DriverStage {
-        _FinalStage driver(Driver driver);
+        _FinalStage driver(@NotNull Driver driver);
 
         Builder from(FileJobConfig other);
     }
@@ -139,8 +140,8 @@ public final class FileJobConfig {
          */
         @java.lang.Override
         @JsonSetter("driver")
-        public _FinalStage driver(Driver driver) {
-            this.driver = driver;
+        public _FinalStage driver(@NotNull Driver driver) {
+            this.driver = Objects.requireNonNull(driver, "driver must not be null");
             return this;
         }
 
@@ -150,7 +151,7 @@ public final class FileJobConfig {
          */
         @java.lang.Override
         public _FinalStage detectedHeaderRow(Integer detectedHeaderRow) {
-            this.detectedHeaderRow = Optional.of(detectedHeaderRow);
+            this.detectedHeaderRow = Optional.ofNullable(detectedHeaderRow);
             return this;
         }
 
@@ -167,7 +168,7 @@ public final class FileJobConfig {
          */
         @java.lang.Override
         public _FinalStage options(Map<String, Object> options) {
-            this.options = Optional.of(options);
+            this.options = Optional.ofNullable(options);
             return this;
         }
 

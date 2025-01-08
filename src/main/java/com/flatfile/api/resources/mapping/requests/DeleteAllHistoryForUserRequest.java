@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DeleteAllHistoryForUserRequest.Builder.class)
 public final class DeleteAllHistoryForUserRequest {
     private final Optional<EnvironmentId> environmentId;
@@ -86,7 +86,7 @@ public final class DeleteAllHistoryForUserRequest {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 

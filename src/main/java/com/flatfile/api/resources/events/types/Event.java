@@ -226,6 +226,42 @@ public final class Event {
         return new Event(new EnvironmentDeletedValue(value));
     }
 
+    public static Event actionCreated(GenericEvent value) {
+        return new Event(new ActionCreatedValue(value));
+    }
+
+    public static Event actionUpdated(GenericEvent value) {
+        return new Event(new ActionUpdatedValue(value));
+    }
+
+    public static Event actionDeleted(GenericEvent value) {
+        return new Event(new ActionDeletedValue(value));
+    }
+
+    public static Event dataClipCreated(GenericEvent value) {
+        return new Event(new DataClipCreatedValue(value));
+    }
+
+    public static Event dataClipUpdated(GenericEvent value) {
+        return new Event(new DataClipUpdatedValue(value));
+    }
+
+    public static Event dataClipDeleted(GenericEvent value) {
+        return new Event(new DataClipDeletedValue(value));
+    }
+
+    public static Event dataClipCollaboratorUpdated(GenericEvent value) {
+        return new Event(new DataClipCollaboratorUpdatedValue(value));
+    }
+
+    public static Event dataClipResolutionsCreated(GenericEvent value) {
+        return new Event(new DataClipResolutionsCreatedValue(value));
+    }
+
+    public static Event dataClipResolutionsUpdated(GenericEvent value) {
+        return new Event(new DataClipResolutionsUpdatedValue(value));
+    }
+
     public boolean isAgentCreated() {
         return value instanceof AgentCreatedValue;
     }
@@ -424,6 +460,42 @@ public final class Event {
 
     public boolean isEnvironmentDeleted() {
         return value instanceof EnvironmentDeletedValue;
+    }
+
+    public boolean isActionCreated() {
+        return value instanceof ActionCreatedValue;
+    }
+
+    public boolean isActionUpdated() {
+        return value instanceof ActionUpdatedValue;
+    }
+
+    public boolean isActionDeleted() {
+        return value instanceof ActionDeletedValue;
+    }
+
+    public boolean isDataClipCreated() {
+        return value instanceof DataClipCreatedValue;
+    }
+
+    public boolean isDataClipUpdated() {
+        return value instanceof DataClipUpdatedValue;
+    }
+
+    public boolean isDataClipDeleted() {
+        return value instanceof DataClipDeletedValue;
+    }
+
+    public boolean isDataClipCollaboratorUpdated() {
+        return value instanceof DataClipCollaboratorUpdatedValue;
+    }
+
+    public boolean isDataClipResolutionsCreated() {
+        return value instanceof DataClipResolutionsCreatedValue;
+    }
+
+    public boolean isDataClipResolutionsUpdated() {
+        return value instanceof DataClipResolutionsUpdatedValue;
     }
 
     public boolean _isUnknown() {
@@ -780,6 +852,69 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getActionCreated() {
+        if (isActionCreated()) {
+            return Optional.of(((ActionCreatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getActionUpdated() {
+        if (isActionUpdated()) {
+            return Optional.of(((ActionUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getActionDeleted() {
+        if (isActionDeleted()) {
+            return Optional.of(((ActionDeletedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getDataClipCreated() {
+        if (isDataClipCreated()) {
+            return Optional.of(((DataClipCreatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getDataClipUpdated() {
+        if (isDataClipUpdated()) {
+            return Optional.of(((DataClipUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getDataClipDeleted() {
+        if (isDataClipDeleted()) {
+            return Optional.of(((DataClipDeletedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getDataClipCollaboratorUpdated() {
+        if (isDataClipCollaboratorUpdated()) {
+            return Optional.of(((DataClipCollaboratorUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getDataClipResolutionsCreated() {
+        if (isDataClipResolutionsCreated()) {
+            return Optional.of(((DataClipResolutionsCreatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<GenericEvent> getDataClipResolutionsUpdated() {
+        if (isDataClipResolutionsUpdated()) {
+            return Optional.of(((DataClipResolutionsUpdatedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -893,6 +1028,24 @@ public final class Event {
 
         T visitEnvironmentDeleted(GenericEvent environmentDeleted);
 
+        T visitActionCreated(GenericEvent actionCreated);
+
+        T visitActionUpdated(GenericEvent actionUpdated);
+
+        T visitActionDeleted(GenericEvent actionDeleted);
+
+        T visitDataClipCreated(GenericEvent dataClipCreated);
+
+        T visitDataClipUpdated(GenericEvent dataClipUpdated);
+
+        T visitDataClipDeleted(GenericEvent dataClipDeleted);
+
+        T visitDataClipCollaboratorUpdated(GenericEvent dataClipCollaboratorUpdated);
+
+        T visitDataClipResolutionsCreated(GenericEvent dataClipResolutionsCreated);
+
+        T visitDataClipResolutionsUpdated(GenericEvent dataClipResolutionsUpdated);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -947,7 +1100,16 @@ public final class Event {
         @JsonSubTypes.Type(LayerCreatedValue.class),
         @JsonSubTypes.Type(EnvironmentCreatedValue.class),
         @JsonSubTypes.Type(EnvironmentUpdatedValue.class),
-        @JsonSubTypes.Type(EnvironmentDeletedValue.class)
+        @JsonSubTypes.Type(EnvironmentDeletedValue.class),
+        @JsonSubTypes.Type(ActionCreatedValue.class),
+        @JsonSubTypes.Type(ActionUpdatedValue.class),
+        @JsonSubTypes.Type(ActionDeletedValue.class),
+        @JsonSubTypes.Type(DataClipCreatedValue.class),
+        @JsonSubTypes.Type(DataClipUpdatedValue.class),
+        @JsonSubTypes.Type(DataClipDeletedValue.class),
+        @JsonSubTypes.Type(DataClipCollaboratorUpdatedValue.class),
+        @JsonSubTypes.Type(DataClipResolutionsCreatedValue.class),
+        @JsonSubTypes.Type(DataClipResolutionsUpdatedValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -2840,6 +3002,349 @@ public final class Event {
         }
 
         private boolean equalTo(EnvironmentDeletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("action:created")
+    private static final class ActionCreatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ActionCreatedValue() {}
+
+        private ActionCreatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitActionCreated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ActionCreatedValue && equalTo((ActionCreatedValue) other);
+        }
+
+        private boolean equalTo(ActionCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("action:updated")
+    private static final class ActionUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ActionUpdatedValue() {}
+
+        private ActionUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitActionUpdated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ActionUpdatedValue && equalTo((ActionUpdatedValue) other);
+        }
+
+        private boolean equalTo(ActionUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("action:deleted")
+    private static final class ActionDeletedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ActionDeletedValue() {}
+
+        private ActionDeletedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitActionDeleted(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ActionDeletedValue && equalTo((ActionDeletedValue) other);
+        }
+
+        private boolean equalTo(ActionDeletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:created")
+    private static final class DataClipCreatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipCreatedValue() {}
+
+        private DataClipCreatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipCreated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipCreatedValue && equalTo((DataClipCreatedValue) other);
+        }
+
+        private boolean equalTo(DataClipCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:updated")
+    private static final class DataClipUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipUpdatedValue() {}
+
+        private DataClipUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipUpdated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipUpdatedValue && equalTo((DataClipUpdatedValue) other);
+        }
+
+        private boolean equalTo(DataClipUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:deleted")
+    private static final class DataClipDeletedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipDeletedValue() {}
+
+        private DataClipDeletedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipDeleted(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipDeletedValue && equalTo((DataClipDeletedValue) other);
+        }
+
+        private boolean equalTo(DataClipDeletedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:collaborator-updated")
+    private static final class DataClipCollaboratorUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipCollaboratorUpdatedValue() {}
+
+        private DataClipCollaboratorUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipCollaboratorUpdated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipCollaboratorUpdatedValue
+                    && equalTo((DataClipCollaboratorUpdatedValue) other);
+        }
+
+        private boolean equalTo(DataClipCollaboratorUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:resolutions-created")
+    private static final class DataClipResolutionsCreatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipResolutionsCreatedValue() {}
+
+        private DataClipResolutionsCreatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipResolutionsCreated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipResolutionsCreatedValue && equalTo((DataClipResolutionsCreatedValue) other);
+        }
+
+        private boolean equalTo(DataClipResolutionsCreatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:resolutions-updated")
+    private static final class DataClipResolutionsUpdatedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipResolutionsUpdatedValue() {}
+
+        private DataClipResolutionsUpdatedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipResolutionsUpdated(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipResolutionsUpdatedValue && equalTo((DataClipResolutionsUpdatedValue) other);
+        }
+
+        private boolean equalTo(DataClipResolutionsUpdatedValue other) {
             return value.equals(other.value);
         }
 

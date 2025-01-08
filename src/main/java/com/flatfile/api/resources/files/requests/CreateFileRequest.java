@@ -22,8 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateFileRequest.Builder.class)
 public final class CreateFileRequest {
     private final SpaceId spaceId;
@@ -121,13 +122,13 @@ public final class CreateFileRequest {
     }
 
     public interface SpaceIdStage {
-        EnvironmentIdStage spaceId(SpaceId spaceId);
+        EnvironmentIdStage spaceId(@NotNull SpaceId spaceId);
 
         Builder from(CreateFileRequest other);
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
+        _FinalStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -175,15 +176,15 @@ public final class CreateFileRequest {
 
         @java.lang.Override
         @JsonSetter("spaceId")
-        public EnvironmentIdStage spaceId(SpaceId spaceId) {
-            this.spaceId = spaceId;
+        public EnvironmentIdStage spaceId(@NotNull SpaceId spaceId) {
+            this.spaceId = Objects.requireNonNull(spaceId, "spaceId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public _FinalStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
@@ -193,7 +194,7 @@ public final class CreateFileRequest {
          */
         @java.lang.Override
         public _FinalStage origin(FileOrigin origin) {
-            this.origin = Optional.of(origin);
+            this.origin = Optional.ofNullable(origin);
             return this;
         }
 
@@ -210,7 +211,7 @@ public final class CreateFileRequest {
          */
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -227,7 +228,7 @@ public final class CreateFileRequest {
          */
         @java.lang.Override
         public _FinalStage mode(Mode mode) {
-            this.mode = Optional.of(mode);
+            this.mode = Optional.ofNullable(mode);
             return this;
         }
 

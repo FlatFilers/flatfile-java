@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ActionMessage.Builder.class)
 public final class ActionMessage {
     private final ActionMessageType type;
@@ -70,13 +71,13 @@ public final class ActionMessage {
     }
 
     public interface TypeStage {
-        ContentStage type(ActionMessageType type);
+        ContentStage type(@NotNull ActionMessageType type);
 
         Builder from(ActionMessage other);
     }
 
     public interface ContentStage {
-        _FinalStage content(String content);
+        _FinalStage content(@NotNull String content);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class ActionMessage {
 
         @java.lang.Override
         @JsonSetter("type")
-        public ContentStage type(ActionMessageType type) {
-            this.type = type;
+        public ContentStage type(@NotNull ActionMessageType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("content")
-        public _FinalStage content(String content) {
-            this.content = content;
+        public _FinalStage content(@NotNull String content) {
+            this.content = Objects.requireNonNull(content, "content must not be null");
             return this;
         }
 

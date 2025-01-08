@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EnumPropertyConfig.Builder.class)
 public final class EnumPropertyConfig {
     private final Optional<Boolean> allowCustom;
@@ -101,7 +101,7 @@ public final class EnumPropertyConfig {
         }
 
         public Builder allowCustom(Boolean allowCustom) {
-            this.allowCustom = Optional.of(allowCustom);
+            this.allowCustom = Optional.ofNullable(allowCustom);
             return this;
         }
 

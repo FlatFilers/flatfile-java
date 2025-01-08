@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListEventsRequest.Builder.class)
 public final class ListEventsRequest {
     private final Optional<EnvironmentId> environmentId;
@@ -212,7 +212,7 @@ public final class ListEventsRequest {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -223,7 +223,7 @@ public final class ListEventsRequest {
         }
 
         public Builder spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -234,7 +234,7 @@ public final class ListEventsRequest {
         }
 
         public Builder domain(String domain) {
-            this.domain = Optional.of(domain);
+            this.domain = Optional.ofNullable(domain);
             return this;
         }
 
@@ -245,7 +245,7 @@ public final class ListEventsRequest {
         }
 
         public Builder topic(String topic) {
-            this.topic = Optional.of(topic);
+            this.topic = Optional.ofNullable(topic);
             return this;
         }
 
@@ -256,7 +256,7 @@ public final class ListEventsRequest {
         }
 
         public Builder since(OffsetDateTime since) {
-            this.since = Optional.of(since);
+            this.since = Optional.ofNullable(since);
             return this;
         }
 
@@ -267,7 +267,7 @@ public final class ListEventsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -278,7 +278,7 @@ public final class ListEventsRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -289,7 +289,7 @@ public final class ListEventsRequest {
         }
 
         public Builder includeAcknowledged(Boolean includeAcknowledged) {
-            this.includeAcknowledged = Optional.of(includeAcknowledged);
+            this.includeAcknowledged = Optional.ofNullable(includeAcknowledged);
             return this;
         }
 

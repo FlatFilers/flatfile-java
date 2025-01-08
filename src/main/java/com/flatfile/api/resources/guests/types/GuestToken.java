@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GuestToken.Builder.class)
 public final class GuestToken {
     private final String token;
@@ -73,7 +74,7 @@ public final class GuestToken {
     }
 
     public interface TokenStage {
-        ValidStage token(String token);
+        ValidStage token(@NotNull String token);
 
         Builder from(GuestToken other);
     }
@@ -110,8 +111,8 @@ public final class GuestToken {
          */
         @java.lang.Override
         @JsonSetter("token")
-        public ValidStage token(String token) {
-            this.token = token;
+        public ValidStage token(@NotNull String token) {
+            this.token = Objects.requireNonNull(token, "token must not be null");
             return this;
         }
 

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CollectionJobSubject.Builder.class)
 public final class CollectionJobSubject {
     private final String resource;
@@ -84,7 +85,7 @@ public final class CollectionJobSubject {
     }
 
     public interface ResourceStage {
-        _FinalStage resource(String resource);
+        _FinalStage resource(@NotNull String resource);
 
         Builder from(CollectionJobSubject other);
     }
@@ -124,14 +125,14 @@ public final class CollectionJobSubject {
 
         @java.lang.Override
         @JsonSetter("resource")
-        public _FinalStage resource(String resource) {
-            this.resource = resource;
+        public _FinalStage resource(@NotNull String resource) {
+            this.resource = Objects.requireNonNull(resource, "resource must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage query(Map<String, Object> query) {
-            this.query = Optional.of(query);
+            this.query = Optional.ofNullable(query);
             return this;
         }
 
@@ -144,7 +145,7 @@ public final class CollectionJobSubject {
 
         @java.lang.Override
         public _FinalStage params(Map<String, Object> params) {
-            this.params = Optional.of(params);
+            this.params = Optional.ofNullable(params);
             return this;
         }
 

@@ -4,9 +4,16 @@
 package com.flatfile.api.resources.jobs.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import java.util.HashMap;
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
+@JsonDeserialize(builder = EmptyObject.Builder.class)
 public final class EmptyObject {
     private final Map<String, Object> additionalProperties;
 
@@ -28,5 +35,25 @@ public final class EmptyObject {
     @java.lang.Override
     public String toString() {
         return ObjectMappers.stringify(this);
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder {
+        @JsonAnySetter
+        private Map<String, Object> additionalProperties = new HashMap<>();
+
+        private Builder() {}
+
+        public Builder from(EmptyObject other) {
+            return this;
+        }
+
+        public EmptyObject build() {
+            return new EmptyObject(additionalProperties);
+        }
     }
 }

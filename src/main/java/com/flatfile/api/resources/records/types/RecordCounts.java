@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordCounts.Builder.class)
 public final class RecordCounts {
     private final int total;
@@ -188,7 +188,7 @@ public final class RecordCounts {
          */
         @java.lang.Override
         public _FinalStage byField(Map<String, FieldRecordCounts> byField) {
-            this.byField = Optional.of(byField);
+            this.byField = Optional.ofNullable(byField);
             return this;
         }
 
@@ -201,7 +201,7 @@ public final class RecordCounts {
 
         @java.lang.Override
         public _FinalStage errorsByField(Map<String, Integer> errorsByField) {
-            this.errorsByField = Optional.of(errorsByField);
+            this.errorsByField = Optional.ofNullable(errorsByField);
             return this;
         }
 

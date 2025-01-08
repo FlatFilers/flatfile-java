@@ -11,14 +11,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.ActorIdUnion;
 import com.flatfile.api.resources.commons.types.ActorRoleId;
 import com.flatfile.api.resources.commons.types.RoleId;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AssignRoleResponseData.Builder.class)
 public final class AssignRoleResponseData {
     private final ActorRoleId id;
@@ -117,29 +119,29 @@ public final class AssignRoleResponseData {
     }
 
     public interface IdStage {
-        RoleIdStage id(ActorRoleId id);
+        RoleIdStage id(@NotNull ActorRoleId id);
 
         Builder from(AssignRoleResponseData other);
     }
 
     public interface RoleIdStage {
-        ActorIdStage roleId(RoleId roleId);
+        ActorIdStage roleId(@NotNull RoleId roleId);
     }
 
     public interface ActorIdStage {
-        ResourceIdStage actorId(ActorIdUnion actorId);
+        ResourceIdStage actorId(@NotNull ActorIdUnion actorId);
     }
 
     public interface ResourceIdStage {
-        CreatedAtStage resourceId(ResourceIdUnion resourceId);
+        CreatedAtStage resourceId(@NotNull ResourceIdUnion resourceId);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -185,43 +187,43 @@ public final class AssignRoleResponseData {
 
         @java.lang.Override
         @JsonSetter("id")
-        public RoleIdStage id(ActorRoleId id) {
-            this.id = id;
+        public RoleIdStage id(@NotNull ActorRoleId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("roleId")
-        public ActorIdStage roleId(RoleId roleId) {
-            this.roleId = roleId;
+        public ActorIdStage roleId(@NotNull RoleId roleId) {
+            this.roleId = Objects.requireNonNull(roleId, "roleId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("actorId")
-        public ResourceIdStage actorId(ActorIdUnion actorId) {
-            this.actorId = actorId;
+        public ResourceIdStage actorId(@NotNull ActorIdUnion actorId) {
+            this.actorId = Objects.requireNonNull(actorId, "actorId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("resourceId")
-        public CreatedAtStage resourceId(ResourceIdUnion resourceId) {
-            this.resourceId = resourceId;
+        public CreatedAtStage resourceId(@NotNull ResourceIdUnion resourceId) {
+            this.resourceId = Objects.requireNonNull(resourceId, "resourceId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

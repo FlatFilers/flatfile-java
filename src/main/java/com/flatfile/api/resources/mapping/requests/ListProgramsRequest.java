@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListProgramsRequest.Builder.class)
 public final class ListProgramsRequest {
     private final Optional<Integer> pageSize;
@@ -247,7 +247,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -258,7 +258,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -269,7 +269,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder createdBy(UserId createdBy) {
-            this.createdBy = Optional.of(createdBy);
+            this.createdBy = Optional.ofNullable(createdBy);
             return this;
         }
 
@@ -280,7 +280,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder createdAfter(OffsetDateTime createdAfter) {
-            this.createdAfter = Optional.of(createdAfter);
+            this.createdAfter = Optional.ofNullable(createdAfter);
             return this;
         }
 
@@ -291,7 +291,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder createdBefore(OffsetDateTime createdBefore) {
-            this.createdBefore = Optional.of(createdBefore);
+            this.createdBefore = Optional.ofNullable(createdBefore);
             return this;
         }
 
@@ -302,7 +302,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -313,7 +313,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder familyId(FamilyId familyId) {
-            this.familyId = Optional.of(familyId);
+            this.familyId = Optional.ofNullable(familyId);
             return this;
         }
 
@@ -324,7 +324,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -335,7 +335,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder sourceKeys(String sourceKeys) {
-            this.sourceKeys = Optional.of(sourceKeys);
+            this.sourceKeys = Optional.ofNullable(sourceKeys);
             return this;
         }
 
@@ -346,7 +346,7 @@ public final class ListProgramsRequest {
         }
 
         public Builder destinationKeys(String destinationKeys) {
-            this.destinationKeys = Optional.of(destinationKeys);
+            this.destinationKeys = Optional.ofNullable(destinationKeys);
             return this;
         }
 

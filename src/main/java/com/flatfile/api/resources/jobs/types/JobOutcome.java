@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobOutcome.Builder.class)
 public final class JobOutcome {
     private final Optional<Boolean> acknowledge;
@@ -171,7 +171,7 @@ public final class JobOutcome {
         }
 
         public Builder acknowledge(Boolean acknowledge) {
-            this.acknowledge = Optional.of(acknowledge);
+            this.acknowledge = Optional.ofNullable(acknowledge);
             return this;
         }
 
@@ -182,7 +182,7 @@ public final class JobOutcome {
         }
 
         public Builder trigger(JobOutcomeTrigger trigger) {
-            this.trigger = Optional.of(trigger);
+            this.trigger = Optional.ofNullable(trigger);
             return this;
         }
 
@@ -193,7 +193,7 @@ public final class JobOutcome {
         }
 
         public Builder buttonText(String buttonText) {
-            this.buttonText = Optional.of(buttonText);
+            this.buttonText = Optional.ofNullable(buttonText);
             return this;
         }
 
@@ -204,7 +204,7 @@ public final class JobOutcome {
         }
 
         public Builder next(JobOutcomeNext next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 
@@ -215,7 +215,7 @@ public final class JobOutcome {
         }
 
         public Builder heading(String heading) {
-            this.heading = Optional.of(heading);
+            this.heading = Optional.ofNullable(heading);
             return this;
         }
 
@@ -226,7 +226,7 @@ public final class JobOutcome {
         }
 
         public Builder message(String message) {
-            this.message = Optional.of(message);
+            this.message = Optional.ofNullable(message);
             return this;
         }
 
@@ -237,7 +237,7 @@ public final class JobOutcome {
         }
 
         public Builder hideDefaultButton(Boolean hideDefaultButton) {
-            this.hideDefaultButton = Optional.of(hideDefaultButton);
+            this.hideDefaultButton = Optional.ofNullable(hideDefaultButton);
             return this;
         }
 

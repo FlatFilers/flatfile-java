@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CellConfig.Builder.class)
 public final class CellConfig {
     private final Optional<Boolean> readonly;
@@ -84,7 +84,7 @@ public final class CellConfig {
         }
 
         public Builder readonly(Boolean readonly) {
-            this.readonly = Optional.of(readonly);
+            this.readonly = Optional.ofNullable(readonly);
             return this;
         }
 

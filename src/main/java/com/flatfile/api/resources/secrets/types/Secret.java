@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.ActorIdUnion;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SecretId;
 import com.flatfile.api.resources.commons.types.SpaceId;
@@ -19,8 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Secret.Builder.class)
 public final class Secret implements IWriteSecret {
     private final SecretName name;
@@ -31,6 +33,8 @@ public final class Secret implements IWriteSecret {
 
     private final Optional<SpaceId> spaceId;
 
+    private final Optional<ActorIdUnion> actorId;
+
     private final SecretId id;
 
     private final Map<String, Object> additionalProperties;
@@ -40,12 +44,14 @@ public final class Secret implements IWriteSecret {
             SecretValue value,
             Optional<EnvironmentId> environmentId,
             Optional<SpaceId> spaceId,
+            Optional<ActorIdUnion> actorId,
             SecretId id,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.value = value;
         this.environmentId = environmentId;
         this.spaceId = spaceId;
+        this.actorId = actorId;
         this.id = id;
         this.additionalProperties = additionalProperties;
     }
@@ -87,6 +93,15 @@ public final class Secret implements IWriteSecret {
     }
 
     /**
+     * @return The Actor of the secret.
+     */
+    @JsonProperty("actorId")
+    @java.lang.Override
+    public Optional<ActorIdUnion> getActorId() {
+        return actorId;
+    }
+
+    /**
      * @return The ID of the secret.
      */
     @JsonProperty("id")
@@ -110,12 +125,13 @@ public final class Secret implements IWriteSecret {
                 && value.equals(other.value)
                 && environmentId.equals(other.environmentId)
                 && spaceId.equals(other.spaceId)
+                && actorId.equals(other.actorId)
                 && id.equals(other.id);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.value, this.environmentId, this.spaceId, this.id);
+        return Objects.hash(this.name, this.value, this.environmentId, this.spaceId, this.actorId, this.id);
     }
 
     @java.lang.Override
@@ -128,17 +144,17 @@ public final class Secret implements IWriteSecret {
     }
 
     public interface NameStage {
-        ValueStage name(SecretName name);
+        ValueStage name(@NotNull SecretName name);
 
         Builder from(Secret other);
     }
 
     public interface ValueStage {
-        IdStage value(SecretValue value);
+        IdStage value(@NotNull SecretValue value);
     }
 
     public interface IdStage {
-        _FinalStage id(SecretId id);
+        _FinalStage id(@NotNull SecretId id);
     }
 
     public interface _FinalStage {
@@ -151,6 +167,10 @@ public final class Secret implements IWriteSecret {
         _FinalStage spaceId(Optional<SpaceId> spaceId);
 
         _FinalStage spaceId(SpaceId spaceId);
+
+        _FinalStage actorId(Optional<ActorIdUnion> actorId);
+
+        _FinalStage actorId(ActorIdUnion actorId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -160,6 +180,8 @@ public final class Secret implements IWriteSecret {
         private SecretValue value;
 
         private SecretId id;
+
+        private Optional<ActorIdUnion> actorId = Optional.empty();
 
         private Optional<SpaceId> spaceId = Optional.empty();
 
@@ -176,6 +198,7 @@ public final class Secret implements IWriteSecret {
             value(other.getValue());
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
+            actorId(other.getActorId());
             id(other.getId());
             return this;
         }
@@ -186,8 +209,8 @@ public final class Secret implements IWriteSecret {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public ValueStage name(SecretName name) {
-            this.name = name;
+        public ValueStage name(@NotNull SecretName name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -197,8 +220,8 @@ public final class Secret implements IWriteSecret {
          */
         @java.lang.Override
         @JsonSetter("value")
-        public IdStage value(SecretValue value) {
-            this.value = value;
+        public IdStage value(@NotNull SecretValue value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
             return this;
         }
 
@@ -208,8 +231,25 @@ public final class Secret implements IWriteSecret {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(SecretId id) {
-            this.id = id;
+        public _FinalStage id(@NotNull SecretId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The Actor of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage actorId(ActorIdUnion actorId) {
+            this.actorId = Optional.ofNullable(actorId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "actorId", nulls = Nulls.SKIP)
+        public _FinalStage actorId(Optional<ActorIdUnion> actorId) {
+            this.actorId = actorId;
             return this;
         }
 
@@ -219,7 +259,7 @@ public final class Secret implements IWriteSecret {
          */
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -236,7 +276,7 @@ public final class Secret implements IWriteSecret {
          */
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -249,7 +289,7 @@ public final class Secret implements IWriteSecret {
 
         @java.lang.Override
         public Secret build() {
-            return new Secret(name, value, environmentId, spaceId, id, additionalProperties);
+            return new Secret(name, value, environmentId, spaceId, actorId, id, additionalProperties);
         }
     }
 }

@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DiffRecordsResponse.Builder.class)
 public final class DiffRecordsResponse {
     private final DiffRecords data;
@@ -62,7 +63,7 @@ public final class DiffRecordsResponse {
     }
 
     public interface DataStage {
-        _FinalStage data(DiffRecords data);
+        _FinalStage data(@NotNull DiffRecords data);
 
         Builder from(DiffRecordsResponse other);
     }
@@ -88,8 +89,8 @@ public final class DiffRecordsResponse {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(DiffRecords data) {
-            this.data = data;
+        public _FinalStage data(@NotNull DiffRecords data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

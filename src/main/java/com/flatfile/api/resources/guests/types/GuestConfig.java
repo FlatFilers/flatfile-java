@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GuestConfig.Builder.class)
 public final class GuestConfig implements IGuestConfig {
     private final EnvironmentId environmentId;
@@ -102,17 +103,17 @@ public final class GuestConfig implements IGuestConfig {
     }
 
     public interface EnvironmentIdStage {
-        EmailStage environmentId(EnvironmentId environmentId);
+        EmailStage environmentId(@NotNull EnvironmentId environmentId);
 
         Builder from(GuestConfig other);
     }
 
     public interface EmailStage {
-        NameStage email(String email);
+        NameStage email(@NotNull String email);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -151,22 +152,22 @@ public final class GuestConfig implements IGuestConfig {
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public EmailStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public EmailStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("email")
-        public NameStage email(String email) {
-            this.email = email;
+        public NameStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 

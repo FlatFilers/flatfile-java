@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MappingRuleConfig.Builder.class)
 public final class MappingRuleConfig implements IMappingRuleConfig {
     private final String name;
@@ -136,13 +137,13 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
     }
 
     public interface NameStage {
-        TypeStage name(String name);
+        TypeStage name(@NotNull String name);
 
         Builder from(MappingRuleConfig other);
     }
 
     public interface TypeStage {
-        _FinalStage type(String type);
+        _FinalStage type(@NotNull String type);
     }
 
     public interface _FinalStage {
@@ -201,15 +202,15 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public TypeStage name(String name) {
-            this.name = name;
+        public TypeStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(String type) {
-            this.type = type;
+        public _FinalStage type(@NotNull String type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -219,7 +220,7 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -236,7 +237,7 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
          */
         @java.lang.Override
         public _FinalStage acceptedBy(UserId acceptedBy) {
-            this.acceptedBy = Optional.of(acceptedBy);
+            this.acceptedBy = Optional.ofNullable(acceptedBy);
             return this;
         }
 
@@ -253,7 +254,7 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
          */
         @java.lang.Override
         public _FinalStage acceptedAt(OffsetDateTime acceptedAt) {
-            this.acceptedAt = Optional.of(acceptedAt);
+            this.acceptedAt = Optional.ofNullable(acceptedAt);
             return this;
         }
 
@@ -266,7 +267,7 @@ public final class MappingRuleConfig implements IMappingRuleConfig {
 
         @java.lang.Override
         public _FinalStage config(Object config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 

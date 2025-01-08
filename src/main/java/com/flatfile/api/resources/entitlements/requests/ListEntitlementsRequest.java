@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListEntitlementsRequest.Builder.class)
 public final class ListEntitlementsRequest {
     private final String resourceId;
@@ -65,7 +66,7 @@ public final class ListEntitlementsRequest {
     }
 
     public interface ResourceIdStage {
-        _FinalStage resourceId(String resourceId);
+        _FinalStage resourceId(@NotNull String resourceId);
 
         Builder from(ListEntitlementsRequest other);
     }
@@ -95,8 +96,8 @@ public final class ListEntitlementsRequest {
          */
         @java.lang.Override
         @JsonSetter("resourceId")
-        public _FinalStage resourceId(String resourceId) {
-            this.resourceId = resourceId;
+        public _FinalStage resourceId(@NotNull String resourceId) {
+            this.resourceId = Objects.requireNonNull(resourceId, "resourceId must not be null");
             return this;
         }
 

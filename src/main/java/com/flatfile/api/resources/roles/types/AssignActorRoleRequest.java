@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.RoleId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AssignActorRoleRequest.Builder.class)
 public final class AssignActorRoleRequest {
     private final RoleId roleId;
@@ -72,13 +73,13 @@ public final class AssignActorRoleRequest {
     }
 
     public interface RoleIdStage {
-        ResourceIdStage roleId(RoleId roleId);
+        ResourceIdStage roleId(@NotNull RoleId roleId);
 
         Builder from(AssignActorRoleRequest other);
     }
 
     public interface ResourceIdStage {
-        _FinalStage resourceId(ResourceIdUnion resourceId);
+        _FinalStage resourceId(@NotNull ResourceIdUnion resourceId);
     }
 
     public interface _FinalStage {
@@ -105,15 +106,15 @@ public final class AssignActorRoleRequest {
 
         @java.lang.Override
         @JsonSetter("roleId")
-        public ResourceIdStage roleId(RoleId roleId) {
-            this.roleId = roleId;
+        public ResourceIdStage roleId(@NotNull RoleId roleId) {
+            this.roleId = Objects.requireNonNull(roleId, "roleId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("resourceId")
-        public _FinalStage resourceId(ResourceIdUnion resourceId) {
-            this.resourceId = resourceId;
+        public _FinalStage resourceId(@NotNull ResourceIdUnion resourceId) {
+            this.resourceId = Objects.requireNonNull(resourceId, "resourceId must not be null");
             return this;
         }
 

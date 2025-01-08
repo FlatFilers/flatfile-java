@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
@@ -16,10 +17,14 @@ import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PromptCreate.Builder.class)
 public final class PromptCreate {
+    private final Optional<PromptTypeEnum> promptType;
+
     private final String prompt;
 
     private final EnvironmentId environmentId;
@@ -29,11 +34,24 @@ public final class PromptCreate {
     private final Map<String, Object> additionalProperties;
 
     private PromptCreate(
-            String prompt, EnvironmentId environmentId, SpaceId spaceId, Map<String, Object> additionalProperties) {
+            Optional<PromptTypeEnum> promptType,
+            String prompt,
+            EnvironmentId environmentId,
+            SpaceId spaceId,
+            Map<String, Object> additionalProperties) {
+        this.promptType = promptType;
         this.prompt = prompt;
         this.environmentId = environmentId;
         this.spaceId = spaceId;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Type of prompt; Defaults to AI_ASSIST
+     */
+    @JsonProperty("promptType")
+    public Optional<PromptTypeEnum> getPromptType() {
+        return promptType;
     }
 
     @JsonProperty("prompt")
@@ -63,14 +81,15 @@ public final class PromptCreate {
     }
 
     private boolean equalTo(PromptCreate other) {
-        return prompt.equals(other.prompt)
+        return promptType.equals(other.promptType)
+                && prompt.equals(other.prompt)
                 && environmentId.equals(other.environmentId)
                 && spaceId.equals(other.spaceId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.prompt, this.environmentId, this.spaceId);
+        return Objects.hash(this.promptType, this.prompt, this.environmentId, this.spaceId);
     }
 
     @java.lang.Override
@@ -83,21 +102,25 @@ public final class PromptCreate {
     }
 
     public interface PromptStage {
-        EnvironmentIdStage prompt(String prompt);
+        EnvironmentIdStage prompt(@NotNull String prompt);
 
         Builder from(PromptCreate other);
     }
 
     public interface EnvironmentIdStage {
-        SpaceIdStage environmentId(EnvironmentId environmentId);
+        SpaceIdStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface SpaceIdStage {
-        _FinalStage spaceId(SpaceId spaceId);
+        _FinalStage spaceId(@NotNull SpaceId spaceId);
     }
 
     public interface _FinalStage {
         PromptCreate build();
+
+        _FinalStage promptType(Optional<PromptTypeEnum> promptType);
+
+        _FinalStage promptType(PromptTypeEnum promptType);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -108,6 +131,8 @@ public final class PromptCreate {
 
         private SpaceId spaceId;
 
+        private Optional<PromptTypeEnum> promptType = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -115,6 +140,7 @@ public final class PromptCreate {
 
         @java.lang.Override
         public Builder from(PromptCreate other) {
+            promptType(other.getPromptType());
             prompt(other.getPrompt());
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
@@ -123,28 +149,45 @@ public final class PromptCreate {
 
         @java.lang.Override
         @JsonSetter("prompt")
-        public EnvironmentIdStage prompt(String prompt) {
-            this.prompt = prompt;
+        public EnvironmentIdStage prompt(@NotNull String prompt) {
+            this.prompt = Objects.requireNonNull(prompt, "prompt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public SpaceIdStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public SpaceIdStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("spaceId")
-        public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = spaceId;
+        public _FinalStage spaceId(@NotNull SpaceId spaceId) {
+            this.spaceId = Objects.requireNonNull(spaceId, "spaceId must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Type of prompt; Defaults to AI_ASSIST</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage promptType(PromptTypeEnum promptType) {
+            this.promptType = Optional.ofNullable(promptType);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "promptType", nulls = Nulls.SKIP)
+        public _FinalStage promptType(Optional<PromptTypeEnum> promptType) {
+            this.promptType = promptType;
             return this;
         }
 
         @java.lang.Override
         public PromptCreate build() {
-            return new PromptCreate(prompt, environmentId, spaceId, additionalProperties);
+            return new PromptCreate(promptType, prompt, environmentId, spaceId, additionalProperties);
         }
     }
 }

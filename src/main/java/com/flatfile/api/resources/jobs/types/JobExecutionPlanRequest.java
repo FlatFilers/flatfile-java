@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobExecutionPlanRequest.Builder.class)
 public final class JobExecutionPlanRequest implements IJobExecutionPlan {
     private final List<Edge> fieldMapping;
@@ -130,13 +131,13 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
     }
 
     public interface FileIdStage {
-        JobIdStage fileId(FileId fileId);
+        JobIdStage fileId(@NotNull FileId fileId);
 
         Builder from(JobExecutionPlanRequest other);
     }
 
     public interface JobIdStage {
-        _FinalStage jobId(JobId jobId);
+        _FinalStage jobId(@NotNull JobId jobId);
     }
 
     public interface _FinalStage {
@@ -197,21 +198,21 @@ public final class JobExecutionPlanRequest implements IJobExecutionPlan {
 
         @java.lang.Override
         @JsonSetter("fileId")
-        public JobIdStage fileId(FileId fileId) {
-            this.fileId = fileId;
+        public JobIdStage fileId(@NotNull FileId fileId) {
+            this.fileId = Objects.requireNonNull(fileId, "fileId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("jobId")
-        public _FinalStage jobId(JobId jobId) {
-            this.jobId = jobId;
+        public _FinalStage jobId(@NotNull JobId jobId) {
+            this.jobId = Objects.requireNonNull(jobId, "jobId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage programId(String programId) {
-            this.programId = Optional.of(programId);
+            this.programId = Optional.ofNullable(programId);
             return this;
         }
 

@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AppCreate.Builder.class)
 public final class AppCreate {
     private final String name;
@@ -36,6 +37,8 @@ public final class AppCreate {
 
     private final Optional<Object> environmentFilters;
 
+    private final Optional<Object> blueprint;
+
     private final Map<String, Object> additionalProperties;
 
     private AppCreate(
@@ -47,6 +50,7 @@ public final class AppCreate {
             Optional<String> icon,
             Optional<Object> metadata,
             Optional<Object> environmentFilters,
+            Optional<Object> blueprint,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.namespace = namespace;
@@ -56,6 +60,7 @@ public final class AppCreate {
         this.icon = icon;
         this.metadata = metadata;
         this.environmentFilters = environmentFilters;
+        this.blueprint = blueprint;
         this.additionalProperties = additionalProperties;
     }
 
@@ -99,6 +104,11 @@ public final class AppCreate {
         return environmentFilters;
     }
 
+    @JsonProperty("blueprint")
+    public Optional<Object> getBlueprint() {
+        return blueprint;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -118,7 +128,8 @@ public final class AppCreate {
                 && entityPlural.equals(other.entityPlural)
                 && icon.equals(other.icon)
                 && metadata.equals(other.metadata)
-                && environmentFilters.equals(other.environmentFilters);
+                && environmentFilters.equals(other.environmentFilters)
+                && blueprint.equals(other.blueprint);
     }
 
     @java.lang.Override
@@ -131,7 +142,8 @@ public final class AppCreate {
                 this.entityPlural,
                 this.icon,
                 this.metadata,
-                this.environmentFilters);
+                this.environmentFilters,
+                this.blueprint);
     }
 
     @java.lang.Override
@@ -144,17 +156,17 @@ public final class AppCreate {
     }
 
     public interface NameStage {
-        NamespaceStage name(String name);
+        NamespaceStage name(@NotNull String name);
 
         Builder from(AppCreate other);
     }
 
     public interface NamespaceStage {
-        TypeStage namespace(String namespace);
+        TypeStage namespace(@NotNull String namespace);
     }
 
     public interface TypeStage {
-        _FinalStage type(AppType type);
+        _FinalStage type(@NotNull AppType type);
     }
 
     public interface _FinalStage {
@@ -179,6 +191,10 @@ public final class AppCreate {
         _FinalStage environmentFilters(Optional<Object> environmentFilters);
 
         _FinalStage environmentFilters(Object environmentFilters);
+
+        _FinalStage blueprint(Optional<Object> blueprint);
+
+        _FinalStage blueprint(Object blueprint);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -188,6 +204,8 @@ public final class AppCreate {
         private String namespace;
 
         private AppType type;
+
+        private Optional<Object> blueprint = Optional.empty();
 
         private Optional<Object> environmentFilters = Optional.empty();
 
@@ -214,33 +232,47 @@ public final class AppCreate {
             icon(other.getIcon());
             metadata(other.getMetadata());
             environmentFilters(other.getEnvironmentFilters());
+            blueprint(other.getBlueprint());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public NamespaceStage name(String name) {
-            this.name = name;
+        public NamespaceStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("namespace")
-        public TypeStage namespace(String namespace) {
-            this.namespace = namespace;
+        public TypeStage namespace(@NotNull String namespace) {
+            this.namespace = Objects.requireNonNull(namespace, "namespace must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(AppType type) {
-            this.type = type;
+        public _FinalStage type(@NotNull AppType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage blueprint(Object blueprint) {
+            this.blueprint = Optional.ofNullable(blueprint);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "blueprint", nulls = Nulls.SKIP)
+        public _FinalStage blueprint(Optional<Object> blueprint) {
+            this.blueprint = blueprint;
             return this;
         }
 
         @java.lang.Override
         public _FinalStage environmentFilters(Object environmentFilters) {
-            this.environmentFilters = Optional.of(environmentFilters);
+            this.environmentFilters = Optional.ofNullable(environmentFilters);
             return this;
         }
 
@@ -253,7 +285,7 @@ public final class AppCreate {
 
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -266,7 +298,7 @@ public final class AppCreate {
 
         @java.lang.Override
         public _FinalStage icon(String icon) {
-            this.icon = Optional.of(icon);
+            this.icon = Optional.ofNullable(icon);
             return this;
         }
 
@@ -279,7 +311,7 @@ public final class AppCreate {
 
         @java.lang.Override
         public _FinalStage entityPlural(String entityPlural) {
-            this.entityPlural = Optional.of(entityPlural);
+            this.entityPlural = Optional.ofNullable(entityPlural);
             return this;
         }
 
@@ -292,7 +324,7 @@ public final class AppCreate {
 
         @java.lang.Override
         public _FinalStage entity(String entity) {
-            this.entity = Optional.of(entity);
+            this.entity = Optional.ofNullable(entity);
             return this;
         }
 
@@ -314,6 +346,7 @@ public final class AppCreate {
                     icon,
                     metadata,
                     environmentFilters,
+                    blueprint,
                     additionalProperties);
         }
     }

@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AgentLog.Builder.class)
 public final class AgentLog {
     private final EventId eventId;
@@ -113,7 +114,7 @@ public final class AgentLog {
     }
 
     public interface EventIdStage {
-        SuccessStage eventId(EventId eventId);
+        SuccessStage eventId(@NotNull EventId eventId);
 
         Builder from(AgentLog other);
     }
@@ -123,11 +124,11 @@ public final class AgentLog {
     }
 
     public interface CreatedAtStage {
-        CompletedAtStage createdAt(String createdAt);
+        CompletedAtStage createdAt(@NotNull String createdAt);
     }
 
     public interface CompletedAtStage {
-        _FinalStage completedAt(String completedAt);
+        _FinalStage completedAt(@NotNull String completedAt);
     }
 
     public interface _FinalStage {
@@ -168,8 +169,8 @@ public final class AgentLog {
 
         @java.lang.Override
         @JsonSetter("eventId")
-        public SuccessStage eventId(EventId eventId) {
-            this.eventId = eventId;
+        public SuccessStage eventId(@NotNull EventId eventId) {
+            this.eventId = Objects.requireNonNull(eventId, "eventId must not be null");
             return this;
         }
 
@@ -186,15 +187,15 @@ public final class AgentLog {
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public CompletedAtStage createdAt(String createdAt) {
-            this.createdAt = createdAt;
+        public CompletedAtStage createdAt(@NotNull String createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("completedAt")
-        public _FinalStage completedAt(String completedAt) {
-            this.completedAt = completedAt;
+        public _FinalStage completedAt(@NotNull String completedAt) {
+            this.completedAt = Objects.requireNonNull(completedAt, "completedAt must not be null");
             return this;
         }
 
@@ -204,7 +205,7 @@ public final class AgentLog {
          */
         @java.lang.Override
         public _FinalStage log(String log) {
-            this.log = Optional.of(log);
+            this.log = Optional.ofNullable(log);
             return this;
         }
 

@@ -22,8 +22,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FindAndReplaceRecordRequest.Builder.class)
 public final class FindAndReplaceRecordRequest {
     private final Optional<Filter> filter;
@@ -179,7 +180,7 @@ public final class FindAndReplaceRecordRequest {
     }
 
     public interface FieldKeyStage {
-        _FinalStage fieldKey(String fieldKey);
+        _FinalStage fieldKey(@NotNull String fieldKey);
 
         Builder from(FindAndReplaceRecordRequest other);
     }
@@ -265,8 +266,8 @@ public final class FindAndReplaceRecordRequest {
          */
         @java.lang.Override
         @JsonSetter("fieldKey")
-        public _FinalStage fieldKey(String fieldKey) {
-            this.fieldKey = fieldKey;
+        public _FinalStage fieldKey(@NotNull String fieldKey) {
+            this.fieldKey = Objects.requireNonNull(fieldKey, "fieldKey must not be null");
             return this;
         }
 
@@ -276,7 +277,7 @@ public final class FindAndReplaceRecordRequest {
          */
         @java.lang.Override
         public _FinalStage replace(CellValueUnion replace) {
-            this.replace = Optional.of(replace);
+            this.replace = Optional.ofNullable(replace);
             return this;
         }
 
@@ -293,7 +294,7 @@ public final class FindAndReplaceRecordRequest {
          */
         @java.lang.Override
         public _FinalStage find(CellValueUnion find) {
-            this.find = Optional.of(find);
+            this.find = Optional.ofNullable(find);
             return this;
         }
 
@@ -310,7 +311,7 @@ public final class FindAndReplaceRecordRequest {
          */
         @java.lang.Override
         public _FinalStage q(String q) {
-            this.q = Optional.of(q);
+            this.q = Optional.ofNullable(q);
             return this;
         }
 
@@ -327,7 +328,7 @@ public final class FindAndReplaceRecordRequest {
          */
         @java.lang.Override
         public _FinalStage ids(RecordId ids) {
-            this.ids = Optional.of(ids);
+            this.ids = Optional.ofNullable(ids);
             return this;
         }
 
@@ -340,7 +341,7 @@ public final class FindAndReplaceRecordRequest {
 
         @java.lang.Override
         public _FinalStage searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -353,7 +354,7 @@ public final class FindAndReplaceRecordRequest {
 
         @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -370,7 +371,7 @@ public final class FindAndReplaceRecordRequest {
          */
         @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -383,7 +384,7 @@ public final class FindAndReplaceRecordRequest {
 
         @java.lang.Override
         public _FinalStage filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 

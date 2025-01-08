@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobAckDetails.Builder.class)
 public final class JobAckDetails {
     private final Optional<String> info;
@@ -116,7 +116,7 @@ public final class JobAckDetails {
         }
 
         public Builder info(String info) {
-            this.info = Optional.of(info);
+            this.info = Optional.ofNullable(info);
             return this;
         }
 
@@ -127,7 +127,7 @@ public final class JobAckDetails {
         }
 
         public Builder progress(Integer progress) {
-            this.progress = Optional.of(progress);
+            this.progress = Optional.ofNullable(progress);
             return this;
         }
 
@@ -138,7 +138,7 @@ public final class JobAckDetails {
         }
 
         public Builder estimatedCompletionAt(OffsetDateTime estimatedCompletionAt) {
-            this.estimatedCompletionAt = Optional.of(estimatedCompletionAt);
+            this.estimatedCompletionAt = Optional.ofNullable(estimatedCompletionAt);
             return this;
         }
 

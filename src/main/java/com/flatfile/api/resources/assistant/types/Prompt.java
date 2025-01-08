@@ -21,8 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Prompt.Builder.class)
 public final class Prompt {
     private final PromptId id;
@@ -34,6 +35,8 @@ public final class Prompt {
     private final Optional<EnvironmentId> environmentId;
 
     private final Optional<SpaceId> spaceId;
+
+    private final PromptTypeEnum promptType;
 
     private final String prompt;
 
@@ -51,6 +54,7 @@ public final class Prompt {
             AccountId accountId,
             Optional<EnvironmentId> environmentId,
             Optional<SpaceId> spaceId,
+            PromptTypeEnum promptType,
             String prompt,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -61,6 +65,7 @@ public final class Prompt {
         this.accountId = accountId;
         this.environmentId = environmentId;
         this.spaceId = spaceId;
+        this.promptType = promptType;
         this.prompt = prompt;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -94,6 +99,14 @@ public final class Prompt {
     @JsonProperty("spaceId")
     public Optional<SpaceId> getSpaceId() {
         return spaceId;
+    }
+
+    /**
+     * @return Type of prompt
+     */
+    @JsonProperty("promptType")
+    public PromptTypeEnum getPromptType() {
+        return promptType;
     }
 
     /**
@@ -136,6 +149,7 @@ public final class Prompt {
                 && accountId.equals(other.accountId)
                 && environmentId.equals(other.environmentId)
                 && spaceId.equals(other.spaceId)
+                && promptType.equals(other.promptType)
                 && prompt.equals(other.prompt)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
@@ -150,6 +164,7 @@ public final class Prompt {
                 this.accountId,
                 this.environmentId,
                 this.spaceId,
+                this.promptType,
                 this.prompt,
                 this.createdAt,
                 this.updatedAt,
@@ -166,29 +181,33 @@ public final class Prompt {
     }
 
     public interface IdStage {
-        CreatedByIdStage id(PromptId id);
+        CreatedByIdStage id(@NotNull PromptId id);
 
         Builder from(Prompt other);
     }
 
     public interface CreatedByIdStage {
-        AccountIdStage createdById(String createdById);
+        AccountIdStage createdById(@NotNull String createdById);
     }
 
     public interface AccountIdStage {
-        PromptStage accountId(AccountId accountId);
+        PromptTypeStage accountId(@NotNull AccountId accountId);
+    }
+
+    public interface PromptTypeStage {
+        PromptStage promptType(@NotNull PromptTypeEnum promptType);
     }
 
     public interface PromptStage {
-        CreatedAtStage prompt(String prompt);
+        CreatedAtStage prompt(@NotNull String prompt);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -212,6 +231,7 @@ public final class Prompt {
             implements IdStage,
                     CreatedByIdStage,
                     AccountIdStage,
+                    PromptTypeStage,
                     PromptStage,
                     CreatedAtStage,
                     UpdatedAtStage,
@@ -221,6 +241,8 @@ public final class Prompt {
         private String createdById;
 
         private AccountId accountId;
+
+        private PromptTypeEnum promptType;
 
         private String prompt;
 
@@ -246,6 +268,7 @@ public final class Prompt {
             accountId(other.getAccountId());
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
+            promptType(other.getPromptType());
             prompt(other.getPrompt());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
@@ -255,8 +278,8 @@ public final class Prompt {
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedByIdStage id(PromptId id) {
-            this.id = id;
+        public CreatedByIdStage id(@NotNull PromptId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -266,15 +289,26 @@ public final class Prompt {
          */
         @java.lang.Override
         @JsonSetter("createdById")
-        public AccountIdStage createdById(String createdById) {
-            this.createdById = createdById;
+        public AccountIdStage createdById(@NotNull String createdById) {
+            this.createdById = Objects.requireNonNull(createdById, "createdById must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public PromptStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public PromptTypeStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Type of prompt</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("promptType")
+        public PromptStage promptType(@NotNull PromptTypeEnum promptType) {
+            this.promptType = Objects.requireNonNull(promptType, "promptType must not be null");
             return this;
         }
 
@@ -284,28 +318,28 @@ public final class Prompt {
          */
         @java.lang.Override
         @JsonSetter("prompt")
-        public CreatedAtStage prompt(String prompt) {
-            this.prompt = prompt;
+        public CreatedAtStage prompt(@NotNull String prompt) {
+            this.prompt = Objects.requireNonNull(prompt, "prompt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
-            this.deletedAt = Optional.of(deletedAt);
+            this.deletedAt = Optional.ofNullable(deletedAt);
             return this;
         }
 
@@ -318,7 +352,7 @@ public final class Prompt {
 
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -331,7 +365,7 @@ public final class Prompt {
 
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -350,6 +384,7 @@ public final class Prompt {
                     accountId,
                     environmentId,
                     spaceId,
+                    promptType,
                     prompt,
                     createdAt,
                     updatedAt,

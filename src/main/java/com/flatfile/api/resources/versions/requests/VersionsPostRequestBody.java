@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = VersionsPostRequestBody.Builder.class)
 public final class VersionsPostRequestBody {
     private final Optional<SheetId> sheetId;
@@ -104,7 +104,7 @@ public final class VersionsPostRequestBody {
         }
 
         public Builder sheetId(SheetId sheetId) {
-            this.sheetId = Optional.of(sheetId);
+            this.sheetId = Optional.ofNullable(sheetId);
             return this;
         }
 
@@ -115,7 +115,7 @@ public final class VersionsPostRequestBody {
         }
 
         public Builder parentVersionId(VersionId parentVersionId) {
-            this.parentVersionId = Optional.of(parentVersionId);
+            this.parentVersionId = Optional.ofNullable(parentVersionId);
             return this;
         }
 

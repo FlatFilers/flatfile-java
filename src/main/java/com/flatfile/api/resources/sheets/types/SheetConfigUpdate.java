@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SheetConfigUpdate.Builder.class)
 public final class SheetConfigUpdate implements ISheetConfigUpdate {
     private final Optional<String> name;
@@ -238,7 +238,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -249,7 +249,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 
@@ -260,7 +260,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
@@ -271,7 +271,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder readonly(Boolean readonly) {
-            this.readonly = Optional.of(readonly);
+            this.readonly = Optional.ofNullable(readonly);
             return this;
         }
 
@@ -282,7 +282,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder allowAdditionalFields(Boolean allowAdditionalFields) {
-            this.allowAdditionalFields = Optional.of(allowAdditionalFields);
+            this.allowAdditionalFields = Optional.ofNullable(allowAdditionalFields);
             return this;
         }
 
@@ -293,7 +293,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder mappingConfidenceThreshold(Double mappingConfidenceThreshold) {
-            this.mappingConfidenceThreshold = Optional.of(mappingConfidenceThreshold);
+            this.mappingConfidenceThreshold = Optional.ofNullable(mappingConfidenceThreshold);
             return this;
         }
 
@@ -304,7 +304,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder access(List<SheetAccess> access) {
-            this.access = Optional.of(access);
+            this.access = Optional.ofNullable(access);
             return this;
         }
 
@@ -315,7 +315,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder fields(List<Property> fields) {
-            this.fields = Optional.of(fields);
+            this.fields = Optional.ofNullable(fields);
             return this;
         }
 
@@ -326,7 +326,7 @@ public final class SheetConfigUpdate implements ISheetConfigUpdate {
         }
 
         public Builder actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 

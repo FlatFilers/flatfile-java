@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ArrayableProperty.Builder.class)
 public final class ArrayableProperty implements IArrayableProperty {
     private final Optional<Boolean> isArray;
@@ -88,7 +88,7 @@ public final class ArrayableProperty implements IArrayableProperty {
         }
 
         public Builder isArray(Boolean isArray) {
-            this.isArray = Optional.of(isArray);
+            this.isArray = Optional.ofNullable(isArray);
             return this;
         }
 

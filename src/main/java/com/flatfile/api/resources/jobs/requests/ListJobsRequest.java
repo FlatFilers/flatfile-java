@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListJobsRequest.Builder.class)
 public final class ListJobsRequest {
     private final Optional<EnvironmentId> environmentId;
@@ -232,7 +232,7 @@ public final class ListJobsRequest {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -243,7 +243,7 @@ public final class ListJobsRequest {
         }
 
         public Builder spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -254,7 +254,7 @@ public final class ListJobsRequest {
         }
 
         public Builder workbookId(WorkbookId workbookId) {
-            this.workbookId = Optional.of(workbookId);
+            this.workbookId = Optional.ofNullable(workbookId);
             return this;
         }
 
@@ -265,7 +265,7 @@ public final class ListJobsRequest {
         }
 
         public Builder fileId(FileId fileId) {
-            this.fileId = Optional.of(fileId);
+            this.fileId = Optional.ofNullable(fileId);
             return this;
         }
 
@@ -276,7 +276,7 @@ public final class ListJobsRequest {
         }
 
         public Builder parentId(JobId parentId) {
-            this.parentId = Optional.of(parentId);
+            this.parentId = Optional.ofNullable(parentId);
             return this;
         }
 
@@ -287,7 +287,7 @@ public final class ListJobsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -298,7 +298,7 @@ public final class ListJobsRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -309,7 +309,7 @@ public final class ListJobsRequest {
         }
 
         public Builder sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
+            this.sortDirection = Optional.ofNullable(sortDirection);
             return this;
         }
 
@@ -320,7 +320,7 @@ public final class ListJobsRequest {
         }
 
         public Builder excludeChildJobs(Boolean excludeChildJobs) {
-            this.excludeChildJobs = Optional.of(excludeChildJobs);
+            this.excludeChildJobs = Optional.ofNullable(excludeChildJobs);
             return this;
         }
 

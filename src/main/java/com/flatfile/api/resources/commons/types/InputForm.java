@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InputForm.Builder.class)
 public final class InputForm {
     private final InputFormType type;
@@ -73,7 +74,7 @@ public final class InputForm {
     }
 
     public interface TypeStage {
-        _FinalStage type(InputFormType type);
+        _FinalStage type(@NotNull InputFormType type);
 
         Builder from(InputForm other);
     }
@@ -108,8 +109,8 @@ public final class InputForm {
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(InputFormType type) {
-            this.type = type;
+        public _FinalStage type(@NotNull InputFormType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 

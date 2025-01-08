@@ -20,8 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Guest.Builder.class)
 public final class Guest implements IGuestConfig {
     private final EnvironmentId environmentId;
@@ -141,29 +142,29 @@ public final class Guest implements IGuestConfig {
     }
 
     public interface EnvironmentIdStage {
-        EmailStage environmentId(EnvironmentId environmentId);
+        EmailStage environmentId(@NotNull EnvironmentId environmentId);
 
         Builder from(Guest other);
     }
 
     public interface EmailStage {
-        NameStage email(String email);
+        NameStage email(@NotNull String email);
     }
 
     public interface NameStage {
-        IdStage name(String name);
+        IdStage name(@NotNull String name);
     }
 
     public interface IdStage {
-        CreatedAtStage id(GuestId id);
+        CreatedAtStage id(@NotNull GuestId id);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -212,29 +213,29 @@ public final class Guest implements IGuestConfig {
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public EmailStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public EmailStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("email")
-        public NameStage email(String email) {
-            this.email = email;
+        public NameStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public IdStage name(String name) {
-            this.name = name;
+        public IdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(GuestId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull GuestId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -244,8 +245,8 @@ public final class Guest implements IGuestConfig {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -255,8 +256,8 @@ public final class Guest implements IGuestConfig {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

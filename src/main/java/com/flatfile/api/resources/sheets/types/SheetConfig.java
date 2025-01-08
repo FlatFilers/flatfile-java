@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SheetConfig.Builder.class)
 public final class SheetConfig {
     private final String name;
@@ -214,7 +215,7 @@ public final class SheetConfig {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(SheetConfig other);
     }
@@ -316,8 +317,8 @@ public final class SheetConfig {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -327,7 +328,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage constraints(List<SheetConstraint> constraints) {
-            this.constraints = Optional.of(constraints);
+            this.constraints = Optional.ofNullable(constraints);
             return this;
         }
 
@@ -344,7 +345,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -361,7 +362,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -406,7 +407,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage access(List<SheetAccess> access) {
-            this.access = Optional.of(access);
+            this.access = Optional.ofNullable(access);
             return this;
         }
 
@@ -423,7 +424,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage mappingConfidenceThreshold(Double mappingConfidenceThreshold) {
-            this.mappingConfidenceThreshold = Optional.of(mappingConfidenceThreshold);
+            this.mappingConfidenceThreshold = Optional.ofNullable(mappingConfidenceThreshold);
             return this;
         }
 
@@ -440,7 +441,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage allowAdditionalFields(Boolean allowAdditionalFields) {
-            this.allowAdditionalFields = Optional.of(allowAdditionalFields);
+            this.allowAdditionalFields = Optional.ofNullable(allowAdditionalFields);
             return this;
         }
 
@@ -457,7 +458,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage readonly(Boolean readonly) {
-            this.readonly = Optional.of(readonly);
+            this.readonly = Optional.ofNullable(readonly);
             return this;
         }
 
@@ -474,7 +475,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
@@ -491,7 +492,7 @@ public final class SheetConfig {
          */
         @java.lang.Override
         public _FinalStage description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 

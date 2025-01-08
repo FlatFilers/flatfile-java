@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetSnapshotRecordsRequest.Builder.class)
 public final class GetSnapshotRecordsRequest {
     private final Optional<Integer> pageSize;
@@ -122,7 +122,7 @@ public final class GetSnapshotRecordsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -133,7 +133,7 @@ public final class GetSnapshotRecordsRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -144,7 +144,7 @@ public final class GetSnapshotRecordsRequest {
         }
 
         public Builder changeType(ChangeType changeType) {
-            this.changeType = Optional.of(changeType);
+            this.changeType = Optional.ofNullable(changeType);
             return this;
         }
 

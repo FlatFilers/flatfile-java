@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ExternalConstraint.Builder.class)
 public final class ExternalConstraint {
     private final String validator;
@@ -72,7 +73,7 @@ public final class ExternalConstraint {
     }
 
     public interface ValidatorStage {
-        _FinalStage validator(String validator);
+        _FinalStage validator(@NotNull String validator);
 
         Builder from(ExternalConstraint other);
     }
@@ -105,14 +106,14 @@ public final class ExternalConstraint {
 
         @java.lang.Override
         @JsonSetter("validator")
-        public _FinalStage validator(String validator) {
-            this.validator = validator;
+        public _FinalStage validator(@NotNull String validator) {
+            this.validator = Objects.requireNonNull(validator, "validator must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage config(Object config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 

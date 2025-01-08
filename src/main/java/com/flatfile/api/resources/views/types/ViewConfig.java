@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ViewConfig.Builder.class)
 public final class ViewConfig {
     private final Optional<VersionId> versionId;
@@ -386,7 +386,7 @@ public final class ViewConfig {
         }
 
         public Builder versionId(VersionId versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -397,7 +397,7 @@ public final class ViewConfig {
         }
 
         public Builder commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -408,7 +408,7 @@ public final class ViewConfig {
         }
 
         public Builder sinceVersionId(VersionId sinceVersionId) {
-            this.sinceVersionId = Optional.of(sinceVersionId);
+            this.sinceVersionId = Optional.ofNullable(sinceVersionId);
             return this;
         }
 
@@ -419,7 +419,7 @@ public final class ViewConfig {
         }
 
         public Builder sinceCommitId(CommitId sinceCommitId) {
-            this.sinceCommitId = Optional.of(sinceCommitId);
+            this.sinceCommitId = Optional.ofNullable(sinceCommitId);
             return this;
         }
 
@@ -430,7 +430,7 @@ public final class ViewConfig {
         }
 
         public Builder sortField(SortField sortField) {
-            this.sortField = Optional.of(sortField);
+            this.sortField = Optional.ofNullable(sortField);
             return this;
         }
 
@@ -441,7 +441,7 @@ public final class ViewConfig {
         }
 
         public Builder sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
+            this.sortDirection = Optional.ofNullable(sortDirection);
             return this;
         }
 
@@ -452,7 +452,7 @@ public final class ViewConfig {
         }
 
         public Builder filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -463,7 +463,7 @@ public final class ViewConfig {
         }
 
         public Builder filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -474,7 +474,7 @@ public final class ViewConfig {
         }
 
         public Builder searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -485,7 +485,7 @@ public final class ViewConfig {
         }
 
         public Builder searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -496,7 +496,7 @@ public final class ViewConfig {
         }
 
         public Builder ids(List<RecordId> ids) {
-            this.ids = Optional.of(ids);
+            this.ids = Optional.ofNullable(ids);
             return this;
         }
 
@@ -507,7 +507,7 @@ public final class ViewConfig {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -518,7 +518,7 @@ public final class ViewConfig {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -529,7 +529,7 @@ public final class ViewConfig {
         }
 
         public Builder includeCounts(Boolean includeCounts) {
-            this.includeCounts = Optional.of(includeCounts);
+            this.includeCounts = Optional.ofNullable(includeCounts);
             return this;
         }
 
@@ -540,7 +540,7 @@ public final class ViewConfig {
         }
 
         public Builder includeLength(Boolean includeLength) {
-            this.includeLength = Optional.of(includeLength);
+            this.includeLength = Optional.ofNullable(includeLength);
             return this;
         }
 
@@ -551,7 +551,7 @@ public final class ViewConfig {
         }
 
         public Builder includeLinks(Boolean includeLinks) {
-            this.includeLinks = Optional.of(includeLinks);
+            this.includeLinks = Optional.ofNullable(includeLinks);
             return this;
         }
 
@@ -562,7 +562,7 @@ public final class ViewConfig {
         }
 
         public Builder includeMessages(Boolean includeMessages) {
-            this.includeMessages = Optional.of(includeMessages);
+            this.includeMessages = Optional.ofNullable(includeMessages);
             return this;
         }
 
@@ -573,7 +573,7 @@ public final class ViewConfig {
         }
 
         public Builder for_(EventId for_) {
-            this.for_ = Optional.of(for_);
+            this.for_ = Optional.ofNullable(for_);
             return this;
         }
 
@@ -584,7 +584,7 @@ public final class ViewConfig {
         }
 
         public Builder q(String q) {
-            this.q = Optional.of(q);
+            this.q = Optional.ofNullable(q);
             return this;
         }
 

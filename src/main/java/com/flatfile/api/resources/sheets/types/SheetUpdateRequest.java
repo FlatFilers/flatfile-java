@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SheetUpdateRequest.Builder.class)
 public final class SheetUpdateRequest {
     private final Optional<String> name;
@@ -119,7 +119,7 @@ public final class SheetUpdateRequest {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -130,7 +130,7 @@ public final class SheetUpdateRequest {
         }
 
         public Builder slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
@@ -141,7 +141,7 @@ public final class SheetUpdateRequest {
         }
 
         public Builder metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 

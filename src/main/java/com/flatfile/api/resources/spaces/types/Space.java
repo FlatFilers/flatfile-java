@@ -27,8 +27,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Space.Builder.class)
 public final class Space implements IInternalSpaceConfigBase {
     private final Optional<SpaceConfigId> spaceConfigId;
@@ -482,21 +483,21 @@ public final class Space implements IInternalSpaceConfigBase {
     }
 
     public interface IdStage {
-        CreatedAtStage id(SpaceId id);
+        CreatedAtStage id(@NotNull SpaceId id);
 
         Builder from(Space other);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        NameStage updatedAt(OffsetDateTime updatedAt);
+        NameStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
     }
 
     public interface _FinalStage {
@@ -720,8 +721,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(SpaceId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull SpaceId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -731,8 +732,8 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -742,8 +743,8 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public NameStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public NameStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
@@ -753,8 +754,8 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -792,7 +793,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage upgradedAt(OffsetDateTime upgradedAt) {
-            this.upgradedAt = Optional.of(upgradedAt);
+            this.upgradedAt = Optional.ofNullable(upgradedAt);
             return this;
         }
 
@@ -809,7 +810,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage size(SpaceSize size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 
@@ -826,7 +827,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage isCollaborative(Boolean isCollaborative) {
-            this.isCollaborative = Optional.of(isCollaborative);
+            this.isCollaborative = Optional.ofNullable(isCollaborative);
             return this;
         }
 
@@ -843,7 +844,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage accessToken(String accessToken) {
-            this.accessToken = Optional.of(accessToken);
+            this.accessToken = Optional.ofNullable(accessToken);
             return this;
         }
 
@@ -860,7 +861,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage displayOrder(Integer displayOrder) {
-            this.displayOrder = Optional.of(displayOrder);
+            this.displayOrder = Optional.ofNullable(displayOrder);
             return this;
         }
 
@@ -877,7 +878,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage guestLink(String guestLink) {
-            this.guestLink = Optional.of(guestLink);
+            this.guestLink = Optional.ofNullable(guestLink);
             return this;
         }
 
@@ -894,7 +895,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage lastActivityAt(OffsetDateTime lastActivityAt) {
-            this.lastActivityAt = Optional.of(lastActivityAt);
+            this.lastActivityAt = Optional.ofNullable(lastActivityAt);
             return this;
         }
 
@@ -911,7 +912,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage expiredAt(OffsetDateTime expiredAt) {
-            this.expiredAt = Optional.of(expiredAt);
+            this.expiredAt = Optional.ofNullable(expiredAt);
             return this;
         }
 
@@ -928,7 +929,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage createdByUserName(String createdByUserName) {
-            this.createdByUserName = Optional.of(createdByUserName);
+            this.createdByUserName = Optional.ofNullable(createdByUserName);
             return this;
         }
 
@@ -941,7 +942,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage createdByUserId(UserId createdByUserId) {
-            this.createdByUserId = Optional.of(createdByUserId);
+            this.createdByUserId = Optional.ofNullable(createdByUserId);
             return this;
         }
 
@@ -958,7 +959,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage filesCount(Integer filesCount) {
-            this.filesCount = Optional.of(filesCount);
+            this.filesCount = Optional.ofNullable(filesCount);
             return this;
         }
 
@@ -975,7 +976,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage workbooksCount(Integer workbooksCount) {
-            this.workbooksCount = Optional.of(workbooksCount);
+            this.workbooksCount = Optional.ofNullable(workbooksCount);
             return this;
         }
 
@@ -992,7 +993,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage appId(AppId appId) {
-            this.appId = Optional.of(appId);
+            this.appId = Optional.ofNullable(appId);
             return this;
         }
 
@@ -1009,7 +1010,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage archivedAt(OffsetDateTime archivedAt) {
-            this.archivedAt = Optional.of(archivedAt);
+            this.archivedAt = Optional.ofNullable(archivedAt);
             return this;
         }
 
@@ -1022,7 +1023,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage languageOverride(String languageOverride) {
-            this.languageOverride = Optional.of(languageOverride);
+            this.languageOverride = Optional.ofNullable(languageOverride);
             return this;
         }
 
@@ -1035,7 +1036,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage translationsPath(String translationsPath) {
-            this.translationsPath = Optional.of(translationsPath);
+            this.translationsPath = Optional.ofNullable(translationsPath);
             return this;
         }
 
@@ -1048,7 +1049,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage labels(List<String> labels) {
-            this.labels = Optional.of(labels);
+            this.labels = Optional.ofNullable(labels);
             return this;
         }
 
@@ -1061,7 +1062,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -1074,7 +1075,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage autoConfigure(Boolean autoConfigure) {
-            this.autoConfigure = Optional.of(autoConfigure);
+            this.autoConfigure = Optional.ofNullable(autoConfigure);
             return this;
         }
 
@@ -1087,7 +1088,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage access(List<SpaceAccess> access) {
-            this.access = Optional.of(access);
+            this.access = Optional.ofNullable(access);
             return this;
         }
 
@@ -1100,7 +1101,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -1117,7 +1118,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage settings(SpaceSettings settings) {
-            this.settings = Optional.of(settings);
+            this.settings = Optional.ofNullable(settings);
             return this;
         }
 
@@ -1134,7 +1135,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -1151,7 +1152,7 @@ public final class Space implements IInternalSpaceConfigBase {
          */
         @java.lang.Override
         public _FinalStage primaryWorkbookId(WorkbookId primaryWorkbookId) {
-            this.primaryWorkbookId = Optional.of(primaryWorkbookId);
+            this.primaryWorkbookId = Optional.ofNullable(primaryWorkbookId);
             return this;
         }
 
@@ -1164,7 +1165,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -1177,7 +1178,7 @@ public final class Space implements IInternalSpaceConfigBase {
 
         @java.lang.Override
         public _FinalStage spaceConfigId(SpaceConfigId spaceConfigId) {
-            this.spaceConfigId = Optional.of(spaceConfigId);
+            this.spaceConfigId = Optional.ofNullable(spaceConfigId);
             return this;
         }
 

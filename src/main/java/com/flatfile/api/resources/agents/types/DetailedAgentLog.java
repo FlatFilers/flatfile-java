@@ -19,8 +19,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DetailedAgentLog.Builder.class)
 public final class DetailedAgentLog {
     private final EventId eventId;
@@ -162,7 +163,7 @@ public final class DetailedAgentLog {
     }
 
     public interface EventIdStage {
-        SuccessStage eventId(EventId eventId);
+        SuccessStage eventId(@NotNull EventId eventId);
 
         Builder from(DetailedAgentLog other);
     }
@@ -172,11 +173,11 @@ public final class DetailedAgentLog {
     }
 
     public interface CreatedAtStage {
-        CompletedAtStage createdAt(OffsetDateTime createdAt);
+        CompletedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface CompletedAtStage {
-        DurationStage completedAt(OffsetDateTime completedAt);
+        DurationStage completedAt(@NotNull OffsetDateTime completedAt);
     }
 
     public interface DurationStage {
@@ -184,7 +185,7 @@ public final class DetailedAgentLog {
     }
 
     public interface TopicStage {
-        _FinalStage topic(String topic);
+        _FinalStage topic(@NotNull String topic);
     }
 
     public interface _FinalStage {
@@ -246,8 +247,8 @@ public final class DetailedAgentLog {
 
         @java.lang.Override
         @JsonSetter("eventId")
-        public SuccessStage eventId(EventId eventId) {
-            this.eventId = eventId;
+        public SuccessStage eventId(@NotNull EventId eventId) {
+            this.eventId = Objects.requireNonNull(eventId, "eventId must not be null");
             return this;
         }
 
@@ -264,15 +265,15 @@ public final class DetailedAgentLog {
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public CompletedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public CompletedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("completedAt")
-        public DurationStage completedAt(OffsetDateTime completedAt) {
-            this.completedAt = completedAt;
+        public DurationStage completedAt(@NotNull OffsetDateTime completedAt) {
+            this.completedAt = Objects.requireNonNull(completedAt, "completedAt must not be null");
             return this;
         }
 
@@ -293,8 +294,8 @@ public final class DetailedAgentLog {
          */
         @java.lang.Override
         @JsonSetter("topic")
-        public _FinalStage topic(String topic) {
-            this.topic = topic;
+        public _FinalStage topic(@NotNull String topic) {
+            this.topic = Objects.requireNonNull(topic, "topic must not be null");
             return this;
         }
 
@@ -304,7 +305,7 @@ public final class DetailedAgentLog {
          */
         @java.lang.Override
         public _FinalStage log(String log) {
-            this.log = Optional.of(log);
+            this.log = Optional.ofNullable(log);
             return this;
         }
 

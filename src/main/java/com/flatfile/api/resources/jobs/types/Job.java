@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Job.Builder.class)
 public final class Job implements IJobConfig {
     private final JobType type;
@@ -67,6 +68,8 @@ public final class Job implements IJobConfig {
 
     private final Optional<List<JobId>> predecessorIds;
 
+    private final Optional<Map<String, Object>> metadata;
+
     private final JobId id;
 
     private final OffsetDateTime createdAt;
@@ -103,6 +106,7 @@ public final class Job implements IJobConfig {
             Optional<JobPartExecution> partExecution,
             Optional<JobId> parentId,
             Optional<List<JobId>> predecessorIds,
+            Optional<Map<String, Object>> metadata,
             JobId id,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -131,6 +135,7 @@ public final class Job implements IJobConfig {
         this.partExecution = partExecution;
         this.parentId = parentId;
         this.predecessorIds = predecessorIds;
+        this.metadata = metadata;
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -317,6 +322,15 @@ public final class Job implements IJobConfig {
         return predecessorIds;
     }
 
+    /**
+     * @return Additional metadata for the job
+     */
+    @JsonProperty("metadata")
+    @java.lang.Override
+    public Optional<Map<String, Object>> getMetadata() {
+        return metadata;
+    }
+
     @JsonProperty("id")
     public JobId getId() {
         return id;
@@ -395,6 +409,7 @@ public final class Job implements IJobConfig {
                 && partExecution.equals(other.partExecution)
                 && parentId.equals(other.parentId)
                 && predecessorIds.equals(other.predecessorIds)
+                && metadata.equals(other.metadata)
                 && id.equals(other.id)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
@@ -427,6 +442,7 @@ public final class Job implements IJobConfig {
                 this.partExecution,
                 this.parentId,
                 this.predecessorIds,
+                this.metadata,
                 this.id,
                 this.createdAt,
                 this.updatedAt,
@@ -445,29 +461,29 @@ public final class Job implements IJobConfig {
     }
 
     public interface TypeStage {
-        OperationStage type(JobType type);
+        OperationStage type(@NotNull JobType type);
 
         Builder from(Job other);
     }
 
     public interface OperationStage {
-        SourceStage operation(String operation);
+        SourceStage operation(@NotNull String operation);
     }
 
     public interface SourceStage {
-        IdStage source(JobSource source);
+        IdStage source(@NotNull JobSource source);
     }
 
     public interface IdStage {
-        CreatedAtStage id(JobId id);
+        CreatedAtStage id(@NotNull JobId id);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -545,6 +561,10 @@ public final class Job implements IJobConfig {
 
         _FinalStage predecessorIds(List<JobId> predecessorIds);
 
+        _FinalStage metadata(Optional<Map<String, Object>> metadata);
+
+        _FinalStage metadata(Map<String, Object> metadata);
+
         _FinalStage startedAt(Optional<OffsetDateTime> startedAt);
 
         _FinalStage startedAt(OffsetDateTime startedAt);
@@ -578,6 +598,8 @@ public final class Job implements IJobConfig {
         private Optional<OffsetDateTime> finishedAt = Optional.empty();
 
         private Optional<OffsetDateTime> startedAt = Optional.empty();
+
+        private Optional<Map<String, Object>> metadata = Optional.empty();
 
         private Optional<List<JobId>> predecessorIds = Optional.empty();
 
@@ -643,6 +665,7 @@ public final class Job implements IJobConfig {
             partExecution(other.getPartExecution());
             parentId(other.getParentId());
             predecessorIds(other.getPredecessorIds());
+            metadata(other.getMetadata());
             id(other.getId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
@@ -658,8 +681,8 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         @JsonSetter("type")
-        public OperationStage type(JobType type) {
-            this.type = type;
+        public OperationStage type(@NotNull JobType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -669,22 +692,22 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         @JsonSetter("operation")
-        public SourceStage operation(String operation) {
-            this.operation = operation;
+        public SourceStage operation(@NotNull String operation) {
+            this.operation = Objects.requireNonNull(operation, "operation must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("source")
-        public IdStage source(JobSource source) {
-            this.source = source;
+        public IdStage source(@NotNull JobSource source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(JobId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull JobId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -694,8 +717,8 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -705,8 +728,8 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
@@ -716,7 +739,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage outcomeAcknowledgedAt(OffsetDateTime outcomeAcknowledgedAt) {
-            this.outcomeAcknowledgedAt = Optional.of(outcomeAcknowledgedAt);
+            this.outcomeAcknowledgedAt = Optional.ofNullable(outcomeAcknowledgedAt);
             return this;
         }
 
@@ -733,7 +756,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage finishedAt(OffsetDateTime finishedAt) {
-            this.finishedAt = Optional.of(finishedAt);
+            this.finishedAt = Optional.ofNullable(finishedAt);
             return this;
         }
 
@@ -750,7 +773,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage startedAt(OffsetDateTime startedAt) {
-            this.startedAt = Optional.of(startedAt);
+            this.startedAt = Optional.ofNullable(startedAt);
             return this;
         }
 
@@ -762,12 +785,29 @@ public final class Job implements IJobConfig {
         }
 
         /**
+         * <p>Additional metadata for the job</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage metadata(Map<String, Object> metadata) {
+            this.metadata = Optional.ofNullable(metadata);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public _FinalStage metadata(Optional<Map<String, Object>> metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        /**
          * <p>The ids of the jobs that must complete before this job can start</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         public _FinalStage predecessorIds(List<JobId> predecessorIds) {
-            this.predecessorIds = Optional.of(predecessorIds);
+            this.predecessorIds = Optional.ofNullable(predecessorIds);
             return this;
         }
 
@@ -784,7 +824,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage parentId(JobId parentId) {
-            this.parentId = Optional.of(parentId);
+            this.parentId = Optional.ofNullable(parentId);
             return this;
         }
 
@@ -801,7 +841,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage partExecution(JobPartExecution partExecution) {
-            this.partExecution = Optional.of(partExecution);
+            this.partExecution = Optional.ofNullable(partExecution);
             return this;
         }
 
@@ -818,7 +858,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage partData(Map<String, Object> partData) {
-            this.partData = Optional.of(partData);
+            this.partData = Optional.ofNullable(partData);
             return this;
         }
 
@@ -835,7 +875,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage part(Integer part) {
-            this.part = Optional.of(part);
+            this.part = Optional.ofNullable(part);
             return this;
         }
 
@@ -852,7 +892,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -869,7 +909,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage managed(Boolean managed) {
-            this.managed = Optional.of(managed);
+            this.managed = Optional.ofNullable(managed);
             return this;
         }
 
@@ -886,7 +926,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage info(String info) {
-            this.info = Optional.of(info);
+            this.info = Optional.ofNullable(info);
             return this;
         }
 
@@ -903,7 +943,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage outcome(Map<String, Object> outcome) {
-            this.outcome = Optional.of(outcome);
+            this.outcome = Optional.ofNullable(outcome);
             return this;
         }
 
@@ -920,7 +960,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage subject(JobSubject subject) {
-            this.subject = Optional.of(subject);
+            this.subject = Optional.ofNullable(subject);
             return this;
         }
 
@@ -937,7 +977,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage input(Map<String, Object> input) {
-            this.input = Optional.of(input);
+            this.input = Optional.ofNullable(input);
             return this;
         }
 
@@ -954,7 +994,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage mode(JobMode mode) {
-            this.mode = Optional.of(mode);
+            this.mode = Optional.ofNullable(mode);
             return this;
         }
 
@@ -967,7 +1007,7 @@ public final class Job implements IJobConfig {
 
         @java.lang.Override
         public _FinalStage fileId(FileId fileId) {
-            this.fileId = Optional.of(fileId);
+            this.fileId = Optional.ofNullable(fileId);
             return this;
         }
 
@@ -984,7 +1024,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage progress(Integer progress) {
-            this.progress = Optional.of(progress);
+            this.progress = Optional.ofNullable(progress);
             return this;
         }
 
@@ -1001,7 +1041,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage status(JobStatus status) {
-            this.status = Optional.of(status);
+            this.status = Optional.ofNullable(status);
             return this;
         }
 
@@ -1018,7 +1058,7 @@ public final class Job implements IJobConfig {
          */
         @java.lang.Override
         public _FinalStage trigger(Trigger trigger) {
-            this.trigger = Optional.of(trigger);
+            this.trigger = Optional.ofNullable(trigger);
             return this;
         }
 
@@ -1031,7 +1071,7 @@ public final class Job implements IJobConfig {
 
         @java.lang.Override
         public _FinalStage config(JobUpdateConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -1044,7 +1084,7 @@ public final class Job implements IJobConfig {
 
         @java.lang.Override
         public _FinalStage destination(JobDestination destination) {
-            this.destination = Optional.of(destination);
+            this.destination = Optional.ofNullable(destination);
             return this;
         }
 
@@ -1079,6 +1119,7 @@ public final class Job implements IJobConfig {
                     partExecution,
                     parentId,
                     predecessorIds,
+                    metadata,
                     id,
                     createdAt,
                     updatedAt,

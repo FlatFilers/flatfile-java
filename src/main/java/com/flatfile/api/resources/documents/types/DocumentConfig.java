@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DocumentConfig.Builder.class)
 public final class DocumentConfig implements IDocumentConfig {
     private final String title;
@@ -105,13 +106,13 @@ public final class DocumentConfig implements IDocumentConfig {
     }
 
     public interface TitleStage {
-        BodyStage title(String title);
+        BodyStage title(@NotNull String title);
 
         Builder from(DocumentConfig other);
     }
 
     public interface BodyStage {
-        _FinalStage body(String body);
+        _FinalStage body(@NotNull String body);
     }
 
     public interface _FinalStage {
@@ -152,21 +153,21 @@ public final class DocumentConfig implements IDocumentConfig {
 
         @java.lang.Override
         @JsonSetter("title")
-        public BodyStage title(String title) {
-            this.title = title;
+        public BodyStage title(@NotNull String title) {
+            this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
-        public _FinalStage body(String body) {
-            this.body = body;
+        public _FinalStage body(@NotNull String body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -183,7 +184,7 @@ public final class DocumentConfig implements IDocumentConfig {
          */
         @java.lang.Override
         public _FinalStage treatments(List<String> treatments) {
-            this.treatments = Optional.of(treatments);
+            this.treatments = Optional.ofNullable(treatments);
             return this;
         }
 

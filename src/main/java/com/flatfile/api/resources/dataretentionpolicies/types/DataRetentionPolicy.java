@@ -17,8 +17,9 @@ import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DataRetentionPolicy.Builder.class)
 public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
     private final DataRetentionPolicyEnum type;
@@ -126,7 +127,7 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
     }
 
     public interface TypeStage {
-        PeriodStage type(DataRetentionPolicyEnum type);
+        PeriodStage type(@NotNull DataRetentionPolicyEnum type);
 
         Builder from(DataRetentionPolicy other);
     }
@@ -136,19 +137,19 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
     }
 
     public interface EnvironmentIdStage {
-        IdStage environmentId(EnvironmentId environmentId);
+        IdStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface IdStage {
-        CreatedAtStage id(DataRetentionPolicyId id);
+        CreatedAtStage id(@NotNull DataRetentionPolicyId id);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -194,8 +195,8 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
 
         @java.lang.Override
         @JsonSetter("type")
-        public PeriodStage type(DataRetentionPolicyEnum type) {
-            this.type = type;
+        public PeriodStage type(@NotNull DataRetentionPolicyEnum type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -208,15 +209,15 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public IdStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public IdStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(DataRetentionPolicyId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull DataRetentionPolicyId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -226,8 +227,8 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -237,8 +238,8 @@ public final class DataRetentionPolicy implements IDataRetentionPolicyConfig {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 

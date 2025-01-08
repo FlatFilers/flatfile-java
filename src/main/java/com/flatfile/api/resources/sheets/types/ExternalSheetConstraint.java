@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ExternalSheetConstraint.Builder.class)
 public final class ExternalSheetConstraint {
     private final String validator;
@@ -88,7 +89,7 @@ public final class ExternalSheetConstraint {
     }
 
     public interface ValidatorStage {
-        _FinalStage validator(String validator);
+        _FinalStage validator(@NotNull String validator);
 
         Builder from(ExternalSheetConstraint other);
     }
@@ -128,14 +129,14 @@ public final class ExternalSheetConstraint {
 
         @java.lang.Override
         @JsonSetter("validator")
-        public _FinalStage validator(String validator) {
-            this.validator = validator;
+        public _FinalStage validator(@NotNull String validator) {
+            this.validator = Objects.requireNonNull(validator, "validator must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage config(Object config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -152,7 +153,7 @@ public final class ExternalSheetConstraint {
          */
         @java.lang.Override
         public _FinalStage fields(List<String> fields) {
-            this.fields = Optional.of(fields);
+            this.fields = Optional.ofNullable(fields);
             return this;
         }
 

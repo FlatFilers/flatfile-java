@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SheetConfigOrUpdate.Builder.class)
 public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpdate {
     private final Optional<String> name;
@@ -367,7 +367,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -378,7 +378,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 
@@ -389,7 +389,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
@@ -400,7 +400,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder readonly(Boolean readonly) {
-            this.readonly = Optional.of(readonly);
+            this.readonly = Optional.ofNullable(readonly);
             return this;
         }
 
@@ -411,7 +411,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder allowAdditionalFields(Boolean allowAdditionalFields) {
-            this.allowAdditionalFields = Optional.of(allowAdditionalFields);
+            this.allowAdditionalFields = Optional.ofNullable(allowAdditionalFields);
             return this;
         }
 
@@ -422,7 +422,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder mappingConfidenceThreshold(Double mappingConfidenceThreshold) {
-            this.mappingConfidenceThreshold = Optional.of(mappingConfidenceThreshold);
+            this.mappingConfidenceThreshold = Optional.ofNullable(mappingConfidenceThreshold);
             return this;
         }
 
@@ -433,7 +433,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder access(List<SheetAccess> access) {
-            this.access = Optional.of(access);
+            this.access = Optional.ofNullable(access);
             return this;
         }
 
@@ -444,7 +444,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder fields(List<Property> fields) {
-            this.fields = Optional.of(fields);
+            this.fields = Optional.ofNullable(fields);
             return this;
         }
 
@@ -455,7 +455,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -466,7 +466,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder id(SheetId id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
@@ -477,7 +477,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder workbookId(WorkbookId workbookId) {
-            this.workbookId = Optional.of(workbookId);
+            this.workbookId = Optional.ofNullable(workbookId);
             return this;
         }
 
@@ -488,7 +488,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder config(SheetConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -499,7 +499,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -510,7 +510,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -521,7 +521,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
+            this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 
@@ -532,7 +532,7 @@ public final class SheetConfigOrUpdate implements ISheetConfigUpdate, ISheetUpda
         }
 
         public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.of(createdAt);
+            this.createdAt = Optional.ofNullable(createdAt);
             return this;
         }
 

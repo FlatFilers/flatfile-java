@@ -1,1 +1,4 @@
 # Specify files that shouldn't be modified by Fern
+
+src/main/java/com/flatfile/api/resources/records/types/CellValueUnion.java
+src/main/java/com/flatfile/api/resources/snapshots/SnapshotsClient.java

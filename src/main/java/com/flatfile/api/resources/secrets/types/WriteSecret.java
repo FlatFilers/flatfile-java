@@ -12,14 +12,16 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.ActorIdUnion;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WriteSecret.Builder.class)
 public final class WriteSecret implements IWriteSecret {
     private final SecretName name;
@@ -30,6 +32,8 @@ public final class WriteSecret implements IWriteSecret {
 
     private final Optional<SpaceId> spaceId;
 
+    private final Optional<ActorIdUnion> actorId;
+
     private final Map<String, Object> additionalProperties;
 
     private WriteSecret(
@@ -37,11 +41,13 @@ public final class WriteSecret implements IWriteSecret {
             SecretValue value,
             Optional<EnvironmentId> environmentId,
             Optional<SpaceId> spaceId,
+            Optional<ActorIdUnion> actorId,
             Map<String, Object> additionalProperties) {
         this.name = name;
         this.value = value;
         this.environmentId = environmentId;
         this.spaceId = spaceId;
+        this.actorId = actorId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -81,6 +87,15 @@ public final class WriteSecret implements IWriteSecret {
         return spaceId;
     }
 
+    /**
+     * @return The Actor of the secret.
+     */
+    @JsonProperty("actorId")
+    @java.lang.Override
+    public Optional<ActorIdUnion> getActorId() {
+        return actorId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -96,12 +111,13 @@ public final class WriteSecret implements IWriteSecret {
         return name.equals(other.name)
                 && value.equals(other.value)
                 && environmentId.equals(other.environmentId)
-                && spaceId.equals(other.spaceId);
+                && spaceId.equals(other.spaceId)
+                && actorId.equals(other.actorId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.name, this.value, this.environmentId, this.spaceId);
+        return Objects.hash(this.name, this.value, this.environmentId, this.spaceId, this.actorId);
     }
 
     @java.lang.Override
@@ -114,13 +130,13 @@ public final class WriteSecret implements IWriteSecret {
     }
 
     public interface NameStage {
-        ValueStage name(SecretName name);
+        ValueStage name(@NotNull SecretName name);
 
         Builder from(WriteSecret other);
     }
 
     public interface ValueStage {
-        _FinalStage value(SecretValue value);
+        _FinalStage value(@NotNull SecretValue value);
     }
 
     public interface _FinalStage {
@@ -133,6 +149,10 @@ public final class WriteSecret implements IWriteSecret {
         _FinalStage spaceId(Optional<SpaceId> spaceId);
 
         _FinalStage spaceId(SpaceId spaceId);
+
+        _FinalStage actorId(Optional<ActorIdUnion> actorId);
+
+        _FinalStage actorId(ActorIdUnion actorId);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -140,6 +160,8 @@ public final class WriteSecret implements IWriteSecret {
         private SecretName name;
 
         private SecretValue value;
+
+        private Optional<ActorIdUnion> actorId = Optional.empty();
 
         private Optional<SpaceId> spaceId = Optional.empty();
 
@@ -156,6 +178,7 @@ public final class WriteSecret implements IWriteSecret {
             value(other.getValue());
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
+            actorId(other.getActorId());
             return this;
         }
 
@@ -165,8 +188,8 @@ public final class WriteSecret implements IWriteSecret {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public ValueStage name(SecretName name) {
-            this.name = name;
+        public ValueStage name(@NotNull SecretName name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -176,8 +199,25 @@ public final class WriteSecret implements IWriteSecret {
          */
         @java.lang.Override
         @JsonSetter("value")
-        public _FinalStage value(SecretValue value) {
-            this.value = value;
+        public _FinalStage value(@NotNull SecretValue value) {
+            this.value = Objects.requireNonNull(value, "value must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The Actor of the secret.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage actorId(ActorIdUnion actorId) {
+            this.actorId = Optional.ofNullable(actorId);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "actorId", nulls = Nulls.SKIP)
+        public _FinalStage actorId(Optional<ActorIdUnion> actorId) {
+            this.actorId = actorId;
             return this;
         }
 
@@ -187,7 +227,7 @@ public final class WriteSecret implements IWriteSecret {
          */
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -204,7 +244,7 @@ public final class WriteSecret implements IWriteSecret {
          */
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -217,7 +257,7 @@ public final class WriteSecret implements IWriteSecret {
 
         @java.lang.Override
         public WriteSecret build() {
-            return new WriteSecret(name, value, environmentId, spaceId, additionalProperties);
+            return new WriteSecret(name, value, environmentId, spaceId, actorId, additionalProperties);
         }
     }
 }

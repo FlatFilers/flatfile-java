@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SpaceSidebarConfig.Builder.class)
 public final class SpaceSidebarConfig {
     private final Optional<List<WorkbookId>> workbookSidebarOrder;
@@ -90,7 +90,7 @@ public final class SpaceSidebarConfig {
         }
 
         public Builder workbookSidebarOrder(List<WorkbookId> workbookSidebarOrder) {
-            this.workbookSidebarOrder = Optional.of(workbookSidebarOrder);
+            this.workbookSidebarOrder = Optional.ofNullable(workbookSidebarOrder);
             return this;
         }
 

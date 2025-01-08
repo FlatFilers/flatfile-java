@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateWorkbookConfig.Builder.class)
 public final class CreateWorkbookConfig {
     private final String name;
@@ -201,7 +202,7 @@ public final class CreateWorkbookConfig {
     }
 
     public interface NameStage {
-        _FinalStage name(String name);
+        _FinalStage name(@NotNull String name);
 
         Builder from(CreateWorkbookConfig other);
     }
@@ -294,8 +295,8 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public _FinalStage name(String name) {
-            this.name = name;
+        public _FinalStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -305,7 +306,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage treatments(List<WorkbookTreatments> treatments) {
-            this.treatments = Optional.of(treatments);
+            this.treatments = Optional.ofNullable(treatments);
             return this;
         }
 
@@ -322,7 +323,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -339,7 +340,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage settings(WorkbookConfigSettings settings) {
-            this.settings = Optional.of(settings);
+            this.settings = Optional.ofNullable(settings);
             return this;
         }
 
@@ -356,7 +357,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -373,7 +374,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage sheets(List<SheetConfig> sheets) {
-            this.sheets = Optional.of(sheets);
+            this.sheets = Optional.ofNullable(sheets);
             return this;
         }
 
@@ -390,7 +391,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -407,7 +408,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -424,7 +425,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -441,7 +442,7 @@ public final class CreateWorkbookConfig {
          */
         @java.lang.Override
         public _FinalStage labels(List<String> labels) {
-            this.labels = Optional.of(labels);
+            this.labels = Optional.ofNullable(labels);
             return this;
         }
 

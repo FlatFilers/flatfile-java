@@ -12,20 +12,32 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkbookConfigSettings.Builder.class)
 public final class WorkbookConfigSettings {
     private final Optional<Boolean> trackChanges;
 
+    private final Optional<Boolean> noMappingRedirect;
+
+    private final Optional<List<SheetId>> sheetSidebarOrder;
+
     private final Map<String, Object> additionalProperties;
 
-    private WorkbookConfigSettings(Optional<Boolean> trackChanges, Map<String, Object> additionalProperties) {
+    private WorkbookConfigSettings(
+            Optional<Boolean> trackChanges,
+            Optional<Boolean> noMappingRedirect,
+            Optional<List<SheetId>> sheetSidebarOrder,
+            Map<String, Object> additionalProperties) {
         this.trackChanges = trackChanges;
+        this.noMappingRedirect = noMappingRedirect;
+        this.sheetSidebarOrder = sheetSidebarOrder;
         this.additionalProperties = additionalProperties;
     }
 
@@ -35,6 +47,22 @@ public final class WorkbookConfigSettings {
     @JsonProperty("trackChanges")
     public Optional<Boolean> getTrackChanges() {
         return trackChanges;
+    }
+
+    /**
+     * @return When noMappingRedirect is set to true, dragging a file into a sheet will not redirect to the mapping screen. Defaults to false.
+     */
+    @JsonProperty("noMappingRedirect")
+    public Optional<Boolean> getNoMappingRedirect() {
+        return noMappingRedirect;
+    }
+
+    /**
+     * @return Used to set the order of sheets in the sidebar. Sheets that are not specified will be shown after those listed.
+     */
+    @JsonProperty("sheetSidebarOrder")
+    public Optional<List<SheetId>> getSheetSidebarOrder() {
+        return sheetSidebarOrder;
     }
 
     @java.lang.Override
@@ -49,12 +77,14 @@ public final class WorkbookConfigSettings {
     }
 
     private boolean equalTo(WorkbookConfigSettings other) {
-        return trackChanges.equals(other.trackChanges);
+        return trackChanges.equals(other.trackChanges)
+                && noMappingRedirect.equals(other.noMappingRedirect)
+                && sheetSidebarOrder.equals(other.sheetSidebarOrder);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.trackChanges);
+        return Objects.hash(this.trackChanges, this.noMappingRedirect, this.sheetSidebarOrder);
     }
 
     @java.lang.Override
@@ -70,6 +100,10 @@ public final class WorkbookConfigSettings {
     public static final class Builder {
         private Optional<Boolean> trackChanges = Optional.empty();
 
+        private Optional<Boolean> noMappingRedirect = Optional.empty();
+
+        private Optional<List<SheetId>> sheetSidebarOrder = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -77,6 +111,8 @@ public final class WorkbookConfigSettings {
 
         public Builder from(WorkbookConfigSettings other) {
             trackChanges(other.getTrackChanges());
+            noMappingRedirect(other.getNoMappingRedirect());
+            sheetSidebarOrder(other.getSheetSidebarOrder());
             return this;
         }
 
@@ -87,12 +123,34 @@ public final class WorkbookConfigSettings {
         }
 
         public Builder trackChanges(Boolean trackChanges) {
-            this.trackChanges = Optional.of(trackChanges);
+            this.trackChanges = Optional.ofNullable(trackChanges);
+            return this;
+        }
+
+        @JsonSetter(value = "noMappingRedirect", nulls = Nulls.SKIP)
+        public Builder noMappingRedirect(Optional<Boolean> noMappingRedirect) {
+            this.noMappingRedirect = noMappingRedirect;
+            return this;
+        }
+
+        public Builder noMappingRedirect(Boolean noMappingRedirect) {
+            this.noMappingRedirect = Optional.ofNullable(noMappingRedirect);
+            return this;
+        }
+
+        @JsonSetter(value = "sheetSidebarOrder", nulls = Nulls.SKIP)
+        public Builder sheetSidebarOrder(Optional<List<SheetId>> sheetSidebarOrder) {
+            this.sheetSidebarOrder = sheetSidebarOrder;
+            return this;
+        }
+
+        public Builder sheetSidebarOrder(List<SheetId> sheetSidebarOrder) {
+            this.sheetSidebarOrder = Optional.ofNullable(sheetSidebarOrder);
             return this;
         }
 
         public WorkbookConfigSettings build() {
-            return new WorkbookConfigSettings(trackChanges, additionalProperties);
+            return new WorkbookConfigSettings(trackChanges, noMappingRedirect, sheetSidebarOrder, additionalProperties);
         }
     }
 }

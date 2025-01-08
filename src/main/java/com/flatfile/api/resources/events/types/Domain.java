@@ -24,7 +24,9 @@ public enum Domain {
 
     CRON("cron"),
 
-    ENVIRONMENT("environment");
+    ENVIRONMENT("environment"),
+
+    DATA_CLIP("data-clip");
 
     private final String value;
 

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CategoryMapping.Builder.class)
 public final class CategoryMapping {
     private final Optional<EnumValue> sourceValue;
@@ -104,7 +104,7 @@ public final class CategoryMapping {
         }
 
         public Builder sourceValue(EnumValue sourceValue) {
-            this.sourceValue = Optional.of(sourceValue);
+            this.sourceValue = Optional.ofNullable(sourceValue);
             return this;
         }
 
@@ -115,7 +115,7 @@ public final class CategoryMapping {
         }
 
         public Builder destinationValue(EnumValue destinationValue) {
-            this.destinationValue = Optional.of(destinationValue);
+            this.destinationValue = Optional.ofNullable(destinationValue);
             return this;
         }
 

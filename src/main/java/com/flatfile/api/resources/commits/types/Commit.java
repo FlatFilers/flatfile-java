@@ -19,8 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Commit.Builder.class)
 public final class Commit {
     private final CommitId id;
@@ -131,21 +132,21 @@ public final class Commit {
     }
 
     public interface IdStage {
-        SheetIdStage id(CommitId id);
+        SheetIdStage id(@NotNull CommitId id);
 
         Builder from(Commit other);
     }
 
     public interface SheetIdStage {
-        CreatedByStage sheetId(SheetId sheetId);
+        CreatedByStage sheetId(@NotNull SheetId sheetId);
     }
 
     public interface CreatedByStage {
-        CreatedAtStage createdBy(String createdBy);
+        CreatedAtStage createdBy(@NotNull String createdBy);
     }
 
     public interface CreatedAtStage {
-        _FinalStage createdAt(OffsetDateTime createdAt);
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
@@ -192,15 +193,15 @@ public final class Commit {
 
         @java.lang.Override
         @JsonSetter("id")
-        public SheetIdStage id(CommitId id) {
-            this.id = id;
+        public SheetIdStage id(@NotNull CommitId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sheetId")
-        public CreatedByStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public CreatedByStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
@@ -210,8 +211,8 @@ public final class Commit {
          */
         @java.lang.Override
         @JsonSetter("createdBy")
-        public CreatedAtStage createdBy(String createdBy) {
-            this.createdBy = createdBy;
+        public CreatedAtStage createdBy(@NotNull String createdBy) {
+            this.createdBy = Objects.requireNonNull(createdBy, "createdBy must not be null");
             return this;
         }
 
@@ -221,8 +222,8 @@ public final class Commit {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -232,7 +233,7 @@ public final class Commit {
          */
         @java.lang.Override
         public _FinalStage completedAt(OffsetDateTime completedAt) {
-            this.completedAt = Optional.of(completedAt);
+            this.completedAt = Optional.ofNullable(completedAt);
             return this;
         }
 
@@ -249,7 +250,7 @@ public final class Commit {
          */
         @java.lang.Override
         public _FinalStage completedBy(String completedBy) {
-            this.completedBy = Optional.of(completedBy);
+            this.completedBy = Optional.ofNullable(completedBy);
             return this;
         }
 

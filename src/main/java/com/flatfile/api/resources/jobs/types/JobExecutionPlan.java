@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobExecutionPlan.Builder.class)
 public final class JobExecutionPlan implements IJobExecutionPlan {
     private final List<Edge> fieldMapping;
@@ -183,7 +183,7 @@ public final class JobExecutionPlan implements IJobExecutionPlan {
         }
 
         public Builder programId(String programId) {
-            this.programId = Optional.of(programId);
+            this.programId = Optional.ofNullable(programId);
             return this;
         }
 
