@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Progress.Builder.class)
 public final class Progress {
     private final Optional<Integer> current;
@@ -119,7 +119,7 @@ public final class Progress {
         }
 
         public Builder current(Integer current) {
-            this.current = Optional.of(current);
+            this.current = Optional.ofNullable(current);
             return this;
         }
 
@@ -130,7 +130,7 @@ public final class Progress {
         }
 
         public Builder total(Integer total) {
-            this.total = Optional.of(total);
+            this.total = Optional.ofNullable(total);
             return this;
         }
 
@@ -141,7 +141,7 @@ public final class Progress {
         }
 
         public Builder percent(Integer percent) {
-            this.percent = Optional.of(percent);
+            this.percent = Optional.ofNullable(percent);
             return this;
         }
 

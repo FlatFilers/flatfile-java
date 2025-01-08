@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = App.Builder.class)
 public final class App {
     private final AppId id;
@@ -39,6 +40,8 @@ public final class App {
     private final Object metadata;
 
     private final Object environmentFilters;
+
+    private final Optional<Object> blueprint;
 
     private final OffsetDateTime createdAt;
 
@@ -60,6 +63,7 @@ public final class App {
             Optional<String> icon,
             Object metadata,
             Object environmentFilters,
+            Optional<Object> blueprint,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
             Optional<OffsetDateTime> deletedAt,
@@ -74,6 +78,7 @@ public final class App {
         this.icon = icon;
         this.metadata = metadata;
         this.environmentFilters = environmentFilters;
+        this.blueprint = blueprint;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.deletedAt = deletedAt;
@@ -126,6 +131,11 @@ public final class App {
         return environmentFilters;
     }
 
+    @JsonProperty("blueprint")
+    public Optional<Object> getBlueprint() {
+        return blueprint;
+    }
+
     @JsonProperty("createdAt")
     public OffsetDateTime getCreatedAt() {
         return createdAt;
@@ -167,6 +177,7 @@ public final class App {
                 && icon.equals(other.icon)
                 && metadata.equals(other.metadata)
                 && environmentFilters.equals(other.environmentFilters)
+                && blueprint.equals(other.blueprint)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
                 && deletedAt.equals(other.deletedAt)
@@ -185,6 +196,7 @@ public final class App {
                 this.icon,
                 this.metadata,
                 this.environmentFilters,
+                this.blueprint,
                 this.createdAt,
                 this.updatedAt,
                 this.deletedAt,
@@ -201,29 +213,29 @@ public final class App {
     }
 
     public interface IdStage {
-        NameStage id(AppId id);
+        NameStage id(@NotNull AppId id);
 
         Builder from(App other);
     }
 
     public interface NameStage {
-        NamespaceStage name(String name);
+        NamespaceStage name(@NotNull String name);
     }
 
     public interface NamespaceStage {
-        TypeStage namespace(String namespace);
+        TypeStage namespace(@NotNull String namespace);
     }
 
     public interface TypeStage {
-        EntityStage type(AppType type);
+        EntityStage type(@NotNull AppType type);
     }
 
     public interface EntityStage {
-        EntityPluralStage entity(String entity);
+        EntityPluralStage entity(@NotNull String entity);
     }
 
     public interface EntityPluralStage {
-        MetadataStage entityPlural(String entityPlural);
+        MetadataStage entityPlural(@NotNull String entityPlural);
     }
 
     public interface MetadataStage {
@@ -235,11 +247,11 @@ public final class App {
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -248,6 +260,10 @@ public final class App {
         _FinalStage icon(Optional<String> icon);
 
         _FinalStage icon(String icon);
+
+        _FinalStage blueprint(Optional<Object> blueprint);
+
+        _FinalStage blueprint(Object blueprint);
 
         _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt);
 
@@ -295,6 +311,8 @@ public final class App {
 
         private Optional<OffsetDateTime> deletedAt = Optional.empty();
 
+        private Optional<Object> blueprint = Optional.empty();
+
         private Optional<String> icon = Optional.empty();
 
         @JsonAnySetter
@@ -313,6 +331,7 @@ public final class App {
             icon(other.getIcon());
             metadata(other.getMetadata());
             environmentFilters(other.getEnvironmentFilters());
+            blueprint(other.getBlueprint());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
             deletedAt(other.getDeletedAt());
@@ -322,43 +341,43 @@ public final class App {
 
         @java.lang.Override
         @JsonSetter("id")
-        public NameStage id(AppId id) {
-            this.id = id;
+        public NameStage id(@NotNull AppId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public NamespaceStage name(String name) {
-            this.name = name;
+        public NamespaceStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("namespace")
-        public TypeStage namespace(String namespace) {
-            this.namespace = namespace;
+        public TypeStage namespace(@NotNull String namespace) {
+            this.namespace = Objects.requireNonNull(namespace, "namespace must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("type")
-        public EntityStage type(AppType type) {
-            this.type = type;
+        public EntityStage type(@NotNull AppType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("entity")
-        public EntityPluralStage entity(String entity) {
-            this.entity = entity;
+        public EntityPluralStage entity(@NotNull String entity) {
+            this.entity = Objects.requireNonNull(entity, "entity must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("entityPlural")
-        public MetadataStage entityPlural(String entityPlural) {
-            this.entityPlural = entityPlural;
+        public MetadataStage entityPlural(@NotNull String entityPlural) {
+            this.entityPlural = Objects.requireNonNull(entityPlural, "entityPlural must not be null");
             return this;
         }
 
@@ -378,21 +397,21 @@ public final class App {
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage activatedAt(OffsetDateTime activatedAt) {
-            this.activatedAt = Optional.of(activatedAt);
+            this.activatedAt = Optional.ofNullable(activatedAt);
             return this;
         }
 
@@ -405,7 +424,7 @@ public final class App {
 
         @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
-            this.deletedAt = Optional.of(deletedAt);
+            this.deletedAt = Optional.ofNullable(deletedAt);
             return this;
         }
 
@@ -417,8 +436,21 @@ public final class App {
         }
 
         @java.lang.Override
+        public _FinalStage blueprint(Object blueprint) {
+            this.blueprint = Optional.ofNullable(blueprint);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "blueprint", nulls = Nulls.SKIP)
+        public _FinalStage blueprint(Optional<Object> blueprint) {
+            this.blueprint = blueprint;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage icon(String icon) {
-            this.icon = Optional.of(icon);
+            this.icon = Optional.ofNullable(icon);
             return this;
         }
 
@@ -441,6 +473,7 @@ public final class App {
                     icon,
                     metadata,
                     environmentFilters,
+                    blueprint,
                     createdAt,
                     updatedAt,
                     deletedAt,

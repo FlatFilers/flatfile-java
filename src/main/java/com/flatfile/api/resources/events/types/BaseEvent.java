@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BaseEvent.Builder.class)
 public final class BaseEvent implements IBaseEvent {
     private final Domain domain;
@@ -168,13 +169,13 @@ public final class BaseEvent implements IBaseEvent {
     }
 
     public interface DomainStage {
-        ContextStage domain(Domain domain);
+        ContextStage domain(@NotNull Domain domain);
 
         Builder from(BaseEvent other);
     }
 
     public interface ContextStage {
-        _FinalStage context(Context context);
+        _FinalStage context(@NotNull Context context);
     }
 
     public interface _FinalStage {
@@ -247,8 +248,8 @@ public final class BaseEvent implements IBaseEvent {
          */
         @java.lang.Override
         @JsonSetter("domain")
-        public ContextStage domain(Domain domain) {
-            this.domain = domain;
+        public ContextStage domain(@NotNull Domain domain) {
+            this.domain = Objects.requireNonNull(domain, "domain must not be null");
             return this;
         }
 
@@ -258,14 +259,14 @@ public final class BaseEvent implements IBaseEvent {
          */
         @java.lang.Override
         @JsonSetter("context")
-        public _FinalStage context(Context context) {
-            this.context = context;
+        public _FinalStage context(@NotNull Context context) {
+            this.context = Objects.requireNonNull(context, "context must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
-            this.namespaces = Optional.of(namespaces);
+            this.namespaces = Optional.ofNullable(namespaces);
             return this;
         }
 
@@ -278,7 +279,7 @@ public final class BaseEvent implements IBaseEvent {
 
         @java.lang.Override
         public _FinalStage origin(Origin origin) {
-            this.origin = Optional.of(origin);
+            this.origin = Optional.ofNullable(origin);
             return this;
         }
 
@@ -291,7 +292,7 @@ public final class BaseEvent implements IBaseEvent {
 
         @java.lang.Override
         public _FinalStage target(String target) {
-            this.target = Optional.of(target);
+            this.target = Optional.ofNullable(target);
             return this;
         }
 
@@ -308,7 +309,7 @@ public final class BaseEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage dataUrl(String dataUrl) {
-            this.dataUrl = Optional.of(dataUrl);
+            this.dataUrl = Optional.ofNullable(dataUrl);
             return this;
         }
 
@@ -325,7 +326,7 @@ public final class BaseEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage callbackUrl(String callbackUrl) {
-            this.callbackUrl = Optional.of(callbackUrl);
+            this.callbackUrl = Optional.ofNullable(callbackUrl);
             return this;
         }
 
@@ -342,7 +343,7 @@ public final class BaseEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage attributes(EventAttributes attributes) {
-            this.attributes = Optional.of(attributes);
+            this.attributes = Optional.ofNullable(attributes);
             return this;
         }
 

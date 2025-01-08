@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EnvironmentConfigUpdate.Builder.class)
 public final class EnvironmentConfigUpdate {
     private final Optional<String> name;
@@ -178,7 +178,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -189,7 +189,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder isProd(Boolean isProd) {
-            this.isProd = Optional.of(isProd);
+            this.isProd = Optional.ofNullable(isProd);
             return this;
         }
 
@@ -200,7 +200,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder guestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
-            this.guestAuthentication = Optional.of(guestAuthentication);
+            this.guestAuthentication = Optional.ofNullable(guestAuthentication);
             return this;
         }
 
@@ -211,7 +211,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -222,7 +222,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder translationsPath(String translationsPath) {
-            this.translationsPath = Optional.of(translationsPath);
+            this.translationsPath = Optional.ofNullable(translationsPath);
             return this;
         }
 
@@ -233,7 +233,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder namespaces(List<String> namespaces) {
-            this.namespaces = Optional.of(namespaces);
+            this.namespaces = Optional.ofNullable(namespaces);
             return this;
         }
 
@@ -244,7 +244,7 @@ public final class EnvironmentConfigUpdate {
         }
 
         public Builder languageOverride(String languageOverride) {
-            this.languageOverride = Optional.of(languageOverride);
+            this.languageOverride = Optional.ofNullable(languageOverride);
             return this;
         }
 

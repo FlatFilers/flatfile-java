@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetRecordsCsvRequest.Builder.class)
 public final class GetRecordsCsvRequest {
     private final Optional<String> versionId;
@@ -89,7 +89,7 @@ public final class GetRecordsCsvRequest {
     }
 
     /**
-     * @return <p>records that were changed in that version in that version and only those records.</p>
+     * @return <p>records that were changed in that version  in that version and only those records.</p>
      */
     @JsonProperty("commitId")
     public Optional<CommitId> getCommitId() {
@@ -269,7 +269,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder versionId(String versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -280,7 +280,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -291,7 +291,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder sinceVersionId(VersionId sinceVersionId) {
-            this.sinceVersionId = Optional.of(sinceVersionId);
+            this.sinceVersionId = Optional.ofNullable(sinceVersionId);
             return this;
         }
 
@@ -302,7 +302,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder sinceCommitId(CommitId sinceCommitId) {
-            this.sinceCommitId = Optional.of(sinceCommitId);
+            this.sinceCommitId = Optional.ofNullable(sinceCommitId);
             return this;
         }
 
@@ -313,7 +313,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder sortField(SortField sortField) {
-            this.sortField = Optional.of(sortField);
+            this.sortField = Optional.ofNullable(sortField);
             return this;
         }
 
@@ -324,7 +324,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
+            this.sortDirection = Optional.ofNullable(sortDirection);
             return this;
         }
 
@@ -335,7 +335,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -346,7 +346,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -357,7 +357,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -368,7 +368,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -379,7 +379,7 @@ public final class GetRecordsCsvRequest {
         }
 
         public Builder ids(RecordId ids) {
-            this.ids = Optional.of(ids);
+            this.ids = Optional.ofNullable(ids);
             return this;
         }
 

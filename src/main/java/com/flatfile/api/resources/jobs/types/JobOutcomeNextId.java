@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobOutcomeNextId.Builder.class)
 public final class JobOutcomeNextId {
     private final String id;
@@ -93,7 +94,7 @@ public final class JobOutcomeNextId {
     }
 
     public interface IdStage {
-        _FinalStage id(String id);
+        _FinalStage id(@NotNull String id);
 
         Builder from(JobOutcomeNextId other);
     }
@@ -140,14 +141,14 @@ public final class JobOutcomeNextId {
 
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(String id) {
-            this.id = id;
+        public _FinalStage id(@NotNull String id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage query(String query) {
-            this.query = Optional.of(query);
+            this.query = Optional.ofNullable(query);
             return this;
         }
 
@@ -160,7 +161,7 @@ public final class JobOutcomeNextId {
 
         @java.lang.Override
         public _FinalStage path(String path) {
-            this.path = Optional.of(path);
+            this.path = Optional.ofNullable(path);
             return this;
         }
 
@@ -173,7 +174,7 @@ public final class JobOutcomeNextId {
 
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

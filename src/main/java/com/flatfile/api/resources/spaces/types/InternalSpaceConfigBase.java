@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InternalSpaceConfigBase.Builder.class)
 public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
     private final Optional<SpaceConfigId> spaceConfigId;
@@ -305,7 +305,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder spaceConfigId(SpaceConfigId spaceConfigId) {
-            this.spaceConfigId = Optional.of(spaceConfigId);
+            this.spaceConfigId = Optional.ofNullable(spaceConfigId);
             return this;
         }
 
@@ -316,7 +316,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -327,7 +327,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder primaryWorkbookId(WorkbookId primaryWorkbookId) {
-            this.primaryWorkbookId = Optional.of(primaryWorkbookId);
+            this.primaryWorkbookId = Optional.ofNullable(primaryWorkbookId);
             return this;
         }
 
@@ -338,7 +338,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -349,7 +349,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder settings(SpaceSettings settings) {
-            this.settings = Optional.of(settings);
+            this.settings = Optional.ofNullable(settings);
             return this;
         }
 
@@ -360,7 +360,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -371,7 +371,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder access(List<SpaceAccess> access) {
-            this.access = Optional.of(access);
+            this.access = Optional.ofNullable(access);
             return this;
         }
 
@@ -382,7 +382,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder autoConfigure(Boolean autoConfigure) {
-            this.autoConfigure = Optional.of(autoConfigure);
+            this.autoConfigure = Optional.ofNullable(autoConfigure);
             return this;
         }
 
@@ -393,7 +393,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -404,7 +404,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder labels(List<String> labels) {
-            this.labels = Optional.of(labels);
+            this.labels = Optional.ofNullable(labels);
             return this;
         }
 
@@ -415,7 +415,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder translationsPath(String translationsPath) {
-            this.translationsPath = Optional.of(translationsPath);
+            this.translationsPath = Optional.ofNullable(translationsPath);
             return this;
         }
 
@@ -426,7 +426,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder languageOverride(String languageOverride) {
-            this.languageOverride = Optional.of(languageOverride);
+            this.languageOverride = Optional.ofNullable(languageOverride);
             return this;
         }
 
@@ -437,7 +437,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder archivedAt(OffsetDateTime archivedAt) {
-            this.archivedAt = Optional.of(archivedAt);
+            this.archivedAt = Optional.ofNullable(archivedAt);
             return this;
         }
 
@@ -448,7 +448,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         }
 
         public Builder appId(AppId appId) {
-            this.appId = Optional.of(appId);
+            this.appId = Optional.ofNullable(appId);
             return this;
         }
 

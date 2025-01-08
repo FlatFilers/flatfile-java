@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Entitlement.Builder.class)
 public final class Entitlement {
     private final String key;
@@ -76,7 +77,7 @@ public final class Entitlement {
     }
 
     public interface KeyStage {
-        MetadataStage key(String key);
+        MetadataStage key(@NotNull String key);
 
         Builder from(Entitlement other);
     }
@@ -113,8 +114,8 @@ public final class Entitlement {
          */
         @java.lang.Override
         @JsonSetter("key")
-        public MetadataStage key(String key) {
-            this.key = key;
+        public MetadataStage key(@NotNull String key) {
+            this.key = Objects.requireNonNull(key, "key must not be null");
             return this;
         }
 

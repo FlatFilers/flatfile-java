@@ -3,24 +3,39 @@
  */
 package com.flatfile.api.resources.spaces;
 
-import com.flatfile.api.core.ApiError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.FlatfileApiException;
+import com.flatfile.api.core.FlatfileException;
 import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
+import com.flatfile.api.resources.commons.errors.BadRequestError;
+import com.flatfile.api.resources.commons.errors.ForbiddenError;
+import com.flatfile.api.resources.commons.errors.NotFoundError;
+import com.flatfile.api.resources.commons.types.Errors;
+import com.flatfile.api.resources.commons.types.GuidanceId;
 import com.flatfile.api.resources.commons.types.SpaceId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.spaces.requests.DeleteSpacesRequest;
+import com.flatfile.api.resources.spaces.requests.GetGuidanceRequest;
+import com.flatfile.api.resources.spaces.requests.ListGuidanceRequest;
 import com.flatfile.api.resources.spaces.requests.ListSpacesRequest;
+import com.flatfile.api.resources.spaces.types.GuidanceApiCreateData;
+import com.flatfile.api.resources.spaces.types.GuidanceApiUpdateData;
+import com.flatfile.api.resources.spaces.types.GuidanceListResponse;
+import com.flatfile.api.resources.spaces.types.GuidanceResource;
 import com.flatfile.api.resources.spaces.types.ListSpacesResponse;
 import com.flatfile.api.resources.spaces.types.SpaceConfig;
 import com.flatfile.api.resources.spaces.types.SpaceResponse;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class SpacesClient {
     protected final ClientOptions clientOptions;
@@ -87,17 +102,29 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ListSpacesResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListSpacesResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                if (response.code() == 400) {
+                    throw new BadRequestError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -127,8 +154,8 @@ public class SpacesClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new FlatfileException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -136,17 +163,33 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SpaceResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SpaceResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -172,17 +215,33 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SpaceResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SpaceResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -208,17 +267,33 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Success.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -243,17 +318,33 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Success.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -284,8 +375,8 @@ public class SpacesClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new FlatfileException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -293,17 +384,33 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), SpaceResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SpaceResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -330,17 +437,386 @@ public class SpacesClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Success.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Sets archivedAt timestamp on a space to null
+     */
+    public Success unarchiveSpace(SpaceId spaceId) {
+        return unarchiveSpace(spaceId, null);
+    }
+
+    /**
+     * Sets archivedAt timestamp on a space to null
+     */
+    public Success unarchiveSpace(SpaceId spaceId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("spaces")
+                .addPathSegment(spaceId.toString())
+                .addPathSegments("unarchive")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", RequestBody.create("", null))
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Success.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Creates a new guidance
+     */
+    public GuidanceResource createGuidance(SpaceId spaceId, GuidanceApiCreateData request) {
+        return createGuidance(spaceId, request, null);
+    }
+
+    /**
+     * Creates a new guidance
+     */
+    public GuidanceResource createGuidance(
+            SpaceId spaceId, GuidanceApiCreateData request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("spaces")
+                .addPathSegment(spaceId.toString())
+                .addPathSegments("guidance")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new FlatfileException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GuidanceResource.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 403:
+                        throw new ForbiddenError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Lists guidances
+     */
+    public GuidanceListResponse listGuidance(SpaceId spaceId, ListGuidanceRequest request) {
+        return listGuidance(spaceId, request, null);
+    }
+
+    /**
+     * Lists guidances
+     */
+    public GuidanceListResponse listGuidance(
+            SpaceId spaceId, ListGuidanceRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("spaces")
+                .addPathSegment(spaceId.toString())
+                .addPathSegments("guidance");
+        if (request.getGuide().isPresent()) {
+            httpUrl.addQueryParameter("guide", request.getGuide().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GuidanceListResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 403:
+                        throw new ForbiddenError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Retrieves a guidance by its id
+     */
+    public GuidanceResource getGuidance(SpaceId spaceId, GuidanceId guidanceId, GetGuidanceRequest request) {
+        return getGuidance(spaceId, guidanceId, request, null);
+    }
+
+    /**
+     * Retrieves a guidance by its id
+     */
+    public GuidanceResource getGuidance(
+            SpaceId spaceId, GuidanceId guidanceId, GetGuidanceRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("spaces")
+                .addPathSegment(spaceId.toString())
+                .addPathSegments("guidance")
+                .addPathSegment(guidanceId.toString());
+        if (request.getGuide().isPresent()) {
+            httpUrl.addQueryParameter("guide", request.getGuide().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GuidanceResource.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 403:
+                        throw new ForbiddenError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Updates a guidance with the given id
+     */
+    public GuidanceResource updateGuidance(SpaceId spaceId, GuidanceId guidanceId, GuidanceApiUpdateData request) {
+        return updateGuidance(spaceId, guidanceId, request, null);
+    }
+
+    /**
+     * Updates a guidance with the given id
+     */
+    public GuidanceResource updateGuidance(
+            SpaceId spaceId, GuidanceId guidanceId, GuidanceApiUpdateData request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("spaces")
+                .addPathSegment(spaceId.toString())
+                .addPathSegments("guidance")
+                .addPathSegment(guidanceId.toString())
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new FlatfileException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("PATCH", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GuidanceResource.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 403:
+                        throw new ForbiddenError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Deletes a guidance by its id
+     */
+    public Success deleteGuidance(SpaceId spaceId, GuidanceId guidanceId) {
+        return deleteGuidance(spaceId, guidanceId, null);
+    }
+
+    /**
+     * Deletes a guidance by its id
+     */
+    public Success deleteGuidance(SpaceId spaceId, GuidanceId guidanceId, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("spaces")
+                .addPathSegment(spaceId.toString())
+                .addPathSegments("guidance")
+                .addPathSegment(guidanceId.toString())
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Success.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 403:
+                        throw new ForbiddenError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 }

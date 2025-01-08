@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GuestConfigUpdate.Builder.class)
 public final class GuestConfigUpdate {
     private final Optional<EnvironmentId> environmentId;
@@ -127,7 +127,7 @@ public final class GuestConfigUpdate {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -138,7 +138,7 @@ public final class GuestConfigUpdate {
         }
 
         public Builder email(String email) {
-            this.email = Optional.of(email);
+            this.email = Optional.ofNullable(email);
             return this;
         }
 
@@ -149,7 +149,7 @@ public final class GuestConfigUpdate {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -160,7 +160,7 @@ public final class GuestConfigUpdate {
         }
 
         public Builder spaces(List<GuestSpace> spaces) {
-            this.spaces = Optional.of(spaces);
+            this.spaces = Optional.ofNullable(spaces);
             return this;
         }
 

@@ -6,6 +6,7 @@ package com.flatfile.api;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.Suppliers;
 import com.flatfile.api.resources.accounts.AccountsClient;
+import com.flatfile.api.resources.actions.ActionsClient;
 import com.flatfile.api.resources.agents.AgentsClient;
 import com.flatfile.api.resources.apps.AppsClient;
 import com.flatfile.api.resources.assistant.AssistantClient;
@@ -35,6 +36,8 @@ public class Flatfile {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AccountsClient> accountsClient;
+
+    protected final Supplier<ActionsClient> actionsClient;
 
     protected final Supplier<AgentsClient> agentsClient;
 
@@ -85,6 +88,7 @@ public class Flatfile {
     public Flatfile(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.accountsClient = Suppliers.memoize(() -> new AccountsClient(clientOptions));
+        this.actionsClient = Suppliers.memoize(() -> new ActionsClient(clientOptions));
         this.agentsClient = Suppliers.memoize(() -> new AgentsClient(clientOptions));
         this.appsClient = Suppliers.memoize(() -> new AppsClient(clientOptions));
         this.assistantClient = Suppliers.memoize(() -> new AssistantClient(clientOptions));
@@ -112,6 +116,10 @@ public class Flatfile {
 
     public AccountsClient accounts() {
         return this.accountsClient.get();
+    }
+
+    public ActionsClient actions() {
+        return this.actionsClient.get();
     }
 
     public AgentsClient agents() {

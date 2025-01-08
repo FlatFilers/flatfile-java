@@ -19,8 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetRecordsResponseData.Builder.class)
 public final class GetRecordsResponseData implements ISuccessData {
     private final boolean success;
@@ -119,7 +120,7 @@ public final class GetRecordsResponseData implements ISuccessData {
     }
 
     public interface RecordsStage {
-        _FinalStage records(RecordsWithLinks records);
+        _FinalStage records(@NotNull RecordsWithLinks records);
     }
 
     public interface _FinalStage {
@@ -174,14 +175,14 @@ public final class GetRecordsResponseData implements ISuccessData {
 
         @java.lang.Override
         @JsonSetter("records")
-        public _FinalStage records(RecordsWithLinks records) {
-            this.records = records;
+        public _FinalStage records(@NotNull RecordsWithLinks records) {
+            this.records = Objects.requireNonNull(records, "records must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -198,7 +199,7 @@ public final class GetRecordsResponseData implements ISuccessData {
          */
         @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -211,7 +212,7 @@ public final class GetRecordsResponseData implements ISuccessData {
 
         @java.lang.Override
         public _FinalStage counts(RecordCounts counts) {
-            this.counts = Optional.of(counts);
+            this.counts = Optional.ofNullable(counts);
             return this;
         }
 

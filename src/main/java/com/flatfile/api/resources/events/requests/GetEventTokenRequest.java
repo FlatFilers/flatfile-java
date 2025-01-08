@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetEventTokenRequest.Builder.class)
 public final class GetEventTokenRequest {
     private final Optional<String> scope;
@@ -103,7 +103,7 @@ public final class GetEventTokenRequest {
         }
 
         public Builder scope(String scope) {
-            this.scope = Optional.of(scope);
+            this.scope = Optional.ofNullable(scope);
             return this;
         }
 
@@ -114,7 +114,7 @@ public final class GetEventTokenRequest {
         }
 
         public Builder spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 

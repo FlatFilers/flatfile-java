@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EnumDetails.Builder.class)
 public final class EnumDetails {
     private final List<CategoryMapping> mapping;
@@ -140,7 +140,7 @@ public final class EnumDetails {
         }
 
         public Builder unusedSourceValues(List<EnumValue> unusedSourceValues) {
-            this.unusedSourceValues = Optional.of(unusedSourceValues);
+            this.unusedSourceValues = Optional.ofNullable(unusedSourceValues);
             return this;
         }
 
@@ -151,7 +151,7 @@ public final class EnumDetails {
         }
 
         public Builder unusedDestinationValues(List<EnumValue> unusedDestinationValues) {
-            this.unusedDestinationValues = Optional.of(unusedDestinationValues);
+            this.unusedDestinationValues = Optional.ofNullable(unusedDestinationValues);
             return this;
         }
 

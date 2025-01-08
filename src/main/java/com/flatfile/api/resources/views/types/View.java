@@ -16,8 +16,9 @@ import com.flatfile.api.resources.commons.types.ViewId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = View.Builder.class)
 public final class View {
     private final ViewId id;
@@ -121,25 +122,25 @@ public final class View {
     }
 
     public interface IdStage {
-        SheetIdStage id(ViewId id);
+        SheetIdStage id(@NotNull ViewId id);
 
         Builder from(View other);
     }
 
     public interface SheetIdStage {
-        NameStage sheetId(SheetId sheetId);
+        NameStage sheetId(@NotNull SheetId sheetId);
     }
 
     public interface NameStage {
-        ConfigStage name(String name);
+        ConfigStage name(@NotNull String name);
     }
 
     public interface ConfigStage {
-        CreatedByStage config(ViewConfig config);
+        CreatedByStage config(@NotNull ViewConfig config);
     }
 
     public interface CreatedByStage {
-        _FinalStage createdBy(String createdBy);
+        _FinalStage createdBy(@NotNull String createdBy);
     }
 
     public interface _FinalStage {
@@ -180,8 +181,8 @@ public final class View {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public SheetIdStage id(ViewId id) {
-            this.id = id;
+        public SheetIdStage id(@NotNull ViewId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -191,8 +192,8 @@ public final class View {
          */
         @java.lang.Override
         @JsonSetter("sheetId")
-        public NameStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public NameStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
@@ -202,8 +203,8 @@ public final class View {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public ConfigStage name(String name) {
-            this.name = name;
+        public ConfigStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -213,8 +214,8 @@ public final class View {
          */
         @java.lang.Override
         @JsonSetter("config")
-        public CreatedByStage config(ViewConfig config) {
-            this.config = config;
+        public CreatedByStage config(@NotNull ViewConfig config) {
+            this.config = Objects.requireNonNull(config, "config must not be null");
             return this;
         }
 
@@ -224,8 +225,8 @@ public final class View {
          */
         @java.lang.Override
         @JsonSetter("createdBy")
-        public _FinalStage createdBy(String createdBy) {
-            this.createdBy = createdBy;
+        public _FinalStage createdBy(@NotNull String createdBy) {
+            this.createdBy = Objects.requireNonNull(createdBy, "createdBy must not be null");
             return this;
         }
 

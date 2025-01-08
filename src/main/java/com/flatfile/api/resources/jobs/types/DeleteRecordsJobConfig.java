@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DeleteRecordsJobConfig.Builder.class)
 public final class DeleteRecordsJobConfig {
     private final Optional<Filter> filter;
@@ -41,6 +42,8 @@ public final class DeleteRecordsJobConfig {
 
     private final Optional<List<RecordId>> exceptions;
 
+    private final Optional<String> snapshotLabel;
+
     private final Map<String, Object> additionalProperties;
 
     private DeleteRecordsJobConfig(
@@ -51,6 +54,7 @@ public final class DeleteRecordsJobConfig {
             Optional<String> q,
             SheetId sheet,
             Optional<List<RecordId>> exceptions,
+            Optional<String> snapshotLabel,
             Map<String, Object> additionalProperties) {
         this.filter = filter;
         this.filterField = filterField;
@@ -59,6 +63,7 @@ public final class DeleteRecordsJobConfig {
         this.q = q;
         this.sheet = sheet;
         this.exceptions = exceptions;
+        this.snapshotLabel = snapshotLabel;
         this.additionalProperties = additionalProperties;
     }
 
@@ -109,6 +114,14 @@ public final class DeleteRecordsJobConfig {
         return exceptions;
     }
 
+    /**
+     * @return If specified, a snapshot will be generated with this label
+     */
+    @JsonProperty("snapshotLabel")
+    public Optional<String> getSnapshotLabel() {
+        return snapshotLabel;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -127,13 +140,21 @@ public final class DeleteRecordsJobConfig {
                 && searchField.equals(other.searchField)
                 && q.equals(other.q)
                 && sheet.equals(other.sheet)
-                && exceptions.equals(other.exceptions);
+                && exceptions.equals(other.exceptions)
+                && snapshotLabel.equals(other.snapshotLabel);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.filter, this.filterField, this.searchValue, this.searchField, this.q, this.sheet, this.exceptions);
+                this.filter,
+                this.filterField,
+                this.searchValue,
+                this.searchField,
+                this.q,
+                this.sheet,
+                this.exceptions,
+                this.snapshotLabel);
     }
 
     @java.lang.Override
@@ -146,7 +167,7 @@ public final class DeleteRecordsJobConfig {
     }
 
     public interface SheetStage {
-        _FinalStage sheet(SheetId sheet);
+        _FinalStage sheet(@NotNull SheetId sheet);
 
         Builder from(DeleteRecordsJobConfig other);
     }
@@ -177,11 +198,17 @@ public final class DeleteRecordsJobConfig {
         _FinalStage exceptions(Optional<List<RecordId>> exceptions);
 
         _FinalStage exceptions(List<RecordId> exceptions);
+
+        _FinalStage snapshotLabel(Optional<String> snapshotLabel);
+
+        _FinalStage snapshotLabel(String snapshotLabel);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements SheetStage, _FinalStage {
         private SheetId sheet;
+
+        private Optional<String> snapshotLabel = Optional.empty();
 
         private Optional<List<RecordId>> exceptions = Optional.empty();
 
@@ -209,13 +236,31 @@ public final class DeleteRecordsJobConfig {
             q(other.getQ());
             sheet(other.getSheet());
             exceptions(other.getExceptions());
+            snapshotLabel(other.getSnapshotLabel());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sheet")
-        public _FinalStage sheet(SheetId sheet) {
-            this.sheet = sheet;
+        public _FinalStage sheet(@NotNull SheetId sheet) {
+            this.sheet = Objects.requireNonNull(sheet, "sheet must not be null");
+            return this;
+        }
+
+        /**
+         * <p>If specified, a snapshot will be generated with this label</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage snapshotLabel(String snapshotLabel) {
+            this.snapshotLabel = Optional.ofNullable(snapshotLabel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "snapshotLabel", nulls = Nulls.SKIP)
+        public _FinalStage snapshotLabel(Optional<String> snapshotLabel) {
+            this.snapshotLabel = snapshotLabel;
             return this;
         }
 
@@ -225,7 +270,7 @@ public final class DeleteRecordsJobConfig {
          */
         @java.lang.Override
         public _FinalStage exceptions(List<RecordId> exceptions) {
-            this.exceptions = Optional.of(exceptions);
+            this.exceptions = Optional.ofNullable(exceptions);
             return this;
         }
 
@@ -242,7 +287,7 @@ public final class DeleteRecordsJobConfig {
          */
         @java.lang.Override
         public _FinalStage q(String q) {
-            this.q = Optional.of(q);
+            this.q = Optional.ofNullable(q);
             return this;
         }
 
@@ -255,7 +300,7 @@ public final class DeleteRecordsJobConfig {
 
         @java.lang.Override
         public _FinalStage searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -268,7 +313,7 @@ public final class DeleteRecordsJobConfig {
 
         @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -285,7 +330,7 @@ public final class DeleteRecordsJobConfig {
          */
         @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -302,7 +347,7 @@ public final class DeleteRecordsJobConfig {
          */
         @java.lang.Override
         public _FinalStage filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -316,7 +361,15 @@ public final class DeleteRecordsJobConfig {
         @java.lang.Override
         public DeleteRecordsJobConfig build() {
             return new DeleteRecordsJobConfig(
-                    filter, filterField, searchValue, searchField, q, sheet, exceptions, additionalProperties);
+                    filter,
+                    filterField,
+                    searchValue,
+                    searchField,
+                    q,
+                    sheet,
+                    exceptions,
+                    snapshotLabel,
+                    additionalProperties);
         }
     }
 }

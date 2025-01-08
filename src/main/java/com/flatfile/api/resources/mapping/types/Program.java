@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Program.Builder.class)
 public final class Program {
     private final List<MappingRuleOrConfig> rules;
@@ -265,7 +265,7 @@ public final class Program {
         }
 
         public Builder id(String id) {
-            this.id = Optional.of(id);
+            this.id = Optional.ofNullable(id);
             return this;
         }
 
@@ -276,7 +276,7 @@ public final class Program {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -287,7 +287,7 @@ public final class Program {
         }
 
         public Builder familyId(FamilyId familyId) {
-            this.familyId = Optional.of(familyId);
+            this.familyId = Optional.ofNullable(familyId);
             return this;
         }
 
@@ -298,7 +298,7 @@ public final class Program {
         }
 
         public Builder createdAt(OffsetDateTime createdAt) {
-            this.createdAt = Optional.of(createdAt);
+            this.createdAt = Optional.ofNullable(createdAt);
             return this;
         }
 
@@ -309,7 +309,7 @@ public final class Program {
         }
 
         public Builder createdBy(UserId createdBy) {
-            this.createdBy = Optional.of(createdBy);
+            this.createdBy = Optional.ofNullable(createdBy);
             return this;
         }
 
@@ -354,7 +354,7 @@ public final class Program {
         }
 
         public Builder summary(ProgramSummary summary) {
-            this.summary = Optional.of(summary);
+            this.summary = Optional.ofNullable(summary);
             return this;
         }
 
@@ -365,7 +365,7 @@ public final class Program {
         }
 
         public Builder accessToken(String accessToken) {
-            this.accessToken = Optional.of(accessToken);
+            this.accessToken = Optional.ofNullable(accessToken);
             return this;
         }
 

@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DeleteSpacesRequest.Builder.class)
 public final class DeleteSpacesRequest {
     private final SpaceId spaceIds;
@@ -66,7 +67,7 @@ public final class DeleteSpacesRequest {
     }
 
     public interface SpaceIdsStage {
-        _FinalStage spaceIds(SpaceId spaceIds);
+        _FinalStage spaceIds(@NotNull SpaceId spaceIds);
 
         Builder from(DeleteSpacesRequest other);
     }
@@ -96,8 +97,8 @@ public final class DeleteSpacesRequest {
          */
         @java.lang.Override
         @JsonSetter("spaceIds")
-        public _FinalStage spaceIds(SpaceId spaceIds) {
-            this.spaceIds = spaceIds;
+        public _FinalStage spaceIds(@NotNull SpaceId spaceIds) {
+            this.spaceIds = Objects.requireNonNull(spaceIds, "spaceIds must not be null");
             return this;
         }
 

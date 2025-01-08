@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListFilesRequest.Builder.class)
 public final class ListFilesRequest {
     private final Optional<String> spaceId;
@@ -135,7 +135,7 @@ public final class ListFilesRequest {
         }
 
         public Builder spaceId(String spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -146,7 +146,7 @@ public final class ListFilesRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -157,7 +157,7 @@ public final class ListFilesRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -168,7 +168,7 @@ public final class ListFilesRequest {
         }
 
         public Builder mode(Mode mode) {
-            this.mode = Optional.of(mode);
+            this.mode = Optional.ofNullable(mode);
             return this;
         }
 

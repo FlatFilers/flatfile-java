@@ -5,6 +5,7 @@ package com.flatfile.api.resources.agents.types;
 
 import com.flatfile.api.resources.events.types.EventTopic;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IAgentConfig {
@@ -14,5 +15,9 @@ public interface IAgentConfig {
 
     Optional<String> getSource();
 
+    Optional<String> getSourceMap();
+
     Optional<String> getSlug();
+
+    Optional<Map<String, Object>> getOptions();
 }

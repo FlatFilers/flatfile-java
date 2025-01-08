@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CellValue.Builder.class)
 public final class CellValue implements ICellValue {
     private final Optional<Boolean> valid;
@@ -65,6 +65,9 @@ public final class CellValue implements ICellValue {
         return messages;
     }
 
+    /**
+     * @return Deprecated, use record level metadata instead.
+     */
     @JsonProperty("metadata")
     @java.lang.Override
     public Optional<Map<String, Object>> getMetadata() {
@@ -159,7 +162,7 @@ public final class CellValue implements ICellValue {
         }
 
         public Builder valid(Boolean valid) {
-            this.valid = Optional.of(valid);
+            this.valid = Optional.ofNullable(valid);
             return this;
         }
 
@@ -170,7 +173,7 @@ public final class CellValue implements ICellValue {
         }
 
         public Builder messages(List<ValidationMessage> messages) {
-            this.messages = Optional.of(messages);
+            this.messages = Optional.ofNullable(messages);
             return this;
         }
 
@@ -181,7 +184,7 @@ public final class CellValue implements ICellValue {
         }
 
         public Builder metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -192,7 +195,7 @@ public final class CellValue implements ICellValue {
         }
 
         public Builder value(CellValueUnion value) {
-            this.value = Optional.of(value);
+            this.value = Optional.ofNullable(value);
             return this;
         }
 
@@ -203,7 +206,7 @@ public final class CellValue implements ICellValue {
         }
 
         public Builder layer(String layer) {
-            this.layer = Optional.of(layer);
+            this.layer = Optional.ofNullable(layer);
             return this;
         }
 
@@ -214,7 +217,7 @@ public final class CellValue implements ICellValue {
         }
 
         public Builder updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = Optional.of(updatedAt);
+            this.updatedAt = Optional.ofNullable(updatedAt);
             return this;
         }
 

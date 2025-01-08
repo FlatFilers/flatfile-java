@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Record.Builder.class)
 public final class Record implements IRecordBase {
     private final RecordId id;
@@ -164,13 +165,13 @@ public final class Record implements IRecordBase {
     }
 
     public interface IdStage {
-        ValuesStage id(RecordId id);
+        ValuesStage id(@NotNull RecordId id);
 
         Builder from(Record other);
     }
 
     public interface ValuesStage {
-        _FinalStage values(RecordData values);
+        _FinalStage values(@NotNull RecordData values);
     }
 
     public interface _FinalStage {
@@ -239,21 +240,21 @@ public final class Record implements IRecordBase {
 
         @java.lang.Override
         @JsonSetter("id")
-        public ValuesStage id(RecordId id) {
-            this.id = id;
+        public ValuesStage id(@NotNull RecordId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("values")
-        public _FinalStage values(RecordData values) {
-            this.values = values;
+        public _FinalStage values(@NotNull RecordData values) {
+            this.values = Objects.requireNonNull(values, "values must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage config(RecordConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -266,7 +267,7 @@ public final class Record implements IRecordBase {
 
         @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -283,7 +284,7 @@ public final class Record implements IRecordBase {
          */
         @java.lang.Override
         public _FinalStage messages(List<ValidationMessage> messages) {
-            this.messages = Optional.of(messages);
+            this.messages = Optional.ofNullable(messages);
             return this;
         }
 
@@ -300,7 +301,7 @@ public final class Record implements IRecordBase {
          */
         @java.lang.Override
         public _FinalStage valid(Boolean valid) {
-            this.valid = Optional.of(valid);
+            this.valid = Optional.ofNullable(valid);
             return this;
         }
 
@@ -313,7 +314,7 @@ public final class Record implements IRecordBase {
 
         @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -330,7 +331,7 @@ public final class Record implements IRecordBase {
          */
         @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 

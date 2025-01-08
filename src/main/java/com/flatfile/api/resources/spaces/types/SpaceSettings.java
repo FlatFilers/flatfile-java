@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SpaceSettings.Builder.class)
 public final class SpaceSettings {
     private final Optional<SpaceSidebarConfig> sidebarConfig;
@@ -87,7 +87,7 @@ public final class SpaceSettings {
         }
 
         public Builder sidebarConfig(SpaceSidebarConfig sidebarConfig) {
-            this.sidebarConfig = Optional.of(sidebarConfig);
+            this.sidebarConfig = Optional.ofNullable(sidebarConfig);
             return this;
         }
 

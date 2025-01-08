@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UniqueConstraintConfig.Builder.class)
 public final class UniqueConstraintConfig {
     private final Optional<Boolean> caseSensitive;
@@ -102,7 +102,7 @@ public final class UniqueConstraintConfig {
         }
 
         public Builder caseSensitive(Boolean caseSensitive) {
-            this.caseSensitive = Optional.of(caseSensitive);
+            this.caseSensitive = Optional.ofNullable(caseSensitive);
             return this;
         }
 
@@ -113,7 +113,7 @@ public final class UniqueConstraintConfig {
         }
 
         public Builder ignoreEmpty(Boolean ignoreEmpty) {
-            this.ignoreEmpty = Optional.of(ignoreEmpty);
+            this.ignoreEmpty = Optional.ofNullable(ignoreEmpty);
             return this;
         }
 

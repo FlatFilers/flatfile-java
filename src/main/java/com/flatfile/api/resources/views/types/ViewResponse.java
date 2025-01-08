@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ViewResponse.Builder.class)
 public final class ViewResponse {
     private final View data;
@@ -62,7 +63,7 @@ public final class ViewResponse {
     }
 
     public interface DataStage {
-        _FinalStage data(View data);
+        _FinalStage data(@NotNull View data);
 
         Builder from(ViewResponse other);
     }
@@ -88,8 +89,8 @@ public final class ViewResponse {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(View data) {
-            this.data = data;
+        public _FinalStage data(@NotNull View data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

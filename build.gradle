@@ -13,9 +13,9 @@ repositories {
 
 dependencies {
     api 'com.squareup.okhttp3:okhttp:4.12.0'
-    api 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.12.3'
-    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.17.2'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.17.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
@@ -24,15 +24,39 @@ dependencies {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+tasks.withType(Javadoc) {
+    failOnError false
+    options.addStringOption('Xdoclint:none', '-quiet')
+}
+
 spotless {
     java {
         palantirJavaFormat()
     }
 }
 
+
 java {
     withSourcesJar()
     withJavadocJar()
+}
+
+
+group = 'com.flatfile'
+
+version = '0.0.14'
+
+jar {
+    dependsOn(":generatePomFileForMavenPublication")
+    archiveBaseName = "flatfile-java"
+}
+
+sourcesJar {
+    archiveBaseName = "flatfile-java"
+}
+
+javadocJar {
+    archiveBaseName = "flatfile-java"
 }
 
 test {
@@ -41,13 +65,27 @@ test {
         showStandardStreams = true
     }
 }
+
 publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.flatfile'
             artifactId = 'flatfile-java'
-            version = '0.0.13'
+            version = '0.0.14'
             from components.java
+            pom {
+                licenses {
+                    license {
+                        name = 'The MIT License (MIT)'
+                        url = 'https://mit-license.org/'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/FlatFilers/flatfile-java.git'
+                    developerConnection = 'scm:git:git://github.com/FlatFilers/flatfile-java.git'
+                    url = 'https://github.com/FlatFilers/flatfile-java'
+                }
+            }
         }
     }
     repositories {

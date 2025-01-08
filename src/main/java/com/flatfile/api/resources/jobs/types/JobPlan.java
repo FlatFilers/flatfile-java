@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobPlan.Builder.class)
 public final class JobPlan {
     private final Job job;
@@ -70,13 +71,13 @@ public final class JobPlan {
     }
 
     public interface JobStage {
-        PlanStage job(Job job);
+        PlanStage job(@NotNull Job job);
 
         Builder from(JobPlan other);
     }
 
     public interface PlanStage {
-        _FinalStage plan(JobExecutionPlan plan);
+        _FinalStage plan(@NotNull JobExecutionPlan plan);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class JobPlan {
 
         @java.lang.Override
         @JsonSetter("job")
-        public PlanStage job(Job job) {
-            this.job = job;
+        public PlanStage job(@NotNull Job job) {
+            this.job = Objects.requireNonNull(job, "job must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("plan")
-        public _FinalStage plan(JobExecutionPlan plan) {
-            this.plan = plan;
+        public _FinalStage plan(@NotNull JobExecutionPlan plan) {
+            this.plan = Objects.requireNonNull(plan, "plan must not be null");
             return this;
         }
 

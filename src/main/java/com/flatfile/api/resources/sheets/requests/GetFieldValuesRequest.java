@@ -26,8 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetFieldValuesRequest.Builder.class)
 public final class GetFieldValuesRequest {
     private final Optional<FieldKey> fieldKey;
@@ -191,7 +192,7 @@ public final class GetFieldValuesRequest {
     }
 
     public interface DistinctStage {
-        _FinalStage distinct(Distinct distinct);
+        _FinalStage distinct(@NotNull Distinct distinct);
 
         Builder from(GetFieldValuesRequest other);
     }
@@ -284,8 +285,8 @@ public final class GetFieldValuesRequest {
          */
         @java.lang.Override
         @JsonSetter("distinct")
-        public _FinalStage distinct(Distinct distinct) {
-            this.distinct = distinct;
+        public _FinalStage distinct(@NotNull Distinct distinct) {
+            this.distinct = Objects.requireNonNull(distinct, "distinct must not be null");
             return this;
         }
 
@@ -295,7 +296,7 @@ public final class GetFieldValuesRequest {
          */
         @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -308,7 +309,7 @@ public final class GetFieldValuesRequest {
 
         @java.lang.Override
         public _FinalStage includeCounts(IncludeCounts includeCounts) {
-            this.includeCounts = Optional.of(includeCounts);
+            this.includeCounts = Optional.ofNullable(includeCounts);
             return this;
         }
 
@@ -325,7 +326,7 @@ public final class GetFieldValuesRequest {
          */
         @java.lang.Override
         public _FinalStage pageNumber(PageNumber pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -342,7 +343,7 @@ public final class GetFieldValuesRequest {
          */
         @java.lang.Override
         public _FinalStage pageSize(PageSize pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -359,7 +360,7 @@ public final class GetFieldValuesRequest {
          */
         @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -372,7 +373,7 @@ public final class GetFieldValuesRequest {
 
         @java.lang.Override
         public _FinalStage filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -385,7 +386,7 @@ public final class GetFieldValuesRequest {
 
         @java.lang.Override
         public _FinalStage sortDirection(SortDirection sortDirection) {
-            this.sortDirection = Optional.of(sortDirection);
+            this.sortDirection = Optional.ofNullable(sortDirection);
             return this;
         }
 
@@ -398,7 +399,7 @@ public final class GetFieldValuesRequest {
 
         @java.lang.Override
         public _FinalStage sortField(SortField sortField) {
-            this.sortField = Optional.of(sortField);
+            this.sortField = Optional.ofNullable(sortField);
             return this;
         }
 
@@ -411,7 +412,7 @@ public final class GetFieldValuesRequest {
 
         @java.lang.Override
         public _FinalStage fieldKey(FieldKey fieldKey) {
-            this.fieldKey = Optional.of(fieldKey);
+            this.fieldKey = Optional.ofNullable(fieldKey);
             return this;
         }
 

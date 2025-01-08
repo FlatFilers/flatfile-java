@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CompositeUniqueConstraint.Builder.class)
 public final class CompositeUniqueConstraint {
     private final String name;
@@ -107,13 +108,13 @@ public final class CompositeUniqueConstraint {
     }
 
     public interface NameStage {
-        StrategyStage name(String name);
+        StrategyStage name(@NotNull String name);
 
         Builder from(CompositeUniqueConstraint other);
     }
 
     public interface StrategyStage {
-        _FinalStage strategy(CompositeUniqueConstraintStrategy strategy);
+        _FinalStage strategy(@NotNull CompositeUniqueConstraintStrategy strategy);
     }
 
     public interface _FinalStage {
@@ -160,15 +161,15 @@ public final class CompositeUniqueConstraint {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public StrategyStage name(String name) {
-            this.name = name;
+        public StrategyStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("strategy")
-        public _FinalStage strategy(CompositeUniqueConstraintStrategy strategy) {
-            this.strategy = strategy;
+        public _FinalStage strategy(@NotNull CompositeUniqueConstraintStrategy strategy) {
+            this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
             return this;
         }
 
@@ -178,7 +179,7 @@ public final class CompositeUniqueConstraint {
          */
         @java.lang.Override
         public _FinalStage requiredFields(List<String> requiredFields) {
-            this.requiredFields = Optional.of(requiredFields);
+            this.requiredFields = Optional.ofNullable(requiredFields);
             return this;
         }
 

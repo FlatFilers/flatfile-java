@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EventAttributes.Builder.class)
 public final class EventAttributes {
     private final Optional<OffsetDateTime> targetUpdatedAt;
@@ -105,7 +105,7 @@ public final class EventAttributes {
         }
 
         public Builder targetUpdatedAt(OffsetDateTime targetUpdatedAt) {
-            this.targetUpdatedAt = Optional.of(targetUpdatedAt);
+            this.targetUpdatedAt = Optional.ofNullable(targetUpdatedAt);
             return this;
         }
 
@@ -116,7 +116,7 @@ public final class EventAttributes {
         }
 
         public Builder progress(Progress progress) {
-            this.progress = Optional.of(progress);
+            this.progress = Optional.ofNullable(progress);
             return this;
         }
 

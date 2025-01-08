@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobUpdate.Builder.class)
 public final class JobUpdate {
     private final Optional<JobUpdateConfig> config;
@@ -31,6 +31,8 @@ public final class JobUpdate {
 
     private final Optional<String> info;
 
+    private final Optional<Map<String, Object>> metadata;
+
     private final Map<String, Object> additionalProperties;
 
     private JobUpdate(
@@ -39,12 +41,14 @@ public final class JobUpdate {
             Optional<Integer> progress,
             Optional<OffsetDateTime> outcomeAcknowledgedAt,
             Optional<String> info,
+            Optional<Map<String, Object>> metadata,
             Map<String, Object> additionalProperties) {
         this.config = config;
         this.status = status;
         this.progress = progress;
         this.outcomeAcknowledgedAt = outcomeAcknowledgedAt;
         this.info = info;
+        this.metadata = metadata;
         this.additionalProperties = additionalProperties;
     }
 
@@ -85,6 +89,14 @@ public final class JobUpdate {
         return info;
     }
 
+    /**
+     * @return Additional metadata for the job
+     */
+    @JsonProperty("metadata")
+    public Optional<Map<String, Object>> getMetadata() {
+        return metadata;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -101,12 +113,14 @@ public final class JobUpdate {
                 && status.equals(other.status)
                 && progress.equals(other.progress)
                 && outcomeAcknowledgedAt.equals(other.outcomeAcknowledgedAt)
-                && info.equals(other.info);
+                && info.equals(other.info)
+                && metadata.equals(other.metadata);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.config, this.status, this.progress, this.outcomeAcknowledgedAt, this.info);
+        return Objects.hash(
+                this.config, this.status, this.progress, this.outcomeAcknowledgedAt, this.info, this.metadata);
     }
 
     @java.lang.Override
@@ -130,6 +144,8 @@ public final class JobUpdate {
 
         private Optional<String> info = Optional.empty();
 
+        private Optional<Map<String, Object>> metadata = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -141,6 +157,7 @@ public final class JobUpdate {
             progress(other.getProgress());
             outcomeAcknowledgedAt(other.getOutcomeAcknowledgedAt());
             info(other.getInfo());
+            metadata(other.getMetadata());
             return this;
         }
 
@@ -151,7 +168,7 @@ public final class JobUpdate {
         }
 
         public Builder config(JobUpdateConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -162,7 +179,7 @@ public final class JobUpdate {
         }
 
         public Builder status(JobStatus status) {
-            this.status = Optional.of(status);
+            this.status = Optional.ofNullable(status);
             return this;
         }
 
@@ -173,7 +190,7 @@ public final class JobUpdate {
         }
 
         public Builder progress(Integer progress) {
-            this.progress = Optional.of(progress);
+            this.progress = Optional.ofNullable(progress);
             return this;
         }
 
@@ -184,7 +201,7 @@ public final class JobUpdate {
         }
 
         public Builder outcomeAcknowledgedAt(OffsetDateTime outcomeAcknowledgedAt) {
-            this.outcomeAcknowledgedAt = Optional.of(outcomeAcknowledgedAt);
+            this.outcomeAcknowledgedAt = Optional.ofNullable(outcomeAcknowledgedAt);
             return this;
         }
 
@@ -195,12 +212,23 @@ public final class JobUpdate {
         }
 
         public Builder info(String info) {
-            this.info = Optional.of(info);
+            this.info = Optional.ofNullable(info);
+            return this;
+        }
+
+        @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
+        public Builder metadata(Optional<Map<String, Object>> metadata) {
+            this.metadata = metadata;
+            return this;
+        }
+
+        public Builder metadata(Map<String, Object> metadata) {
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
         public JobUpdate build() {
-            return new JobUpdate(config, status, progress, outcomeAcknowledgedAt, info, additionalProperties);
+            return new JobUpdate(config, status, progress, outcomeAcknowledgedAt, info, metadata, additionalProperties);
         }
     }
 }

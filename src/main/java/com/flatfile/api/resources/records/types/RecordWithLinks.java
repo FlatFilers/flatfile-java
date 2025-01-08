@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordWithLinks.Builder.class)
 public final class RecordWithLinks {
     private final RecordId id;
@@ -118,13 +119,13 @@ public final class RecordWithLinks {
     }
 
     public interface IdStage {
-        ValuesStage id(RecordId id);
+        ValuesStage id(@NotNull RecordId id);
 
         Builder from(RecordWithLinks other);
     }
 
     public interface ValuesStage {
-        _FinalStage values(RecordDataWithLinks values);
+        _FinalStage values(@NotNull RecordDataWithLinks values);
     }
 
     public interface _FinalStage {
@@ -179,21 +180,21 @@ public final class RecordWithLinks {
 
         @java.lang.Override
         @JsonSetter("id")
-        public ValuesStage id(RecordId id) {
-            this.id = id;
+        public ValuesStage id(@NotNull RecordId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("values")
-        public _FinalStage values(RecordDataWithLinks values) {
-            this.values = values;
+        public _FinalStage values(@NotNull RecordDataWithLinks values) {
+            this.values = Objects.requireNonNull(values, "values must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage config(RecordConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -206,7 +207,7 @@ public final class RecordWithLinks {
 
         @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -219,7 +220,7 @@ public final class RecordWithLinks {
 
         @java.lang.Override
         public _FinalStage messages(List<ValidationMessage> messages) {
-            this.messages = Optional.of(messages);
+            this.messages = Optional.ofNullable(messages);
             return this;
         }
 
@@ -232,7 +233,7 @@ public final class RecordWithLinks {
 
         @java.lang.Override
         public _FinalStage valid(Boolean valid) {
-            this.valid = Optional.of(valid);
+            this.valid = Optional.ofNullable(valid);
             return this;
         }
 

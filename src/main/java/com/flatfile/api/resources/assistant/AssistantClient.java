@@ -3,8 +3,10 @@
  */
 package com.flatfile.api.resources.assistant;
 
-import com.flatfile.api.core.ApiError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.flatfile.api.core.ClientOptions;
+import com.flatfile.api.core.FlatfileApiException;
+import com.flatfile.api.core.FlatfileException;
 import com.flatfile.api.core.MediaTypes;
 import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.core.RequestOptions;
@@ -18,9 +20,11 @@ import com.flatfile.api.resources.commons.types.Success;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class AssistantClient {
     protected final ClientOptions clientOptions;
@@ -50,6 +54,10 @@ public class AssistantClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("prompts");
+        if (request.getPromptType().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "promptType", request.getPromptType().get().toString());
+        }
         if (request.getPageSize().isPresent()) {
             httpUrl.addQueryParameter("pageSize", request.getPageSize().get().toString());
         }
@@ -63,17 +71,22 @@ public class AssistantClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PromptsResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PromptsResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -99,25 +112,23 @@ public class AssistantClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PromptResponse.class);
-            }
-            throw new ApiError(
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-    }
-
-    /**
-     * Updates a prompt
-     */
-    public PromptResponse update(PromptId promptId) {
-        return update(promptId, PromptPatch.builder().build());
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PromptResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
     }
 
     /**
@@ -140,8 +151,8 @@ public class AssistantClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new FlatfileException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -149,17 +160,22 @@ public class AssistantClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PromptResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PromptResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -182,8 +198,8 @@ public class AssistantClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new FlatfileException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -191,17 +207,22 @@ public class AssistantClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), PromptResponse.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), PromptResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 
@@ -227,17 +248,22 @@ public class AssistantClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            Response response =
-                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Success.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Success.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlatfileException("Network error executing HTTP request", e);
         }
     }
 }

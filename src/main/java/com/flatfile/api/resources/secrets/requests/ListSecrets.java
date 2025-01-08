@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.commons.types.ActorIdUnion;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.HashMap;
@@ -19,21 +20,25 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListSecrets.Builder.class)
 public final class ListSecrets {
     private final Optional<EnvironmentId> environmentId;
 
     private final Optional<SpaceId> spaceId;
 
+    private final Optional<ActorIdUnion> actorId;
+
     private final Map<String, Object> additionalProperties;
 
     private ListSecrets(
             Optional<EnvironmentId> environmentId,
             Optional<SpaceId> spaceId,
+            Optional<ActorIdUnion> actorId,
             Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.spaceId = spaceId;
+        this.actorId = actorId;
         this.additionalProperties = additionalProperties;
     }
 
@@ -53,6 +58,14 @@ public final class ListSecrets {
         return spaceId;
     }
 
+    /**
+     * @return The Actor of the secret.
+     */
+    @JsonProperty("actorId")
+    public Optional<ActorIdUnion> getActorId() {
+        return actorId;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -65,12 +78,14 @@ public final class ListSecrets {
     }
 
     private boolean equalTo(ListSecrets other) {
-        return environmentId.equals(other.environmentId) && spaceId.equals(other.spaceId);
+        return environmentId.equals(other.environmentId)
+                && spaceId.equals(other.spaceId)
+                && actorId.equals(other.actorId);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.environmentId, this.spaceId);
+        return Objects.hash(this.environmentId, this.spaceId, this.actorId);
     }
 
     @java.lang.Override
@@ -88,6 +103,8 @@ public final class ListSecrets {
 
         private Optional<SpaceId> spaceId = Optional.empty();
 
+        private Optional<ActorIdUnion> actorId = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -96,6 +113,7 @@ public final class ListSecrets {
         public Builder from(ListSecrets other) {
             environmentId(other.getEnvironmentId());
             spaceId(other.getSpaceId());
+            actorId(other.getActorId());
             return this;
         }
 
@@ -106,7 +124,7 @@ public final class ListSecrets {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -117,12 +135,23 @@ public final class ListSecrets {
         }
 
         public Builder spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
+            return this;
+        }
+
+        @JsonSetter(value = "actorId", nulls = Nulls.SKIP)
+        public Builder actorId(Optional<ActorIdUnion> actorId) {
+            this.actorId = actorId;
+            return this;
+        }
+
+        public Builder actorId(ActorIdUnion actorId) {
+            this.actorId = Optional.ofNullable(actorId);
             return this;
         }
 
         public ListSecrets build() {
-            return new ListSecrets(environmentId, spaceId, additionalProperties);
+            return new ListSecrets(environmentId, spaceId, actorId, additionalProperties);
         }
     }
 }

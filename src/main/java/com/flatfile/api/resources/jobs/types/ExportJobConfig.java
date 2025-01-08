@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ExportJobConfig.Builder.class)
 public final class ExportJobConfig {
     private final ExportOptions options;
@@ -62,7 +63,7 @@ public final class ExportJobConfig {
     }
 
     public interface OptionsStage {
-        _FinalStage options(ExportOptions options);
+        _FinalStage options(@NotNull ExportOptions options);
 
         Builder from(ExportJobConfig other);
     }
@@ -88,8 +89,8 @@ public final class ExportJobConfig {
 
         @java.lang.Override
         @JsonSetter("options")
-        public _FinalStage options(ExportOptions options) {
-            this.options = options;
+        public _FinalStage options(@NotNull ExportOptions options) {
+            this.options = Objects.requireNonNull(options, "options must not be null");
             return this;
         }
 

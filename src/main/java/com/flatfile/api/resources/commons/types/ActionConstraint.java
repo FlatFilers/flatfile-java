@@ -3,99 +3,257 @@
  */
 package com.flatfile.api.resources.commons.types;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.flatfile.api.core.ObjectMappers;
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
+import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(builder = ActionConstraint.Builder.class)
 public final class ActionConstraint {
-    private final ActionConstraintType type;
+    private final Value value;
 
-    private final Map<String, Object> additionalProperties;
-
-    private ActionConstraint(ActionConstraintType type, Map<String, Object> additionalProperties) {
-        this.type = type;
-        this.additionalProperties = additionalProperties;
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    private ActionConstraint(Value value) {
+        this.value = value;
     }
 
-    @JsonProperty("type")
-    public ActionConstraintType getType() {
-        return type;
+    public <T> T visit(Visitor<T> visitor) {
+        return value.visit(visitor);
     }
 
-    @java.lang.Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        return other instanceof ActionConstraint && equalTo((ActionConstraint) other);
+    public static ActionConstraint hasAllValid(ActionConstraintHasAllValid value) {
+        return new ActionConstraint(new HasAllValidValue(value));
     }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
+    public static ActionConstraint hasSelection(ActionConstraintHasSelection value) {
+        return new ActionConstraint(new HasSelectionValue(value));
     }
 
-    private boolean equalTo(ActionConstraint other) {
-        return type.equals(other.type);
+    public static ActionConstraint hasData(ActionConstraintHasData value) {
+        return new ActionConstraint(new HasDataValue(value));
     }
 
-    @java.lang.Override
-    public int hashCode() {
-        return Objects.hash(this.type);
+    public boolean isHasAllValid() {
+        return value instanceof HasAllValidValue;
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
+    public boolean isHasSelection() {
+        return value instanceof HasSelectionValue;
     }
 
-    public static TypeStage builder() {
-        return new Builder();
+    public boolean isHasData() {
+        return value instanceof HasDataValue;
     }
 
-    public interface TypeStage {
-        _FinalStage type(ActionConstraintType type);
-
-        Builder from(ActionConstraint other);
+    public boolean _isUnknown() {
+        return value instanceof _UnknownValue;
     }
 
-    public interface _FinalStage {
-        ActionConstraint build();
+    public Optional<ActionConstraintHasAllValid> getHasAllValid() {
+        if (isHasAllValid()) {
+            return Optional.of(((HasAllValidValue) value).value);
+        }
+        return Optional.empty();
     }
 
+    public Optional<ActionConstraintHasSelection> getHasSelection() {
+        if (isHasSelection()) {
+            return Optional.of(((HasSelectionValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<ActionConstraintHasData> getHasData() {
+        if (isHasData()) {
+            return Optional.of(((HasDataValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Object> _getUnknown() {
+        if (_isUnknown()) {
+            return Optional.of(((_UnknownValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    @JsonValue
+    private Value getValue() {
+        return this.value;
+    }
+
+    public interface Visitor<T> {
+        T visitHasAllValid(ActionConstraintHasAllValid hasAllValid);
+
+        T visitHasSelection(ActionConstraintHasSelection hasSelection);
+
+        T visitHasData(ActionConstraintHasData hasData);
+
+        T _visitUnknown(Object unknownType);
+    }
+
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
+    @JsonSubTypes({
+        @JsonSubTypes.Type(HasAllValidValue.class),
+        @JsonSubTypes.Type(HasSelectionValue.class),
+        @JsonSubTypes.Type(HasDataValue.class)
+    })
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements TypeStage, _FinalStage {
-        private ActionConstraintType type;
+    private interface Value {
+        <T> T visit(Visitor<T> visitor);
+    }
 
-        @JsonAnySetter
-        private Map<String, Object> additionalProperties = new HashMap<>();
+    @JsonTypeName("hasAllValid")
+    private static final class HasAllValidValue implements Value {
+        @JsonUnwrapped
+        private ActionConstraintHasAllValid value;
 
-        private Builder() {}
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private HasAllValidValue() {}
 
-        @java.lang.Override
-        public Builder from(ActionConstraint other) {
-            type(other.getType());
-            return this;
+        private HasAllValidValue(ActionConstraintHasAllValid value) {
+            this.value = value;
         }
 
         @java.lang.Override
-        @JsonSetter("type")
-        public _FinalStage type(ActionConstraintType type) {
-            this.type = type;
-            return this;
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitHasAllValid(value);
         }
 
         @java.lang.Override
-        public ActionConstraint build() {
-            return new ActionConstraint(type, additionalProperties);
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof HasAllValidValue && equalTo((HasAllValidValue) other);
+        }
+
+        private boolean equalTo(HasAllValidValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "ActionConstraint{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("hasSelection")
+    private static final class HasSelectionValue implements Value {
+        @JsonUnwrapped
+        private ActionConstraintHasSelection value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private HasSelectionValue() {}
+
+        private HasSelectionValue(ActionConstraintHasSelection value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitHasSelection(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof HasSelectionValue && equalTo((HasSelectionValue) other);
+        }
+
+        private boolean equalTo(HasSelectionValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "ActionConstraint{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("hasData")
+    private static final class HasDataValue implements Value {
+        @JsonUnwrapped
+        private ActionConstraintHasData value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private HasDataValue() {}
+
+        private HasDataValue(ActionConstraintHasData value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitHasData(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof HasDataValue && equalTo((HasDataValue) other);
+        }
+
+        private boolean equalTo(HasDataValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "ActionConstraint{" + "value: " + value + "}";
+        }
+    }
+
+    private static final class _UnknownValue implements Value {
+        private String type;
+
+        @JsonValue
+        private Object value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private _UnknownValue(@JsonProperty("value") Object value) {}
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor._visitUnknown(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
+        }
+
+        private boolean equalTo(_UnknownValue other) {
+            return type.equals(other.type) && value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.type, this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "ActionConstraint{" + "type: " + type + ", value: " + value + "}";
         }
     }
 }

@@ -15,13 +15,15 @@ import com.flatfile.api.core.ObjectMappers;
 import com.flatfile.api.resources.commons.types.CommitId;
 import com.flatfile.api.resources.commons.types.RecordId;
 import com.flatfile.api.resources.commons.types.VersionId;
+import com.flatfile.api.resources.dataclips.types.Resolve;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DiffRecord.Builder.class)
 public final class DiffRecord implements IRecordBase {
     private final RecordId id;
@@ -40,6 +42,8 @@ public final class DiffRecord implements IRecordBase {
 
     private final DiffData values;
 
+    private final Optional<List<Resolve>> resolves;
+
     private final Map<String, Object> additionalProperties;
 
     private DiffRecord(
@@ -51,6 +55,7 @@ public final class DiffRecord implements IRecordBase {
             Optional<Map<String, Object>> metadata,
             Optional<RecordConfig> config,
             DiffData values,
+            Optional<List<Resolve>> resolves,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.versionId = versionId;
@@ -60,6 +65,7 @@ public final class DiffRecord implements IRecordBase {
         this.metadata = metadata;
         this.config = config;
         this.values = values;
+        this.resolves = resolves;
         this.additionalProperties = additionalProperties;
     }
 
@@ -119,6 +125,11 @@ public final class DiffRecord implements IRecordBase {
         return values;
     }
 
+    @JsonProperty("resolves")
+    public Optional<List<Resolve>> getResolves() {
+        return resolves;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -138,7 +149,8 @@ public final class DiffRecord implements IRecordBase {
                 && messages.equals(other.messages)
                 && metadata.equals(other.metadata)
                 && config.equals(other.config)
-                && values.equals(other.values);
+                && values.equals(other.values)
+                && resolves.equals(other.resolves);
     }
 
     @java.lang.Override
@@ -151,7 +163,8 @@ public final class DiffRecord implements IRecordBase {
                 this.messages,
                 this.metadata,
                 this.config,
-                this.values);
+                this.values,
+                this.resolves);
     }
 
     @java.lang.Override
@@ -164,13 +177,13 @@ public final class DiffRecord implements IRecordBase {
     }
 
     public interface IdStage {
-        ValuesStage id(RecordId id);
+        ValuesStage id(@NotNull RecordId id);
 
         Builder from(DiffRecord other);
     }
 
     public interface ValuesStage {
-        _FinalStage values(DiffData values);
+        _FinalStage values(@NotNull DiffData values);
     }
 
     public interface _FinalStage {
@@ -199,6 +212,10 @@ public final class DiffRecord implements IRecordBase {
         _FinalStage config(Optional<RecordConfig> config);
 
         _FinalStage config(RecordConfig config);
+
+        _FinalStage resolves(Optional<List<Resolve>> resolves);
+
+        _FinalStage resolves(List<Resolve> resolves);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -206,6 +223,8 @@ public final class DiffRecord implements IRecordBase {
         private RecordId id;
 
         private DiffData values;
+
+        private Optional<List<Resolve>> resolves = Optional.empty();
 
         private Optional<RecordConfig> config = Optional.empty();
 
@@ -234,26 +253,40 @@ public final class DiffRecord implements IRecordBase {
             metadata(other.getMetadata());
             config(other.getConfig());
             values(other.getValues());
+            resolves(other.getResolves());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public ValuesStage id(RecordId id) {
-            this.id = id;
+        public ValuesStage id(@NotNull RecordId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("values")
-        public _FinalStage values(DiffData values) {
-            this.values = values;
+        public _FinalStage values(@NotNull DiffData values) {
+            this.values = Objects.requireNonNull(values, "values must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage resolves(List<Resolve> resolves) {
+            this.resolves = Optional.ofNullable(resolves);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "resolves", nulls = Nulls.SKIP)
+        public _FinalStage resolves(Optional<List<Resolve>> resolves) {
+            this.resolves = resolves;
             return this;
         }
 
         @java.lang.Override
         public _FinalStage config(RecordConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 
@@ -266,7 +299,7 @@ public final class DiffRecord implements IRecordBase {
 
         @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -283,7 +316,7 @@ public final class DiffRecord implements IRecordBase {
          */
         @java.lang.Override
         public _FinalStage messages(List<ValidationMessage> messages) {
-            this.messages = Optional.of(messages);
+            this.messages = Optional.ofNullable(messages);
             return this;
         }
 
@@ -300,7 +333,7 @@ public final class DiffRecord implements IRecordBase {
          */
         @java.lang.Override
         public _FinalStage valid(Boolean valid) {
-            this.valid = Optional.of(valid);
+            this.valid = Optional.ofNullable(valid);
             return this;
         }
 
@@ -313,7 +346,7 @@ public final class DiffRecord implements IRecordBase {
 
         @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -330,7 +363,7 @@ public final class DiffRecord implements IRecordBase {
          */
         @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -344,7 +377,7 @@ public final class DiffRecord implements IRecordBase {
         @java.lang.Override
         public DiffRecord build() {
             return new DiffRecord(
-                    id, versionId, commitId, valid, messages, metadata, config, values, additionalProperties);
+                    id, versionId, commitId, valid, messages, metadata, config, values, resolves, additionalProperties);
         }
     }
 }

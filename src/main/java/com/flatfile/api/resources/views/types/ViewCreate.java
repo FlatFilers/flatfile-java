@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ViewCreate.Builder.class)
 public final class ViewCreate {
     private final SheetId sheetId;
@@ -79,17 +80,17 @@ public final class ViewCreate {
     }
 
     public interface SheetIdStage {
-        NameStage sheetId(SheetId sheetId);
+        NameStage sheetId(@NotNull SheetId sheetId);
 
         Builder from(ViewCreate other);
     }
 
     public interface NameStage {
-        ConfigStage name(String name);
+        ConfigStage name(@NotNull String name);
     }
 
     public interface ConfigStage {
-        _FinalStage config(ViewConfig config);
+        _FinalStage config(@NotNull ViewConfig config);
     }
 
     public interface _FinalStage {
@@ -119,22 +120,22 @@ public final class ViewCreate {
 
         @java.lang.Override
         @JsonSetter("sheetId")
-        public NameStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public NameStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public ConfigStage name(String name) {
-            this.name = name;
+        public ConfigStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("config")
-        public _FinalStage config(ViewConfig config) {
-            this.config = config;
+        public _FinalStage config(@NotNull ViewConfig config) {
+            this.config = Objects.requireNonNull(config, "config must not be null");
             return this;
         }
 

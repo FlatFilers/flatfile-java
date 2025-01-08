@@ -6,12 +6,14 @@ package com.flatfile.api.resources.records.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.flatfile.api.core.ObjectMappers;
 import java.io.IOException;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @JsonDeserialize(using = CellValueUnion.Deserializer.class)
@@ -45,6 +47,8 @@ public final class CellValueUnion {
             return visitor.visit((String) this.value);
         } else if (this.type == 6) {
             return visitor.visit((OffsetDateTime) this.value);
+        } else if (this.type == 7) {
+            return visitor.visit((List<String>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -97,6 +101,10 @@ public final class CellValueUnion {
         return new CellValueUnion(value, 6);
     }
 
+    public static CellValueUnion of(List<String> value) {
+        return new CellValueUnion(value, 7);
+    }
+
     public interface Visitor<T> {
         T visit(String value);
 
@@ -111,6 +119,8 @@ public final class CellValueUnion {
         T visit(String value);
 
         T visit(OffsetDateTime value);
+
+        T visit(List<String> value);
     }
 
     static final class Deserializer extends StdDeserializer<CellValueUnion> {
@@ -143,6 +153,10 @@ public final class CellValueUnion {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, OffsetDateTime.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

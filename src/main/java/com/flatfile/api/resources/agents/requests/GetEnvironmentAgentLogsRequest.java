@@ -21,8 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetEnvironmentAgentLogsRequest.Builder.class)
 public final class GetEnvironmentAgentLogsRequest {
     private final EnvironmentId environmentId;
@@ -111,7 +112,7 @@ public final class GetEnvironmentAgentLogsRequest {
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
+        _FinalStage environmentId(@NotNull EnvironmentId environmentId);
 
         Builder from(GetEnvironmentAgentLogsRequest other);
     }
@@ -165,14 +166,14 @@ public final class GetEnvironmentAgentLogsRequest {
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public _FinalStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage pageNumber(PageNumber pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -185,7 +186,7 @@ public final class GetEnvironmentAgentLogsRequest {
 
         @java.lang.Override
         public _FinalStage pageSize(PageSize pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -198,7 +199,7 @@ public final class GetEnvironmentAgentLogsRequest {
 
         @java.lang.Override
         public _FinalStage success(SuccessQueryParameter success) {
-            this.success = Optional.of(success);
+            this.success = Optional.ofNullable(success);
             return this;
         }
 
@@ -211,7 +212,7 @@ public final class GetEnvironmentAgentLogsRequest {
 
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 

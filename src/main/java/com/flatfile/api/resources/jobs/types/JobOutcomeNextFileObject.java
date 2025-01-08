@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobOutcomeNextFileObject.Builder.class)
 public final class JobOutcomeNextFileObject {
     private final String fileId;
@@ -72,7 +73,7 @@ public final class JobOutcomeNextFileObject {
     }
 
     public interface FileIdStage {
-        _FinalStage fileId(String fileId);
+        _FinalStage fileId(@NotNull String fileId);
 
         Builder from(JobOutcomeNextFileObject other);
     }
@@ -105,14 +106,14 @@ public final class JobOutcomeNextFileObject {
 
         @java.lang.Override
         @JsonSetter("fileId")
-        public _FinalStage fileId(String fileId) {
-            this.fileId = fileId;
+        public _FinalStage fileId(@NotNull String fileId) {
+            this.fileId = Objects.requireNonNull(fileId, "fileId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

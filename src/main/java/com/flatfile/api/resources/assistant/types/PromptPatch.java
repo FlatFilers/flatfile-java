@@ -9,28 +9,27 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PromptPatch.Builder.class)
 public final class PromptPatch {
-    private final Optional<String> prompt;
+    private final String prompt;
 
     private final Map<String, Object> additionalProperties;
 
-    private PromptPatch(Optional<String> prompt, Map<String, Object> additionalProperties) {
+    private PromptPatch(String prompt, Map<String, Object> additionalProperties) {
         this.prompt = prompt;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("prompt")
-    public Optional<String> getPrompt() {
+    public String getPrompt() {
         return prompt;
     }
 
@@ -59,35 +58,43 @@ public final class PromptPatch {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static PromptStage builder() {
         return new Builder();
     }
 
+    public interface PromptStage {
+        _FinalStage prompt(@NotNull String prompt);
+
+        Builder from(PromptPatch other);
+    }
+
+    public interface _FinalStage {
+        PromptPatch build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<String> prompt = Optional.empty();
+    public static final class Builder implements PromptStage, _FinalStage {
+        private String prompt;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(PromptPatch other) {
             prompt(other.getPrompt());
             return this;
         }
 
-        @JsonSetter(value = "prompt", nulls = Nulls.SKIP)
-        public Builder prompt(Optional<String> prompt) {
-            this.prompt = prompt;
+        @java.lang.Override
+        @JsonSetter("prompt")
+        public _FinalStage prompt(@NotNull String prompt) {
+            this.prompt = Objects.requireNonNull(prompt, "prompt must not be null");
             return this;
         }
 
-        public Builder prompt(String prompt) {
-            this.prompt = Optional.of(prompt);
-            return this;
-        }
-
+        @java.lang.Override
         public PromptPatch build() {
             return new PromptPatch(prompt, additionalProperties);
         }

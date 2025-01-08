@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UniqueConstraint.Builder.class)
 public final class UniqueConstraint {
     private final Optional<UniqueConstraintConfig> config;
@@ -84,7 +84,7 @@ public final class UniqueConstraint {
         }
 
         public Builder config(UniqueConstraintConfig config) {
-            this.config = Optional.of(config);
+            this.config = Optional.ofNullable(config);
             return this;
         }
 

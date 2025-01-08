@@ -17,8 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EnvironmentConfigCreate.Builder.class)
 public final class EnvironmentConfigCreate {
     private final String name;
@@ -140,7 +141,7 @@ public final class EnvironmentConfigCreate {
     }
 
     public interface NameStage {
-        IsProdStage name(String name);
+        IsProdStage name(@NotNull String name);
 
         Builder from(EnvironmentConfigCreate other);
     }
@@ -212,8 +213,8 @@ public final class EnvironmentConfigCreate {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public IsProdStage name(String name) {
-            this.name = name;
+        public IsProdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -230,7 +231,7 @@ public final class EnvironmentConfigCreate {
 
         @java.lang.Override
         public _FinalStage languageOverride(String languageOverride) {
-            this.languageOverride = Optional.of(languageOverride);
+            this.languageOverride = Optional.ofNullable(languageOverride);
             return this;
         }
 
@@ -243,7 +244,7 @@ public final class EnvironmentConfigCreate {
 
         @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
-            this.namespaces = Optional.of(namespaces);
+            this.namespaces = Optional.ofNullable(namespaces);
             return this;
         }
 
@@ -256,7 +257,7 @@ public final class EnvironmentConfigCreate {
 
         @java.lang.Override
         public _FinalStage translationsPath(String translationsPath) {
-            this.translationsPath = Optional.of(translationsPath);
+            this.translationsPath = Optional.ofNullable(translationsPath);
             return this;
         }
 
@@ -269,7 +270,7 @@ public final class EnvironmentConfigCreate {
 
         @java.lang.Override
         public _FinalStage metadata(Map<String, Object> metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -282,7 +283,7 @@ public final class EnvironmentConfigCreate {
 
         @java.lang.Override
         public _FinalStage guestAuthentication(List<GuestAuthenticationEnum> guestAuthentication) {
-            this.guestAuthentication = Optional.of(guestAuthentication);
+            this.guestAuthentication = Optional.ofNullable(guestAuthentication);
             return this;
         }
 

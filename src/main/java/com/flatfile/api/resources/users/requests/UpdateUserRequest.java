@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateUserRequest.Builder.class)
 public final class UpdateUserRequest {
     private final Optional<String> name;
@@ -96,7 +96,7 @@ public final class UpdateUserRequest {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -107,7 +107,7 @@ public final class UpdateUserRequest {
         }
 
         public Builder dashboard(Integer dashboard) {
-            this.dashboard = Optional.of(dashboard);
+            this.dashboard = Optional.ofNullable(dashboard);
             return this;
         }
 

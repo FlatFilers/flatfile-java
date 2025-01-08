@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = MutateJobConfig.Builder.class)
 public final class MutateJobConfig {
     private final SheetId sheetId;
@@ -199,13 +200,13 @@ public final class MutateJobConfig {
     }
 
     public interface SheetIdStage {
-        MutateRecordStage sheetId(SheetId sheetId);
+        MutateRecordStage sheetId(@NotNull SheetId sheetId);
 
         Builder from(MutateJobConfig other);
     }
 
     public interface MutateRecordStage {
-        _FinalStage mutateRecord(String mutateRecord);
+        _FinalStage mutateRecord(@NotNull String mutateRecord);
     }
 
     public interface _FinalStage {
@@ -295,8 +296,8 @@ public final class MutateJobConfig {
 
         @java.lang.Override
         @JsonSetter("sheetId")
-        public MutateRecordStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public MutateRecordStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
@@ -306,8 +307,8 @@ public final class MutateJobConfig {
          */
         @java.lang.Override
         @JsonSetter("mutateRecord")
-        public _FinalStage mutateRecord(String mutateRecord) {
-            this.mutateRecord = mutateRecord;
+        public _FinalStage mutateRecord(@NotNull String mutateRecord) {
+            this.mutateRecord = Objects.requireNonNull(mutateRecord, "mutateRecord must not be null");
             return this;
         }
 
@@ -317,7 +318,7 @@ public final class MutateJobConfig {
          */
         @java.lang.Override
         public _FinalStage ids(List<RecordId> ids) {
-            this.ids = Optional.of(ids);
+            this.ids = Optional.ofNullable(ids);
             return this;
         }
 
@@ -330,7 +331,7 @@ public final class MutateJobConfig {
 
         @java.lang.Override
         public _FinalStage q(String q) {
-            this.q = Optional.of(q);
+            this.q = Optional.ofNullable(q);
             return this;
         }
 
@@ -343,7 +344,7 @@ public final class MutateJobConfig {
 
         @java.lang.Override
         public _FinalStage searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -356,7 +357,7 @@ public final class MutateJobConfig {
 
         @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -369,7 +370,7 @@ public final class MutateJobConfig {
 
         @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -382,7 +383,7 @@ public final class MutateJobConfig {
 
         @java.lang.Override
         public _FinalStage filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -399,7 +400,7 @@ public final class MutateJobConfig {
          */
         @java.lang.Override
         public _FinalStage snapshotId(String snapshotId) {
-            this.snapshotId = Optional.of(snapshotId);
+            this.snapshotId = Optional.ofNullable(snapshotId);
             return this;
         }
 
@@ -416,7 +417,7 @@ public final class MutateJobConfig {
          */
         @java.lang.Override
         public _FinalStage snapshotLabel(String snapshotLabel) {
-            this.snapshotLabel = Optional.of(snapshotLabel);
+            this.snapshotLabel = Optional.ofNullable(snapshotLabel);
             return this;
         }
 
@@ -433,7 +434,7 @@ public final class MutateJobConfig {
          */
         @java.lang.Override
         public _FinalStage mutationId(String mutationId) {
-            this.mutationId = Optional.of(mutationId);
+            this.mutationId = Optional.ofNullable(mutationId);
             return this;
         }
 

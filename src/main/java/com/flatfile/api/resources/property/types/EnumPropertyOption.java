@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EnumPropertyOption.Builder.class)
 public final class EnumPropertyOption {
     private final Optional<String> label;
@@ -232,7 +232,7 @@ public final class EnumPropertyOption {
          */
         @java.lang.Override
         public _FinalStage alternativeNames(List<String> alternativeNames) {
-            this.alternativeNames = Optional.of(alternativeNames);
+            this.alternativeNames = Optional.ofNullable(alternativeNames);
             return this;
         }
 
@@ -249,7 +249,7 @@ public final class EnumPropertyOption {
          */
         @java.lang.Override
         public _FinalStage meta(Map<String, Object> meta) {
-            this.meta = Optional.of(meta);
+            this.meta = Optional.ofNullable(meta);
             return this;
         }
 
@@ -266,7 +266,7 @@ public final class EnumPropertyOption {
          */
         @java.lang.Override
         public _FinalStage icon(String icon) {
-            this.icon = Optional.of(icon);
+            this.icon = Optional.ofNullable(icon);
             return this;
         }
 
@@ -283,7 +283,7 @@ public final class EnumPropertyOption {
          */
         @java.lang.Override
         public _FinalStage color(String color) {
-            this.color = Optional.of(color);
+            this.color = Optional.ofNullable(color);
             return this;
         }
 
@@ -300,7 +300,7 @@ public final class EnumPropertyOption {
          */
         @java.lang.Override
         public _FinalStage description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 
@@ -317,7 +317,7 @@ public final class EnumPropertyOption {
          */
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

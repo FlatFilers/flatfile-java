@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AssignRoleResponse.Builder.class)
 public final class AssignRoleResponse {
     private final AssignRoleResponseData data;
@@ -62,7 +63,7 @@ public final class AssignRoleResponse {
     }
 
     public interface DataStage {
-        _FinalStage data(AssignRoleResponseData data);
+        _FinalStage data(@NotNull AssignRoleResponseData data);
 
         Builder from(AssignRoleResponse other);
     }
@@ -88,8 +89,8 @@ public final class AssignRoleResponse {
 
         @java.lang.Override
         @JsonSetter("data")
-        public _FinalStage data(AssignRoleResponseData data) {
-            this.data = data;
+        public _FinalStage data(@NotNull AssignRoleResponseData data) {
+            this.data = Objects.requireNonNull(data, "data must not be null");
             return this;
         }
 

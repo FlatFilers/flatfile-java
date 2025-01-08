@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.WorkbookId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListSheetsRequest.Builder.class)
 public final class ListSheetsRequest {
     private final WorkbookId workbookId;
@@ -66,7 +67,7 @@ public final class ListSheetsRequest {
     }
 
     public interface WorkbookIdStage {
-        _FinalStage workbookId(WorkbookId workbookId);
+        _FinalStage workbookId(@NotNull WorkbookId workbookId);
 
         Builder from(ListSheetsRequest other);
     }
@@ -96,8 +97,8 @@ public final class ListSheetsRequest {
          */
         @java.lang.Override
         @JsonSetter("workbookId")
-        public _FinalStage workbookId(WorkbookId workbookId) {
-            this.workbookId = workbookId;
+        public _FinalStage workbookId(@NotNull WorkbookId workbookId) {
+            this.workbookId = Objects.requireNonNull(workbookId, "workbookId must not be null");
             return this;
         }
 

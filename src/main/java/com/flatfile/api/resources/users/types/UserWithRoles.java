@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UserWithRoles.Builder.class)
 public final class UserWithRoles implements IUser {
     private final UserId id;
@@ -206,33 +207,33 @@ public final class UserWithRoles implements IUser {
     }
 
     public interface IdStage {
-        IdpStage id(UserId id);
+        IdpStage id(@NotNull UserId id);
 
         Builder from(UserWithRoles other);
     }
 
     public interface IdpStage {
-        CreatedAtStage idp(String idp);
+        CreatedAtStage idp(@NotNull String idp);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        EmailStage updatedAt(OffsetDateTime updatedAt);
+        EmailStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface EmailStage {
-        NameStage email(String email);
+        NameStage email(@NotNull String email);
     }
 
     public interface NameStage {
-        AccountIdStage name(String name);
+        AccountIdStage name(@NotNull String name);
     }
 
     public interface AccountIdStage {
-        _FinalStage accountId(AccountId accountId);
+        _FinalStage accountId(@NotNull AccountId accountId);
     }
 
     public interface _FinalStage {
@@ -321,50 +322,50 @@ public final class UserWithRoles implements IUser {
 
         @java.lang.Override
         @JsonSetter("id")
-        public IdpStage id(UserId id) {
-            this.id = id;
+        public IdpStage id(@NotNull UserId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("idp")
-        public CreatedAtStage idp(String idp) {
-            this.idp = idp;
+        public CreatedAtStage idp(@NotNull String idp) {
+            this.idp = Objects.requireNonNull(idp, "idp must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public EmailStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public EmailStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("email")
-        public NameStage email(String email) {
-            this.email = email;
+        public NameStage email(@NotNull String email) {
+            this.email = Objects.requireNonNull(email, "email must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("name")
-        public AccountIdStage name(String name) {
-            this.name = name;
+        public AccountIdStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public _FinalStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public _FinalStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
             return this;
         }
 
@@ -390,7 +391,7 @@ public final class UserWithRoles implements IUser {
 
         @java.lang.Override
         public _FinalStage dashboard(Integer dashboard) {
-            this.dashboard = Optional.of(dashboard);
+            this.dashboard = Optional.ofNullable(dashboard);
             return this;
         }
 
@@ -403,7 +404,7 @@ public final class UserWithRoles implements IUser {
 
         @java.lang.Override
         public _FinalStage lastSeenAt(OffsetDateTime lastSeenAt) {
-            this.lastSeenAt = Optional.of(lastSeenAt);
+            this.lastSeenAt = Optional.ofNullable(lastSeenAt);
             return this;
         }
 
@@ -436,7 +437,7 @@ public final class UserWithRoles implements IUser {
 
         @java.lang.Override
         public _FinalStage idpRef(String idpRef) {
-            this.idpRef = Optional.of(idpRef);
+            this.idpRef = Optional.ofNullable(idpRef);
             return this;
         }
 

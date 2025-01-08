@@ -45,7 +45,23 @@ public final class JobUpdateConfig {
         } else if (this.type == 6) {
             return visitor.visit((MappingProgramJobConfig) this.value);
         } else if (this.type == 7) {
+            return visitor.visit((AiGenerateBlueprintJobConfig) this.value);
+        } else if (this.type == 8) {
+            return visitor.visit((AppAutobuildDeployJobConfig) this.value);
+        } else if (this.type == 9) {
+            return visitor.visit((AiGenerateSampleDataJobConfig) this.value);
+        } else if (this.type == 10) {
+            return visitor.visit((AiGenerateBlueprintConstraintsJobConfig) this.value);
+        } else if (this.type == 11) {
+            return visitor.visit((AiGenerateConstraintJobConfig) this.value);
+        } else if (this.type == 12) {
+            return visitor.visit((AiRuleCreationJobConfig) this.value);
+        } else if (this.type == 13) {
             return visitor.visit((EmptyObject) this.value);
+        } else if (this.type == 14) {
+            return visitor.visit((AddRecordsToDataClipJobConfig) this.value);
+        } else if (this.type == 15) {
+            return visitor.visit((UpdateDataClipResolutionsJobConfig) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -98,8 +114,40 @@ public final class JobUpdateConfig {
         return new JobUpdateConfig(value, 6);
     }
 
-    public static JobUpdateConfig of(EmptyObject value) {
+    public static JobUpdateConfig of(AiGenerateBlueprintJobConfig value) {
         return new JobUpdateConfig(value, 7);
+    }
+
+    public static JobUpdateConfig of(AppAutobuildDeployJobConfig value) {
+        return new JobUpdateConfig(value, 8);
+    }
+
+    public static JobUpdateConfig of(AiGenerateSampleDataJobConfig value) {
+        return new JobUpdateConfig(value, 9);
+    }
+
+    public static JobUpdateConfig of(AiGenerateBlueprintConstraintsJobConfig value) {
+        return new JobUpdateConfig(value, 10);
+    }
+
+    public static JobUpdateConfig of(AiGenerateConstraintJobConfig value) {
+        return new JobUpdateConfig(value, 11);
+    }
+
+    public static JobUpdateConfig of(AiRuleCreationJobConfig value) {
+        return new JobUpdateConfig(value, 12);
+    }
+
+    public static JobUpdateConfig of(EmptyObject value) {
+        return new JobUpdateConfig(value, 13);
+    }
+
+    public static JobUpdateConfig of(AddRecordsToDataClipJobConfig value) {
+        return new JobUpdateConfig(value, 14);
+    }
+
+    public static JobUpdateConfig of(UpdateDataClipResolutionsJobConfig value) {
+        return new JobUpdateConfig(value, 15);
     }
 
     public interface Visitor<T> {
@@ -117,7 +165,23 @@ public final class JobUpdateConfig {
 
         T visit(MappingProgramJobConfig value);
 
+        T visit(AiGenerateBlueprintJobConfig value);
+
+        T visit(AppAutobuildDeployJobConfig value);
+
+        T visit(AiGenerateSampleDataJobConfig value);
+
+        T visit(AiGenerateBlueprintConstraintsJobConfig value);
+
+        T visit(AiGenerateConstraintJobConfig value);
+
+        T visit(AiRuleCreationJobConfig value);
+
         T visit(EmptyObject value);
+
+        T visit(AddRecordsToDataClipJobConfig value);
+
+        T visit(UpdateDataClipResolutionsJobConfig value);
     }
 
     static final class Deserializer extends StdDeserializer<JobUpdateConfig> {
@@ -157,7 +221,39 @@ public final class JobUpdateConfig {
             } catch (IllegalArgumentException e) {
             }
             try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AiGenerateBlueprintJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AppAutobuildDeployJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AiGenerateSampleDataJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AiGenerateBlueprintConstraintsJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AiGenerateConstraintJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AiRuleCreationJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, EmptyObject.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, AddRecordsToDataClipJobConfig.class));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, UpdateDataClipResolutionsJobConfig.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

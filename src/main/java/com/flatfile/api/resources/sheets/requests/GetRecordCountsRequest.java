@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetRecordCountsRequest.Builder.class)
 public final class GetRecordCountsRequest {
     private final Optional<String> versionId;
@@ -249,7 +249,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder versionId(String versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -260,7 +260,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder sinceVersionId(VersionId sinceVersionId) {
-            this.sinceVersionId = Optional.of(sinceVersionId);
+            this.sinceVersionId = Optional.ofNullable(sinceVersionId);
             return this;
         }
 
@@ -271,7 +271,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -282,7 +282,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder sinceCommitId(CommitId sinceCommitId) {
-            this.sinceCommitId = Optional.of(sinceCommitId);
+            this.sinceCommitId = Optional.ofNullable(sinceCommitId);
             return this;
         }
 
@@ -293,7 +293,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -304,7 +304,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -315,7 +315,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -326,7 +326,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -337,7 +337,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder byField(Boolean byField) {
-            this.byField = Optional.of(byField);
+            this.byField = Optional.ofNullable(byField);
             return this;
         }
 
@@ -348,7 +348,7 @@ public final class GetRecordCountsRequest {
         }
 
         public Builder q(String q) {
-            this.q = Optional.of(q);
+            this.q = Optional.ofNullable(q);
             return this;
         }
 

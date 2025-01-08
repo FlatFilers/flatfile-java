@@ -20,8 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GenericEvent.Builder.class)
 public final class GenericEvent implements IBaseEvent {
     private final Domain domain;
@@ -249,21 +250,21 @@ public final class GenericEvent implements IBaseEvent {
     }
 
     public interface DomainStage {
-        ContextStage domain(Domain domain);
+        ContextStage domain(@NotNull Domain domain);
 
         Builder from(GenericEvent other);
     }
 
     public interface ContextStage {
-        IdStage context(Context context);
+        IdStage context(@NotNull Context context);
     }
 
     public interface IdStage {
-        CreatedAtStage id(EventId id);
+        CreatedAtStage id(@NotNull EventId id);
     }
 
     public interface CreatedAtStage {
-        _FinalStage createdAt(OffsetDateTime createdAt);
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
@@ -372,8 +373,8 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         @JsonSetter("domain")
-        public ContextStage domain(Domain domain) {
-            this.domain = domain;
+        public ContextStage domain(@NotNull Domain domain) {
+            this.domain = Objects.requireNonNull(domain, "domain must not be null");
             return this;
         }
 
@@ -383,15 +384,15 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         @JsonSetter("context")
-        public IdStage context(Context context) {
-            this.context = context;
+        public IdStage context(@NotNull Context context) {
+            this.context = Objects.requireNonNull(context, "context must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(EventId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull EventId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -401,8 +402,8 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -432,7 +433,7 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage acknowledgedBy(String acknowledgedBy) {
-            this.acknowledgedBy = Optional.of(acknowledgedBy);
+            this.acknowledgedBy = Optional.ofNullable(acknowledgedBy);
             return this;
         }
 
@@ -449,7 +450,7 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage acknowledgedAt(OffsetDateTime acknowledgedAt) {
-            this.acknowledgedAt = Optional.of(acknowledgedAt);
+            this.acknowledgedAt = Optional.ofNullable(acknowledgedAt);
             return this;
         }
 
@@ -466,7 +467,7 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage deletedAt(OffsetDateTime deletedAt) {
-            this.deletedAt = Optional.of(deletedAt);
+            this.deletedAt = Optional.ofNullable(deletedAt);
             return this;
         }
 
@@ -479,7 +480,7 @@ public final class GenericEvent implements IBaseEvent {
 
         @java.lang.Override
         public _FinalStage namespaces(List<String> namespaces) {
-            this.namespaces = Optional.of(namespaces);
+            this.namespaces = Optional.ofNullable(namespaces);
             return this;
         }
 
@@ -492,7 +493,7 @@ public final class GenericEvent implements IBaseEvent {
 
         @java.lang.Override
         public _FinalStage origin(Origin origin) {
-            this.origin = Optional.of(origin);
+            this.origin = Optional.ofNullable(origin);
             return this;
         }
 
@@ -505,7 +506,7 @@ public final class GenericEvent implements IBaseEvent {
 
         @java.lang.Override
         public _FinalStage target(String target) {
-            this.target = Optional.of(target);
+            this.target = Optional.ofNullable(target);
             return this;
         }
 
@@ -522,7 +523,7 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage dataUrl(String dataUrl) {
-            this.dataUrl = Optional.of(dataUrl);
+            this.dataUrl = Optional.ofNullable(dataUrl);
             return this;
         }
 
@@ -539,7 +540,7 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage callbackUrl(String callbackUrl) {
-            this.callbackUrl = Optional.of(callbackUrl);
+            this.callbackUrl = Optional.ofNullable(callbackUrl);
             return this;
         }
 
@@ -556,7 +557,7 @@ public final class GenericEvent implements IBaseEvent {
          */
         @java.lang.Override
         public _FinalStage attributes(EventAttributes attributes) {
-            this.attributes = Optional.of(attributes);
+            this.attributes = Optional.ofNullable(attributes);
             return this;
         }
 

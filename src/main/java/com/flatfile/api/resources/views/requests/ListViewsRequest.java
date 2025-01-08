@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListViewsRequest.Builder.class)
 public final class ListViewsRequest {
     private final SheetId sheetId;
@@ -94,7 +95,7 @@ public final class ListViewsRequest {
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(SheetId sheetId);
+        _FinalStage sheetId(@NotNull SheetId sheetId);
 
         Builder from(ListViewsRequest other);
     }
@@ -138,8 +139,8 @@ public final class ListViewsRequest {
          */
         @java.lang.Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public _FinalStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
@@ -149,7 +150,7 @@ public final class ListViewsRequest {
          */
         @java.lang.Override
         public _FinalStage pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 
@@ -166,7 +167,7 @@ public final class ListViewsRequest {
          */
         @java.lang.Override
         public _FinalStage pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 

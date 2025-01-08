@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Invite.Builder.class)
 public final class Invite {
     private final GuestId guestId;
@@ -104,13 +105,13 @@ public final class Invite {
     }
 
     public interface GuestIdStage {
-        SpaceIdStage guestId(GuestId guestId);
+        SpaceIdStage guestId(@NotNull GuestId guestId);
 
         Builder from(Invite other);
     }
 
     public interface SpaceIdStage {
-        _FinalStage spaceId(SpaceId spaceId);
+        _FinalStage spaceId(@NotNull SpaceId spaceId);
     }
 
     public interface _FinalStage {
@@ -151,15 +152,15 @@ public final class Invite {
 
         @java.lang.Override
         @JsonSetter("guestId")
-        public SpaceIdStage guestId(GuestId guestId) {
-            this.guestId = guestId;
+        public SpaceIdStage guestId(@NotNull GuestId guestId) {
+            this.guestId = Objects.requireNonNull(guestId, "guestId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("spaceId")
-        public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = spaceId;
+        public _FinalStage spaceId(@NotNull SpaceId spaceId) {
+            this.spaceId = Objects.requireNonNull(spaceId, "spaceId must not be null");
             return this;
         }
 
@@ -169,7 +170,7 @@ public final class Invite {
          */
         @java.lang.Override
         public _FinalStage message(String message) {
-            this.message = Optional.of(message);
+            this.message = Optional.ofNullable(message);
             return this;
         }
 
@@ -186,7 +187,7 @@ public final class Invite {
          */
         @java.lang.Override
         public _FinalStage fromName(String fromName) {
-            this.fromName = Optional.of(fromName);
+            this.fromName = Optional.ofNullable(fromName);
             return this;
         }
 

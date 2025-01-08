@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobOutcomeNextWait.Builder.class)
 public final class JobOutcomeNextWait {
     private final Optional<Boolean> fade;
@@ -96,7 +96,7 @@ public final class JobOutcomeNextWait {
         }
 
         public Builder fade(Boolean fade) {
-            this.fade = Optional.of(fade);
+            this.fade = Optional.ofNullable(fade);
             return this;
         }
 
@@ -107,7 +107,7 @@ public final class JobOutcomeNextWait {
         }
 
         public Builder confetti(Boolean confetti) {
-            this.confetti = Optional.of(confetti);
+            this.confetti = Optional.ofNullable(confetti);
             return this;
         }
 

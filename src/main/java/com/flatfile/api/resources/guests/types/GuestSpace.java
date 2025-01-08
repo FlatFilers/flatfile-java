@@ -19,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GuestSpace.Builder.class)
 public final class GuestSpace {
     private final SpaceId id;
@@ -87,7 +88,7 @@ public final class GuestSpace {
     }
 
     public interface IdStage {
-        _FinalStage id(SpaceId id);
+        _FinalStage id(@NotNull SpaceId id);
 
         Builder from(GuestSpace other);
     }
@@ -127,14 +128,14 @@ public final class GuestSpace {
 
         @java.lang.Override
         @JsonSetter("id")
-        public _FinalStage id(SpaceId id) {
-            this.id = id;
+        public _FinalStage id(@NotNull SpaceId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage lastAccessed(OffsetDateTime lastAccessed) {
-            this.lastAccessed = Optional.of(lastAccessed);
+            this.lastAccessed = Optional.ofNullable(lastAccessed);
             return this;
         }
 
@@ -147,7 +148,7 @@ public final class GuestSpace {
 
         @java.lang.Override
         public _FinalStage workbooks(List<GuestWorkbook> workbooks) {
-            this.workbooks = Optional.of(workbooks);
+            this.workbooks = Optional.ofNullable(workbooks);
             return this;
         }
 

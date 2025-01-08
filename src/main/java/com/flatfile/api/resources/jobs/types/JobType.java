@@ -14,7 +14,9 @@ public enum JobType {
 
     SPACE("space"),
 
-    DOCUMENT("document");
+    DOCUMENT("document"),
+
+    APP("app");
 
     private final String value;
 

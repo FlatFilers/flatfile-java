@@ -20,8 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Sheet.Builder.class)
 public final class Sheet {
     private final SheetId id;
@@ -228,33 +229,33 @@ public final class Sheet {
     }
 
     public interface IdStage {
-        WorkbookIdStage id(SheetId id);
+        WorkbookIdStage id(@NotNull SheetId id);
 
         Builder from(Sheet other);
     }
 
     public interface WorkbookIdStage {
-        NameStage workbookId(WorkbookId workbookId);
+        NameStage workbookId(@NotNull WorkbookId workbookId);
     }
 
     public interface NameStage {
-        SlugStage name(String name);
+        SlugStage name(@NotNull String name);
     }
 
     public interface SlugStage {
-        ConfigStage slug(String slug);
+        ConfigStage slug(@NotNull String slug);
     }
 
     public interface ConfigStage {
-        UpdatedAtStage config(SheetConfig config);
+        UpdatedAtStage config(@NotNull SheetConfig config);
     }
 
     public interface UpdatedAtStage {
-        CreatedAtStage updatedAt(OffsetDateTime updatedAt);
+        CreatedAtStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface CreatedAtStage {
-        _FinalStage createdAt(OffsetDateTime createdAt);
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
@@ -343,8 +344,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public WorkbookIdStage id(SheetId id) {
-            this.id = id;
+        public WorkbookIdStage id(@NotNull SheetId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -354,8 +355,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("workbookId")
-        public NameStage workbookId(WorkbookId workbookId) {
-            this.workbookId = workbookId;
+        public NameStage workbookId(@NotNull WorkbookId workbookId) {
+            this.workbookId = Objects.requireNonNull(workbookId, "workbookId must not be null");
             return this;
         }
 
@@ -365,8 +366,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("name")
-        public SlugStage name(String name) {
-            this.name = name;
+        public SlugStage name(@NotNull String name) {
+            this.name = Objects.requireNonNull(name, "name must not be null");
             return this;
         }
 
@@ -376,8 +377,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("slug")
-        public ConfigStage slug(String slug) {
-            this.slug = slug;
+        public ConfigStage slug(@NotNull String slug) {
+            this.slug = Objects.requireNonNull(slug, "slug must not be null");
             return this;
         }
 
@@ -387,8 +388,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("config")
-        public UpdatedAtStage config(SheetConfig config) {
-            this.config = config;
+        public UpdatedAtStage config(@NotNull SheetConfig config) {
+            this.config = Objects.requireNonNull(config, "config must not be null");
             return this;
         }
 
@@ -398,8 +399,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public CreatedAtStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public CreatedAtStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
@@ -409,8 +410,8 @@ public final class Sheet {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -420,7 +421,7 @@ public final class Sheet {
          */
         @java.lang.Override
         public _FinalStage recordCounts(RecordCounts recordCounts) {
-            this.recordCounts = Optional.of(recordCounts);
+            this.recordCounts = Optional.ofNullable(recordCounts);
             return this;
         }
 
@@ -437,7 +438,7 @@ public final class Sheet {
          */
         @java.lang.Override
         public _FinalStage lockedAt(OffsetDateTime lockedAt) {
-            this.lockedAt = Optional.of(lockedAt);
+            this.lockedAt = Optional.ofNullable(lockedAt);
             return this;
         }
 
@@ -454,7 +455,7 @@ public final class Sheet {
          */
         @java.lang.Override
         public _FinalStage lockedBy(String lockedBy) {
-            this.lockedBy = Optional.of(lockedBy);
+            this.lockedBy = Optional.ofNullable(lockedBy);
             return this;
         }
 
@@ -471,7 +472,7 @@ public final class Sheet {
          */
         @java.lang.Override
         public _FinalStage namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -488,7 +489,7 @@ public final class Sheet {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 

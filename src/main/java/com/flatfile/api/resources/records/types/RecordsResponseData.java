@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordsResponseData.Builder.class)
 public final class RecordsResponseData implements ISuccessData {
     private final boolean success;
@@ -174,7 +174,7 @@ public final class RecordsResponseData implements ISuccessData {
 
         @java.lang.Override
         public _FinalStage commitId(CommitId commitId) {
-            this.commitId = Optional.of(commitId);
+            this.commitId = Optional.ofNullable(commitId);
             return this;
         }
 
@@ -191,7 +191,7 @@ public final class RecordsResponseData implements ISuccessData {
          */
         @java.lang.Override
         public _FinalStage versionId(VersionId versionId) {
-            this.versionId = Optional.of(versionId);
+            this.versionId = Optional.ofNullable(versionId);
             return this;
         }
 
@@ -204,7 +204,7 @@ public final class RecordsResponseData implements ISuccessData {
 
         @java.lang.Override
         public _FinalStage counts(RecordCounts counts) {
-            this.counts = Optional.of(counts);
+            this.counts = Optional.ofNullable(counts);
             return this;
         }
 
@@ -217,7 +217,7 @@ public final class RecordsResponseData implements ISuccessData {
 
         @java.lang.Override
         public _FinalStage records(RecordsWithLinks records) {
-            this.records = Optional.of(records);
+            this.records = Optional.ofNullable(records);
             return this;
         }
 

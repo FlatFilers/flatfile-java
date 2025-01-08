@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateFileRequest.Builder.class)
 public final class UpdateFileRequest {
     private final Optional<WorkbookId> workbookId;
@@ -155,7 +155,7 @@ public final class UpdateFileRequest {
         }
 
         public Builder workbookId(WorkbookId workbookId) {
-            this.workbookId = Optional.of(workbookId);
+            this.workbookId = Optional.ofNullable(workbookId);
             return this;
         }
 
@@ -166,7 +166,7 @@ public final class UpdateFileRequest {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -177,7 +177,7 @@ public final class UpdateFileRequest {
         }
 
         public Builder mode(Mode mode) {
-            this.mode = Optional.of(mode);
+            this.mode = Optional.ofNullable(mode);
             return this;
         }
 
@@ -188,7 +188,7 @@ public final class UpdateFileRequest {
         }
 
         public Builder status(ModelFileStatusEnum status) {
-            this.status = Optional.of(status);
+            this.status = Optional.ofNullable(status);
             return this;
         }
 
@@ -199,7 +199,7 @@ public final class UpdateFileRequest {
         }
 
         public Builder actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 

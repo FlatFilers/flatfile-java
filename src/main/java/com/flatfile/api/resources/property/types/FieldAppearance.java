@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FieldAppearance.Builder.class)
 public final class FieldAppearance {
     private final Optional<FieldSize> size;
@@ -84,7 +84,7 @@ public final class FieldAppearance {
         }
 
         public Builder size(FieldSize size) {
-            this.size = Optional.of(size);
+            this.size = Optional.ofNullable(size);
             return this;
         }
 

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListSheetCommitsRequest.Builder.class)
 public final class ListSheetCommitsRequest {
     private final Optional<Boolean> completed;
@@ -87,7 +87,7 @@ public final class ListSheetCommitsRequest {
         }
 
         public Builder completed(Boolean completed) {
-            this.completed = Optional.of(completed);
+            this.completed = Optional.ofNullable(completed);
             return this;
         }
 

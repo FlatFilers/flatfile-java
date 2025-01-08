@@ -17,8 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreateSnapshotRequest.Builder.class)
 public final class CreateSnapshotRequest {
     private final SheetId sheetId;
@@ -79,7 +80,7 @@ public final class CreateSnapshotRequest {
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(SheetId sheetId);
+        _FinalStage sheetId(@NotNull SheetId sheetId);
 
         Builder from(CreateSnapshotRequest other);
     }
@@ -116,8 +117,8 @@ public final class CreateSnapshotRequest {
          */
         @java.lang.Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public _FinalStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
@@ -127,7 +128,7 @@ public final class CreateSnapshotRequest {
          */
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

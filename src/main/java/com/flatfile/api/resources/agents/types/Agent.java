@@ -22,8 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Agent.Builder.class)
 public final class Agent implements IAgentConfig {
     private final Optional<List<EventTopic>> topics;
@@ -32,7 +33,11 @@ public final class Agent implements IAgentConfig {
 
     private final Optional<String> source;
 
+    private final Optional<String> sourceMap;
+
     private final Optional<String> slug;
+
+    private final Optional<Map<String, Object>> options;
 
     private final AgentId id;
 
@@ -50,7 +55,9 @@ public final class Agent implements IAgentConfig {
             Optional<List<EventTopic>> topics,
             Optional<Compiler> compiler,
             Optional<String> source,
+            Optional<String> sourceMap,
             Optional<String> slug,
+            Optional<Map<String, Object>> options,
             AgentId id,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
@@ -60,7 +67,9 @@ public final class Agent implements IAgentConfig {
         this.topics = topics;
         this.compiler = compiler;
         this.source = source;
+        this.sourceMap = sourceMap;
         this.slug = slug;
+        this.options = options;
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -97,12 +106,30 @@ public final class Agent implements IAgentConfig {
     }
 
     /**
+     * @return The source map of the agent
+     */
+    @JsonProperty("sourceMap")
+    @java.lang.Override
+    public Optional<String> getSourceMap() {
+        return sourceMap;
+    }
+
+    /**
      * @return The slug of the agent
      */
     @JsonProperty("slug")
     @java.lang.Override
     public Optional<String> getSlug() {
         return slug;
+    }
+
+    /**
+     * @return Options for the agent
+     */
+    @JsonProperty("options")
+    @java.lang.Override
+    public Optional<Map<String, Object>> getOptions() {
+        return options;
     }
 
     @JsonProperty("id")
@@ -145,7 +172,9 @@ public final class Agent implements IAgentConfig {
         return topics.equals(other.topics)
                 && compiler.equals(other.compiler)
                 && source.equals(other.source)
+                && sourceMap.equals(other.sourceMap)
                 && slug.equals(other.slug)
+                && options.equals(other.options)
                 && id.equals(other.id)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
@@ -159,7 +188,9 @@ public final class Agent implements IAgentConfig {
                 this.topics,
                 this.compiler,
                 this.source,
+                this.sourceMap,
                 this.slug,
+                this.options,
                 this.id,
                 this.createdAt,
                 this.updatedAt,
@@ -177,25 +208,25 @@ public final class Agent implements IAgentConfig {
     }
 
     public interface IdStage {
-        CreatedAtStage id(AgentId id);
+        CreatedAtStage id(@NotNull AgentId id);
 
         Builder from(Agent other);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        AccountIdStage updatedAt(OffsetDateTime updatedAt);
+        AccountIdStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface AccountIdStage {
-        EnvironmentIdStage accountId(AccountId accountId);
+        EnvironmentIdStage accountId(@NotNull AccountId accountId);
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
+        _FinalStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -213,9 +244,17 @@ public final class Agent implements IAgentConfig {
 
         _FinalStage source(String source);
 
+        _FinalStage sourceMap(Optional<String> sourceMap);
+
+        _FinalStage sourceMap(String sourceMap);
+
         _FinalStage slug(Optional<String> slug);
 
         _FinalStage slug(String slug);
+
+        _FinalStage options(Optional<Map<String, Object>> options);
+
+        _FinalStage options(Map<String, Object> options);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -231,7 +270,11 @@ public final class Agent implements IAgentConfig {
 
         private EnvironmentId environmentId;
 
+        private Optional<Map<String, Object>> options = Optional.empty();
+
         private Optional<String> slug = Optional.empty();
+
+        private Optional<String> sourceMap = Optional.empty();
 
         private Optional<String> source = Optional.empty();
 
@@ -249,7 +292,9 @@ public final class Agent implements IAgentConfig {
             topics(other.getTopics());
             compiler(other.getCompiler());
             source(other.getSource());
+            sourceMap(other.getSourceMap());
             slug(other.getSlug());
+            options(other.getOptions());
             id(other.getId());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
@@ -260,36 +305,53 @@ public final class Agent implements IAgentConfig {
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(AgentId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull AgentId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public AccountIdStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public AccountIdStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("accountId")
-        public EnvironmentIdStage accountId(AccountId accountId) {
-            this.accountId = accountId;
+        public EnvironmentIdStage accountId(@NotNull AccountId accountId) {
+            this.accountId = Objects.requireNonNull(accountId, "accountId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public _FinalStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
+            return this;
+        }
+
+        /**
+         * <p>Options for the agent</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage options(Map<String, Object> options) {
+            this.options = Optional.ofNullable(options);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "options", nulls = Nulls.SKIP)
+        public _FinalStage options(Optional<Map<String, Object>> options) {
+            this.options = options;
             return this;
         }
 
@@ -299,7 +361,7 @@ public final class Agent implements IAgentConfig {
          */
         @java.lang.Override
         public _FinalStage slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
@@ -311,12 +373,29 @@ public final class Agent implements IAgentConfig {
         }
 
         /**
+         * <p>The source map of the agent</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage sourceMap(String sourceMap) {
+            this.sourceMap = Optional.ofNullable(sourceMap);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "sourceMap", nulls = Nulls.SKIP)
+        public _FinalStage sourceMap(Optional<String> sourceMap) {
+            this.sourceMap = sourceMap;
+            return this;
+        }
+
+        /**
          * <p>The source of the agent</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         public _FinalStage source(String source) {
-            this.source = Optional.of(source);
+            this.source = Optional.ofNullable(source);
             return this;
         }
 
@@ -333,7 +412,7 @@ public final class Agent implements IAgentConfig {
          */
         @java.lang.Override
         public _FinalStage compiler(Compiler compiler) {
-            this.compiler = Optional.of(compiler);
+            this.compiler = Optional.ofNullable(compiler);
             return this;
         }
 
@@ -350,7 +429,7 @@ public final class Agent implements IAgentConfig {
          */
         @java.lang.Override
         public _FinalStage topics(List<EventTopic> topics) {
-            this.topics = Optional.of(topics);
+            this.topics = Optional.ofNullable(topics);
             return this;
         }
 
@@ -367,7 +446,9 @@ public final class Agent implements IAgentConfig {
                     topics,
                     compiler,
                     source,
+                    sourceMap,
                     slug,
+                    options,
                     id,
                     createdAt,
                     updatedAt,

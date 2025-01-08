@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobOutcomeNextView.Builder.class)
 public final class JobOutcomeNextView {
     private final String sheetId;
@@ -89,7 +90,7 @@ public final class JobOutcomeNextView {
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(String sheetId);
+        _FinalStage sheetId(@NotNull String sheetId);
 
         Builder from(JobOutcomeNextView other);
     }
@@ -131,14 +132,14 @@ public final class JobOutcomeNextView {
 
         @java.lang.Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(String sheetId) {
-            this.sheetId = sheetId;
+        public _FinalStage sheetId(@NotNull String sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

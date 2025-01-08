@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetDetailedAgentLogsResponse.Builder.class)
 public final class GetDetailedAgentLogsResponse {
     private final Optional<Pagination> pagination;
@@ -99,7 +99,7 @@ public final class GetDetailedAgentLogsResponse {
         }
 
         public Builder pagination(Pagination pagination) {
-            this.pagination = Optional.of(pagination);
+            this.pagination = Optional.ofNullable(pagination);
             return this;
         }
 

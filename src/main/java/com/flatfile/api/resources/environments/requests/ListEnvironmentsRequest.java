@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListEnvironmentsRequest.Builder.class)
 public final class ListEnvironmentsRequest {
     private final Optional<Integer> pageSize;
@@ -102,7 +102,7 @@ public final class ListEnvironmentsRequest {
         }
 
         public Builder pageSize(Integer pageSize) {
-            this.pageSize = Optional.of(pageSize);
+            this.pageSize = Optional.ofNullable(pageSize);
             return this;
         }
 
@@ -113,7 +113,7 @@ public final class ListEnvironmentsRequest {
         }
 
         public Builder pageNumber(Integer pageNumber) {
-            this.pageNumber = Optional.of(pageNumber);
+            this.pageNumber = Optional.ofNullable(pageNumber);
             return this;
         }
 

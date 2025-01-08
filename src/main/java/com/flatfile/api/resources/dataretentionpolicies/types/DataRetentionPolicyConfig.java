@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.EnvironmentId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DataRetentionPolicyConfig.Builder.class)
 public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConfig {
     private final DataRetentionPolicyEnum type;
@@ -86,7 +87,7 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
     }
 
     public interface TypeStage {
-        PeriodStage type(DataRetentionPolicyEnum type);
+        PeriodStage type(@NotNull DataRetentionPolicyEnum type);
 
         Builder from(DataRetentionPolicyConfig other);
     }
@@ -96,7 +97,7 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
     }
 
     public interface EnvironmentIdStage {
-        _FinalStage environmentId(EnvironmentId environmentId);
+        _FinalStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface _FinalStage {
@@ -126,8 +127,8 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
 
         @java.lang.Override
         @JsonSetter("type")
-        public PeriodStage type(DataRetentionPolicyEnum type) {
-            this.type = type;
+        public PeriodStage type(@NotNull DataRetentionPolicyEnum type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 
@@ -140,8 +141,8 @@ public final class DataRetentionPolicyConfig implements IDataRetentionPolicyConf
 
         @java.lang.Override
         @JsonSetter("environmentId")
-        public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public _FinalStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 

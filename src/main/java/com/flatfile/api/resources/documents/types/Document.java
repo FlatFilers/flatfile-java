@@ -22,8 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Document.Builder.class)
 public final class Document implements IDocumentConfig {
     private final String title;
@@ -174,25 +175,25 @@ public final class Document implements IDocumentConfig {
     }
 
     public interface TitleStage {
-        BodyStage title(String title);
+        BodyStage title(@NotNull String title);
 
         Builder from(Document other);
     }
 
     public interface BodyStage {
-        IdStage body(String body);
+        IdStage body(@NotNull String body);
     }
 
     public interface IdStage {
-        CreatedAtStage id(DocumentId id);
+        CreatedAtStage id(@NotNull DocumentId id);
     }
 
     public interface CreatedAtStage {
-        UpdatedAtStage createdAt(OffsetDateTime createdAt);
+        UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface UpdatedAtStage {
-        _FinalStage updatedAt(OffsetDateTime updatedAt);
+        _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface _FinalStage {
@@ -257,22 +258,22 @@ public final class Document implements IDocumentConfig {
 
         @java.lang.Override
         @JsonSetter("title")
-        public BodyStage title(String title) {
-            this.title = title;
+        public BodyStage title(@NotNull String title) {
+            this.title = Objects.requireNonNull(title, "title must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("body")
-        public IdStage body(String body) {
-            this.body = body;
+        public IdStage body(@NotNull String body) {
+            this.body = Objects.requireNonNull(body, "body must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("id")
-        public CreatedAtStage id(DocumentId id) {
-            this.id = id;
+        public CreatedAtStage id(@NotNull DocumentId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -282,8 +283,8 @@ public final class Document implements IDocumentConfig {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public UpdatedAtStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public UpdatedAtStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -293,14 +294,14 @@ public final class Document implements IDocumentConfig {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public _FinalStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -313,7 +314,7 @@ public final class Document implements IDocumentConfig {
 
         @java.lang.Override
         public _FinalStage spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -326,7 +327,7 @@ public final class Document implements IDocumentConfig {
 
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -343,7 +344,7 @@ public final class Document implements IDocumentConfig {
          */
         @java.lang.Override
         public _FinalStage treatments(List<String> treatments) {
-            this.treatments = Optional.of(treatments);
+            this.treatments = Optional.ofNullable(treatments);
             return this;
         }
 

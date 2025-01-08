@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FindAndReplaceJobConfig.Builder.class)
 public final class FindAndReplaceJobConfig {
     private final Optional<Filter> filter;
@@ -45,6 +46,8 @@ public final class FindAndReplaceJobConfig {
 
     private final String fieldKey;
 
+    private final Optional<String> snapshotLabel;
+
     private final Map<String, Object> additionalProperties;
 
     private FindAndReplaceJobConfig(
@@ -57,6 +60,7 @@ public final class FindAndReplaceJobConfig {
             Optional<CellValueUnion> find,
             Optional<CellValueUnion> replace,
             String fieldKey,
+            Optional<String> snapshotLabel,
             Map<String, Object> additionalProperties) {
         this.filter = filter;
         this.filterField = filterField;
@@ -67,6 +71,7 @@ public final class FindAndReplaceJobConfig {
         this.find = find;
         this.replace = replace;
         this.fieldKey = fieldKey;
+        this.snapshotLabel = snapshotLabel;
         this.additionalProperties = additionalProperties;
     }
 
@@ -142,6 +147,14 @@ public final class FindAndReplaceJobConfig {
         return fieldKey;
     }
 
+    /**
+     * @return If specified, a snapshot will be generated with this label
+     */
+    @JsonProperty("snapshotLabel")
+    public Optional<String> getSnapshotLabel() {
+        return snapshotLabel;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -162,7 +175,8 @@ public final class FindAndReplaceJobConfig {
                 && ids.equals(other.ids)
                 && find.equals(other.find)
                 && replace.equals(other.replace)
-                && fieldKey.equals(other.fieldKey);
+                && fieldKey.equals(other.fieldKey)
+                && snapshotLabel.equals(other.snapshotLabel);
     }
 
     @java.lang.Override
@@ -176,7 +190,8 @@ public final class FindAndReplaceJobConfig {
                 this.ids,
                 this.find,
                 this.replace,
-                this.fieldKey);
+                this.fieldKey,
+                this.snapshotLabel);
     }
 
     @java.lang.Override
@@ -189,7 +204,7 @@ public final class FindAndReplaceJobConfig {
     }
 
     public interface FieldKeyStage {
-        _FinalStage fieldKey(String fieldKey);
+        _FinalStage fieldKey(@NotNull String fieldKey);
 
         Builder from(FindAndReplaceJobConfig other);
     }
@@ -228,11 +243,17 @@ public final class FindAndReplaceJobConfig {
         _FinalStage replace(Optional<CellValueUnion> replace);
 
         _FinalStage replace(CellValueUnion replace);
+
+        _FinalStage snapshotLabel(Optional<String> snapshotLabel);
+
+        _FinalStage snapshotLabel(String snapshotLabel);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements FieldKeyStage, _FinalStage {
         private String fieldKey;
+
+        private Optional<String> snapshotLabel = Optional.empty();
 
         private Optional<CellValueUnion> replace = Optional.empty();
 
@@ -266,6 +287,7 @@ public final class FindAndReplaceJobConfig {
             find(other.getFind());
             replace(other.getReplace());
             fieldKey(other.getFieldKey());
+            snapshotLabel(other.getSnapshotLabel());
             return this;
         }
 
@@ -275,8 +297,25 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         @JsonSetter("fieldKey")
-        public _FinalStage fieldKey(String fieldKey) {
-            this.fieldKey = fieldKey;
+        public _FinalStage fieldKey(@NotNull String fieldKey) {
+            this.fieldKey = Objects.requireNonNull(fieldKey, "fieldKey must not be null");
+            return this;
+        }
+
+        /**
+         * <p>If specified, a snapshot will be generated with this label</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage snapshotLabel(String snapshotLabel) {
+            this.snapshotLabel = Optional.ofNullable(snapshotLabel);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "snapshotLabel", nulls = Nulls.SKIP)
+        public _FinalStage snapshotLabel(Optional<String> snapshotLabel) {
+            this.snapshotLabel = snapshotLabel;
             return this;
         }
 
@@ -286,7 +325,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage replace(CellValueUnion replace) {
-            this.replace = Optional.of(replace);
+            this.replace = Optional.ofNullable(replace);
             return this;
         }
 
@@ -303,7 +342,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage find(CellValueUnion find) {
-            this.find = Optional.of(find);
+            this.find = Optional.ofNullable(find);
             return this;
         }
 
@@ -320,7 +359,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage ids(List<RecordId> ids) {
-            this.ids = Optional.of(ids);
+            this.ids = Optional.ofNullable(ids);
             return this;
         }
 
@@ -337,7 +376,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage q(String q) {
-            this.q = Optional.of(q);
+            this.q = Optional.ofNullable(q);
             return this;
         }
 
@@ -354,7 +393,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage searchField(SearchField searchField) {
-            this.searchField = Optional.of(searchField);
+            this.searchField = Optional.ofNullable(searchField);
             return this;
         }
 
@@ -371,7 +410,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage searchValue(SearchValue searchValue) {
-            this.searchValue = Optional.of(searchValue);
+            this.searchValue = Optional.ofNullable(searchValue);
             return this;
         }
 
@@ -388,7 +427,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage filterField(FilterField filterField) {
-            this.filterField = Optional.of(filterField);
+            this.filterField = Optional.ofNullable(filterField);
             return this;
         }
 
@@ -405,7 +444,7 @@ public final class FindAndReplaceJobConfig {
          */
         @java.lang.Override
         public _FinalStage filter(Filter filter) {
-            this.filter = Optional.of(filter);
+            this.filter = Optional.ofNullable(filter);
             return this;
         }
 
@@ -428,6 +467,7 @@ public final class FindAndReplaceJobConfig {
                     find,
                     replace,
                     fieldKey,
+                    snapshotLabel,
                     additionalProperties);
         }
     }

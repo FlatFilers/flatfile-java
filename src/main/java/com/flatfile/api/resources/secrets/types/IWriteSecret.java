@@ -3,6 +3,7 @@
  */
 package com.flatfile.api.resources.secrets.types;
 
+import com.flatfile.api.resources.commons.types.ActorIdUnion;
 import com.flatfile.api.resources.commons.types.EnvironmentId;
 import com.flatfile.api.resources.commons.types.SpaceId;
 import java.util.Optional;
@@ -15,4 +16,6 @@ public interface IWriteSecret {
     Optional<EnvironmentId> getEnvironmentId();
 
     Optional<SpaceId> getSpaceId();
+
+    Optional<ActorIdUnion> getActorId();
 }

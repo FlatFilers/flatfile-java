@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AppPatch.Builder.class)
 public final class AppPatch {
     private final Optional<String> name;
@@ -35,6 +35,8 @@ public final class AppPatch {
 
     private final Optional<Object> environmentFilters;
 
+    private final Optional<Object> blueprint;
+
     private final Optional<OffsetDateTime> activatedAt;
 
     private final Map<String, Object> additionalProperties;
@@ -47,6 +49,7 @@ public final class AppPatch {
             Optional<String> icon,
             Optional<Object> metadata,
             Optional<Object> environmentFilters,
+            Optional<Object> blueprint,
             Optional<OffsetDateTime> activatedAt,
             Map<String, Object> additionalProperties) {
         this.name = name;
@@ -56,6 +59,7 @@ public final class AppPatch {
         this.icon = icon;
         this.metadata = metadata;
         this.environmentFilters = environmentFilters;
+        this.blueprint = blueprint;
         this.activatedAt = activatedAt;
         this.additionalProperties = additionalProperties;
     }
@@ -95,6 +99,11 @@ public final class AppPatch {
         return environmentFilters;
     }
 
+    @JsonProperty("blueprint")
+    public Optional<Object> getBlueprint() {
+        return blueprint;
+    }
+
     @JsonProperty("activatedAt")
     public Optional<OffsetDateTime> getActivatedAt() {
         return activatedAt;
@@ -119,6 +128,7 @@ public final class AppPatch {
                 && icon.equals(other.icon)
                 && metadata.equals(other.metadata)
                 && environmentFilters.equals(other.environmentFilters)
+                && blueprint.equals(other.blueprint)
                 && activatedAt.equals(other.activatedAt);
     }
 
@@ -132,6 +142,7 @@ public final class AppPatch {
                 this.icon,
                 this.metadata,
                 this.environmentFilters,
+                this.blueprint,
                 this.activatedAt);
     }
 
@@ -160,6 +171,8 @@ public final class AppPatch {
 
         private Optional<Object> environmentFilters = Optional.empty();
 
+        private Optional<Object> blueprint = Optional.empty();
+
         private Optional<OffsetDateTime> activatedAt = Optional.empty();
 
         @JsonAnySetter
@@ -175,6 +188,7 @@ public final class AppPatch {
             icon(other.getIcon());
             metadata(other.getMetadata());
             environmentFilters(other.getEnvironmentFilters());
+            blueprint(other.getBlueprint());
             activatedAt(other.getActivatedAt());
             return this;
         }
@@ -186,7 +200,7 @@ public final class AppPatch {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -197,7 +211,7 @@ public final class AppPatch {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -208,7 +222,7 @@ public final class AppPatch {
         }
 
         public Builder entity(String entity) {
-            this.entity = Optional.of(entity);
+            this.entity = Optional.ofNullable(entity);
             return this;
         }
 
@@ -219,7 +233,7 @@ public final class AppPatch {
         }
 
         public Builder entityPlural(String entityPlural) {
-            this.entityPlural = Optional.of(entityPlural);
+            this.entityPlural = Optional.ofNullable(entityPlural);
             return this;
         }
 
@@ -230,7 +244,7 @@ public final class AppPatch {
         }
 
         public Builder icon(String icon) {
-            this.icon = Optional.of(icon);
+            this.icon = Optional.ofNullable(icon);
             return this;
         }
 
@@ -241,7 +255,7 @@ public final class AppPatch {
         }
 
         public Builder metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -252,7 +266,18 @@ public final class AppPatch {
         }
 
         public Builder environmentFilters(Object environmentFilters) {
-            this.environmentFilters = Optional.of(environmentFilters);
+            this.environmentFilters = Optional.ofNullable(environmentFilters);
+            return this;
+        }
+
+        @JsonSetter(value = "blueprint", nulls = Nulls.SKIP)
+        public Builder blueprint(Optional<Object> blueprint) {
+            this.blueprint = blueprint;
+            return this;
+        }
+
+        public Builder blueprint(Object blueprint) {
+            this.blueprint = Optional.ofNullable(blueprint);
             return this;
         }
 
@@ -263,7 +288,7 @@ public final class AppPatch {
         }
 
         public Builder activatedAt(OffsetDateTime activatedAt) {
-            this.activatedAt = Optional.of(activatedAt);
+            this.activatedAt = Optional.ofNullable(activatedAt);
             return this;
         }
 
@@ -276,6 +301,7 @@ public final class AppPatch {
                     icon,
                     metadata,
                     environmentFilters,
+                    blueprint,
                     activatedAt,
                     additionalProperties);
         }

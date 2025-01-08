@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ViewUpdate.Builder.class)
 public final class ViewUpdate {
     private final Optional<String> name;
@@ -72,7 +73,7 @@ public final class ViewUpdate {
     }
 
     public interface ConfigStage {
-        _FinalStage config(ViewConfig config);
+        _FinalStage config(@NotNull ViewConfig config);
 
         Builder from(ViewUpdate other);
     }
@@ -105,14 +106,14 @@ public final class ViewUpdate {
 
         @java.lang.Override
         @JsonSetter("config")
-        public _FinalStage config(ViewConfig config) {
-            this.config = config;
+        public _FinalStage config(@NotNull ViewConfig config) {
+            this.config = Objects.requireNonNull(config, "config must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 

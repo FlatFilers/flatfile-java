@@ -9,15 +9,17 @@ import com.flatfile.api.core.Environment;
 public final class FlatfileBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String token = null;
+
+    private String xDisableHooks = "true";
+
     private Environment environment = Environment.PRODUCTION;
 
+    /**
+     * Sets token
+     */
     public FlatfileBuilder token(String token) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
-        return this;
-    }
-
-    public FlatfileBuilder xDisableHooks(String xDisableHooks) {
-        this.clientOptionsBuilder.addHeader("X-Disable-Hooks", xDisableHooks);
+        this.token = token;
         return this;
     }
 
@@ -31,7 +33,20 @@ public final class FlatfileBuilder {
         return this;
     }
 
+    /**
+     * Sets the timeout (in seconds) for the client
+     */
+    public FlatfileBuilder timeout(int timeout) {
+        this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
     public Flatfile build() {
+        if (token == null) {
+            throw new RuntimeException("Please provide token");
+        }
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
+        this.clientOptionsBuilder.addHeader("X-Disable-Hooks", this.xDisableHooks);
         clientOptionsBuilder.environment(this.environment);
         return new Flatfile(clientOptionsBuilder.build());
     }

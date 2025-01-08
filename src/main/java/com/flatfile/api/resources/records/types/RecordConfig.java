@@ -17,21 +17,25 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = RecordConfig.Builder.class)
 public final class RecordConfig {
     private final Optional<Boolean> readonly;
 
     private final Optional<Map<String, CellConfig>> fields;
 
+    private final Optional<Boolean> markedForDeletion;
+
     private final Map<String, Object> additionalProperties;
 
     private RecordConfig(
             Optional<Boolean> readonly,
             Optional<Map<String, CellConfig>> fields,
+            Optional<Boolean> markedForDeletion,
             Map<String, Object> additionalProperties) {
         this.readonly = readonly;
         this.fields = fields;
+        this.markedForDeletion = markedForDeletion;
         this.additionalProperties = additionalProperties;
     }
 
@@ -43,6 +47,11 @@ public final class RecordConfig {
     @JsonProperty("fields")
     public Optional<Map<String, CellConfig>> getFields() {
         return fields;
+    }
+
+    @JsonProperty("markedForDeletion")
+    public Optional<Boolean> getMarkedForDeletion() {
+        return markedForDeletion;
     }
 
     @java.lang.Override
@@ -57,12 +66,14 @@ public final class RecordConfig {
     }
 
     private boolean equalTo(RecordConfig other) {
-        return readonly.equals(other.readonly) && fields.equals(other.fields);
+        return readonly.equals(other.readonly)
+                && fields.equals(other.fields)
+                && markedForDeletion.equals(other.markedForDeletion);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.readonly, this.fields);
+        return Objects.hash(this.readonly, this.fields, this.markedForDeletion);
     }
 
     @java.lang.Override
@@ -80,6 +91,8 @@ public final class RecordConfig {
 
         private Optional<Map<String, CellConfig>> fields = Optional.empty();
 
+        private Optional<Boolean> markedForDeletion = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -88,6 +101,7 @@ public final class RecordConfig {
         public Builder from(RecordConfig other) {
             readonly(other.getReadonly());
             fields(other.getFields());
+            markedForDeletion(other.getMarkedForDeletion());
             return this;
         }
 
@@ -98,7 +112,7 @@ public final class RecordConfig {
         }
 
         public Builder readonly(Boolean readonly) {
-            this.readonly = Optional.of(readonly);
+            this.readonly = Optional.ofNullable(readonly);
             return this;
         }
 
@@ -109,12 +123,23 @@ public final class RecordConfig {
         }
 
         public Builder fields(Map<String, CellConfig> fields) {
-            this.fields = Optional.of(fields);
+            this.fields = Optional.ofNullable(fields);
+            return this;
+        }
+
+        @JsonSetter(value = "markedForDeletion", nulls = Nulls.SKIP)
+        public Builder markedForDeletion(Optional<Boolean> markedForDeletion) {
+            this.markedForDeletion = markedForDeletion;
+            return this;
+        }
+
+        public Builder markedForDeletion(Boolean markedForDeletion) {
+            this.markedForDeletion = Optional.ofNullable(markedForDeletion);
             return this;
         }
 
         public RecordConfig build() {
-            return new RecordConfig(readonly, fields, additionalProperties);
+            return new RecordConfig(readonly, fields, markedForDeletion, additionalProperties);
         }
     }
 }

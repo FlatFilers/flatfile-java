@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Metadata.Builder.class)
 public final class Metadata {
     private final Optional<Certainty> certainty;
@@ -26,16 +26,20 @@ public final class Metadata {
 
     private final Optional<String> source;
 
+    private final Optional<String> detectedDelimiter;
+
     private final Map<String, Object> additionalProperties;
 
     private Metadata(
             Optional<Certainty> certainty,
             Optional<Double> confidence,
             Optional<String> source,
+            Optional<String> detectedDelimiter,
             Map<String, Object> additionalProperties) {
         this.certainty = certainty;
         this.confidence = confidence;
         this.source = source;
+        this.detectedDelimiter = detectedDelimiter;
         this.additionalProperties = additionalProperties;
     }
 
@@ -54,6 +58,11 @@ public final class Metadata {
         return source;
     }
 
+    @JsonProperty("detectedDelimiter")
+    public Optional<String> getDetectedDelimiter() {
+        return detectedDelimiter;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -66,12 +75,15 @@ public final class Metadata {
     }
 
     private boolean equalTo(Metadata other) {
-        return certainty.equals(other.certainty) && confidence.equals(other.confidence) && source.equals(other.source);
+        return certainty.equals(other.certainty)
+                && confidence.equals(other.confidence)
+                && source.equals(other.source)
+                && detectedDelimiter.equals(other.detectedDelimiter);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.certainty, this.confidence, this.source);
+        return Objects.hash(this.certainty, this.confidence, this.source, this.detectedDelimiter);
     }
 
     @java.lang.Override
@@ -91,6 +103,8 @@ public final class Metadata {
 
         private Optional<String> source = Optional.empty();
 
+        private Optional<String> detectedDelimiter = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -100,6 +114,7 @@ public final class Metadata {
             certainty(other.getCertainty());
             confidence(other.getConfidence());
             source(other.getSource());
+            detectedDelimiter(other.getDetectedDelimiter());
             return this;
         }
 
@@ -110,7 +125,7 @@ public final class Metadata {
         }
 
         public Builder certainty(Certainty certainty) {
-            this.certainty = Optional.of(certainty);
+            this.certainty = Optional.ofNullable(certainty);
             return this;
         }
 
@@ -121,7 +136,7 @@ public final class Metadata {
         }
 
         public Builder confidence(Double confidence) {
-            this.confidence = Optional.of(confidence);
+            this.confidence = Optional.ofNullable(confidence);
             return this;
         }
 
@@ -132,12 +147,23 @@ public final class Metadata {
         }
 
         public Builder source(String source) {
-            this.source = Optional.of(source);
+            this.source = Optional.ofNullable(source);
+            return this;
+        }
+
+        @JsonSetter(value = "detectedDelimiter", nulls = Nulls.SKIP)
+        public Builder detectedDelimiter(Optional<String> detectedDelimiter) {
+            this.detectedDelimiter = detectedDelimiter;
+            return this;
+        }
+
+        public Builder detectedDelimiter(String detectedDelimiter) {
+            this.detectedDelimiter = Optional.ofNullable(detectedDelimiter);
             return this;
         }
 
         public Metadata build() {
-            return new Metadata(certainty, confidence, source, additionalProperties);
+            return new Metadata(certainty, confidence, source, detectedDelimiter, additionalProperties);
         }
     }
 }

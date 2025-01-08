@@ -20,8 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Snapshot.Builder.class)
 public final class Snapshot {
     private final SnapshotId id;
@@ -138,21 +139,21 @@ public final class Snapshot {
     }
 
     public interface IdStage {
-        SheetIdStage id(SnapshotId id);
+        SheetIdStage id(@NotNull SnapshotId id);
 
         Builder from(Snapshot other);
     }
 
     public interface SheetIdStage {
-        CreatedAtStage sheetId(SheetId sheetId);
+        CreatedAtStage sheetId(@NotNull SheetId sheetId);
     }
 
     public interface CreatedAtStage {
-        CreatedByStage createdAt(OffsetDateTime createdAt);
+        CreatedByStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface CreatedByStage {
-        _FinalStage createdBy(UserId createdBy);
+        _FinalStage createdBy(@NotNull UserId createdBy);
     }
 
     public interface _FinalStage {
@@ -203,8 +204,8 @@ public final class Snapshot {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public SheetIdStage id(SnapshotId id) {
-            this.id = id;
+        public SheetIdStage id(@NotNull SnapshotId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -214,8 +215,8 @@ public final class Snapshot {
          */
         @java.lang.Override
         @JsonSetter("sheetId")
-        public CreatedAtStage sheetId(SheetId sheetId) {
-            this.sheetId = sheetId;
+        public CreatedAtStage sheetId(@NotNull SheetId sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 
@@ -225,8 +226,8 @@ public final class Snapshot {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public CreatedByStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public CreatedByStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -236,8 +237,8 @@ public final class Snapshot {
          */
         @java.lang.Override
         @JsonSetter("createdBy")
-        public _FinalStage createdBy(UserId createdBy) {
-            this.createdBy = createdBy;
+        public _FinalStage createdBy(@NotNull UserId createdBy) {
+            this.createdBy = Objects.requireNonNull(createdBy, "createdBy must not be null");
             return this;
         }
 
@@ -247,7 +248,7 @@ public final class Snapshot {
          */
         @java.lang.Override
         public _FinalStage summary(SnapshotSummary summary) {
-            this.summary = Optional.of(summary);
+            this.summary = Optional.ofNullable(summary);
             return this;
         }
 
@@ -264,7 +265,7 @@ public final class Snapshot {
          */
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

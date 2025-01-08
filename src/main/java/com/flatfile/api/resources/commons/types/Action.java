@@ -17,17 +17,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Action.Builder.class)
-public final class Action {
+public final class Action implements IAction, IActionWithoutLabel {
+    private final String label;
+
     private final Optional<String> slug;
 
     private final Optional<String> operation;
 
     private final Optional<ActionMode> mode;
-
-    private final String label;
 
     private final Optional<String> tooltip;
 
@@ -53,13 +54,19 @@ public final class Action {
 
     private final Optional<List<ActionConstraint>> constraints;
 
+    private final Optional<ActionMount> mount;
+
+    private final Optional<Guide> guide;
+
+    private final Optional<Guardrail> guardrail;
+
     private final Map<String, Object> additionalProperties;
 
     private Action(
+            String label,
             Optional<String> slug,
             Optional<String> operation,
             Optional<ActionMode> mode,
-            String label,
             Optional<String> tooltip,
             Optional<List<ActionMessage>> messages,
             Optional<String> type,
@@ -72,11 +79,14 @@ public final class Action {
             Optional<Boolean> requireSelection,
             Optional<InputForm> inputForm,
             Optional<List<ActionConstraint>> constraints,
+            Optional<ActionMount> mount,
+            Optional<Guide> guide,
+            Optional<Guardrail> guardrail,
             Map<String, Object> additionalProperties) {
+        this.label = label;
         this.slug = slug;
         this.operation = operation;
         this.mode = mode;
-        this.label = label;
         this.tooltip = tooltip;
         this.messages = messages;
         this.type = type;
@@ -89,13 +99,26 @@ public final class Action {
         this.requireSelection = requireSelection;
         this.inputForm = inputForm;
         this.constraints = constraints;
+        this.mount = mount;
+        this.guide = guide;
+        this.guardrail = guardrail;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return The text on the Button itself
+     */
+    @JsonProperty("label")
+    @java.lang.Override
+    public String getLabel() {
+        return label;
     }
 
     /**
      * @return <strong>This is deprecated. Use <code>operation</code> instead.</strong>
      */
     @JsonProperty("slug")
+    @java.lang.Override
     public Optional<String> getSlug() {
         return slug;
     }
@@ -104,6 +127,7 @@ public final class Action {
      * @return This will become the job operation that is triggered
      */
     @JsonProperty("operation")
+    @java.lang.Override
     public Optional<String> getOperation() {
         return operation;
     }
@@ -112,27 +136,22 @@ public final class Action {
      * @return Foreground and toolbarBlocking action mode will prevent interacting with the resource until complete
      */
     @JsonProperty("mode")
+    @java.lang.Override
     public Optional<ActionMode> getMode() {
         return mode;
-    }
-
-    /**
-     * @return The text on the button itself.
-     */
-    @JsonProperty("label")
-    public String getLabel() {
-        return label;
     }
 
     /**
      * @return A tooltip that appears when hovering the action button
      */
     @JsonProperty("tooltip")
+    @java.lang.Override
     public Optional<String> getTooltip() {
         return tooltip;
     }
 
     @JsonProperty("messages")
+    @java.lang.Override
     public Optional<List<ActionMessage>> getMessages() {
         return messages;
     }
@@ -141,6 +160,7 @@ public final class Action {
      * @return <strong>This is deprecated.</strong>
      */
     @JsonProperty("type")
+    @java.lang.Override
     public Optional<String> getType() {
         return type;
     }
@@ -149,6 +169,7 @@ public final class Action {
      * @return The text that appears in the dialog after the action is clicked.
      */
     @JsonProperty("description")
+    @java.lang.Override
     public Optional<String> getDescription() {
         return description;
     }
@@ -157,6 +178,7 @@ public final class Action {
      * @return Determines if the action should happen on a regular cadence.
      */
     @JsonProperty("schedule")
+    @java.lang.Override
     public Optional<ActionSchedule> getSchedule() {
         return schedule;
     }
@@ -165,6 +187,7 @@ public final class Action {
      * @return A primary action will be more visibly present, whether in Sheet or Workbook.
      */
     @JsonProperty("primary")
+    @java.lang.Override
     public Optional<Boolean> getPrimary() {
         return primary;
     }
@@ -173,6 +196,7 @@ public final class Action {
      * @return Whether to show a modal to confirm the action
      */
     @JsonProperty("confirm")
+    @java.lang.Override
     public Optional<Boolean> getConfirm() {
         return confirm;
     }
@@ -181,6 +205,7 @@ public final class Action {
      * @return Icon will work on primary actions. It will only accept an already existing Flatfile design system icon.
      */
     @JsonProperty("icon")
+    @java.lang.Override
     public Optional<String> getIcon() {
         return icon;
     }
@@ -189,6 +214,7 @@ public final class Action {
      * @return <strong>This is deprecated. Use <code>constraints</code> instead.</strong>
      */
     @JsonProperty("requireAllValid")
+    @java.lang.Override
     public Optional<Boolean> getRequireAllValid() {
         return requireAllValid;
     }
@@ -197,6 +223,7 @@ public final class Action {
      * @return <strong>This is deprecated. Use <code>constraints</code> instead.</strong>
      */
     @JsonProperty("requireSelection")
+    @java.lang.Override
     public Optional<Boolean> getRequireSelection() {
         return requireSelection;
     }
@@ -205,6 +232,7 @@ public final class Action {
      * @return Adds an input form for this action after it is clicked.
      */
     @JsonProperty("inputForm")
+    @java.lang.Override
     public Optional<InputForm> getInputForm() {
         return inputForm;
     }
@@ -213,8 +241,27 @@ public final class Action {
      * @return A limitation or restriction on the action.
      */
     @JsonProperty("constraints")
+    @java.lang.Override
     public Optional<List<ActionConstraint>> getConstraints() {
         return constraints;
+    }
+
+    @JsonProperty("mount")
+    @java.lang.Override
+    public Optional<ActionMount> getMount() {
+        return mount;
+    }
+
+    @JsonProperty("guide")
+    @java.lang.Override
+    public Optional<Guide> getGuide() {
+        return guide;
+    }
+
+    @JsonProperty("guardrail")
+    @java.lang.Override
+    public Optional<Guardrail> getGuardrail() {
+        return guardrail;
     }
 
     @java.lang.Override
@@ -229,10 +276,10 @@ public final class Action {
     }
 
     private boolean equalTo(Action other) {
-        return slug.equals(other.slug)
+        return label.equals(other.label)
+                && slug.equals(other.slug)
                 && operation.equals(other.operation)
                 && mode.equals(other.mode)
-                && label.equals(other.label)
                 && tooltip.equals(other.tooltip)
                 && messages.equals(other.messages)
                 && type.equals(other.type)
@@ -244,16 +291,19 @@ public final class Action {
                 && requireAllValid.equals(other.requireAllValid)
                 && requireSelection.equals(other.requireSelection)
                 && inputForm.equals(other.inputForm)
-                && constraints.equals(other.constraints);
+                && constraints.equals(other.constraints)
+                && mount.equals(other.mount)
+                && guide.equals(other.guide)
+                && guardrail.equals(other.guardrail);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
+                this.label,
                 this.slug,
                 this.operation,
                 this.mode,
-                this.label,
                 this.tooltip,
                 this.messages,
                 this.type,
@@ -265,7 +315,10 @@ public final class Action {
                 this.requireAllValid,
                 this.requireSelection,
                 this.inputForm,
-                this.constraints);
+                this.constraints,
+                this.mount,
+                this.guide,
+                this.guardrail);
     }
 
     @java.lang.Override
@@ -278,7 +331,7 @@ public final class Action {
     }
 
     public interface LabelStage {
-        _FinalStage label(String label);
+        _FinalStage label(@NotNull String label);
 
         Builder from(Action other);
     }
@@ -345,11 +398,29 @@ public final class Action {
         _FinalStage constraints(Optional<List<ActionConstraint>> constraints);
 
         _FinalStage constraints(List<ActionConstraint> constraints);
+
+        _FinalStage mount(Optional<ActionMount> mount);
+
+        _FinalStage mount(ActionMount mount);
+
+        _FinalStage guide(Optional<Guide> guide);
+
+        _FinalStage guide(Guide guide);
+
+        _FinalStage guardrail(Optional<Guardrail> guardrail);
+
+        _FinalStage guardrail(Guardrail guardrail);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements LabelStage, _FinalStage {
         private String label;
+
+        private Optional<Guardrail> guardrail = Optional.empty();
+
+        private Optional<Guide> guide = Optional.empty();
+
+        private Optional<ActionMount> mount = Optional.empty();
 
         private Optional<List<ActionConstraint>> constraints = Optional.empty();
 
@@ -388,10 +459,10 @@ public final class Action {
 
         @java.lang.Override
         public Builder from(Action other) {
+            label(other.getLabel());
             slug(other.getSlug());
             operation(other.getOperation());
             mode(other.getMode());
-            label(other.getLabel());
             tooltip(other.getTooltip());
             messages(other.getMessages());
             type(other.getType());
@@ -404,17 +475,59 @@ public final class Action {
             requireSelection(other.getRequireSelection());
             inputForm(other.getInputForm());
             constraints(other.getConstraints());
+            mount(other.getMount());
+            guide(other.getGuide());
+            guardrail(other.getGuardrail());
             return this;
         }
 
         /**
-         * <p>The text on the button itself.</p>
+         * <p>The text on the Button itself</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
         @JsonSetter("label")
-        public _FinalStage label(String label) {
-            this.label = label;
+        public _FinalStage label(@NotNull String label) {
+            this.label = Objects.requireNonNull(label, "label must not be null");
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage guardrail(Guardrail guardrail) {
+            this.guardrail = Optional.ofNullable(guardrail);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "guardrail", nulls = Nulls.SKIP)
+        public _FinalStage guardrail(Optional<Guardrail> guardrail) {
+            this.guardrail = guardrail;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage guide(Guide guide) {
+            this.guide = Optional.ofNullable(guide);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "guide", nulls = Nulls.SKIP)
+        public _FinalStage guide(Optional<Guide> guide) {
+            this.guide = guide;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage mount(ActionMount mount) {
+            this.mount = Optional.ofNullable(mount);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "mount", nulls = Nulls.SKIP)
+        public _FinalStage mount(Optional<ActionMount> mount) {
+            this.mount = mount;
             return this;
         }
 
@@ -424,7 +537,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage constraints(List<ActionConstraint> constraints) {
-            this.constraints = Optional.of(constraints);
+            this.constraints = Optional.ofNullable(constraints);
             return this;
         }
 
@@ -441,7 +554,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage inputForm(InputForm inputForm) {
-            this.inputForm = Optional.of(inputForm);
+            this.inputForm = Optional.ofNullable(inputForm);
             return this;
         }
 
@@ -458,7 +571,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage requireSelection(Boolean requireSelection) {
-            this.requireSelection = Optional.of(requireSelection);
+            this.requireSelection = Optional.ofNullable(requireSelection);
             return this;
         }
 
@@ -475,7 +588,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage requireAllValid(Boolean requireAllValid) {
-            this.requireAllValid = Optional.of(requireAllValid);
+            this.requireAllValid = Optional.ofNullable(requireAllValid);
             return this;
         }
 
@@ -492,7 +605,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage icon(String icon) {
-            this.icon = Optional.of(icon);
+            this.icon = Optional.ofNullable(icon);
             return this;
         }
 
@@ -509,7 +622,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage confirm(Boolean confirm) {
-            this.confirm = Optional.of(confirm);
+            this.confirm = Optional.ofNullable(confirm);
             return this;
         }
 
@@ -526,7 +639,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage primary(Boolean primary) {
-            this.primary = Optional.of(primary);
+            this.primary = Optional.ofNullable(primary);
             return this;
         }
 
@@ -543,7 +656,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage schedule(ActionSchedule schedule) {
-            this.schedule = Optional.of(schedule);
+            this.schedule = Optional.ofNullable(schedule);
             return this;
         }
 
@@ -560,7 +673,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 
@@ -577,7 +690,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage type(String type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
@@ -590,7 +703,7 @@ public final class Action {
 
         @java.lang.Override
         public _FinalStage messages(List<ActionMessage> messages) {
-            this.messages = Optional.of(messages);
+            this.messages = Optional.ofNullable(messages);
             return this;
         }
 
@@ -607,7 +720,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage tooltip(String tooltip) {
-            this.tooltip = Optional.of(tooltip);
+            this.tooltip = Optional.ofNullable(tooltip);
             return this;
         }
 
@@ -624,7 +737,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage mode(ActionMode mode) {
-            this.mode = Optional.of(mode);
+            this.mode = Optional.ofNullable(mode);
             return this;
         }
 
@@ -641,7 +754,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage operation(String operation) {
-            this.operation = Optional.of(operation);
+            this.operation = Optional.ofNullable(operation);
             return this;
         }
 
@@ -658,7 +771,7 @@ public final class Action {
          */
         @java.lang.Override
         public _FinalStage slug(String slug) {
-            this.slug = Optional.of(slug);
+            this.slug = Optional.ofNullable(slug);
             return this;
         }
 
@@ -672,10 +785,10 @@ public final class Action {
         @java.lang.Override
         public Action build() {
             return new Action(
+                    label,
                     slug,
                     operation,
                     mode,
-                    label,
                     tooltip,
                     messages,
                     type,
@@ -688,6 +801,9 @@ public final class Action {
                     requireSelection,
                     inputForm,
                     constraints,
+                    mount,
+                    guide,
+                    guardrail,
                     additionalProperties);
         }
     }

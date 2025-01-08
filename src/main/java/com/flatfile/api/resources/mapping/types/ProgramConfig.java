@@ -18,8 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ProgramConfig.Builder.class)
 public final class ProgramConfig {
     private final SheetConfig source;
@@ -123,13 +124,13 @@ public final class ProgramConfig {
     }
 
     public interface SourceStage {
-        DestinationStage source(SheetConfig source);
+        DestinationStage source(@NotNull SheetConfig source);
 
         Builder from(ProgramConfig other);
     }
 
     public interface DestinationStage {
-        _FinalStage destination(SheetConfig destination);
+        _FinalStage destination(@NotNull SheetConfig destination);
     }
 
     public interface _FinalStage {
@@ -181,8 +182,8 @@ public final class ProgramConfig {
          */
         @java.lang.Override
         @JsonSetter("source")
-        public DestinationStage source(SheetConfig source) {
-            this.source = source;
+        public DestinationStage source(@NotNull SheetConfig source) {
+            this.source = Objects.requireNonNull(source, "source must not be null");
             return this;
         }
 
@@ -192,8 +193,8 @@ public final class ProgramConfig {
          */
         @java.lang.Override
         @JsonSetter("destination")
-        public _FinalStage destination(SheetConfig destination) {
-            this.destination = destination;
+        public _FinalStage destination(@NotNull SheetConfig destination) {
+            this.destination = Objects.requireNonNull(destination, "destination must not be null");
             return this;
         }
 
@@ -203,7 +204,7 @@ public final class ProgramConfig {
          */
         @java.lang.Override
         public _FinalStage save(Boolean save) {
-            this.save = Optional.of(save);
+            this.save = Optional.ofNullable(save);
             return this;
         }
 
@@ -220,7 +221,7 @@ public final class ProgramConfig {
          */
         @java.lang.Override
         public _FinalStage namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -237,7 +238,7 @@ public final class ProgramConfig {
          */
         @java.lang.Override
         public _FinalStage familyId(FamilyId familyId) {
-            this.familyId = Optional.of(familyId);
+            this.familyId = Optional.ofNullable(familyId);
             return this;
         }
 

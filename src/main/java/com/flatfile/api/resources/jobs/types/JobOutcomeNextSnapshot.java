@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobOutcomeNextSnapshot.Builder.class)
 public final class JobOutcomeNextSnapshot {
     private final String snapshotId;
@@ -70,13 +71,13 @@ public final class JobOutcomeNextSnapshot {
     }
 
     public interface SnapshotIdStage {
-        SheetIdStage snapshotId(String snapshotId);
+        SheetIdStage snapshotId(@NotNull String snapshotId);
 
         Builder from(JobOutcomeNextSnapshot other);
     }
 
     public interface SheetIdStage {
-        _FinalStage sheetId(String sheetId);
+        _FinalStage sheetId(@NotNull String sheetId);
     }
 
     public interface _FinalStage {
@@ -103,15 +104,15 @@ public final class JobOutcomeNextSnapshot {
 
         @java.lang.Override
         @JsonSetter("snapshotId")
-        public SheetIdStage snapshotId(String snapshotId) {
-            this.snapshotId = snapshotId;
+        public SheetIdStage snapshotId(@NotNull String snapshotId) {
+            this.snapshotId = Objects.requireNonNull(snapshotId, "snapshotId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("sheetId")
-        public _FinalStage sheetId(String sheetId) {
-            this.sheetId = sheetId;
+        public _FinalStage sheetId(@NotNull String sheetId) {
+            this.sheetId = Objects.requireNonNull(sheetId, "sheetId must not be null");
             return this;
         }
 

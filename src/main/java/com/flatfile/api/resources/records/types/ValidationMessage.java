@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ValidationMessage.Builder.class)
 public final class ValidationMessage {
     private final Optional<String> field;
@@ -142,7 +142,7 @@ public final class ValidationMessage {
         }
 
         public Builder field(String field) {
-            this.field = Optional.of(field);
+            this.field = Optional.ofNullable(field);
             return this;
         }
 
@@ -153,7 +153,7 @@ public final class ValidationMessage {
         }
 
         public Builder type(ValidationType type) {
-            this.type = Optional.of(type);
+            this.type = Optional.ofNullable(type);
             return this;
         }
 
@@ -164,7 +164,7 @@ public final class ValidationMessage {
         }
 
         public Builder source(ValidationSource source) {
-            this.source = Optional.of(source);
+            this.source = Optional.ofNullable(source);
             return this;
         }
 
@@ -175,7 +175,7 @@ public final class ValidationMessage {
         }
 
         public Builder message(String message) {
-            this.message = Optional.of(message);
+            this.message = Optional.ofNullable(message);
             return this;
         }
 
@@ -186,7 +186,7 @@ public final class ValidationMessage {
         }
 
         public Builder path(JsonPathString path) {
-            this.path = Optional.of(path);
+            this.path = Optional.ofNullable(path);
             return this;
         }
 

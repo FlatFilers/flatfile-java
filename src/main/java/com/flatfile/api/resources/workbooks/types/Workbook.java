@@ -23,8 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Workbook.Builder.class)
 public final class Workbook {
     private final WorkbookId id;
@@ -256,25 +257,25 @@ public final class Workbook {
     }
 
     public interface IdStage {
-        SpaceIdStage id(WorkbookId id);
+        SpaceIdStage id(@NotNull WorkbookId id);
 
         Builder from(Workbook other);
     }
 
     public interface SpaceIdStage {
-        EnvironmentIdStage spaceId(SpaceId spaceId);
+        EnvironmentIdStage spaceId(@NotNull SpaceId spaceId);
     }
 
     public interface EnvironmentIdStage {
-        UpdatedAtStage environmentId(EnvironmentId environmentId);
+        UpdatedAtStage environmentId(@NotNull EnvironmentId environmentId);
     }
 
     public interface UpdatedAtStage {
-        CreatedAtStage updatedAt(OffsetDateTime updatedAt);
+        CreatedAtStage updatedAt(@NotNull OffsetDateTime updatedAt);
     }
 
     public interface CreatedAtStage {
-        _FinalStage createdAt(OffsetDateTime createdAt);
+        _FinalStage createdAt(@NotNull OffsetDateTime createdAt);
     }
 
     public interface _FinalStage {
@@ -378,8 +379,8 @@ public final class Workbook {
          */
         @java.lang.Override
         @JsonSetter("id")
-        public SpaceIdStage id(WorkbookId id) {
-            this.id = id;
+        public SpaceIdStage id(@NotNull WorkbookId id) {
+            this.id = Objects.requireNonNull(id, "id must not be null");
             return this;
         }
 
@@ -389,8 +390,8 @@ public final class Workbook {
          */
         @java.lang.Override
         @JsonSetter("spaceId")
-        public EnvironmentIdStage spaceId(SpaceId spaceId) {
-            this.spaceId = spaceId;
+        public EnvironmentIdStage spaceId(@NotNull SpaceId spaceId) {
+            this.spaceId = Objects.requireNonNull(spaceId, "spaceId must not be null");
             return this;
         }
 
@@ -400,8 +401,8 @@ public final class Workbook {
          */
         @java.lang.Override
         @JsonSetter("environmentId")
-        public UpdatedAtStage environmentId(EnvironmentId environmentId) {
-            this.environmentId = environmentId;
+        public UpdatedAtStage environmentId(@NotNull EnvironmentId environmentId) {
+            this.environmentId = Objects.requireNonNull(environmentId, "environmentId must not be null");
             return this;
         }
 
@@ -411,8 +412,8 @@ public final class Workbook {
          */
         @java.lang.Override
         @JsonSetter("updatedAt")
-        public CreatedAtStage updatedAt(OffsetDateTime updatedAt) {
-            this.updatedAt = updatedAt;
+        public CreatedAtStage updatedAt(@NotNull OffsetDateTime updatedAt) {
+            this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
             return this;
         }
 
@@ -422,8 +423,8 @@ public final class Workbook {
          */
         @java.lang.Override
         @JsonSetter("createdAt")
-        public _FinalStage createdAt(OffsetDateTime createdAt) {
-            this.createdAt = createdAt;
+        public _FinalStage createdAt(@NotNull OffsetDateTime createdAt) {
+            this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
             return this;
         }
 
@@ -433,7 +434,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage expiredAt(OffsetDateTime expiredAt) {
-            this.expiredAt = Optional.of(expiredAt);
+            this.expiredAt = Optional.ofNullable(expiredAt);
             return this;
         }
 
@@ -446,7 +447,7 @@ public final class Workbook {
 
         @java.lang.Override
         public _FinalStage namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -463,7 +464,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage treatments(List<WorkbookTreatments> treatments) {
-            this.treatments = Optional.of(treatments);
+            this.treatments = Optional.ofNullable(treatments);
             return this;
         }
 
@@ -480,7 +481,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -497,7 +498,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage settings(WorkbookConfigSettings settings) {
-            this.settings = Optional.of(settings);
+            this.settings = Optional.ofNullable(settings);
             return this;
         }
 
@@ -514,7 +515,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -531,7 +532,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage labels(List<String> labels) {
-            this.labels = Optional.of(labels);
+            this.labels = Optional.ofNullable(labels);
             return this;
         }
 
@@ -548,7 +549,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage sheets(List<Sheet> sheets) {
-            this.sheets = Optional.of(sheets);
+            this.sheets = Optional.ofNullable(sheets);
             return this;
         }
 
@@ -565,7 +566,7 @@ public final class Workbook {
          */
         @java.lang.Override
         public _FinalStage name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 

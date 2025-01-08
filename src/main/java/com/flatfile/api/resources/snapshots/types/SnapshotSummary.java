@@ -11,11 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
+import com.flatfile.api.resources.sheets.types.SheetConfig;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SnapshotSummary.Builder.class)
 public final class SnapshotSummary {
     private final SummarySection createdSince;
@@ -24,16 +26,24 @@ public final class SnapshotSummary {
 
     private final SummarySection deletedSince;
 
+    private final SchemaDiffRecord schemaDiff;
+
+    private final SheetConfig config;
+
     private final Map<String, Object> additionalProperties;
 
     private SnapshotSummary(
             SummarySection createdSince,
             SummarySection updatedSince,
             SummarySection deletedSince,
+            SchemaDiffRecord schemaDiff,
+            SheetConfig config,
             Map<String, Object> additionalProperties) {
         this.createdSince = createdSince;
         this.updatedSince = updatedSince;
         this.deletedSince = deletedSince;
+        this.schemaDiff = schemaDiff;
+        this.config = config;
         this.additionalProperties = additionalProperties;
     }
 
@@ -52,6 +62,22 @@ public final class SnapshotSummary {
         return deletedSince;
     }
 
+    /**
+     * @return The schema diff between the snapshot and the current sheet schema.
+     */
+    @JsonProperty("schemaDiff")
+    public SchemaDiffRecord getSchemaDiff() {
+        return schemaDiff;
+    }
+
+    /**
+     * @return The sheet configuration at the time of the snapshot.
+     */
+    @JsonProperty("config")
+    public SheetConfig getConfig() {
+        return config;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -66,12 +92,14 @@ public final class SnapshotSummary {
     private boolean equalTo(SnapshotSummary other) {
         return createdSince.equals(other.createdSince)
                 && updatedSince.equals(other.updatedSince)
-                && deletedSince.equals(other.deletedSince);
+                && deletedSince.equals(other.deletedSince)
+                && schemaDiff.equals(other.schemaDiff)
+                && config.equals(other.config);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.createdSince, this.updatedSince, this.deletedSince);
+        return Objects.hash(this.createdSince, this.updatedSince, this.deletedSince, this.schemaDiff, this.config);
     }
 
     @java.lang.Override
@@ -84,17 +112,25 @@ public final class SnapshotSummary {
     }
 
     public interface CreatedSinceStage {
-        UpdatedSinceStage createdSince(SummarySection createdSince);
+        UpdatedSinceStage createdSince(@NotNull SummarySection createdSince);
 
         Builder from(SnapshotSummary other);
     }
 
     public interface UpdatedSinceStage {
-        DeletedSinceStage updatedSince(SummarySection updatedSince);
+        DeletedSinceStage updatedSince(@NotNull SummarySection updatedSince);
     }
 
     public interface DeletedSinceStage {
-        _FinalStage deletedSince(SummarySection deletedSince);
+        SchemaDiffStage deletedSince(@NotNull SummarySection deletedSince);
+    }
+
+    public interface SchemaDiffStage {
+        ConfigStage schemaDiff(@NotNull SchemaDiffRecord schemaDiff);
+    }
+
+    public interface ConfigStage {
+        _FinalStage config(@NotNull SheetConfig config);
     }
 
     public interface _FinalStage {
@@ -102,12 +138,22 @@ public final class SnapshotSummary {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements CreatedSinceStage, UpdatedSinceStage, DeletedSinceStage, _FinalStage {
+    public static final class Builder
+            implements CreatedSinceStage,
+                    UpdatedSinceStage,
+                    DeletedSinceStage,
+                    SchemaDiffStage,
+                    ConfigStage,
+                    _FinalStage {
         private SummarySection createdSince;
 
         private SummarySection updatedSince;
 
         private SummarySection deletedSince;
+
+        private SchemaDiffRecord schemaDiff;
+
+        private SheetConfig config;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -119,33 +165,58 @@ public final class SnapshotSummary {
             createdSince(other.getCreatedSince());
             updatedSince(other.getUpdatedSince());
             deletedSince(other.getDeletedSince());
+            schemaDiff(other.getSchemaDiff());
+            config(other.getConfig());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("createdSince")
-        public UpdatedSinceStage createdSince(SummarySection createdSince) {
-            this.createdSince = createdSince;
+        public UpdatedSinceStage createdSince(@NotNull SummarySection createdSince) {
+            this.createdSince = Objects.requireNonNull(createdSince, "createdSince must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("updatedSince")
-        public DeletedSinceStage updatedSince(SummarySection updatedSince) {
-            this.updatedSince = updatedSince;
+        public DeletedSinceStage updatedSince(@NotNull SummarySection updatedSince) {
+            this.updatedSince = Objects.requireNonNull(updatedSince, "updatedSince must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("deletedSince")
-        public _FinalStage deletedSince(SummarySection deletedSince) {
-            this.deletedSince = deletedSince;
+        public SchemaDiffStage deletedSince(@NotNull SummarySection deletedSince) {
+            this.deletedSince = Objects.requireNonNull(deletedSince, "deletedSince must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The schema diff between the snapshot and the current sheet schema.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("schemaDiff")
+        public ConfigStage schemaDiff(@NotNull SchemaDiffRecord schemaDiff) {
+            this.schemaDiff = Objects.requireNonNull(schemaDiff, "schemaDiff must not be null");
+            return this;
+        }
+
+        /**
+         * <p>The sheet configuration at the time of the snapshot.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("config")
+        public _FinalStage config(@NotNull SheetConfig config) {
+            this.config = Objects.requireNonNull(config, "config must not be null");
             return this;
         }
 
         @java.lang.Override
         public SnapshotSummary build() {
-            return new SnapshotSummary(createdSince, updatedSince, deletedSince, additionalProperties);
+            return new SnapshotSummary(
+                    createdSince, updatedSince, deletedSince, schemaDiff, config, additionalProperties);
         }
     }
 }

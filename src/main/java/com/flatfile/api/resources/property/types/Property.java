@@ -50,6 +50,10 @@ public final class Property {
         return new Property(new ReferenceValue(value));
     }
 
+    public static Property referenceList(ReferenceListProperty value) {
+        return new Property(new ReferenceListValue(value));
+    }
+
     public static Property stringList(StringListProperty value) {
         return new Property(new StringListValue(value));
     }
@@ -80,6 +84,10 @@ public final class Property {
 
     public boolean isReference() {
         return value instanceof ReferenceValue;
+    }
+
+    public boolean isReferenceList() {
+        return value instanceof ReferenceListValue;
     }
 
     public boolean isStringList() {
@@ -136,6 +144,13 @@ public final class Property {
         return Optional.empty();
     }
 
+    public Optional<ReferenceListProperty> getReferenceList() {
+        if (isReferenceList()) {
+            return Optional.of(((ReferenceListValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<StringListProperty> getStringList() {
         if (isStringList()) {
             return Optional.of(((StringListValue) value).value);
@@ -175,6 +190,8 @@ public final class Property {
 
         T visitReference(ReferenceProperty reference);
 
+        T visitReferenceList(ReferenceListProperty referenceList);
+
         T visitStringList(StringListProperty stringList);
 
         T visitEnumList(EnumListProperty enumList);
@@ -190,6 +207,7 @@ public final class Property {
         @JsonSubTypes.Type(DateValue.class),
         @JsonSubTypes.Type(EnumValue.class),
         @JsonSubTypes.Type(ReferenceValue.class),
+        @JsonSubTypes.Type(ReferenceListValue.class),
         @JsonSubTypes.Type(StringListValue.class),
         @JsonSubTypes.Type(EnumListValue.class)
     })
@@ -412,6 +430,44 @@ public final class Property {
         }
 
         private boolean equalTo(ReferenceValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Property{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("reference-list")
+    private static final class ReferenceListValue implements Value {
+        @JsonUnwrapped
+        private ReferenceListProperty value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private ReferenceListValue() {}
+
+        private ReferenceListValue(ReferenceListProperty value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitReferenceList(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof ReferenceListValue && equalTo((ReferenceListValue) other);
+        }
+
+        private boolean equalTo(ReferenceListValue other) {
             return value.equals(other.value);
         }
 

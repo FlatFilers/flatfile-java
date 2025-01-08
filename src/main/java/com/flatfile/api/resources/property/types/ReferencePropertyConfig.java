@@ -9,27 +9,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ReferencePropertyConfig.Builder.class)
 public final class ReferencePropertyConfig {
     private final String ref;
 
     private final String key;
 
-    private final ReferencePropertyRelationship relationship;
+    private final Optional<ReferencePropertyRelationship> relationship;
 
     private final Map<String, Object> additionalProperties;
 
     private ReferencePropertyConfig(
             String ref,
             String key,
-            ReferencePropertyRelationship relationship,
+            Optional<ReferencePropertyRelationship> relationship,
             Map<String, Object> additionalProperties) {
         this.ref = ref;
         this.key = key;
@@ -57,7 +60,7 @@ public final class ReferencePropertyConfig {
      * @return The type of relationship this defines
      */
     @JsonProperty("relationship")
-    public ReferencePropertyRelationship getRelationship() {
+    public Optional<ReferencePropertyRelationship> getRelationship() {
         return relationship;
     }
 
@@ -91,30 +94,30 @@ public final class ReferencePropertyConfig {
     }
 
     public interface RefStage {
-        KeyStage ref(String ref);
+        KeyStage ref(@NotNull String ref);
 
         Builder from(ReferencePropertyConfig other);
     }
 
     public interface KeyStage {
-        RelationshipStage key(String key);
-    }
-
-    public interface RelationshipStage {
-        _FinalStage relationship(ReferencePropertyRelationship relationship);
+        _FinalStage key(@NotNull String key);
     }
 
     public interface _FinalStage {
         ReferencePropertyConfig build();
+
+        _FinalStage relationship(Optional<ReferencePropertyRelationship> relationship);
+
+        _FinalStage relationship(ReferencePropertyRelationship relationship);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements RefStage, KeyStage, RelationshipStage, _FinalStage {
+    public static final class Builder implements RefStage, KeyStage, _FinalStage {
         private String ref;
 
         private String key;
 
-        private ReferencePropertyRelationship relationship;
+        private Optional<ReferencePropertyRelationship> relationship = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -135,8 +138,8 @@ public final class ReferencePropertyConfig {
          */
         @java.lang.Override
         @JsonSetter("ref")
-        public KeyStage ref(String ref) {
-            this.ref = ref;
+        public KeyStage ref(@NotNull String ref) {
+            this.ref = Objects.requireNonNull(ref, "ref must not be null");
             return this;
         }
 
@@ -146,8 +149,8 @@ public final class ReferencePropertyConfig {
          */
         @java.lang.Override
         @JsonSetter("key")
-        public RelationshipStage key(String key) {
-            this.key = key;
+        public _FinalStage key(@NotNull String key) {
+            this.key = Objects.requireNonNull(key, "key must not be null");
             return this;
         }
 
@@ -156,8 +159,14 @@ public final class ReferencePropertyConfig {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("relationship")
         public _FinalStage relationship(ReferencePropertyRelationship relationship) {
+            this.relationship = Optional.ofNullable(relationship);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "relationship", nulls = Nulls.SKIP)
+        public _FinalStage relationship(Optional<ReferencePropertyRelationship> relationship) {
             this.relationship = relationship;
             return this;
         }

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JobCancelDetails.Builder.class)
 public final class JobCancelDetails {
     private final Optional<String> info;
@@ -84,7 +84,7 @@ public final class JobCancelDetails {
         }
 
         public Builder info(String info) {
-            this.info = Optional.of(info);
+            this.info = Optional.ofNullable(info);
             return this;
         }
 

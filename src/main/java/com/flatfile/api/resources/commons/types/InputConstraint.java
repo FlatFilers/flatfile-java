@@ -14,8 +14,9 @@ import com.flatfile.api.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InputConstraint.Builder.class)
 public final class InputConstraint {
     private final InputConstraintType type;
@@ -62,7 +63,7 @@ public final class InputConstraint {
     }
 
     public interface TypeStage {
-        _FinalStage type(InputConstraintType type);
+        _FinalStage type(@NotNull InputConstraintType type);
 
         Builder from(InputConstraint other);
     }
@@ -88,8 +89,8 @@ public final class InputConstraint {
 
         @java.lang.Override
         @JsonSetter("type")
-        public _FinalStage type(InputConstraintType type) {
-            this.type = type;
+        public _FinalStage type(@NotNull InputConstraintType type) {
+            this.type = Objects.requireNonNull(type, "type must not be null");
             return this;
         }
 

@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = NumberConfig.Builder.class)
 public final class NumberConfig {
     private final Optional<Integer> decimalPlaces;
@@ -87,7 +87,7 @@ public final class NumberConfig {
         }
 
         public Builder decimalPlaces(Integer decimalPlaces) {
-            this.decimalPlaces = Optional.of(decimalPlaces);
+            this.decimalPlaces = Optional.ofNullable(decimalPlaces);
             return this;
         }
 

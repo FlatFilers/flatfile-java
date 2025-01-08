@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = EventToken.Builder.class)
 public final class EventToken {
     private final Optional<AccountId> accountId;
@@ -138,7 +138,7 @@ public final class EventToken {
         }
 
         public Builder accountId(AccountId accountId) {
-            this.accountId = Optional.of(accountId);
+            this.accountId = Optional.ofNullable(accountId);
             return this;
         }
 
@@ -149,7 +149,7 @@ public final class EventToken {
         }
 
         public Builder subscribeKey(String subscribeKey) {
-            this.subscribeKey = Optional.of(subscribeKey);
+            this.subscribeKey = Optional.ofNullable(subscribeKey);
             return this;
         }
 
@@ -160,7 +160,7 @@ public final class EventToken {
         }
 
         public Builder ttl(Integer ttl) {
-            this.ttl = Optional.of(ttl);
+            this.ttl = Optional.ofNullable(ttl);
             return this;
         }
 
@@ -171,7 +171,7 @@ public final class EventToken {
         }
 
         public Builder token(String token) {
-            this.token = Optional.of(token);
+            this.token = Optional.ofNullable(token);
             return this;
         }
 

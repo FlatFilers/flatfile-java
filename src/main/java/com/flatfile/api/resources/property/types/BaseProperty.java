@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BaseProperty.Builder.class)
 public final class BaseProperty implements IBaseProperty {
     private final String key;
@@ -93,6 +94,9 @@ public final class BaseProperty implements IBaseProperty {
         return description;
     }
 
+    /**
+     * @return A list of constraints that should be applied to this field. This is limited to a maximum of 10 constraints and all external and stored constraints must have unique validator values.
+     */
     @JsonProperty("constraints")
     @java.lang.Override
     public Optional<List<Constraint>> getConstraints() {
@@ -193,7 +197,7 @@ public final class BaseProperty implements IBaseProperty {
     }
 
     public interface KeyStage {
-        _FinalStage key(String key);
+        _FinalStage key(@NotNull String key);
 
         Builder from(BaseProperty other);
     }
@@ -282,14 +286,14 @@ public final class BaseProperty implements IBaseProperty {
 
         @java.lang.Override
         @JsonSetter("key")
-        public _FinalStage key(String key) {
-            this.key = key;
+        public _FinalStage key(@NotNull String key) {
+            this.key = Objects.requireNonNull(key, "key must not be null");
             return this;
         }
 
         @java.lang.Override
         public _FinalStage alternativeNames(List<String> alternativeNames) {
-            this.alternativeNames = Optional.of(alternativeNames);
+            this.alternativeNames = Optional.ofNullable(alternativeNames);
             return this;
         }
 
@@ -306,7 +310,7 @@ public final class BaseProperty implements IBaseProperty {
          */
         @java.lang.Override
         public _FinalStage treatments(List<String> treatments) {
-            this.treatments = Optional.of(treatments);
+            this.treatments = Optional.ofNullable(treatments);
             return this;
         }
 
@@ -323,7 +327,7 @@ public final class BaseProperty implements IBaseProperty {
          */
         @java.lang.Override
         public _FinalStage metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
@@ -340,7 +344,7 @@ public final class BaseProperty implements IBaseProperty {
          */
         @java.lang.Override
         public _FinalStage actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -353,7 +357,7 @@ public final class BaseProperty implements IBaseProperty {
 
         @java.lang.Override
         public _FinalStage appearance(FieldAppearance appearance) {
-            this.appearance = Optional.of(appearance);
+            this.appearance = Optional.ofNullable(appearance);
             return this;
         }
 
@@ -366,7 +370,7 @@ public final class BaseProperty implements IBaseProperty {
 
         @java.lang.Override
         public _FinalStage readonly(Boolean readonly) {
-            this.readonly = Optional.of(readonly);
+            this.readonly = Optional.ofNullable(readonly);
             return this;
         }
 
@@ -377,9 +381,13 @@ public final class BaseProperty implements IBaseProperty {
             return this;
         }
 
+        /**
+         * <p>A list of constraints that should be applied to this field. This is limited to a maximum of 10 constraints and all external and stored constraints must have unique validator values.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
         @java.lang.Override
         public _FinalStage constraints(List<Constraint> constraints) {
-            this.constraints = Optional.of(constraints);
+            this.constraints = Optional.ofNullable(constraints);
             return this;
         }
 
@@ -396,7 +404,7 @@ public final class BaseProperty implements IBaseProperty {
          */
         @java.lang.Override
         public _FinalStage description(String description) {
-            this.description = Optional.of(description);
+            this.description = Optional.ofNullable(description);
             return this;
         }
 
@@ -413,7 +421,7 @@ public final class BaseProperty implements IBaseProperty {
          */
         @java.lang.Override
         public _FinalStage label(String label) {
-            this.label = Optional.of(label);
+            this.label = Optional.ofNullable(label);
             return this;
         }
 

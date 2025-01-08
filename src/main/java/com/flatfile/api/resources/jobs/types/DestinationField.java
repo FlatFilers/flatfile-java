@@ -18,8 +18,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DestinationField.Builder.class)
 public final class DestinationField {
     private final Property destinationField;
@@ -81,7 +82,7 @@ public final class DestinationField {
     }
 
     public interface DestinationFieldStage {
-        _FinalStage destinationField(Property destinationField);
+        _FinalStage destinationField(@NotNull Property destinationField);
 
         Builder from(DestinationField other);
     }
@@ -118,8 +119,8 @@ public final class DestinationField {
          */
         @java.lang.Override
         @JsonSetter("destinationField")
-        public _FinalStage destinationField(Property destinationField) {
-            this.destinationField = destinationField;
+        public _FinalStage destinationField(@NotNull Property destinationField) {
+            this.destinationField = Objects.requireNonNull(destinationField, "destinationField must not be null");
             return this;
         }
 
@@ -129,7 +130,7 @@ public final class DestinationField {
          */
         @java.lang.Override
         public _FinalStage preview(List<String> preview) {
-            this.preview = Optional.of(preview);
+            this.preview = Optional.ofNullable(preview);
             return this;
         }
 

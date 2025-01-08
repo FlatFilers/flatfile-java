@@ -15,8 +15,9 @@ import com.flatfile.api.resources.commons.types.SheetId;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = PipelineJobConfig.Builder.class)
 public final class PipelineJobConfig {
     private final SheetId sourceSheetId;
@@ -72,13 +73,13 @@ public final class PipelineJobConfig {
     }
 
     public interface SourceSheetIdStage {
-        DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId);
+        DestinationSheetIdStage sourceSheetId(@NotNull SheetId sourceSheetId);
 
         Builder from(PipelineJobConfig other);
     }
 
     public interface DestinationSheetIdStage {
-        _FinalStage destinationSheetId(SheetId destinationSheetId);
+        _FinalStage destinationSheetId(@NotNull SheetId destinationSheetId);
     }
 
     public interface _FinalStage {
@@ -105,15 +106,15 @@ public final class PipelineJobConfig {
 
         @java.lang.Override
         @JsonSetter("sourceSheetId")
-        public DestinationSheetIdStage sourceSheetId(SheetId sourceSheetId) {
-            this.sourceSheetId = sourceSheetId;
+        public DestinationSheetIdStage sourceSheetId(@NotNull SheetId sourceSheetId) {
+            this.sourceSheetId = Objects.requireNonNull(sourceSheetId, "sourceSheetId must not be null");
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("destinationSheetId")
-        public _FinalStage destinationSheetId(SheetId destinationSheetId) {
-            this.destinationSheetId = destinationSheetId;
+        public _FinalStage destinationSheetId(@NotNull SheetId destinationSheetId) {
+            this.destinationSheetId = Objects.requireNonNull(destinationSheetId, "destinationSheetId must not be null");
             return this;
         }
 

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = WorkbookUpdate.Builder.class)
 public final class WorkbookUpdate {
     private final Optional<String> name;
@@ -211,7 +211,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder name(String name) {
-            this.name = Optional.of(name);
+            this.name = Optional.ofNullable(name);
             return this;
         }
 
@@ -222,7 +222,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder labels(List<String> labels) {
-            this.labels = Optional.of(labels);
+            this.labels = Optional.ofNullable(labels);
             return this;
         }
 
@@ -233,7 +233,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder spaceId(SpaceId spaceId) {
-            this.spaceId = Optional.of(spaceId);
+            this.spaceId = Optional.ofNullable(spaceId);
             return this;
         }
 
@@ -244,7 +244,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder environmentId(EnvironmentId environmentId) {
-            this.environmentId = Optional.of(environmentId);
+            this.environmentId = Optional.ofNullable(environmentId);
             return this;
         }
 
@@ -255,7 +255,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder namespace(String namespace) {
-            this.namespace = Optional.of(namespace);
+            this.namespace = Optional.ofNullable(namespace);
             return this;
         }
 
@@ -266,7 +266,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder sheets(List<SheetConfigOrUpdate> sheets) {
-            this.sheets = Optional.of(sheets);
+            this.sheets = Optional.ofNullable(sheets);
             return this;
         }
 
@@ -277,7 +277,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder actions(List<Action> actions) {
-            this.actions = Optional.of(actions);
+            this.actions = Optional.ofNullable(actions);
             return this;
         }
 
@@ -288,7 +288,7 @@ public final class WorkbookUpdate {
         }
 
         public Builder metadata(Object metadata) {
-            this.metadata = Optional.of(metadata);
+            this.metadata = Optional.ofNullable(metadata);
             return this;
         }
 
