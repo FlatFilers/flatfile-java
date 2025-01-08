@@ -3,6 +3,9 @@
  */
 package com.flatfile.api.resources.snapshots;
 
+import java.io.IOException;
+import java.util.Optional;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.FlatfileApiException;
@@ -23,8 +26,7 @@ import com.flatfile.api.resources.snapshots.requests.ListSnapshotRequest;
 import com.flatfile.api.resources.snapshots.types.RestoreOptions;
 import com.flatfile.api.resources.snapshots.types.SnapshotResponse;
 import com.flatfile.api.resources.snapshots.types.SnapshotsResponse;
-import java.io.IOException;
-import java.util.Optional;
+
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -165,7 +167,7 @@ public class SnapshotsClient {
                 .newBuilder()
                 .addPathSegments("snapshots")
                 .addPathSegment(snapshotId.toString());
-        httpUrl.addQueryParameter("includeSummary", request.getIncludeSummary().toString());
+        httpUrl.addQueryParameter("includeSummary", String.valueOf(request.getIncludeSummary()));
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
