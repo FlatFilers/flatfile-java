@@ -44,7 +44,7 @@ java {
 
 group = 'com.flatfile'
 
-version = '0.0.14'
+version = '0.0.15'
 
 jar {
     dependsOn(":generatePomFileForMavenPublication")
@@ -71,7 +71,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.flatfile'
             artifactId = 'flatfile-java'
-            version = '0.0.14'
+            version = '0.0.15'
             from components.java
             pom {
                 licenses {

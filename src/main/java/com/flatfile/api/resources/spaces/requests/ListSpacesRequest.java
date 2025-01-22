@@ -41,6 +41,8 @@ public final class ListSpacesRequest {
 
     private final Optional<Boolean> isCollaborative;
 
+    private final Optional<Boolean> isAppTemplate;
+
     private final Map<String, Object> additionalProperties;
 
     private ListSpacesRequest(
@@ -53,6 +55,7 @@ public final class ListSpacesRequest {
             Optional<GetSpacesSortField> sortField,
             Optional<SortDirection> sortDirection,
             Optional<Boolean> isCollaborative,
+            Optional<Boolean> isAppTemplate,
             Map<String, Object> additionalProperties) {
         this.environmentId = environmentId;
         this.pageSize = pageSize;
@@ -63,6 +66,7 @@ public final class ListSpacesRequest {
         this.sortField = sortField;
         this.sortDirection = sortDirection;
         this.isCollaborative = isCollaborative;
+        this.isAppTemplate = isAppTemplate;
         this.additionalProperties = additionalProperties;
     }
 
@@ -138,6 +142,14 @@ public final class ListSpacesRequest {
         return isCollaborative;
     }
 
+    /**
+     * @return Flag for app templates
+     */
+    @JsonProperty("isAppTemplate")
+    public Optional<Boolean> getIsAppTemplate() {
+        return isAppTemplate;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -158,7 +170,8 @@ public final class ListSpacesRequest {
                 && archived.equals(other.archived)
                 && sortField.equals(other.sortField)
                 && sortDirection.equals(other.sortDirection)
-                && isCollaborative.equals(other.isCollaborative);
+                && isCollaborative.equals(other.isCollaborative)
+                && isAppTemplate.equals(other.isAppTemplate);
     }
 
     @java.lang.Override
@@ -172,7 +185,8 @@ public final class ListSpacesRequest {
                 this.archived,
                 this.sortField,
                 this.sortDirection,
-                this.isCollaborative);
+                this.isCollaborative,
+                this.isAppTemplate);
     }
 
     @java.lang.Override
@@ -204,6 +218,8 @@ public final class ListSpacesRequest {
 
         private Optional<Boolean> isCollaborative = Optional.empty();
 
+        private Optional<Boolean> isAppTemplate = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -219,6 +235,7 @@ public final class ListSpacesRequest {
             sortField(other.getSortField());
             sortDirection(other.getSortDirection());
             isCollaborative(other.getIsCollaborative());
+            isAppTemplate(other.getIsAppTemplate());
             return this;
         }
 
@@ -321,6 +338,17 @@ public final class ListSpacesRequest {
             return this;
         }
 
+        @JsonSetter(value = "isAppTemplate", nulls = Nulls.SKIP)
+        public Builder isAppTemplate(Optional<Boolean> isAppTemplate) {
+            this.isAppTemplate = isAppTemplate;
+            return this;
+        }
+
+        public Builder isAppTemplate(Boolean isAppTemplate) {
+            this.isAppTemplate = Optional.ofNullable(isAppTemplate);
+            return this;
+        }
+
         public ListSpacesRequest build() {
             return new ListSpacesRequest(
                     environmentId,
@@ -332,6 +360,7 @@ public final class ListSpacesRequest {
                     sortField,
                     sortDirection,
                     isCollaborative,
+                    isAppTemplate,
                     additionalProperties);
         }
     }

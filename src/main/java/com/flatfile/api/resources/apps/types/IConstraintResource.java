@@ -26,6 +26,4 @@ public interface IConstraintResource {
     OffsetDateTime getCreatedAt();
 
     OffsetDateTime getUpdatedAt();
-
-    Optional<OffsetDateTime> getDeletedAt();
 }

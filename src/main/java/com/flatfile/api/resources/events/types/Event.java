@@ -262,6 +262,10 @@ public final class Event {
         return new Event(new DataClipResolutionsUpdatedValue(value));
     }
 
+    public static Event dataClipResolutionsRefreshed(GenericEvent value) {
+        return new Event(new DataClipResolutionsRefreshedValue(value));
+    }
+
     public boolean isAgentCreated() {
         return value instanceof AgentCreatedValue;
     }
@@ -496,6 +500,10 @@ public final class Event {
 
     public boolean isDataClipResolutionsUpdated() {
         return value instanceof DataClipResolutionsUpdatedValue;
+    }
+
+    public boolean isDataClipResolutionsRefreshed() {
+        return value instanceof DataClipResolutionsRefreshedValue;
     }
 
     public boolean _isUnknown() {
@@ -915,6 +923,13 @@ public final class Event {
         return Optional.empty();
     }
 
+    public Optional<GenericEvent> getDataClipResolutionsRefreshed() {
+        if (isDataClipResolutionsRefreshed()) {
+            return Optional.of(((DataClipResolutionsRefreshedValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -1046,6 +1061,8 @@ public final class Event {
 
         T visitDataClipResolutionsUpdated(GenericEvent dataClipResolutionsUpdated);
 
+        T visitDataClipResolutionsRefreshed(GenericEvent dataClipResolutionsRefreshed);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -1109,7 +1126,8 @@ public final class Event {
         @JsonSubTypes.Type(DataClipDeletedValue.class),
         @JsonSubTypes.Type(DataClipCollaboratorUpdatedValue.class),
         @JsonSubTypes.Type(DataClipResolutionsCreatedValue.class),
-        @JsonSubTypes.Type(DataClipResolutionsUpdatedValue.class)
+        @JsonSubTypes.Type(DataClipResolutionsUpdatedValue.class),
+        @JsonSubTypes.Type(DataClipResolutionsRefreshedValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -3345,6 +3363,45 @@ public final class Event {
         }
 
         private boolean equalTo(DataClipResolutionsUpdatedValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "Event{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("data-clip:resolutions-refreshed")
+    private static final class DataClipResolutionsRefreshedValue implements Value {
+        @JsonUnwrapped
+        private GenericEvent value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private DataClipResolutionsRefreshedValue() {}
+
+        private DataClipResolutionsRefreshedValue(GenericEvent value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitDataClipResolutionsRefreshed(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof DataClipResolutionsRefreshedValue
+                    && equalTo((DataClipResolutionsRefreshedValue) other);
+        }
+
+        private boolean equalTo(DataClipResolutionsRefreshedValue other) {
             return value.equals(other.value);
         }
 

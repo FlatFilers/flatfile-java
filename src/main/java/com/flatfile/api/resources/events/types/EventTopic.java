@@ -132,7 +132,9 @@ public enum EventTopic {
 
     DATA_CLIP_RESOLUTIONS_CREATED("data-clip:resolutions-created"),
 
-    DATA_CLIP_RESOLUTIONS_UPDATED("data-clip:resolutions-updated");
+    DATA_CLIP_RESOLUTIONS_UPDATED("data-clip:resolutions-updated"),
+
+    DATA_CLIP_RESOLUTIONS_REFRESHED("data-clip:resolutions-refreshed");
 
     private final String value;
 

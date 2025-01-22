@@ -26,12 +26,18 @@ public final class EnumPropertyConfig {
 
     private final List<EnumPropertyOption> options;
 
+    private final Optional<EnumPropertySortBy> sortBy;
+
     private final Map<String, Object> additionalProperties;
 
     private EnumPropertyConfig(
-            Optional<Boolean> allowCustom, List<EnumPropertyOption> options, Map<String, Object> additionalProperties) {
+            Optional<Boolean> allowCustom,
+            List<EnumPropertyOption> options,
+            Optional<EnumPropertySortBy> sortBy,
+            Map<String, Object> additionalProperties) {
         this.allowCustom = allowCustom;
         this.options = options;
+        this.sortBy = sortBy;
         this.additionalProperties = additionalProperties;
     }
 
@@ -48,6 +54,14 @@ public final class EnumPropertyConfig {
         return options;
     }
 
+    /**
+     * @return Sort the options by the value of this property. Defaults to <code>label</code>.
+     */
+    @JsonProperty("sortBy")
+    public Optional<EnumPropertySortBy> getSortBy() {
+        return sortBy;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -60,12 +74,12 @@ public final class EnumPropertyConfig {
     }
 
     private boolean equalTo(EnumPropertyConfig other) {
-        return allowCustom.equals(other.allowCustom) && options.equals(other.options);
+        return allowCustom.equals(other.allowCustom) && options.equals(other.options) && sortBy.equals(other.sortBy);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.allowCustom, this.options);
+        return Objects.hash(this.allowCustom, this.options, this.sortBy);
     }
 
     @java.lang.Override
@@ -83,6 +97,8 @@ public final class EnumPropertyConfig {
 
         private List<EnumPropertyOption> options = new ArrayList<>();
 
+        private Optional<EnumPropertySortBy> sortBy = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -91,6 +107,7 @@ public final class EnumPropertyConfig {
         public Builder from(EnumPropertyConfig other) {
             allowCustom(other.getAllowCustom());
             options(other.getOptions());
+            sortBy(other.getSortBy());
             return this;
         }
 
@@ -122,8 +139,19 @@ public final class EnumPropertyConfig {
             return this;
         }
 
+        @JsonSetter(value = "sortBy", nulls = Nulls.SKIP)
+        public Builder sortBy(Optional<EnumPropertySortBy> sortBy) {
+            this.sortBy = sortBy;
+            return this;
+        }
+
+        public Builder sortBy(EnumPropertySortBy sortBy) {
+            this.sortBy = Optional.ofNullable(sortBy);
+            return this;
+        }
+
         public EnumPropertyConfig build() {
-            return new EnumPropertyConfig(allowCustom, options, additionalProperties);
+            return new EnumPropertyConfig(allowCustom, options, sortBy, additionalProperties);
         }
     }
 }

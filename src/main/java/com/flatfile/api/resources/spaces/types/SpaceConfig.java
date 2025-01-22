@@ -56,6 +56,8 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
 
     private final Optional<AppId> appId;
 
+    private final Optional<Boolean> isAppTemplate;
+
     private final Optional<String> name;
 
     private final Optional<Integer> displayOrder;
@@ -79,6 +81,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
             Optional<String> languageOverride,
             Optional<OffsetDateTime> archivedAt,
             Optional<AppId> appId,
+            Optional<Boolean> isAppTemplate,
             Optional<String> name,
             Optional<Integer> displayOrder,
             Optional<List<GuestAuthenticationEnum>> guestAuthentication,
@@ -97,6 +100,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
         this.languageOverride = languageOverride;
         this.archivedAt = archivedAt;
         this.appId = appId;
+        this.isAppTemplate = isAppTemplate;
         this.name = name;
         this.displayOrder = displayOrder;
         this.guestAuthentication = guestAuthentication;
@@ -203,6 +207,15 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
     }
 
     /**
+     * @return Whether the space is an app template. Only one space per app can be an app template.
+     */
+    @JsonProperty("isAppTemplate")
+    @java.lang.Override
+    public Optional<Boolean> getIsAppTemplate() {
+        return isAppTemplate;
+    }
+
+    /**
      * @return The name of the space
      */
     @JsonProperty("name")
@@ -249,6 +262,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                 && languageOverride.equals(other.languageOverride)
                 && archivedAt.equals(other.archivedAt)
                 && appId.equals(other.appId)
+                && isAppTemplate.equals(other.isAppTemplate)
                 && name.equals(other.name)
                 && displayOrder.equals(other.displayOrder)
                 && guestAuthentication.equals(other.guestAuthentication);
@@ -271,6 +285,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                 this.languageOverride,
                 this.archivedAt,
                 this.appId,
+                this.isAppTemplate,
                 this.name,
                 this.displayOrder,
                 this.guestAuthentication);
@@ -315,6 +330,8 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
 
         private Optional<AppId> appId = Optional.empty();
 
+        private Optional<Boolean> isAppTemplate = Optional.empty();
+
         private Optional<String> name = Optional.empty();
 
         private Optional<Integer> displayOrder = Optional.empty();
@@ -341,6 +358,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
             languageOverride(other.getLanguageOverride());
             archivedAt(other.getArchivedAt());
             appId(other.getAppId());
+            isAppTemplate(other.getIsAppTemplate());
             name(other.getName());
             displayOrder(other.getDisplayOrder());
             guestAuthentication(other.getGuestAuthentication());
@@ -501,6 +519,17 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
             return this;
         }
 
+        @JsonSetter(value = "isAppTemplate", nulls = Nulls.SKIP)
+        public Builder isAppTemplate(Optional<Boolean> isAppTemplate) {
+            this.isAppTemplate = isAppTemplate;
+            return this;
+        }
+
+        public Builder isAppTemplate(Boolean isAppTemplate) {
+            this.isAppTemplate = Optional.ofNullable(isAppTemplate);
+            return this;
+        }
+
         @JsonSetter(value = "name", nulls = Nulls.SKIP)
         public Builder name(Optional<String> name) {
             this.name = name;
@@ -550,6 +579,7 @@ public final class SpaceConfig implements IInternalSpaceConfigBase {
                     languageOverride,
                     archivedAt,
                     appId,
+                    isAppTemplate,
                     name,
                     displayOrder,
                     guestAuthentication,

@@ -96,6 +96,10 @@ public class SpacesClient {
             httpUrl.addQueryParameter(
                     "isCollaborative", request.getIsCollaborative().get().toString());
         }
+        if (request.getIsAppTemplate().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "isAppTemplate", request.getIsAppTemplate().get().toString());
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

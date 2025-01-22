@@ -22,6 +22,8 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = AiRuleCreationJobConfig.Builder.class)
 public final class AiRuleCreationJobConfig {
+    private final Optional<String> label;
+
     private final String prompt;
 
     private final SheetId sheetId;
@@ -33,16 +35,26 @@ public final class AiRuleCreationJobConfig {
     private final Map<String, Object> additionalProperties;
 
     private AiRuleCreationJobConfig(
+            Optional<String> label,
             String prompt,
             SheetId sheetId,
             String fieldKey,
             Optional<Integer> index,
             Map<String, Object> additionalProperties) {
+        this.label = label;
         this.prompt = prompt;
         this.sheetId = sheetId;
         this.fieldKey = fieldKey;
         this.index = index;
         this.additionalProperties = additionalProperties;
+    }
+
+    /**
+     * @return Display name for the rule to be created
+     */
+    @JsonProperty("label")
+    public Optional<String> getLabel() {
+        return label;
     }
 
     /**
@@ -89,7 +101,8 @@ public final class AiRuleCreationJobConfig {
     }
 
     private boolean equalTo(AiRuleCreationJobConfig other) {
-        return prompt.equals(other.prompt)
+        return label.equals(other.label)
+                && prompt.equals(other.prompt)
                 && sheetId.equals(other.sheetId)
                 && fieldKey.equals(other.fieldKey)
                 && index.equals(other.index);
@@ -97,7 +110,7 @@ public final class AiRuleCreationJobConfig {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.prompt, this.sheetId, this.fieldKey, this.index);
+        return Objects.hash(this.label, this.prompt, this.sheetId, this.fieldKey, this.index);
     }
 
     @java.lang.Override
@@ -126,6 +139,10 @@ public final class AiRuleCreationJobConfig {
     public interface _FinalStage {
         AiRuleCreationJobConfig build();
 
+        _FinalStage label(Optional<String> label);
+
+        _FinalStage label(String label);
+
         _FinalStage index(Optional<Integer> index);
 
         _FinalStage index(Integer index);
@@ -141,6 +158,8 @@ public final class AiRuleCreationJobConfig {
 
         private Optional<Integer> index = Optional.empty();
 
+        private Optional<String> label = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -148,6 +167,7 @@ public final class AiRuleCreationJobConfig {
 
         @java.lang.Override
         public Builder from(AiRuleCreationJobConfig other) {
+            label(other.getLabel());
             prompt(other.getPrompt());
             sheetId(other.getSheetId());
             fieldKey(other.getFieldKey());
@@ -205,9 +225,26 @@ public final class AiRuleCreationJobConfig {
             return this;
         }
 
+        /**
+         * <p>Display name for the rule to be created</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage label(String label) {
+            this.label = Optional.ofNullable(label);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "label", nulls = Nulls.SKIP)
+        public _FinalStage label(Optional<String> label) {
+            this.label = label;
+            return this;
+        }
+
         @java.lang.Override
         public AiRuleCreationJobConfig build() {
-            return new AiRuleCreationJobConfig(prompt, sheetId, fieldKey, index, additionalProperties);
+            return new AiRuleCreationJobConfig(label, prompt, sheetId, fieldKey, index, additionalProperties);
         }
     }
 }

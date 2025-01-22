@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = UpdateDataClipResolutionsJobConfig.Builder.class)
 public final class UpdateDataClipResolutionsJobConfig {
-    private final DataClipId dataClipId;
+    private final DataClipId clipId;
 
     private final SheetId clippedSheetId;
 
@@ -35,13 +35,13 @@ public final class UpdateDataClipResolutionsJobConfig {
     private final Map<String, Object> additionalProperties;
 
     private UpdateDataClipResolutionsJobConfig(
-            DataClipId dataClipId,
+            DataClipId clipId,
             SheetId clippedSheetId,
             ResolveTo resolveTo,
             String columnField,
             String columnValue,
             Map<String, Object> additionalProperties) {
-        this.dataClipId = dataClipId;
+        this.clipId = clipId;
         this.clippedSheetId = clippedSheetId;
         this.resolveTo = resolveTo;
         this.columnField = columnField;
@@ -52,9 +52,9 @@ public final class UpdateDataClipResolutionsJobConfig {
     /**
      * @return The ID of the data clip to resolve
      */
-    @JsonProperty("dataClipId")
-    public DataClipId getDataClipId() {
-        return dataClipId;
+    @JsonProperty("clipId")
+    public DataClipId getClipId() {
+        return clipId;
     }
 
     /**
@@ -99,7 +99,7 @@ public final class UpdateDataClipResolutionsJobConfig {
     }
 
     private boolean equalTo(UpdateDataClipResolutionsJobConfig other) {
-        return dataClipId.equals(other.dataClipId)
+        return clipId.equals(other.clipId)
                 && clippedSheetId.equals(other.clippedSheetId)
                 && resolveTo.equals(other.resolveTo)
                 && columnField.equals(other.columnField)
@@ -108,7 +108,7 @@ public final class UpdateDataClipResolutionsJobConfig {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.dataClipId, this.clippedSheetId, this.resolveTo, this.columnField, this.columnValue);
+        return Objects.hash(this.clipId, this.clippedSheetId, this.resolveTo, this.columnField, this.columnValue);
     }
 
     @java.lang.Override
@@ -116,12 +116,12 @@ public final class UpdateDataClipResolutionsJobConfig {
         return ObjectMappers.stringify(this);
     }
 
-    public static DataClipIdStage builder() {
+    public static ClipIdStage builder() {
         return new Builder();
     }
 
-    public interface DataClipIdStage {
-        ClippedSheetIdStage dataClipId(@NotNull DataClipId dataClipId);
+    public interface ClipIdStage {
+        ClippedSheetIdStage clipId(@NotNull DataClipId clipId);
 
         Builder from(UpdateDataClipResolutionsJobConfig other);
     }
@@ -148,13 +148,13 @@ public final class UpdateDataClipResolutionsJobConfig {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements DataClipIdStage,
+            implements ClipIdStage,
                     ClippedSheetIdStage,
                     ResolveToStage,
                     ColumnFieldStage,
                     ColumnValueStage,
                     _FinalStage {
-        private DataClipId dataClipId;
+        private DataClipId clipId;
 
         private SheetId clippedSheetId;
 
@@ -171,7 +171,7 @@ public final class UpdateDataClipResolutionsJobConfig {
 
         @java.lang.Override
         public Builder from(UpdateDataClipResolutionsJobConfig other) {
-            dataClipId(other.getDataClipId());
+            clipId(other.getClipId());
             clippedSheetId(other.getClippedSheetId());
             resolveTo(other.getResolveTo());
             columnField(other.getColumnField());
@@ -184,9 +184,9 @@ public final class UpdateDataClipResolutionsJobConfig {
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
-        @JsonSetter("dataClipId")
-        public ClippedSheetIdStage dataClipId(@NotNull DataClipId dataClipId) {
-            this.dataClipId = Objects.requireNonNull(dataClipId, "dataClipId must not be null");
+        @JsonSetter("clipId")
+        public ClippedSheetIdStage clipId(@NotNull DataClipId clipId) {
+            this.clipId = Objects.requireNonNull(clipId, "clipId must not be null");
             return this;
         }
 
@@ -233,7 +233,7 @@ public final class UpdateDataClipResolutionsJobConfig {
         @java.lang.Override
         public UpdateDataClipResolutionsJobConfig build() {
             return new UpdateDataClipResolutionsJobConfig(
-                    dataClipId, clippedSheetId, resolveTo, columnField, columnValue, additionalProperties);
+                    clipId, clippedSheetId, resolveTo, columnField, columnValue, additionalProperties);
         }
     }
 }

@@ -38,6 +38,10 @@ public final class ActionConstraint {
         return new ActionConstraint(new HasDataValue(value));
     }
 
+    public static ActionConstraint hasColumnEnabled(ActionConstraintHasColumnEnabled value) {
+        return new ActionConstraint(new HasColumnEnabledValue(value));
+    }
+
     public boolean isHasAllValid() {
         return value instanceof HasAllValidValue;
     }
@@ -48,6 +52,10 @@ public final class ActionConstraint {
 
     public boolean isHasData() {
         return value instanceof HasDataValue;
+    }
+
+    public boolean isHasColumnEnabled() {
+        return value instanceof HasColumnEnabledValue;
     }
 
     public boolean _isUnknown() {
@@ -75,6 +83,13 @@ public final class ActionConstraint {
         return Optional.empty();
     }
 
+    public Optional<ActionConstraintHasColumnEnabled> getHasColumnEnabled() {
+        if (isHasColumnEnabled()) {
+            return Optional.of(((HasColumnEnabledValue) value).value);
+        }
+        return Optional.empty();
+    }
+
     public Optional<Object> _getUnknown() {
         if (_isUnknown()) {
             return Optional.of(((_UnknownValue) value).value);
@@ -94,6 +109,8 @@ public final class ActionConstraint {
 
         T visitHasData(ActionConstraintHasData hasData);
 
+        T visitHasColumnEnabled(ActionConstraintHasColumnEnabled hasColumnEnabled);
+
         T _visitUnknown(Object unknownType);
     }
 
@@ -101,7 +118,8 @@ public final class ActionConstraint {
     @JsonSubTypes({
         @JsonSubTypes.Type(HasAllValidValue.class),
         @JsonSubTypes.Type(HasSelectionValue.class),
-        @JsonSubTypes.Type(HasDataValue.class)
+        @JsonSubTypes.Type(HasDataValue.class),
+        @JsonSubTypes.Type(HasColumnEnabledValue.class)
     })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
@@ -208,6 +226,44 @@ public final class ActionConstraint {
         }
 
         private boolean equalTo(HasDataValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "ActionConstraint{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("hasColumnEnabled")
+    private static final class HasColumnEnabledValue implements Value {
+        @JsonUnwrapped
+        private ActionConstraintHasColumnEnabled value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private HasColumnEnabledValue() {}
+
+        private HasColumnEnabledValue(ActionConstraintHasColumnEnabled value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitHasColumnEnabled(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof HasColumnEnabledValue && equalTo((HasColumnEnabledValue) other);
+        }
+
+        private boolean equalTo(HasColumnEnabledValue other) {
             return value.equals(other.value);
         }
 

@@ -55,6 +55,8 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
 
     private final Optional<AppId> appId;
 
+    private final Optional<Boolean> isAppTemplate;
+
     private final Map<String, Object> additionalProperties;
 
     private InternalSpaceConfigBase(
@@ -72,6 +74,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
             Optional<String> languageOverride,
             Optional<OffsetDateTime> archivedAt,
             Optional<AppId> appId,
+            Optional<Boolean> isAppTemplate,
             Map<String, Object> additionalProperties) {
         this.spaceConfigId = spaceConfigId;
         this.environmentId = environmentId;
@@ -87,6 +90,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         this.languageOverride = languageOverride;
         this.archivedAt = archivedAt;
         this.appId = appId;
+        this.isAppTemplate = isAppTemplate;
         this.additionalProperties = additionalProperties;
     }
 
@@ -189,6 +193,15 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
         return appId;
     }
 
+    /**
+     * @return Whether the space is an app template. Only one space per app can be an app template.
+     */
+    @JsonProperty("isAppTemplate")
+    @java.lang.Override
+    public Optional<Boolean> getIsAppTemplate() {
+        return isAppTemplate;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -214,7 +227,8 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
                 && translationsPath.equals(other.translationsPath)
                 && languageOverride.equals(other.languageOverride)
                 && archivedAt.equals(other.archivedAt)
-                && appId.equals(other.appId);
+                && appId.equals(other.appId)
+                && isAppTemplate.equals(other.isAppTemplate);
     }
 
     @java.lang.Override
@@ -233,7 +247,8 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
                 this.translationsPath,
                 this.languageOverride,
                 this.archivedAt,
-                this.appId);
+                this.appId,
+                this.isAppTemplate);
     }
 
     @java.lang.Override
@@ -275,6 +290,8 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
 
         private Optional<AppId> appId = Optional.empty();
 
+        private Optional<Boolean> isAppTemplate = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -295,6 +312,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
             languageOverride(other.getLanguageOverride());
             archivedAt(other.getArchivedAt());
             appId(other.getAppId());
+            isAppTemplate(other.getIsAppTemplate());
             return this;
         }
 
@@ -452,6 +470,17 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
             return this;
         }
 
+        @JsonSetter(value = "isAppTemplate", nulls = Nulls.SKIP)
+        public Builder isAppTemplate(Optional<Boolean> isAppTemplate) {
+            this.isAppTemplate = isAppTemplate;
+            return this;
+        }
+
+        public Builder isAppTemplate(Boolean isAppTemplate) {
+            this.isAppTemplate = Optional.ofNullable(isAppTemplate);
+            return this;
+        }
+
         public InternalSpaceConfigBase build() {
             return new InternalSpaceConfigBase(
                     spaceConfigId,
@@ -468,6 +497,7 @@ public final class InternalSpaceConfigBase implements IInternalSpaceConfigBase {
                     languageOverride,
                     archivedAt,
                     appId,
+                    isAppTemplate,
                     additionalProperties);
         }
     }

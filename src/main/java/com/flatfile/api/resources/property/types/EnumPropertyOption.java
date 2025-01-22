@@ -35,6 +35,8 @@ public final class EnumPropertyOption {
 
     private final Optional<List<String>> alternativeNames;
 
+    private final Optional<Integer> ordinal;
+
     private final Map<String, Object> additionalProperties;
 
     private EnumPropertyOption(
@@ -45,6 +47,7 @@ public final class EnumPropertyOption {
             Optional<Map<String, Object>> meta,
             Object value,
             Optional<List<String>> alternativeNames,
+            Optional<Integer> ordinal,
             Map<String, Object> additionalProperties) {
         this.label = label;
         this.description = description;
@@ -53,11 +56,12 @@ public final class EnumPropertyOption {
         this.meta = meta;
         this.value = value;
         this.alternativeNames = alternativeNames;
+        this.ordinal = ordinal;
         this.additionalProperties = additionalProperties;
     }
 
     /**
-     * @return A visual label for this option, defaults to value if not provided
+     * @return A visual label for this option
      */
     @JsonProperty("label")
     public Optional<String> getLabel() {
@@ -112,6 +116,14 @@ public final class EnumPropertyOption {
         return alternativeNames;
     }
 
+    /**
+     * @return The order of this option in the list. SortBy must be set to <code>ordinal</code> to use this.
+     */
+    @JsonProperty("ordinal")
+    public Optional<Integer> getOrdinal() {
+        return ordinal;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -130,13 +142,21 @@ public final class EnumPropertyOption {
                 && icon.equals(other.icon)
                 && meta.equals(other.meta)
                 && value.equals(other.value)
-                && alternativeNames.equals(other.alternativeNames);
+                && alternativeNames.equals(other.alternativeNames)
+                && ordinal.equals(other.ordinal);
     }
 
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.label, this.description, this.color, this.icon, this.meta, this.value, this.alternativeNames);
+                this.label,
+                this.description,
+                this.color,
+                this.icon,
+                this.meta,
+                this.value,
+                this.alternativeNames,
+                this.ordinal);
     }
 
     @java.lang.Override
@@ -180,11 +200,17 @@ public final class EnumPropertyOption {
         _FinalStage alternativeNames(Optional<List<String>> alternativeNames);
 
         _FinalStage alternativeNames(List<String> alternativeNames);
+
+        _FinalStage ordinal(Optional<Integer> ordinal);
+
+        _FinalStage ordinal(Integer ordinal);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder implements ValueStage, _FinalStage {
         private Object value;
+
+        private Optional<Integer> ordinal = Optional.empty();
 
         private Optional<List<String>> alternativeNames = Optional.empty();
 
@@ -212,6 +238,7 @@ public final class EnumPropertyOption {
             meta(other.getMeta());
             value(other.getValue());
             alternativeNames(other.getAlternativeNames());
+            ordinal(other.getOrdinal());
             return this;
         }
 
@@ -223,6 +250,23 @@ public final class EnumPropertyOption {
         @JsonSetter("value")
         public _FinalStage value(Object value) {
             this.value = value;
+            return this;
+        }
+
+        /**
+         * <p>The order of this option in the list. SortBy must be set to <code>ordinal</code> to use this.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage ordinal(Integer ordinal) {
+            this.ordinal = Optional.ofNullable(ordinal);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "ordinal", nulls = Nulls.SKIP)
+        public _FinalStage ordinal(Optional<Integer> ordinal) {
+            this.ordinal = ordinal;
             return this;
         }
 
@@ -312,7 +356,7 @@ public final class EnumPropertyOption {
         }
 
         /**
-         * <p>A visual label for this option, defaults to value if not provided</p>
+         * <p>A visual label for this option</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -331,7 +375,7 @@ public final class EnumPropertyOption {
         @java.lang.Override
         public EnumPropertyOption build() {
             return new EnumPropertyOption(
-                    label, description, color, icon, meta, value, alternativeNames, additionalProperties);
+                    label, description, color, icon, meta, value, alternativeNames, ordinal, additionalProperties);
         }
     }
 }

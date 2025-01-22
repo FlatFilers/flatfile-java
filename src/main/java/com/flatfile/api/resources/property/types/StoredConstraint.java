@@ -27,6 +27,8 @@ public final class StoredConstraint {
 
     private final Optional<String> description;
 
+    private final Optional<String> label;
+
     private final Optional<Object> config;
 
     private final Map<String, Object> additionalProperties;
@@ -35,11 +37,13 @@ public final class StoredConstraint {
             String validator,
             Optional<Integer> version,
             Optional<String> description,
+            Optional<String> label,
             Optional<Object> config,
             Map<String, Object> additionalProperties) {
         this.validator = validator;
         this.version = version;
         this.description = description;
+        this.label = label;
         this.config = config;
         this.additionalProperties = additionalProperties;
     }
@@ -61,11 +65,19 @@ public final class StoredConstraint {
     }
 
     /**
-     * @return A short description of what this constraint configuration does, example - values between 1 and 100
+     * @return A full description of what this constraint configuration does
      */
     @JsonProperty("description")
     public Optional<String> getDescription() {
         return description;
+    }
+
+    /**
+     * @return A short description of what this constraint constraint should do, example - values between 1 and 100
+     */
+    @JsonProperty("label")
+    public Optional<String> getLabel() {
+        return label;
     }
 
     @JsonProperty("config")
@@ -88,12 +100,13 @@ public final class StoredConstraint {
         return validator.equals(other.validator)
                 && version.equals(other.version)
                 && description.equals(other.description)
+                && label.equals(other.label)
                 && config.equals(other.config);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.validator, this.version, this.description, this.config);
+        return Objects.hash(this.validator, this.version, this.description, this.label, this.config);
     }
 
     @java.lang.Override
@@ -122,6 +135,10 @@ public final class StoredConstraint {
 
         _FinalStage description(String description);
 
+        _FinalStage label(Optional<String> label);
+
+        _FinalStage label(String label);
+
         _FinalStage config(Optional<Object> config);
 
         _FinalStage config(Object config);
@@ -132,6 +149,8 @@ public final class StoredConstraint {
         private String validator;
 
         private Optional<Object> config = Optional.empty();
+
+        private Optional<String> label = Optional.empty();
 
         private Optional<String> description = Optional.empty();
 
@@ -147,6 +166,7 @@ public final class StoredConstraint {
             validator(other.getValidator());
             version(other.getVersion());
             description(other.getDescription());
+            label(other.getLabel());
             config(other.getConfig());
             return this;
         }
@@ -176,7 +196,24 @@ public final class StoredConstraint {
         }
 
         /**
-         * <p>A short description of what this constraint configuration does, example - values between 1 and 100</p>
+         * <p>A short description of what this constraint constraint should do, example - values between 1 and 100</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage label(String label) {
+            this.label = Optional.ofNullable(label);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "label", nulls = Nulls.SKIP)
+        public _FinalStage label(Optional<String> label) {
+            this.label = label;
+            return this;
+        }
+
+        /**
+         * <p>A full description of what this constraint configuration does</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -211,7 +248,7 @@ public final class StoredConstraint {
 
         @java.lang.Override
         public StoredConstraint build() {
-            return new StoredConstraint(validator, version, description, config, additionalProperties);
+            return new StoredConstraint(validator, version, description, label, config, additionalProperties);
         }
     }
 }

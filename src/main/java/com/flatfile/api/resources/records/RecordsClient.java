@@ -4,6 +4,7 @@
 package com.flatfile.api.resources.records;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.flatfile.api.core.ClientOptions;
 import com.flatfile.api.core.FlatfileApiException;
 import com.flatfile.api.core.FlatfileException;
@@ -17,7 +18,9 @@ import com.flatfile.api.resources.commons.types.SheetId;
 import com.flatfile.api.resources.commons.types.Success;
 import com.flatfile.api.resources.records.requests.DeleteRecordsRequest;
 import com.flatfile.api.resources.records.requests.FindAndReplaceRecordRequest;
+import com.flatfile.api.resources.records.requests.GetRecordIndicesRequest;
 import com.flatfile.api.resources.records.requests.GetRecordsRequest;
+import com.flatfile.api.resources.records.types.GetRecordIndicesResponse;
 import com.flatfile.api.resources.records.types.GetRecordsResponse;
 import com.flatfile.api.resources.records.types.RecordData;
 import com.flatfile.api.resources.records.types.Records;
@@ -150,6 +153,93 @@ public class RecordsClient {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), GetRecordsResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            try {
+                switch (response.code()) {
+                    case 400:
+                        throw new BadRequestError(
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                    case 404:
+                        throw new NotFoundError(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Errors.class));
+                }
+            } catch (JsonProcessingException ignored) {
+                // unable to map error response, throwing generic error
+            }
+            throw new FlatfileApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new FlatfileException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Returns indices of records from a sheet in a workbook
+     */
+    public GetRecordIndicesResponse indices(SheetId sheetId, GetRecordIndicesRequest request) {
+        return indices(sheetId, request, null);
+    }
+
+    /**
+     * Returns indices of records from a sheet in a workbook
+     */
+    public GetRecordIndicesResponse indices(
+            SheetId sheetId, GetRecordIndicesRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("sheets")
+                .addPathSegment(sheetId.toString())
+                .addPathSegments("records/indices");
+        if (request.getCommitId().isPresent()) {
+            httpUrl.addQueryParameter("commitId", request.getCommitId().get().toString());
+        }
+        if (request.getSinceCommitId().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sinceCommitId", request.getSinceCommitId().get().toString());
+        }
+        if (request.getSortField().isPresent()) {
+            httpUrl.addQueryParameter("sortField", request.getSortField().get().toString());
+        }
+        if (request.getSortDirection().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "sortDirection", request.getSortDirection().get().toString());
+        }
+        if (request.getFilter().isPresent()) {
+            httpUrl.addQueryParameter("filter", request.getFilter().get().toString());
+        }
+        if (request.getFilterField().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "filterField", request.getFilterField().get().toString());
+        }
+        if (request.getSearchValue().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "searchValue", request.getSearchValue().get().toString());
+        }
+        if (request.getSearchField().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "searchField", request.getSearchField().get().toString());
+        }
+        httpUrl.addQueryParameter("ids", request.getIds().toString());
+        if (request.getQ().isPresent()) {
+            httpUrl.addQueryParameter("q", request.getQ().get());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(
+                        responseBody.string(), new TypeReference<GetRecordIndicesResponse>() {});
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             try {

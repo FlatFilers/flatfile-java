@@ -42,8 +42,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
 
     private final OffsetDateTime updatedAt;
 
-    private final Optional<OffsetDateTime> deletedAt;
-
     private final int version;
 
     private final Optional<String> prompt;
@@ -60,7 +58,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
             Optional<String> label,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            Optional<OffsetDateTime> deletedAt,
             int version,
             Optional<String> prompt,
             Map<String, Object> additionalProperties) {
@@ -73,7 +70,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
         this.label = label;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
         this.version = version;
         this.prompt = prompt;
         this.additionalProperties = additionalProperties;
@@ -133,12 +129,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
         return updatedAt;
     }
 
-    @JsonProperty("deletedAt")
-    @java.lang.Override
-    public Optional<OffsetDateTime> getDeletedAt() {
-        return deletedAt;
-    }
-
     @JsonProperty("version")
     public int getVersion() {
         return version;
@@ -170,7 +160,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
                 && label.equals(other.label)
                 && createdAt.equals(other.createdAt)
                 && updatedAt.equals(other.updatedAt)
-                && deletedAt.equals(other.deletedAt)
                 && version == other.version
                 && prompt.equals(other.prompt);
     }
@@ -187,7 +176,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
                 this.label,
                 this.createdAt,
                 this.updatedAt,
-                this.deletedAt,
                 this.version,
                 this.prompt);
     }
@@ -246,10 +234,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
 
         _FinalStage label(String label);
 
-        _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt);
-
-        _FinalStage deletedAt(OffsetDateTime deletedAt);
-
         _FinalStage prompt(Optional<String> prompt);
 
         _FinalStage prompt(String prompt);
@@ -271,8 +255,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
         private int version;
 
         private Optional<String> prompt = Optional.empty();
-
-        private Optional<OffsetDateTime> deletedAt = Optional.empty();
 
         private Optional<String> label = Optional.empty();
 
@@ -298,7 +280,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
             label(other.getLabel());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
-            deletedAt(other.getDeletedAt());
             version(other.getVersion());
             prompt(other.getPrompt());
             return this;
@@ -356,19 +337,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
         @JsonSetter(value = "prompt", nulls = Nulls.SKIP)
         public _FinalStage prompt(Optional<String> prompt) {
             this.prompt = prompt;
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage deletedAt(OffsetDateTime deletedAt) {
-            this.deletedAt = Optional.ofNullable(deletedAt);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "deletedAt", nulls = Nulls.SKIP)
-        public _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt) {
-            this.deletedAt = deletedAt;
             return this;
         }
 
@@ -436,7 +404,6 @@ public final class ConstraintVersionResource implements IConstraintResource {
                     label,
                     createdAt,
                     updatedAt,
-                    deletedAt,
                     version,
                     prompt,
                     additionalProperties);

@@ -40,4 +40,6 @@ public interface IInternalSpaceConfigBase {
     Optional<OffsetDateTime> getArchivedAt();
 
     Optional<AppId> getAppId();
+
+    Optional<Boolean> getIsAppTemplate();
 }

@@ -42,8 +42,6 @@ public final class ConstraintResource implements IConstraintResource {
 
     private final OffsetDateTime updatedAt;
 
-    private final Optional<OffsetDateTime> deletedAt;
-
     private final Map<String, Object> additionalProperties;
 
     private ConstraintResource(
@@ -56,7 +54,6 @@ public final class ConstraintResource implements IConstraintResource {
             Optional<String> label,
             OffsetDateTime createdAt,
             OffsetDateTime updatedAt,
-            Optional<OffsetDateTime> deletedAt,
             Map<String, Object> additionalProperties) {
         this.id = id;
         this.appId = appId;
@@ -67,7 +64,6 @@ public final class ConstraintResource implements IConstraintResource {
         this.label = label;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.deletedAt = deletedAt;
         this.additionalProperties = additionalProperties;
     }
 
@@ -125,12 +121,6 @@ public final class ConstraintResource implements IConstraintResource {
         return updatedAt;
     }
 
-    @JsonProperty("deletedAt")
-    @java.lang.Override
-    public Optional<OffsetDateTime> getDeletedAt() {
-        return deletedAt;
-    }
-
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -151,8 +141,7 @@ public final class ConstraintResource implements IConstraintResource {
                 && options.equals(other.options)
                 && label.equals(other.label)
                 && createdAt.equals(other.createdAt)
-                && updatedAt.equals(other.updatedAt)
-                && deletedAt.equals(other.deletedAt);
+                && updatedAt.equals(other.updatedAt);
     }
 
     @java.lang.Override
@@ -166,8 +155,7 @@ public final class ConstraintResource implements IConstraintResource {
                 this.options,
                 this.label,
                 this.createdAt,
-                this.updatedAt,
-                this.deletedAt);
+                this.updatedAt);
     }
 
     @java.lang.Override
@@ -219,10 +207,6 @@ public final class ConstraintResource implements IConstraintResource {
         _FinalStage label(Optional<String> label);
 
         _FinalStage label(String label);
-
-        _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt);
-
-        _FinalStage deletedAt(OffsetDateTime deletedAt);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -237,8 +221,6 @@ public final class ConstraintResource implements IConstraintResource {
         private OffsetDateTime createdAt;
 
         private OffsetDateTime updatedAt;
-
-        private Optional<OffsetDateTime> deletedAt = Optional.empty();
 
         private Optional<String> label = Optional.empty();
 
@@ -264,7 +246,6 @@ public final class ConstraintResource implements IConstraintResource {
             label(other.getLabel());
             createdAt(other.getCreatedAt());
             updatedAt(other.getUpdatedAt());
-            deletedAt(other.getDeletedAt());
             return this;
         }
 
@@ -300,19 +281,6 @@ public final class ConstraintResource implements IConstraintResource {
         @JsonSetter("updatedAt")
         public _FinalStage updatedAt(@NotNull OffsetDateTime updatedAt) {
             this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage deletedAt(OffsetDateTime deletedAt) {
-            this.deletedAt = Optional.ofNullable(deletedAt);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "deletedAt", nulls = Nulls.SKIP)
-        public _FinalStage deletedAt(Optional<OffsetDateTime> deletedAt) {
-            this.deletedAt = deletedAt;
             return this;
         }
 
@@ -380,7 +348,6 @@ public final class ConstraintResource implements IConstraintResource {
                     label,
                     createdAt,
                     updatedAt,
-                    deletedAt,
                     additionalProperties);
         }
     }

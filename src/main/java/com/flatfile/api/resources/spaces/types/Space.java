@@ -60,6 +60,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
     private final Optional<AppId> appId;
 
+    private final Optional<Boolean> isAppTemplate;
+
     private final SpaceId id;
 
     private final Optional<Integer> workbooksCount;
@@ -111,6 +113,7 @@ public final class Space implements IInternalSpaceConfigBase {
             Optional<String> languageOverride,
             Optional<OffsetDateTime> archivedAt,
             Optional<AppId> appId,
+            Optional<Boolean> isAppTemplate,
             SpaceId id,
             Optional<Integer> workbooksCount,
             Optional<Integer> filesCount,
@@ -143,6 +146,7 @@ public final class Space implements IInternalSpaceConfigBase {
         this.languageOverride = languageOverride;
         this.archivedAt = archivedAt;
         this.appId = appId;
+        this.isAppTemplate = isAppTemplate;
         this.id = id;
         this.workbooksCount = workbooksCount;
         this.filesCount = filesCount;
@@ -260,6 +264,15 @@ public final class Space implements IInternalSpaceConfigBase {
     @java.lang.Override
     public Optional<AppId> getAppId() {
         return appId;
+    }
+
+    /**
+     * @return Whether the space is an app template. Only one space per app can be an app template.
+     */
+    @JsonProperty("isAppTemplate")
+    @java.lang.Override
+    public Optional<Boolean> getIsAppTemplate() {
+        return isAppTemplate;
     }
 
     @JsonProperty("id")
@@ -418,6 +431,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 && languageOverride.equals(other.languageOverride)
                 && archivedAt.equals(other.archivedAt)
                 && appId.equals(other.appId)
+                && isAppTemplate.equals(other.isAppTemplate)
                 && id.equals(other.id)
                 && workbooksCount.equals(other.workbooksCount)
                 && filesCount.equals(other.filesCount)
@@ -454,6 +468,7 @@ public final class Space implements IInternalSpaceConfigBase {
                 this.languageOverride,
                 this.archivedAt,
                 this.appId,
+                this.isAppTemplate,
                 this.id,
                 this.workbooksCount,
                 this.filesCount,
@@ -559,6 +574,10 @@ public final class Space implements IInternalSpaceConfigBase {
 
         _FinalStage appId(AppId appId);
 
+        _FinalStage isAppTemplate(Optional<Boolean> isAppTemplate);
+
+        _FinalStage isAppTemplate(Boolean isAppTemplate);
+
         _FinalStage workbooksCount(Optional<Integer> workbooksCount);
 
         _FinalStage workbooksCount(Integer workbooksCount);
@@ -650,6 +669,8 @@ public final class Space implements IInternalSpaceConfigBase {
 
         private Optional<Integer> workbooksCount = Optional.empty();
 
+        private Optional<Boolean> isAppTemplate = Optional.empty();
+
         private Optional<AppId> appId = Optional.empty();
 
         private Optional<OffsetDateTime> archivedAt = Optional.empty();
@@ -699,6 +720,7 @@ public final class Space implements IInternalSpaceConfigBase {
             languageOverride(other.getLanguageOverride());
             archivedAt(other.getArchivedAt());
             appId(other.getAppId());
+            isAppTemplate(other.getIsAppTemplate());
             id(other.getId());
             workbooksCount(other.getWorkbooksCount());
             filesCount(other.getFilesCount());
@@ -988,6 +1010,23 @@ public final class Space implements IInternalSpaceConfigBase {
         }
 
         /**
+         * <p>Whether the space is an app template. Only one space per app can be an app template.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage isAppTemplate(Boolean isAppTemplate) {
+            this.isAppTemplate = Optional.ofNullable(isAppTemplate);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "isAppTemplate", nulls = Nulls.SKIP)
+        public _FinalStage isAppTemplate(Optional<Boolean> isAppTemplate) {
+            this.isAppTemplate = isAppTemplate;
+            return this;
+        }
+
+        /**
          * <p>The ID of the App that space is associated with</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
@@ -1206,6 +1245,7 @@ public final class Space implements IInternalSpaceConfigBase {
                     languageOverride,
                     archivedAt,
                     appId,
+                    isAppTemplate,
                     id,
                     workbooksCount,
                     filesCount,
